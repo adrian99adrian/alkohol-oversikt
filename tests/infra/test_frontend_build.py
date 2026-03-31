@@ -25,6 +25,11 @@ def _npm_available() -> bool:
     return shutil.which("npm") is not None
 
 
+def _generated_data_exists() -> bool:
+    data_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
+    return data_dir.is_dir() and any(data_dir.glob("*.json"))
+
+
 def _npm_cmd() -> str:
     """Return the npm command name (npm.cmd on Windows, npm elsewhere)."""
     return "npm.cmd" if sys.platform == "win32" else "npm"
@@ -41,6 +46,7 @@ def _npm_env() -> dict[str, str]:
 
 @pytest.mark.slow
 @pytest.mark.skipif(not _npm_available(), reason="npm not installed")
+@pytest.mark.skipif(not _generated_data_exists(), reason="generated municipality data not present")
 class TestFrontendBuild:
     """Tests that require a full Astro build (npm install + build)."""
 
