@@ -62,6 +62,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: pytest -q tests/ --cov=scripts --cov-report=xml
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:

@@ -68,12 +68,13 @@ def main() -> None:
             print(f"Error: no municipality files found in {municipalities_dir}")
             sys.exit(1)
     else:
-        path = municipalities_dir / f"{args.id}.json"
-        if not path.exists():
-            print(f"Error: municipality file not found: {path}")
+        target = municipalities_dir / f"{args.id}.json"
+        if not target.exists():
+            print(f"Error: municipality file not found: {target}")
             sys.exit(1)
-        paths = [path]
+        paths = [target]
 
+    for path in paths:
         municipality = _load_municipality(path)
         result = build_municipality(municipality, calendar)
 

@@ -157,6 +157,14 @@ def get_pre_holiday_for(d: date, holidays: dict[date, str]) -> str | None:
     return None
 
 
+def _pre_holiday_label(pre_holiday_for_key: str | None) -> str:
+    """Build Norwegian label for a pre-holiday day."""
+    if pre_holiday_for_key and pre_holiday_for_key != "sunday":
+        tomorrow_name = HOLIDAY_NAMES.get(pre_holiday_for_key, "")
+        return f"Dag før {tomorrow_name.lower()}" if tomorrow_name else ""
+    return "Dag før helligdag"
+
+
 def classify_day(
     d: date,
     holidays: dict[date, str],
@@ -199,12 +207,7 @@ def classify_day(
         day_type_label = HOLIDAY_NAMES.get(special_day_key or "", "")
     elif pre_holiday and not is_saturday:
         day_type = "pre_holiday"
-        # Label like "Dag før skjærtorsdag"
-        if pre_holiday_for_key and pre_holiday_for_key != "sunday":
-            tomorrow_name = HOLIDAY_NAMES.get(pre_holiday_for_key, "")
-            day_type_label = f"Dag før {tomorrow_name.lower()}" if tomorrow_name else ""
-        else:
-            day_type_label = "Dag før helligdag"
+        day_type_label = _pre_holiday_label(pre_holiday_for_key)
     elif is_saturday:
         day_type = "saturday"
         day_type_label = "Lørdag"

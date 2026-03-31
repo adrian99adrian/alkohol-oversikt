@@ -48,29 +48,18 @@ def municipal_close(day_info: dict, municipality: dict) -> str | None:
 
     # Check for exceptions (e.g., Larvik pre-Ascension Day)
     if day_type == "pre_holiday":
-        exceptions = beer.get("exceptions", {})
-        pre_for = day_info.get("pre_holiday_for")
-        if pre_for:
-            exception_key = f"pre_{pre_for}"
-            if exception_key in exceptions and exceptions[exception_key] == "weekday":
-                return beer["weekday_close"]
+        if _has_weekday_exception(day_info, municipality):
+            return beer["weekday_close"]
         return beer["pre_holiday_close"]
 
     if day_type == "saturday":
         return beer["saturday_close"]
 
-    # special_day not recognized by this municipality — fall back to saturday
-    # if the day is actually a Saturday, otherwise pre_holiday
-    if day_info["is_special_day"]:
-        if day_info.get("is_pre_holiday"):
-            # It's a special day the municipality doesn't list.
-            # If it's a Saturday, use saturday_close
-            actual_weekday = (
-                date.fromisoformat(day_info["date"]).weekday() if "date" in day_info else None
-            )
-            if actual_weekday == 5:
-                return beer["saturday_close"]
-            return beer["pre_holiday_close"]
+    # Unrecognized special day — fall back based on actual weekday
+    if day_info["is_special_day"] and day_info.get("is_pre_holiday"):
+        if day_info.get("_is_saturday"):
+            return beer["saturday_close"]
+        return beer["pre_holiday_close"]
 
     # weekday
     return beer["weekday_close"]
