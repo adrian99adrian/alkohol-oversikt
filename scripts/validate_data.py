@@ -7,6 +7,7 @@ Returns exit code 0 on success, 1 on failure.
 """
 
 import json
+import re
 import sys
 from datetime import date, timedelta
 from pathlib import Path
@@ -124,6 +125,121 @@ def validate_national_max_compliance(days: list[dict]) -> list[str]:
     return errors
 
 
+REQUIRED_STORE_FIELDS = [
+    "store_id",
+    "name",
+    "municipality",
+    "address",
+    "standard_hours",
+    "actual_hours",
+]
+WEEKDAY_KEYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+_TIME_RE = re.compile(r"^\d{2}:\d{2}$")
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def validate_vinmonopolet(data: dict, municipalities_dir: Path | None = None) -> list[str]:
+    """Validate vinmonopolet.json. Returns list of errors."""
+    errors = []
+
+    if "metadata" not in data:
+        errors.append("Missing metadata")
+        return errors
+    if "stores" not in data:
+        errors.append("Missing stores")
+        return errors
+
+    metadata = data["metadata"]
+    stores = data["stores"]
+
+    # Metadata checks
+    if "fetched_at" not in metadata:
+        errors.append("Missing metadata.fetched_at")
+    if "window_start" not in metadata or "window_end" not in metadata:
+        errors.append("Missing metadata.window_start or window_end")
+    if metadata.get("total_stores") != len(stores):
+        errors.append(
+            f"metadata.total_stores ({metadata.get('total_stores')}) != len(stores) ({len(stores)})"
+        )
+
+    if len(stores) == 0:
+        errors.append("No stores found")
+        return errors
+
+    # Per-store validation
+    seen_ids: set[str] = set()
+    window_dates = (
+        {metadata["window_start"], metadata["window_end"]}
+        if "window_start" in metadata and "window_end" in metadata
+        else set()
+    )
+
+    for i, store in enumerate(stores):
+        sid = store.get("store_id", f"index-{i}")
+
+        for field in REQUIRED_STORE_FIELDS:
+            if field not in store:
+                errors.append(f"Store {sid}: missing field '{field}'")
+
+        # store_id must be numeric
+        if "store_id" in store and not store["store_id"].isdigit():
+            errors.append(f"Store {sid}: store_id must be numeric")
+
+        # Duplicate check
+        if sid in seen_ids:
+            errors.append(f"Duplicate store_id: {sid}")
+        seen_ids.add(sid)
+
+        # standard_hours
+        sh = store.get("standard_hours", {})
+        for day in WEEKDAY_KEYS:
+            if day not in sh:
+                errors.append(f"Store {sid}: missing standard_hours.{day}")
+        if sh.get("sunday") is not None:
+            errors.append(f"Store {sid}: sunday must be null")
+        for day in WEEKDAY_KEYS:
+            val = sh.get(day)
+            if val is not None and day != "sunday":
+                if not (
+                    _TIME_RE.match(val.get("open", "")) and _TIME_RE.match(val.get("close", ""))
+                ):
+                    errors.append(f"Store {sid}: invalid time in standard_hours.{day}")
+
+        # actual_hours
+        ah = store.get("actual_hours", {})
+        if len(ah) != 7:
+            errors.append(f"Store {sid}: actual_hours must have exactly 7 entries, got {len(ah)}")
+        for dk, dv in ah.items():
+            if not _DATE_RE.match(dk):
+                errors.append(f"Store {sid}: invalid date key in actual_hours: {dk}")
+            if dv is not None:
+                if not (_TIME_RE.match(dv.get("open", "")) and _TIME_RE.match(dv.get("close", ""))):
+                    errors.append(f"Store {sid}: invalid time in actual_hours.{dk}")
+
+        # Check actual_hours window matches metadata
+        if len(ah) == 7 and window_dates:
+            store_dates = sorted(ah.keys())
+            if store_dates[0] != metadata.get("window_start"):
+                errors.append(f"Store {sid}: actual_hours start {store_dates[0]} != window_start")
+            if store_dates[-1] != metadata.get("window_end"):
+                errors.append(f"Store {sid}: actual_hours end {store_dates[-1]} != window_end")
+
+    # Municipality coverage: every configured municipality must have ≥1 store
+    if municipalities_dir and municipalities_dir.exists():
+        configured = {p.stem for p in municipalities_dir.glob("*.json")}
+        mapped = {s["municipality"] for s in stores if s.get("municipality")}
+        missing = configured - mapped
+        if missing:
+            errors.append(f"Municipalities with no mapped stores: {sorted(missing)}")
+
+    # Informational: count unmapped stores
+    unmapped = sum(1 for s in stores if s.get("municipality") is None)
+    if unmapped:
+        print(f"  Info: {unmapped} stores have municipality=null (not mapped)")
+
+    return errors
+
+
 def main() -> int:
     """CLI entry point. Returns 0 on success, 1 on failure."""
     data_dir = Path(__file__).parent.parent / "data"
@@ -161,6 +277,16 @@ def main() -> int:
                 all_errors.extend(f"{path.name}: {e}" for e in errors)
     else:
         print("Note: calendar.json not found (run build_calendar.py first)")
+
+    # Validate vinmonopolet
+    vinmonopolet_path = data_dir / "generated" / "vinmonopolet.json"
+    if vinmonopolet_path.exists():
+        with open(vinmonopolet_path, encoding="utf-8") as f:
+            vinmonopolet_data = json.load(f)
+        errors = validate_vinmonopolet(vinmonopolet_data, municipalities_dir)
+        all_errors.extend(f"vinmonopolet.json: {e}" for e in errors)
+    else:
+        print("Note: vinmonopolet.json not found (run fetch_vinmonopolet.py first)")
 
     if all_errors:
         print(f"Validation failed with {len(all_errors)} error(s):")

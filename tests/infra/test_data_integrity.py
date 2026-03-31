@@ -104,3 +104,37 @@ class TestMunicipalityFiles:
         for name, data in municipalities:
             expected_id = name.replace(".json", "")
             assert data["id"] == expected_id, f"{name}: id={data['id']!r} doesn't match filename"
+
+
+VINMONOPOLET_PATH = Path(__file__).parent.parent.parent / "data" / "generated" / "vinmonopolet.json"
+
+
+@pytest.mark.skipif(not VINMONOPOLET_PATH.exists(), reason="vinmonopolet.json not generated yet")
+class TestVinmonopoletFile:
+    """Validate generated vinmonopolet.json if it exists."""
+
+    @pytest.fixture(autouse=True)
+    def load_data(self):
+        with open(VINMONOPOLET_PATH, encoding="utf-8") as f:
+            self.data = json.load(f)
+
+    def test_valid_json_structure(self):
+        assert "metadata" in self.data
+        assert "stores" in self.data
+
+    def test_has_stores(self):
+        assert len(self.data["stores"]) > 0
+
+    def test_metadata_fields(self):
+        meta = self.data["metadata"]
+        assert "total_stores" in meta
+        assert "fetched_at" in meta
+        assert "window_start" in meta
+        assert "window_end" in meta
+        assert meta["total_stores"] == len(self.data["stores"])
+
+    def test_store_schema(self):
+        required = {"store_id", "name", "municipality", "address", "standard_hours", "actual_hours"}
+        for store in self.data["stores"][:5]:  # Spot-check first 5
+            missing = required - store.keys()
+            assert not missing, f"Store {store.get('store_id')}: missing {missing}"

@@ -10,6 +10,7 @@ from validate_data import (
     validate_generated_municipality,
     validate_municipality_schema,
     validate_national_max_compliance,
+    validate_vinmonopolet,
 )
 
 # --- Municipality schema validation ---
@@ -126,3 +127,125 @@ class TestValidateNationalMaxCompliance:
         }
         errors = validate_national_max_compliance([fake_day])
         assert len(errors) > 0
+
+
+# --- Vinmonopolet validation ---
+
+
+def _valid_store(store_id: str = "283") -> dict:
+    """Build a minimal valid store for testing."""
+    return {
+        "store_id": store_id,
+        "name": "Test",
+        "municipality": "sandefjord",
+        "address": "Test 1, 0000 Test",
+        "standard_hours": {
+            "monday": {"open": "10:00", "close": "18:00"},
+            "tuesday": {"open": "10:00", "close": "18:00"},
+            "wednesday": {"open": "10:00", "close": "18:00"},
+            "thursday": {"open": "10:00", "close": "18:00"},
+            "friday": {"open": "10:00", "close": "18:00"},
+            "saturday": {"open": "10:00", "close": "15:00"},
+            "sunday": None,
+        },
+        "actual_hours": {
+            "2026-03-30": {"open": "10:00", "close": "18:00"},
+            "2026-03-31": {"open": "10:00", "close": "18:00"},
+            "2026-04-01": {"open": "10:00", "close": "18:00"},
+            "2026-04-02": {"open": "10:00", "close": "18:00"},
+            "2026-04-03": {"open": "10:00", "close": "18:00"},
+            "2026-04-04": {"open": "10:00", "close": "15:00"},
+            "2026-04-05": None,
+        },
+    }
+
+
+def _valid_vinmonopolet_data(**overrides) -> dict:
+    """Build valid top-level vinmonopolet data."""
+    stores = overrides.pop("stores", [_valid_store()])
+    return {
+        "metadata": {
+            "total_stores": len(stores),
+            "fetched_at": "2026-03-31T16:00:00+02:00",
+            "window_start": "2026-03-30",
+            "window_end": "2026-04-05",
+            **overrides,
+        },
+        "stores": stores,
+    }
+
+
+class TestValidateVinmonopolet:
+    """Verify vinmonopolet.json validation."""
+
+    def test_valid_data_passes(self):
+        errors = validate_vinmonopolet(_valid_vinmonopolet_data())
+        assert errors == []
+
+    def test_empty_stores_fails(self):
+        data = _valid_vinmonopolet_data(stores=[], total_stores=0)
+        errors = validate_vinmonopolet(data)
+        assert any("No stores" in e for e in errors)
+
+    def test_missing_metadata_fails(self):
+        errors = validate_vinmonopolet({"stores": []})
+        assert any("Missing metadata" in e for e in errors)
+
+    def test_missing_store_field_fails(self):
+        store = _valid_store()
+        del store["name"]
+        data = _valid_vinmonopolet_data(stores=[store])
+        errors = validate_vinmonopolet(data)
+        assert any("missing field 'name'" in e for e in errors)
+
+    def test_duplicate_store_id_fails(self):
+        data = _valid_vinmonopolet_data(
+            stores=[_valid_store("100"), _valid_store("100")],
+            total_stores=2,
+        )
+        errors = validate_vinmonopolet(data)
+        assert any("Duplicate store_id" in e for e in errors)
+
+    def test_non_numeric_store_id_fails(self):
+        store = _valid_store()
+        store["store_id"] = "abc"
+        data = _valid_vinmonopolet_data(stores=[store])
+        errors = validate_vinmonopolet(data)
+        assert any("numeric" in e for e in errors)
+
+    def test_metadata_count_mismatch_fails(self):
+        data = _valid_vinmonopolet_data(total_stores=99)
+        errors = validate_vinmonopolet(data)
+        assert any("total_stores" in e for e in errors)
+
+    def test_sunday_not_null_fails(self):
+        store = _valid_store()
+        store["standard_hours"]["sunday"] = {"open": "10:00", "close": "15:00"}
+        data = _valid_vinmonopolet_data(stores=[store])
+        errors = validate_vinmonopolet(data)
+        assert any("sunday must be null" in e for e in errors)
+
+    def test_actual_hours_wrong_count_fails(self):
+        store = _valid_store()
+        store["actual_hours"] = {"2026-03-30": None}
+        data = _valid_vinmonopolet_data(stores=[store])
+        errors = validate_vinmonopolet(data)
+        assert any("exactly 7" in e for e in errors)
+
+    def test_actual_hours_window_mismatch_fails(self):
+        store = _valid_store()
+        data = _valid_vinmonopolet_data(
+            stores=[store], window_start="2026-01-01", window_end="2026-01-07"
+        )
+        errors = validate_vinmonopolet(data)
+        assert any("window_start" in e for e in errors)
+
+    def test_municipality_coverage(self, tmp_path):
+        """Every configured municipality must have at least 1 mapped store."""
+        muni_dir = tmp_path / "municipalities"
+        muni_dir.mkdir()
+        (muni_dir / "sandefjord.json").write_text("{}")
+        (muni_dir / "oslo.json").write_text("{}")
+        data = _valid_vinmonopolet_data()  # Only has sandefjord
+        errors = validate_vinmonopolet(data, municipalities_dir=muni_dir)
+        assert any("oslo" in e for e in errors)
