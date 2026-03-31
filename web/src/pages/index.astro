@@ -1,0 +1,136 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import Base from "../layouts/Base.astro";
+
+interface Municipality {
+  id: string;
+  name: string;
+}
+
+const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
+
+let municipalities: Municipality[] = [];
+if (fs.existsSync(dataDir)) {
+  const files = fs.readdirSync(dataDir).filter((f: string) => f.endsWith(".json"));
+  municipalities = files.map((file: string) => {
+    const raw = fs.readFileSync(path.join(dataDir, file), "utf-8");
+    const data = JSON.parse(raw);
+    return { id: data.municipality.id, name: data.municipality.name };
+  });
+}
+
+municipalities.sort((a, b) => a.name.localeCompare(b.name, "no"));
+
+// Ensure base always ends with a slash for URL concatenation
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+---
+
+<Base title="Alkohol-oversikt">
+  <div class="flex flex-col items-center text-center">
+    <h1 class="mb-2 text-3xl font-bold text-white">Alkohol-oversikt</h1>
+    <p class="mb-8 text-slate-300">
+      Finn ut når ølsalget og Vinmonopolet stenger i din kommune
+    </p>
+
+    <!-- Search -->
+    <div
+      id="search-container"
+      class="relative mb-10 w-full max-w-md"
+      data-municipalities={JSON.stringify(municipalities)}
+      data-base={base}
+    >
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Søk etter kommune..."
+        autocomplete="off"
+        class="w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 text-slate-100 placeholder-slate-400 outline-none focus:border-slate-400"
+      />
+      <ul
+        id="search-results"
+        class="absolute left-0 right-0 top-full z-10 mt-1 hidden rounded-lg border border-slate-600 bg-slate-800"
+      >
+      </ul>
+    </div>
+
+    <!-- Quick-links -->
+    <section class="w-full max-w-md">
+      <h2 class="mb-4 text-left text-lg font-semibold text-slate-200">Kommuner</h2>
+      <div class="flex flex-wrap gap-3">
+        {municipalities.map((m) => (
+          <a
+            href={`${base}kommune/${m.id}/`}
+            class="rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-slate-200 hover:border-slate-400 hover:text-white"
+          >
+            {m.name}
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const container = document.getElementById("search-container")!;
+  const input = document.getElementById("search-input") as HTMLInputElement;
+  const resultsList = document.getElementById("search-results")!;
+
+  interface Municipality {
+    id: string;
+    name: string;
+  }
+
+  const municipalities: Municipality[] = JSON.parse(
+    container.dataset.municipalities ?? "[]"
+  );
+  const rawBase = container.dataset.base ?? "/";
+  const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
+  function normalize(str: string): string {
+    return str.normalize("NFC").toLowerCase();
+  }
+
+  input.addEventListener("input", () => {
+    const query = normalize(input.value.trim());
+
+    if (query.length === 0) {
+      resultsList.classList.add("hidden");
+      resultsList.innerHTML = "";
+      return;
+    }
+
+    const matches = municipalities.filter((m) =>
+      normalize(m.name).includes(query)
+    );
+
+    resultsList.innerHTML = "";
+
+    if (matches.length === 0) {
+      const li = document.createElement("li");
+      li.className = "px-4 py-3 text-slate-400";
+      li.textContent = "Ingen treff";
+      resultsList.appendChild(li);
+    } else {
+      for (const m of matches) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `${base}kommune/${m.id}/`;
+        a.className = "block px-4 py-3 text-slate-200 hover:bg-slate-700";
+        a.textContent = m.name;
+        li.appendChild(a);
+        resultsList.appendChild(li);
+      }
+    }
+
+    resultsList.classList.remove("hidden");
+  });
+
+  // Hide results when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!container.contains(e.target as Node)) {
+      resultsList.classList.add("hidden");
+    }
+  });
+</script>
