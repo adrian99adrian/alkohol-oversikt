@@ -1,0 +1,28 @@
+[project]
+name = "alkohol-oversikt"
+version = "0.1.0"
+description = "Static website showing beer sales hours and Vinmonopolet opening times for Norwegian municipalities"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests that hit the network and may take minutes (deselect with '-m \"not slow\"')",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pyright]
+include = ["scripts", "tests"]
+extraPaths = ["scripts"]
+
+[tool.coverage.run]
+source = ["scripts"]
+omit = ["scripts/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = ["if __name__", "pragma: no cover"]
+show_missing = true

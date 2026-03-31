@@ -1,0 +1,45 @@
+# Claude
+.claude/
+CLAUDE.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# Node
+node_modules/
+.astro/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Internal notes and tracking (not for distribution)
+notes/
+TODO.md
+
+# Environment
+.env
+.env.*
+
+# Build output
+docs/
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/
