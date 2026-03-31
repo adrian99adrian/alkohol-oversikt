@@ -1,13 +1,9 @@
 """Tests for municipality data generation."""
 
-import json
 from datetime import date, timedelta
-from pathlib import Path
-from unittest.mock import patch
 
-import pytest
 from build_calendar import build_calendar
-from build_municipality import build_municipality, main
+from build_municipality import build_municipality
 
 
 class TestBuildMunicipality:
@@ -98,36 +94,3 @@ class TestBuildMunicipality:
         }
         for day in result["days"]:
             assert required.issubset(day.keys()), f"Missing: {required - day.keys()}"
-
-
-class TestMain:
-    """Verify CLI entry point and fail-fast behavior."""
-
-    def test_id_not_found_exits_with_error(self, tmp_path):
-        """--id with a nonexistent municipality should exit 1."""
-        with patch("sys.argv", ["prog", "--id", "nonexistent", "--start-date", "2026-01-01"]):
-            with pytest.raises(SystemExit, match="1"):
-                main()
-
-    def test_id_generates_output(self):
-        """--id with a valid municipality should produce a JSON file."""
-        args = ["prog", "--id", "sandefjord", "--start-date", "2026-01-01", "--days", "3"]
-        with patch("sys.argv", args):
-            main()
-
-        gen_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
-        output = gen_dir / "sandefjord.json"
-        assert output.exists()
-        with open(output, encoding="utf-8") as f:
-            data = json.load(f)
-        assert data["municipality"]["id"] == "sandefjord"
-        assert len(data["days"]) == 3
-
-    def test_all_generates_all_municipalities(self):
-        """--all should generate a file for every municipality."""
-        with patch("sys.argv", ["prog", "--all", "--start-date", "2026-01-01", "--days", "3"]):
-            main()
-
-        output_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
-        files = sorted(output_dir.glob("*.json"))
-        assert len(files) >= 3  # sandefjord, larvik, oslo

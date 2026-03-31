@@ -1,9 +1,13 @@
 """Integration tests: run the full pipeline and verify output."""
 
+import json
 from datetime import date
+from pathlib import Path
+from unittest.mock import patch
 
+import pytest
 from build_calendar import build_calendar
-from build_municipality import build_municipality
+from build_municipality import build_municipality, main
 from validate_data import (
     validate_calendar,
     validate_generated_municipality,
@@ -148,3 +152,46 @@ class TestOsloLargeStoreIntegration:
         result, _ = _run_pipeline(sample_municipality_oslo, date(2026, 12, 31), days=1)
         day = result["days"][0]
         assert day["beer_close_large_stores"] is None
+
+
+class TestMainCLI:
+    """Verify CLI entry point and fail-fast behavior."""
+
+    def test_id_not_found_exits_with_error(self):
+        """--id with a nonexistent municipality should exit 1."""
+        args = ["prog", "--id", "nonexistent", "--start-date", "2026-01-01"]
+        with patch("sys.argv", args):
+            with pytest.raises(SystemExit, match="1"):
+                main()
+
+    def test_id_generates_output(self):
+        """--id with a valid municipality should produce a JSON file."""
+        args = [
+            "prog",
+            "--id",
+            "sandefjord",
+            "--start-date",
+            "2026-01-01",
+            "--days",
+            "3",
+        ]
+        with patch("sys.argv", args):
+            main()
+
+        gen_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
+        output = gen_dir / "sandefjord.json"
+        assert output.exists()
+        with open(output, encoding="utf-8") as f:
+            data = json.load(f)
+        assert data["municipality"]["id"] == "sandefjord"
+        assert len(data["days"]) == 3
+
+    def test_all_generates_all_municipalities(self):
+        """--all should generate a file for every municipality."""
+        args = ["prog", "--all", "--start-date", "2026-01-01", "--days", "3"]
+        with patch("sys.argv", args):
+            main()
+
+        gen_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
+        files = sorted(gen_dir.glob("*.json"))
+        assert len(files) >= 3  # sandefjord, larvik, oslo
