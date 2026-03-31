@@ -71,5 +71,7 @@ jobs:
       - run: pytest -q tests/ --cov=scripts --cov-report=xml
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6
+        with:
+          args: -Dsonar.qualitygate.wait=${{ github.event_name == 'pull_request' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
