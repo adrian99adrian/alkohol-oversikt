@@ -31,8 +31,8 @@ class TestVinmonopoletPipeline:
             assert len(r["actual_hours"]) == 7
 
     def test_unmapped_stores_get_null_municipality(self, sample_api_store):
-        """Stores in unknown towns get municipality=None."""
-        store = {**sample_api_store}
+        """Stores with unknown town and unknown displayName get municipality=None."""
+        store = {**sample_api_store, "displayName": "Ukjent"}
         store["address"] = {**store["address"], "town": "Ukjentby"}
         result = transform_store(store, {}, {"sandefjord"})
         assert result["municipality"] is None

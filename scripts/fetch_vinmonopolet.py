@@ -75,12 +75,17 @@ def build_actual_hours(opening_times: list[dict]) -> dict[str, dict | None]:
 def derive_standard_hours(
     opening_times: list[dict],
     special_opening_times: list[dict],
+    previous: dict[str, dict | None] | None = None,
 ) -> dict[str, dict | None]:
     """Derive standard weekly hours from 7-day API data.
 
     Excludes days that appear in specialOpeningTimes (holidays, reduced hours).
     Sunday is always None (closed by law).
-    Missing weekdays fall back to mode of other Mon-Fri hours,
+
+    For days only seen as special (e.g. Easter Thursday), the previous fetch's
+    value for that specific day is preserved. This avoids flattening per-day
+    schedules (Mon-Wed 10-17, Thu-Fri 10-18) into a single fallback.
+    When no previous data exists, falls back to mode of other Mon-Fri hours
     with tie-break on earliest closing time.
     """
     special_dates = {_parse_date(s["date"]) for s in special_opening_times}
@@ -115,11 +120,10 @@ def derive_standard_hours(
             result[name] = None
         elif i in weekday_hours:
             result[name] = weekday_hours[i]
-        elif i in special_skipped:
-            # Day was only seen as a special day — use fallback rather than
-            # assuming closed (e.g. Easter Saturday is special, but the store
-            # is normally open on regular Saturdays).
-            result[name] = fallback
+        elif i in special_skipped and previous and name in previous:
+            # Preserve the previous per-day value rather than flattening
+            # different weekday schedules into a single fallback.
+            result[name] = previous[name]
         else:
             result[name] = fallback
 
@@ -177,19 +181,29 @@ def transform_store(
     store: dict,
     overrides: dict[str, str],
     known_municipalities: set[str],
+    previous_standard_hours: dict[str, dict | None] | None = None,
 ) -> dict:
     """Transform a raw API store dict into spec-compliant output."""
     opening_times = store.get("openingTimes", [])
     special_times = store.get("specialOpeningTimes", [])
 
+    # Try town first, then displayName as fallback for municipality mapping
+    municipality = map_town_to_municipality(
+        store["address"]["town"], overrides, known_municipalities
+    )
+    if municipality is None:
+        municipality = map_town_to_municipality(
+            store["displayName"], overrides, known_municipalities
+        )
+
     return {
         "store_id": store["name"],
         "name": store["displayName"],
-        "municipality": map_town_to_municipality(
-            store["address"]["town"], overrides, known_municipalities
-        ),
+        "municipality": municipality,
         "address": format_address(store),
-        "standard_hours": derive_standard_hours(opening_times, special_times),
+        "standard_hours": derive_standard_hours(
+            opening_times, special_times, previous=previous_standard_hours
+        ),
         "actual_hours": build_actual_hours(opening_times),
     }
 
@@ -272,6 +286,19 @@ def load_known_municipalities(data_dir: Path) -> set[str]:
     return {p.stem for p in municipalities_dir.glob("*.json")}
 
 
+def _load_previous_standard_hours(data_dir: Path) -> dict[str, dict]:
+    """Load standard_hours per store_id from a previous vinmonopolet.json.
+
+    Returns empty dict if the file doesn't exist yet (first run).
+    """
+    path = data_dir / "generated" / "vinmonopolet.json"
+    if not path.exists():
+        return {}
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    return {s["store_id"]: s["standard_hours"] for s in data.get("stores", [])}
+
+
 def _compute_window(stores: list[dict]) -> tuple[str, str]:
     """Compute the shared actual_hours date window from transformed stores."""
     all_dates: set[str] = set()
@@ -302,10 +329,21 @@ def main() -> None:
     overrides = load_town_overrides(data_dir)
     known = load_known_municipalities(data_dir)
 
+    # Load previous standard_hours so holiday-week fetches preserve per-day patterns
+    previous_hours = _load_previous_standard_hours(data_dir)
+
     with httpx.Client(timeout=args.timeout) as client:
         raw_stores = fetch_all_stores(client, page_size=args.page_size)
 
-    transformed = [transform_store(s, overrides, known) for s in raw_stores]
+    transformed = [
+        transform_store(
+            s,
+            overrides,
+            known,
+            previous_standard_hours=previous_hours.get(s["name"]),
+        )
+        for s in raw_stores
+    ]
     transformed.sort(key=lambda s: int(s["store_id"]))
 
     window_start, window_end = _compute_window(transformed)

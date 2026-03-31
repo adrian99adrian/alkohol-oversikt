@@ -51,6 +51,34 @@ class TestDeriveStandardHours:
         # rather than incorrectly assuming the store is closed on Saturdays
         assert result["saturday"] == {"open": "10:00", "close": "18:00"}
 
+    def test_holiday_week_preserves_previous_per_day(
+        self, sample_opening_times_easter, sample_special_opening_times_easter
+    ):
+        """With previous data, special-skipped days keep their per-day hours."""
+        previous = {
+            "monday": {"open": "10:00", "close": "17:00"},
+            "tuesday": {"open": "10:00", "close": "18:00"},
+            "wednesday": {"open": "10:00", "close": "17:00"},
+            "thursday": {"open": "10:00", "close": "19:00"},
+            "friday": {"open": "10:00", "close": "19:00"},
+            "saturday": {"open": "10:00", "close": "15:00"},
+            "sunday": None,
+        }
+        result = derive_standard_hours(
+            sample_opening_times_easter,
+            sample_special_opening_times_easter,
+            previous=previous,
+        )
+        # Tuesday is non-special — uses fresh data
+        assert result["tuesday"] == {"open": "10:00", "close": "18:00"}
+        # Special-skipped days preserve previous per-day values
+        assert result["monday"] == {"open": "10:00", "close": "17:00"}
+        assert result["wednesday"] == {"open": "10:00", "close": "17:00"}
+        assert result["thursday"] == {"open": "10:00", "close": "19:00"}
+        assert result["friday"] == {"open": "10:00", "close": "19:00"}
+        assert result["saturday"] == {"open": "10:00", "close": "15:00"}
+        assert result["sunday"] is None
+
     def test_sunday_always_null(self, sample_opening_times_normal):
         """Sunday is always null regardless of API data."""
         result = derive_standard_hours(sample_opening_times_normal, [])
@@ -225,9 +253,19 @@ class TestTransformStore:
         assert required.issubset(result.keys())
 
     def test_unmapped_municipality_is_none(self, sample_api_store):
-        """Store in unknown town gets municipality=None."""
-        result = transform_store(sample_api_store, {}, set())
+        """Store in unknown town and unknown displayName gets municipality=None."""
+        store = {**sample_api_store, "displayName": "Ukjent"}
+        store["address"] = {**store["address"], "town": "Ukjentby"}
+        result = transform_store(store, {}, {"sandefjord"})
         assert result["municipality"] is None
+
+    def test_displayname_fallback_for_municipality(self, sample_api_store):
+        """When town doesn't match, displayName is tried as fallback."""
+        store = {**sample_api_store}
+        store["address"] = {**store["address"], "town": "Stokke"}
+        # displayName is "Sandefjord" which matches
+        result = transform_store(store, {}, {"sandefjord"})
+        assert result["municipality"] == "sandefjord"
 
     def test_easter_store(self, sample_api_store_easter):
         """Store during Easter week transforms correctly."""
@@ -252,7 +290,8 @@ class TestGetWithRetry:
         assert result == response
         assert client.get.call_count == 1
 
-    def test_retries_on_500(self):
+    @patch("fetch_vinmonopolet.time.sleep")
+    def test_retries_on_500(self, mock_sleep):
         client = MagicMock()
         error_response = MagicMock()
         error_response.status_code = 500
