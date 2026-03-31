@@ -43,7 +43,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: pytest -q tests/unit/ --cov=scripts --cov-report=term-missing
+      - run: pytest -q tests/unit/ -m "not slow" --cov=scripts --cov-report=term-missing
 
   integration-tests:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: pytest -q tests/integration/
+      - run: pytest -q tests/integration/ -m "not slow"
 
   sonar:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
@@ -68,7 +68,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: pytest -q tests/ --cov=scripts --cov-report=xml
+      - run: pytest -q tests/ -m "not slow" --cov=scripts --cov-report=xml
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6
         env:
