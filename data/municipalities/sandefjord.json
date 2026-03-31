@@ -1,0 +1,21 @@
+{
+  "id": "sandefjord",
+  "name": "Sandefjord",
+  "county": "Vestfold og Telemark",
+  "beer_sales": {
+    "weekday_open": "06:00",
+    "weekday_close": "20:00",
+    "saturday_open": "06:00",
+    "saturday_close": "20:00",
+    "pre_holiday_close": "18:00",
+    "special_day_close": "15:00",
+    "special_days": ["easter_eve", "whit_eve", "christmas_eve", "new_years_eve"]
+  },
+  "sources": [
+    {
+      "title": "Sandefjord kommune – salgs- og skjenketider",
+      "url": "https://www.sandefjord.kommune.no/miljo-naring-landbruk/naring/alkohol-servering-og-tobakk/salgs-og-skjenketider/"
+    }
+  ],
+  "last_verified": "2026-03-31"
+}

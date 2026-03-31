@@ -1,0 +1,24 @@
+{
+  "id": "oslo",
+  "name": "Oslo",
+  "county": "Oslo",
+  "beer_sales": {
+    "weekday_open": "08:00",
+    "weekday_close": "20:00",
+    "saturday_open": "08:00",
+    "saturday_close": "18:00",
+    "pre_holiday_close": "18:00",
+    "special_day_close": "18:00",
+    "special_days": ["whit_eve", "christmas_eve", "new_years_eve"],
+    "special_day_close_large_stores": "16:00",
+    "large_store_threshold_sqm": 100,
+    "large_store_special_days": ["whit_eve", "christmas_eve"]
+  },
+  "sources": [
+    {
+      "title": "Oslo kommune – salgstider for øl",
+      "url": "https://www.oslo.kommune.no/skatt-og-naring/salg-servering-og-skjenking/salgstider-for-ol/"
+    }
+  ],
+  "last_verified": "2026-03-31"
+}
