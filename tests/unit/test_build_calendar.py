@@ -1,10 +1,7 @@
 """Tests for calendar generation."""
 
-import sys
 from datetime import UTC, date, timedelta
 from unittest.mock import patch
-
-sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent.parent / "scripts"))
 
 from build_calendar import WEEKDAY_NAMES_NO, build_calendar, get_today_oslo
 

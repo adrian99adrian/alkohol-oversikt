@@ -1,9 +1,6 @@
 """Tests for beer sales time calculation."""
 
-import sys
 from datetime import date
-
-sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent.parent / "scripts"))
 
 from holidays import classify_day, get_public_holidays, get_special_days
 from sales import (

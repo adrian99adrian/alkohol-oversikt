@@ -1,9 +1,13 @@
 """Shared pytest fixtures for all test modules."""
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
+
+# Add scripts/ to sys.path so test files can import pipeline modules directly
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 
 
 @pytest.fixture

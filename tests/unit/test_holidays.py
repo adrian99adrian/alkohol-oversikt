@@ -1,12 +1,8 @@
 """Tests for holiday computation, day type classification, and pre-holiday detection."""
 
-import sys
 from datetime import date
 
 import pytest
-
-sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent.parent / "scripts"))
-
 from holidays import (
     HOLIDAY_NAMES,
     classify_day,

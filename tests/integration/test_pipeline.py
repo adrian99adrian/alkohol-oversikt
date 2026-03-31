@@ -1,9 +1,6 @@
 """Integration tests: run the full pipeline and verify output."""
 
-import sys
 from datetime import date
-
-sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent.parent / "scripts"))
 
 from build_calendar import build_calendar
 from build_municipality import build_municipality

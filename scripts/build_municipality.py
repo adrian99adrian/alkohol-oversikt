@@ -7,6 +7,7 @@ Usage:
 
 import argparse
 import json
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -63,13 +64,15 @@ def main() -> None:
 
     if args.all:
         paths = sorted(municipalities_dir.glob("*.json"))
+        if not paths:
+            print(f"Error: no municipality files found in {municipalities_dir}")
+            sys.exit(1)
     else:
-        paths = [municipalities_dir / f"{args.id}.json"]
-
-    for path in paths:
+        path = municipalities_dir / f"{args.id}.json"
         if not path.exists():
-            print(f"Warning: {path} not found, skipping")
-            continue
+            print(f"Error: municipality file not found: {path}")
+            sys.exit(1)
+        paths = [path]
 
         municipality = _load_municipality(path)
         result = build_municipality(municipality, calendar)
