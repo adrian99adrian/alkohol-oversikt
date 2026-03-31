@@ -102,3 +102,35 @@ class TestFrontendBuild:
         assert "Oslo" in html
         assert "Sandefjord" in html
         assert "Larvik" in html
+
+    def test_municipality_pages_exist(self, docs_dir: Path) -> None:
+        """Build generates a page for each municipality."""
+        for muni in ("oslo", "sandefjord", "larvik"):
+            page = docs_dir / "kommune" / muni / "index.html"
+            assert page.exists(), f"Missing municipality page: {page}"
+
+    def test_municipality_page_has_day_cards(self, docs_dir: Path) -> None:
+        """Municipality page contains today/tomorrow day cards."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "I dag" in html
+        assert "I morgen" in html
+
+    def test_municipality_page_has_table(self, docs_dir: Path) -> None:
+        """Municipality page contains the beer sales table with all columns."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Neste 14 dager" in html
+        assert "Ølsalg" in html
+        assert "Merknad" in html
+
+    def test_municipality_page_has_badges(self, docs_dir: Path) -> None:
+        """Municipality page renders day type badges with color classes."""
+        html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
+        # Should have at least one badge (any color variant)
+        assert "rounded-full" in html
+        assert "text-xs" in html
+
+    def test_municipality_page_has_back_link(self, docs_dir: Path) -> None:
+        """Municipality page has a back link to the landing page."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Tilbake" in html
+        assert "/alkohol-oversikt/" in html

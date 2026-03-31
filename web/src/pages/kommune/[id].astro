@@ -1,0 +1,109 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import Base from "../../layouts/Base.astro";
+import DayCard from "../../components/DayCard.astro";
+import BeerSalesTable from "../../components/BeerSalesTable.astro";
+
+interface DayData {
+  date: string;
+  weekday: string;
+  day_type: string;
+  day_type_label: string;
+  beer_sale_allowed: boolean;
+  beer_open: string | null;
+  beer_close: string | null;
+  beer_close_large_stores: string | null;
+  is_deviation: boolean;
+  comment: string | null;
+}
+
+interface MunicipalityData {
+  municipality: {
+    id: string;
+    name: string;
+    county: string;
+    sources: { title: string; url: string }[];
+    last_verified: string;
+  };
+  days: DayData[];
+}
+
+export function getStaticPaths() {
+  const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
+
+  if (!fs.existsSync(dataDir)) {
+    return [];
+  }
+
+  const files = fs.readdirSync(dataDir).filter((f: string) => f.endsWith(".json"));
+
+  return files.map((file: string) => {
+    const raw = fs.readFileSync(path.join(dataDir, file), "utf-8");
+    const data: MunicipalityData = JSON.parse(raw);
+    return {
+      params: { id: data.municipality.id },
+      props: { data },
+    };
+  });
+}
+
+const { data } = Astro.props as { data: MunicipalityData };
+const { municipality, days } = data;
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+
+// days[0] = today, days[1] = tomorrow (pipeline generates starting from today)
+const today = days[0] ?? null;
+const tomorrow = days[1] ?? null;
+
+// First 14 days for the table
+const tableDays = days.slice(0, 14);
+
+// Next deviation: first day (inclusive of today) where is_deviation is true
+const nextDeviation = days.find((d) => d.is_deviation) ?? null;
+
+function formatDeviationDate(dateStr: string): string {
+  const [, month, day] = dateStr.split("-");
+  return `${day}.${month}`;
+}
+---
+
+<Base title={`${municipality.name} — Alkohol-oversikt`}>
+  <div>
+    <a href={basePath} class="mb-4 inline-block text-sm text-slate-400 hover:text-slate-200">
+      ← Tilbake
+    </a>
+
+    <h1 class="mb-6 text-2xl font-bold text-white">{municipality.name}</h1>
+
+    <!-- Today and Tomorrow cards -->
+    <div class="mb-6 grid gap-4 sm:grid-cols-2">
+      <DayCard label="I dag" day={today} />
+      <DayCard label="I morgen" day={tomorrow} />
+    </div>
+
+    <!-- Next deviation alert -->
+    {nextDeviation && (
+      <div class="mb-6 rounded-lg border border-amber-700 bg-amber-900/30 p-3">
+        <p class="text-sm text-amber-200">
+          <span class="font-semibold">Neste avvik:</span>{" "}
+          {nextDeviation.weekday.charAt(0).toUpperCase() + nextDeviation.weekday.slice(1)}{" "}
+          {formatDeviationDate(nextDeviation.date)} —{" "}
+          {nextDeviation.comment ?? nextDeviation.day_type_label}
+        </p>
+      </div>
+    )}
+
+    <!-- 14-day table -->
+    <section>
+      <h2 class="mb-4 text-lg font-semibold text-slate-200">Neste 14 dager</h2>
+      {tableDays.length > 0 ? (
+        <BeerSalesTable days={tableDays} />
+      ) : (
+        <p class="text-slate-400">Ingen data tilgjengelig</p>
+      )}
+    </section>
+  </div>
+</Base>
