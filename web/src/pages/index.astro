@@ -105,16 +105,23 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
       normalize(m.name).includes(query)
     );
 
+    resultsList.innerHTML = "";
+
     if (matches.length === 0) {
-      resultsList.innerHTML =
-        '<li class="px-4 py-3 text-slate-400">Ingen treff</li>';
+      const li = document.createElement("li");
+      li.className = "px-4 py-3 text-slate-400";
+      li.textContent = "Ingen treff";
+      resultsList.appendChild(li);
     } else {
-      resultsList.innerHTML = matches
-        .map(
-          (m) =>
-            `<li><a href="${base}kommune/${m.id}/" class="block px-4 py-3 text-slate-200 hover:bg-slate-700">${m.name}</a></li>`
-        )
-        .join("");
+      for (const m of matches) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `${base}kommune/${m.id}/`;
+        a.className = "block px-4 py-3 text-slate-200 hover:bg-slate-700";
+        a.textContent = m.name;
+        li.appendChild(a);
+        resultsList.appendChild(li);
+      }
     }
 
     resultsList.classList.remove("hidden");

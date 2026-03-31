@@ -9,16 +9,22 @@ from pathlib import Path
 import pytest
 
 
-@pytest.fixture
-def docs_dir(project_root: Path) -> Path:
+@pytest.fixture(scope="class")
+def _project_root() -> Path:
+    """Return the repo root directory (class-scoped for build tests)."""
+    return Path(__file__).parent.parent.parent
+
+
+@pytest.fixture(scope="class")
+def docs_dir(_project_root: Path) -> Path:
     """Return the build output directory."""
-    return project_root / "docs"
+    return _project_root / "docs"
 
 
-@pytest.fixture
-def web_dir(project_root: Path) -> Path:
+@pytest.fixture(scope="class")
+def web_dir(_project_root: Path) -> Path:
     """Return the web source directory."""
-    return project_root / "web"
+    return _project_root / "web"
 
 
 def _npm_available() -> bool:
@@ -50,7 +56,7 @@ def _npm_env() -> dict[str, str]:
 class TestFrontendBuild:
     """Tests that require a full Astro build (npm install + build)."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixture(autouse=True, scope="class")
     def build_site(self, web_dir: Path, docs_dir: Path) -> None:
         """Run npm install and build once for all tests in this class."""
         npm = _npm_cmd()
