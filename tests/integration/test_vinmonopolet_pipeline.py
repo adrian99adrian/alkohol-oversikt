@@ -1,7 +1,6 @@
 """Integration tests: Vinmonopolet fetch pipeline."""
 
 import json
-from pathlib import Path
 from unittest.mock import patch
 
 from fetch_vinmonopolet import main, transform_store
@@ -43,16 +42,23 @@ class TestVinmonopoletCLI:
     """Verify CLI entry point writes output."""
 
     @patch("fetch_vinmonopolet.fetch_all_stores")
-    def test_writes_output_file(self, mock_fetch, sample_api_store):
+    def test_writes_output_file(self, mock_fetch, sample_api_store, tmp_path):
         mock_fetch.return_value = [sample_api_store]
+
+        # Set up tmp data dir with required files
+        data_dir = tmp_path / "data"
+        muni_dir = data_dir / "municipalities"
+        muni_dir.mkdir(parents=True)
+        (muni_dir / "sandefjord.json").write_text("{}")
+        (data_dir / "town_municipality_map.json").write_text("{}")
 
         with patch(
             "sys.argv",
-            ["prog", "--timeout", "10", "--page-size", "100"],
+            ["prog", "--timeout", "10", "--page-size", "100", "--data-dir", str(data_dir)],
         ):
             main()
 
-        output = Path(__file__).parent.parent.parent / "data" / "generated" / "vinmonopolet.json"
+        output = data_dir / "generated" / "vinmonopolet.json"
         assert output.exists()
         with open(output, encoding="utf-8") as f:
             data = json.load(f)

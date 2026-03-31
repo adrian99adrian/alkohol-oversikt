@@ -179,23 +179,23 @@ class TestValidateVinmonopolet:
     """Verify vinmonopolet.json validation."""
 
     def test_valid_data_passes(self):
-        errors = validate_vinmonopolet(_valid_vinmonopolet_data())
+        errors, _ = validate_vinmonopolet(_valid_vinmonopolet_data())
         assert errors == []
 
     def test_empty_stores_fails(self):
         data = _valid_vinmonopolet_data(stores=[], total_stores=0)
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("No stores" in e for e in errors)
 
     def test_missing_metadata_fails(self):
-        errors = validate_vinmonopolet({"stores": []})
+        errors, _ = validate_vinmonopolet({"stores": []})
         assert any("Missing metadata" in e for e in errors)
 
     def test_missing_store_field_fails(self):
         store = _valid_store()
         del store["name"]
         data = _valid_vinmonopolet_data(stores=[store])
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("missing field 'name'" in e for e in errors)
 
     def test_duplicate_store_id_fails(self):
@@ -203,33 +203,33 @@ class TestValidateVinmonopolet:
             stores=[_valid_store("100"), _valid_store("100")],
             total_stores=2,
         )
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("Duplicate store_id" in e for e in errors)
 
     def test_non_numeric_store_id_fails(self):
         store = _valid_store()
         store["store_id"] = "abc"
         data = _valid_vinmonopolet_data(stores=[store])
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("numeric" in e for e in errors)
 
     def test_metadata_count_mismatch_fails(self):
         data = _valid_vinmonopolet_data(total_stores=99)
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("total_stores" in e for e in errors)
 
     def test_sunday_not_null_fails(self):
         store = _valid_store()
         store["standard_hours"]["sunday"] = {"open": "10:00", "close": "15:00"}
         data = _valid_vinmonopolet_data(stores=[store])
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("sunday must be null" in e for e in errors)
 
     def test_actual_hours_wrong_count_fails(self):
         store = _valid_store()
         store["actual_hours"] = {"2026-03-30": None}
         data = _valid_vinmonopolet_data(stores=[store])
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("exactly 7" in e for e in errors)
 
     def test_actual_hours_window_mismatch_fails(self):
@@ -237,15 +237,16 @@ class TestValidateVinmonopolet:
         data = _valid_vinmonopolet_data(
             stores=[store], window_start="2026-01-01", window_end="2026-01-07"
         )
-        errors = validate_vinmonopolet(data)
+        errors, _ = validate_vinmonopolet(data)
         assert any("window_start" in e for e in errors)
 
-    def test_municipality_coverage(self, tmp_path):
-        """Every configured municipality must have at least 1 mapped store."""
+    def test_municipality_coverage_is_info_not_error(self, tmp_path):
+        """Municipalities with no stores produce info, not errors."""
         muni_dir = tmp_path / "municipalities"
         muni_dir.mkdir()
         (muni_dir / "sandefjord.json").write_text("{}")
         (muni_dir / "oslo.json").write_text("{}")
         data = _valid_vinmonopolet_data()  # Only has sandefjord
-        errors = validate_vinmonopolet(data, municipalities_dir=muni_dir)
-        assert any("oslo" in e for e in errors)
+        errors, info = validate_vinmonopolet(data, municipalities_dir=muni_dir)
+        assert not any("oslo" in e for e in errors)
+        assert any("oslo" in i for i in info)

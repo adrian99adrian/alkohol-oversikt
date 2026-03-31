@@ -32,17 +32,6 @@ WEEKDAY_NAMES = [
     "sunday",
 ]
 
-# Map Norwegian weekday names from API to English index
-_WEEKDAY_NO_TO_INDEX: dict[str, int] = {
-    "mandag": 0,
-    "tirsdag": 1,
-    "onsdag": 2,
-    "torsdag": 3,
-    "fredag": 4,
-    "lørdag": 5,
-    "søndag": 6,
-}
-
 
 def _parse_date(api_date: str) -> str:
     """Extract ISO date (YYYY-MM-DD) from API datetime string."""
@@ -96,24 +85,29 @@ def derive_standard_hours(
     """
     special_dates = {_parse_date(s["date"]) for s in special_opening_times}
 
-    # Collect non-special hours per weekday index (only open days)
-    weekday_hours: dict[int, dict[str, str]] = {}
+    # Collect non-special hours per weekday index.
+    # Explicitly closed (non-special) days are recorded as None.
+    weekday_hours: dict[int, dict[str, str] | None] = {}
+    special_skipped: set[int] = set()
     for entry in opening_times:
         iso_date = _parse_date(entry["date"])
-        if iso_date in special_dates:
-            continue
         d = date.fromisoformat(iso_date)
         wd = d.weekday()  # 0=Monday, 6=Sunday
         if wd == 6:  # Sunday always None
             continue
-        if not entry.get("closed"):
+        if iso_date in special_dates:
+            special_skipped.add(wd)
+            continue
+        if entry.get("closed"):
+            weekday_hours[wd] = None
+        else:
             weekday_hours[wd] = _time_entry(entry)
 
     # Build result with fallback for missing weekdays
     result: dict[str, dict | None] = {}
 
-    # Compute Mon-Fri fallback (mode of available hours, tie-break earliest close)
-    mon_fri_hours = [weekday_hours[wd] for wd in range(5) if wd in weekday_hours]
+    # Compute Mon-Fri fallback (mode of open hours, tie-break earliest close)
+    mon_fri_hours = [h for wd in range(5) if (h := weekday_hours.get(wd)) is not None]
     fallback = _compute_fallback(mon_fri_hours)
 
     for i, name in enumerate(WEEKDAY_NAMES):
@@ -121,9 +115,11 @@ def derive_standard_hours(
             result[name] = None
         elif i in weekday_hours:
             result[name] = weekday_hours[i]
-        elif name == "saturday":
-            # Saturday fallback: use Saturday-specific data or None
-            result[name] = None
+        elif i in special_skipped:
+            # Day was only seen as a special day — use fallback rather than
+            # assuming closed (e.g. Easter Saturday is special, but the store
+            # is normally open on regular Saturdays).
+            result[name] = fallback
         else:
             result[name] = fallback
 
@@ -294,9 +290,15 @@ def main() -> None:
     parser.add_argument(
         "--page-size", type=int, default=DEFAULT_PAGE_SIZE, help="API page size (default: 100)"
     )
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=Path(__file__).parent.parent / "data",
+        help="Path to data directory (default: data/)",
+    )
     args = parser.parse_args()
 
-    data_dir = Path(__file__).parent.parent / "data"
+    data_dir = args.data_dir
     overrides = load_town_overrides(data_dir)
     known = load_known_municipalities(data_dir)
 

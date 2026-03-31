@@ -47,8 +47,9 @@ class TestDeriveStandardHours:
         assert result["wednesday"] == {"open": "10:00", "close": "18:00"}
         assert result["thursday"] == {"open": "10:00", "close": "18:00"}
         assert result["friday"] == {"open": "10:00", "close": "18:00"}
-        # Saturday is special (easter eve) — no non-special Saturday sample
-        assert result["saturday"] is None
+        # Saturday is special (easter eve) — falls back to Mon-Fri mode (10-18)
+        # rather than incorrectly assuming the store is closed on Saturdays
+        assert result["saturday"] == {"open": "10:00", "close": "18:00"}
 
     def test_sunday_always_null(self, sample_opening_times_normal):
         """Sunday is always null regardless of API data."""
@@ -68,6 +69,24 @@ class TestDeriveStandardHours:
             "sunday",
         }
         assert set(result.keys()) == expected_keys
+
+    def test_regular_weekday_closure_preserved(self):
+        """A store regularly closed on a non-special weekday gets None, not fallback."""
+        from tests.conftest import _make_opening_time
+
+        opening_times = [
+            _make_opening_time("2026-03-30", open_h=10, close_h=18, weekday="Mandag"),
+            _make_opening_time("2026-03-31", open_h=10, close_h=18, weekday="Tirsdag"),
+            _make_opening_time("2026-04-01", closed=True, weekday="Onsdag"),  # Regularly closed
+            _make_opening_time("2026-04-02", open_h=10, close_h=18, weekday="Torsdag"),
+            _make_opening_time("2026-04-03", open_h=10, close_h=18, weekday="Fredag"),
+            _make_opening_time("2026-04-04", open_h=10, close_h=15, weekday="Lørdag"),
+            _make_opening_time("2026-04-05", closed=True, weekday="Søndag"),
+        ]
+        result = derive_standard_hours(opening_times, [])
+        assert result["wednesday"] is None
+        assert result["monday"] == {"open": "10:00", "close": "18:00"}
+        assert result["saturday"] == {"open": "10:00", "close": "15:00"}
 
     def test_tie_break_uses_earliest_close(self):
         """When multiple weekdays tie for mode, use earliest closing time."""

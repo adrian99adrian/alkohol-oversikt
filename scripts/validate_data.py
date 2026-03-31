@@ -138,16 +138,20 @@ _TIME_RE = re.compile(r"^\d{2}:\d{2}$")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
-def validate_vinmonopolet(data: dict, municipalities_dir: Path | None = None) -> list[str]:
-    """Validate vinmonopolet.json. Returns list of errors."""
+def validate_vinmonopolet(
+    data: dict,
+    municipalities_dir: Path | None = None,
+) -> tuple[list[str], list[str]]:
+    """Validate vinmonopolet.json. Returns (errors, info messages)."""
     errors = []
+    info = []
 
     if "metadata" not in data:
         errors.append("Missing metadata")
-        return errors
+        return errors, info
     if "stores" not in data:
         errors.append("Missing stores")
-        return errors
+        return errors, info
 
     metadata = data["metadata"]
     stores = data["stores"]
@@ -164,7 +168,7 @@ def validate_vinmonopolet(data: dict, municipalities_dir: Path | None = None) ->
 
     if len(stores) == 0:
         errors.append("No stores found")
-        return errors
+        return errors, info
 
     # Per-store validation
     seen_ids: set[str] = set()
@@ -224,20 +228,20 @@ def validate_vinmonopolet(data: dict, municipalities_dir: Path | None = None) ->
             if store_dates[-1] != metadata.get("window_end"):
                 errors.append(f"Store {sid}: actual_hours end {store_dates[-1]} != window_end")
 
-    # Municipality coverage: every configured municipality must have ≥1 store
+    # Municipality coverage: check which configured municipalities have no stores
     if municipalities_dir and municipalities_dir.exists():
         configured = {p.stem for p in municipalities_dir.glob("*.json")}
         mapped = {s["municipality"] for s in stores if s.get("municipality")}
         missing = configured - mapped
         if missing:
-            errors.append(f"Municipalities with no mapped stores: {sorted(missing)}")
+            info.append(f"Municipalities with no Vinmonopolet stores: {sorted(missing)}")
 
     # Informational: count unmapped stores
     unmapped = sum(1 for s in stores if s.get("municipality") is None)
     if unmapped:
-        print(f"  Info: {unmapped} stores have municipality=null (not mapped)")
+        info.append(f"{unmapped} stores have municipality=null (not mapped)")
 
-    return errors
+    return errors, info
 
 
 def main() -> int:
@@ -283,8 +287,10 @@ def main() -> int:
     if vinmonopolet_path.exists():
         with open(vinmonopolet_path, encoding="utf-8") as f:
             vinmonopolet_data = json.load(f)
-        errors = validate_vinmonopolet(vinmonopolet_data, municipalities_dir)
+        errors, info = validate_vinmonopolet(vinmonopolet_data, municipalities_dir)
         all_errors.extend(f"vinmonopolet.json: {e}" for e in errors)
+        for msg in info:
+            print(f"  Info: {msg}")
     else:
         print("Note: vinmonopolet.json not found (run fetch_vinmonopolet.py first)")
 
