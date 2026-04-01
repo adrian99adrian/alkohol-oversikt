@@ -15,10 +15,16 @@ from validate_data import (
 )
 
 
-def _run_pipeline(municipality: dict, start: date, days: int = 365) -> tuple[dict, list[dict]]:
+def _run_pipeline(
+    municipality: dict,
+    start: date,
+    days: int = 365,
+    vinmonopolet_stores: list[dict] | None = None,
+) -> tuple[dict, list[dict]]:
     """Run the full pipeline for a municipality."""
     calendar = build_calendar(start, num_days=days)
-    return build_municipality(municipality, calendar), calendar
+    result = build_municipality(municipality, calendar, vinmonopolet_stores=vinmonopolet_stores)
+    return result, calendar
 
 
 class TestFullPipeline:
@@ -27,19 +33,19 @@ class TestFullPipeline:
     def test_sandefjord_generates_valid_data(self, sample_municipality_sandefjord):
         result, calendar = _run_pipeline(sample_municipality_sandefjord, date(2026, 1, 1))
         assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result["days"], calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
     def test_larvik_generates_valid_data(self, sample_municipality_larvik):
         result, calendar = _run_pipeline(sample_municipality_larvik, date(2026, 1, 1))
         assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result["days"], calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
     def test_oslo_generates_valid_data(self, sample_municipality_oslo):
         result, calendar = _run_pipeline(sample_municipality_oslo, date(2026, 1, 1))
         assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result["days"], calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
 
@@ -152,6 +158,92 @@ class TestOsloLargeStoreIntegration:
         result, _ = _run_pipeline(sample_municipality_oslo, date(2026, 12, 31), days=1)
         day = result["days"][0]
         assert day["beer_close_large_stores"] is None
+
+
+class TestVinmonopoletIntegration:
+    """Verify Vinmonopolet data flows through build_municipality correctly."""
+
+    SAMPLE_STORE = {
+        "store_id": "283",
+        "name": "Sandefjord",
+        "municipality": "sandefjord",
+        "address": "Jernbanealleen 13, 3210 Sandefjord",
+        "standard_hours": {
+            "monday": {"open": "10:00", "close": "18:00"},
+            "tuesday": {"open": "10:00", "close": "18:00"},
+            "wednesday": {"open": "10:00", "close": "18:00"},
+            "thursday": {"open": "10:00", "close": "18:00"},
+            "friday": {"open": "10:00", "close": "18:00"},
+            "saturday": {"open": "10:00", "close": "15:00"},
+            "sunday": None,
+        },
+        "actual_hours": {
+            "2026-04-01": {"open": "10:00", "close": "16:00"},
+            "2026-04-02": None,
+            "2026-04-03": None,
+            "2026-04-04": {"open": "10:00", "close": "15:00"},
+            "2026-04-05": None,
+            "2026-04-06": None,
+            "2026-04-07": {"open": "10:00", "close": "18:00"},
+        },
+    }
+
+    def test_vinmonopolet_summary_in_days(self, sample_municipality_sandefjord):
+        """Days include vinmonopolet_summary when stores are provided."""
+        result, _ = _run_pipeline(
+            sample_municipality_sandefjord,
+            date(2026, 4, 1),
+            days=14,
+            vinmonopolet_stores=[self.SAMPLE_STORE],
+        )
+        day0 = result["days"][0]
+        assert day0["vinmonopolet_summary"] == "10:00\u201316:00"
+
+        # Holiday should be Stengt
+        day1 = result["days"][1]  # Skjærtorsdag
+        assert day1["vinmonopolet_summary"] == "Stengt"
+
+    def test_vinmonopolet_summary_null_beyond_14_days(self, sample_municipality_sandefjord):
+        """Days beyond 14 have vinmonopolet_summary = null."""
+        result, _ = _run_pipeline(
+            sample_municipality_sandefjord,
+            date(2026, 4, 1),
+            days=30,
+            vinmonopolet_stores=[self.SAMPLE_STORE],
+        )
+        assert result["days"][13]["vinmonopolet_summary"] is not None
+        assert result["days"][14]["vinmonopolet_summary"] is None
+
+    def test_vinmonopolet_stores_resolved(self, sample_municipality_sandefjord):
+        """Output includes resolved vinmonopolet_stores with 14-day hours."""
+        result, _ = _run_pipeline(
+            sample_municipality_sandefjord,
+            date(2026, 4, 1),
+            days=14,
+            vinmonopolet_stores=[self.SAMPLE_STORE],
+        )
+        assert len(result["vinmonopolet_stores"]) == 1
+        store = result["vinmonopolet_stores"][0]
+        assert store["store_id"] == "283"
+        assert len(store["hours"]) == 14
+        assert store["hours"][0]["close"] == "16:00"
+
+    def test_no_stores_produces_null_summaries(self, sample_municipality_sandefjord):
+        """Without stores, all vinmonopolet_summary fields are null."""
+        result, _ = _run_pipeline(sample_municipality_sandefjord, date(2026, 4, 1), days=7)
+        for day in result["days"]:
+            assert day["vinmonopolet_summary"] is None
+        assert result["vinmonopolet_stores"] == []
+
+    def test_validation_passes_with_stores(self, sample_municipality_sandefjord):
+        """Generated data with stores passes validation."""
+        result, calendar = _run_pipeline(
+            sample_municipality_sandefjord,
+            date(2026, 4, 1),
+            days=14,
+            vinmonopolet_stores=[self.SAMPLE_STORE],
+        )
+        assert validate_generated_municipality(result, result["days"], calendar) == []
 
 
 class TestMainCLI:

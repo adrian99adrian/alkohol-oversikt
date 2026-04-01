@@ -4,6 +4,7 @@ import path from "node:path";
 import Base from "../../layouts/Base.astro";
 import DayCard from "../../components/DayCard.astro";
 import BeerSalesTable from "../../components/BeerSalesTable.astro";
+import VinmonopoletList from "../../components/VinmonopoletList.astro";
 import type { MunicipalityData } from "../../types";
 
 export function getStaticPaths() {
@@ -26,7 +27,7 @@ export function getStaticPaths() {
 }
 
 const { data } = Astro.props as { data: MunicipalityData };
-const { municipality, days } = data;
+const { municipality, days, vinmonopolet_stores } = data;
 
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
@@ -53,6 +54,20 @@ function formatDeviationDate(dateStr: string): string {
   const [, month, day] = dateStr.split("-");
   return `${day}.${month}`;
 }
+
+// Vinmonopolet summary for day cards
+const storeCount = vinmonopolet_stores.length;
+function vinmonopoletCardText(summary: string | null): string {
+  if (!summary) return "Stengt";
+  if (summary === "Stengt") return "Stengt";
+  return `Åpent ${summary}`;
+}
+
+// Format last_verified as dd.mm.yyyy
+function formatVerifiedDate(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-");
+  return `${day}.${month}.${year}`;
+}
 ---
 
 <Base title={`${municipality.name} — Alkohol-oversikt`}>
@@ -65,8 +80,18 @@ function formatDeviationDate(dateStr: string): string {
 
     <!-- Today and Tomorrow cards -->
     <div class="mb-6 grid gap-4 sm:grid-cols-2">
-      <DayCard label={dataIsFresh ? "I dag" : today ? formatCardLabel(today.date) : "—"} day={today} />
-      <DayCard label={dataIsFresh ? "I morgen" : tomorrow ? formatCardLabel(tomorrow.date) : "—"} day={tomorrow} />
+      <DayCard
+        label={dataIsFresh ? "I dag" : today ? formatCardLabel(today.date) : "—"}
+        day={today}
+        vinmonopoletText={today ? vinmonopoletCardText(today.vinmonopolet_summary) : undefined}
+        storeCount={storeCount}
+      />
+      <DayCard
+        label={dataIsFresh ? "I morgen" : tomorrow ? formatCardLabel(tomorrow.date) : "—"}
+        day={tomorrow}
+        vinmonopoletText={tomorrow ? vinmonopoletCardText(tomorrow.vinmonopolet_summary) : undefined}
+        storeCount={storeCount}
+      />
     </div>
 
     <!-- Next deviation alert -->
@@ -82,13 +107,53 @@ function formatDeviationDate(dateStr: string): string {
     )}
 
     <!-- 14-day table -->
-    <section>
+    <section class="mb-8">
       <h2 class="mb-4 text-lg font-semibold text-slate-200">Neste 14 dager</h2>
       {tableDays.length > 0 ? (
         <BeerSalesTable days={tableDays} />
       ) : (
         <p class="text-slate-400">Ingen data tilgjengelig</p>
       )}
+    </section>
+
+    <!-- Vinmonopolet store list -->
+    <div class="mb-8">
+      <VinmonopoletList stores={vinmonopolet_stores} days={tableDays} municipalityName={municipality.name} />
+    </div>
+
+    <!-- Sources -->
+    <section class="mb-6">
+      <h2 class="mb-3 text-lg font-semibold text-slate-200">Kilder</h2>
+      <ul class="list-inside list-disc space-y-1 text-sm text-slate-400">
+        {municipality.sources.map((source) => (
+          <li>
+            <a href={source.url} class="text-slate-300 underline hover:text-white" target="_blank" rel="noopener noreferrer">
+              {source.title}
+            </a>
+          </li>
+        ))}
+        {storeCount > 0 && (
+          <li>
+            <a href="https://www.vinmonopolet.no" class="text-slate-300 underline hover:text-white" target="_blank" rel="noopener noreferrer">
+              Vinmonopolet API
+            </a>
+          </li>
+        )}
+      </ul>
+      <p class="mt-2 text-sm text-slate-500">
+        Sist verifisert: {formatVerifiedDate(municipality.last_verified)}
+      </p>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="border-t border-slate-700 pt-4">
+      <p class="text-xs text-slate-500">
+        Denne siden viser siste lovlige tidspunkt for ølsalg i butikk basert på
+        alkoholloven og kommunale forskrifter, samt åpningstider for Vinmonopolet
+        hentet fra deres offisielle API. Faktisk butikkåpningstid kan avvike.
+        Sjekk alltid med butikken ved tvil. Siden er ikke tilknyttet Vinmonopolet
+        eller noen dagligvarekjede.
+      </p>
     </section>
   </div>
 </Base>

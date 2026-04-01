@@ -9,6 +9,20 @@ export interface DayData {
   beer_close_large_stores: string | null;
   is_deviation: boolean;
   comment: string | null;
+  vinmonopolet_summary: string | null;
+}
+
+export interface StoreDay {
+  date: string;
+  open: string | null;
+  close: string | null;
+}
+
+export interface ResolvedStore {
+  store_id: string;
+  name: string;
+  address: string;
+  hours: StoreDay[];
 }
 
 export interface MunicipalityData {
@@ -20,4 +34,5 @@ export interface MunicipalityData {
     last_verified: string;
   };
   days: DayData[];
+  vinmonopolet_stores: ResolvedStore[];
 }

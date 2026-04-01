@@ -18,7 +18,7 @@ from zoneinfo import ZoneInfo
 import httpx
 
 API_BASE = "https://www.vinmonopolet.no/vmpws/v2/vmp/stores"
-DEFAULT_PAGE_SIZE = 100
+DEFAULT_PAGE_SIZE = 400
 DEFAULT_TIMEOUT = 30
 MAX_RETRIES = 3
 
@@ -38,22 +38,15 @@ def _parse_date(api_date: str) -> str:
     return api_date[:10]
 
 
-def _format_time(hour: int, minute: int) -> str:
-    """Format hour/minute integers as HH:MM string."""
-    return f"{hour:02d}:{minute:02d}"
-
-
 def _time_entry(opening_time: dict) -> dict[str, str]:
-    """Extract {open, close} from an API opening time entry."""
+    """Extract {open, close} from an API opening time entry.
+
+    Uses formattedHour which is the reliable HH:MM string from the API.
+    The integer hour/minute fields are unreliable (e.g. 16:00 → hour=4).
+    """
     return {
-        "open": _format_time(
-            opening_time["openingTime"]["hour"],
-            opening_time["openingTime"]["minute"],
-        ),
-        "close": _format_time(
-            opening_time["closingTime"]["hour"],
-            opening_time["closingTime"]["minute"],
-        ),
+        "open": opening_time["openingTime"]["formattedHour"],
+        "close": opening_time["closingTime"]["formattedHour"],
     }
 
 
@@ -257,18 +250,17 @@ def fetch_all_stores(
     """
     first_page = fetch_page(client, page=0, page_size=page_size)
     total_pages = first_page["pagination"]["totalPages"]
-    expected_total = first_page["pagination"]["totalResults"]
 
-    all_stores = list(first_page["stores"])
+    seen: dict[str, dict] = {}
+    for store in first_page["stores"]:
+        seen[store["name"]] = store
 
     for page_num in range(1, total_pages):
         page_data = fetch_page(client, page=page_num, page_size=page_size)
-        all_stores.extend(page_data["stores"])
+        for store in page_data["stores"]:
+            seen[store["name"]] = store
 
-    if len(all_stores) != expected_total:
-        raise ValueError(f"Expected {expected_total} stores, got {len(all_stores)}")
-
-    return all_stores
+    return list(seen.values())
 
 
 def load_town_overrides(data_dir: Path) -> dict[str, str]:
@@ -315,7 +307,7 @@ def main() -> None:
         "--timeout", type=int, default=DEFAULT_TIMEOUT, help="HTTP timeout (default: 30s)"
     )
     parser.add_argument(
-        "--page-size", type=int, default=DEFAULT_PAGE_SIZE, help="API page size (default: 100)"
+        "--page-size", type=int, default=DEFAULT_PAGE_SIZE, help="API page size (default: 400)"
     )
     parser.add_argument(
         "--data-dir",
