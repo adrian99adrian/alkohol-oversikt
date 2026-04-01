@@ -1,0 +1,56 @@
+---
+import DayBadge from "./DayBadge.astro";
+import type { DayData } from "../types";
+
+interface Props {
+  label: string;
+  day: DayData | null;
+}
+
+const { label, day } = Astro.props;
+
+function formatDate(dateStr: string): string {
+  const [year, month, dayNum] = dateStr.split("-");
+  return `${dayNum}.${month}.${year}`;
+}
+---
+
+<div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
+  <h2 class="mb-2 text-lg font-semibold text-white">{label}</h2>
+
+  {day ? (
+    <div>
+      <p class="mb-2 text-sm text-slate-400">
+        {day.weekday.charAt(0).toUpperCase() + day.weekday.slice(1)} {formatDate(day.date)}
+      </p>
+
+      <div class="mb-3">
+        <DayBadge dayType={day.day_type} label={day.day_type_label} />
+      </div>
+
+      {day.beer_sale_allowed ? (
+        <div>
+          <p class="text-slate-200">
+            Ølsalg: Stenger kl. <span class="font-semibold text-white">{day.beer_close}</span>
+          </p>
+          {day.beer_close_large_stores && (
+            <p class="mt-1 text-sm text-slate-300">
+              Butikker &gt;100 m²: Stenger kl. {day.beer_close_large_stores}
+            </p>
+          )}
+        </div>
+      ) : (
+        <p class="text-slate-200">
+          Ølsalg: <span class="font-semibold text-red-400">Stengt</span>
+          <span class="text-sm text-slate-400"> ({day.day_type_label})</span>
+        </p>
+      )}
+
+      {day.comment && (
+        <p class="mt-2 text-sm text-slate-400">{day.comment}</p>
+      )}
+    </div>
+  ) : (
+    <p class="text-slate-400">Ingen data tilgjengelig</p>
+  )}
+</div>

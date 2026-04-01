@@ -102,3 +102,38 @@ class TestFrontendBuild:
         assert "Oslo" in html
         assert "Sandefjord" in html
         assert "Larvik" in html
+
+    def test_municipality_pages_exist(self, docs_dir: Path) -> None:
+        """Build generates a page for each municipality."""
+        for muni in ("oslo", "sandefjord", "larvik"):
+            page = docs_dir / "kommune" / muni / "index.html"
+            assert page.exists(), f"Missing municipality page: {page}"
+
+    def test_municipality_page_has_day_cards(self, docs_dir: Path) -> None:
+        """Municipality page contains today/tomorrow day cards (date labels when stale)."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        # When data is fresh, cards show "I dag" / "I morgen".
+        # When data is stale, cards show formatted dates (e.g. "01.01").
+        has_fresh_labels = "I dag" in html and "I morgen" in html
+        has_date_labels = "01.01" in html and "02.01" in html
+        assert has_fresh_labels or has_date_labels
+
+    def test_municipality_page_has_table(self, docs_dir: Path) -> None:
+        """Municipality page contains the beer sales table with all columns."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Neste 14 dager" in html
+        assert "Ølsalg" in html
+        assert "Merknad" in html
+
+    def test_municipality_page_has_badges(self, docs_dir: Path) -> None:
+        """Municipality page renders day type badges with color classes."""
+        html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
+        # Should have at least one badge (any color variant)
+        assert "rounded-full" in html
+        assert "text-xs" in html
+
+    def test_municipality_page_has_back_link(self, docs_dir: Path) -> None:
+        """Municipality page has a back link to the landing page."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Tilbake" in html
+        assert "/alkohol-oversikt/" in html
