@@ -27,14 +27,21 @@ def build_municipality(
     'vinmonopolet_stores' with resolved 14-day hours.
     """
     stores = vinmonopolet_stores or []
+    max_vinmonopolet_days = 14
 
     days = []
-    for cal_entry in calendar:
+    for i, cal_entry in enumerate(calendar):
         d = date.fromisoformat(cal_entry["date"])
         entry = build_day_entry(d, cal_entry, municipality)
-        entry["vinmonopolet_summary"] = summarize_vinmonopolet(
-            stores, cal_entry["date"], cal_entry["day_type"]
-        )
+        # Only resolve Vinmonopolet hours for the first 14 days — beyond that,
+        # actual_hours are exhausted and standard_hours fallback is unreliable
+        # for holidays further out.
+        if i < max_vinmonopolet_days and stores:
+            entry["vinmonopolet_summary"] = summarize_vinmonopolet(
+                stores, cal_entry["date"], cal_entry["day_type"]
+            )
+        else:
+            entry["vinmonopolet_summary"] = None
         days.append(entry)
 
     # Resolve per-store 14-day hours (first 14 days only)

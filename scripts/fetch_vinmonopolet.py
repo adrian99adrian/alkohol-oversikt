@@ -307,7 +307,7 @@ def main() -> None:
         "--timeout", type=int, default=DEFAULT_TIMEOUT, help="HTTP timeout (default: 30s)"
     )
     parser.add_argument(
-        "--page-size", type=int, default=DEFAULT_PAGE_SIZE, help="API page size (default: 100)"
+        "--page-size", type=int, default=DEFAULT_PAGE_SIZE, help="API page size (default: 400)"
     )
     parser.add_argument(
         "--data-dir",

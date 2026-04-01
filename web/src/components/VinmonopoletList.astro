@@ -4,9 +4,10 @@ import type { ResolvedStore, DayData } from "../types";
 interface Props {
   stores: ResolvedStore[];
   days: DayData[];
+  municipalityName: string;
 }
 
-const { stores, days } = Astro.props;
+const { stores, days, municipalityName } = Astro.props;
 
 const INITIAL_SHOW = 3;
 const hasMore = stores.length > INITIAL_SHOW;
@@ -32,7 +33,7 @@ function formatDateShort(dateStr: string): string {
 {stores.length > 0 && (
   <section>
     <h2 class="mb-4 text-lg font-semibold text-slate-200">
-      Vinmonopolet i {stores[0].name.split(",")[0]}
+      Vinmonopolet i {municipalityName}
     </h2>
 
     <div class="space-y-4">

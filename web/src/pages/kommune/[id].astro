@@ -118,7 +118,7 @@ function formatVerifiedDate(dateStr: string): string {
 
     <!-- Vinmonopolet store list -->
     <div class="mb-8">
-      <VinmonopoletList stores={vinmonopolet_stores} days={tableDays} />
+      <VinmonopoletList stores={vinmonopolet_stores} days={tableDays} municipalityName={municipality.name} />
     </div>
 
     <!-- Sources -->
@@ -132,11 +132,13 @@ function formatVerifiedDate(dateStr: string): string {
             </a>
           </li>
         ))}
-        <li>
-          <a href="https://www.vinmonopolet.no" class="text-slate-300 underline hover:text-white" target="_blank" rel="noopener noreferrer">
-            Vinmonopolet API
-          </a>
-        </li>
+        {storeCount > 0 && (
+          <li>
+            <a href="https://www.vinmonopolet.no" class="text-slate-300 underline hover:text-white" target="_blank" rel="noopener noreferrer">
+              Vinmonopolet API
+            </a>
+          </li>
+        )}
       </ul>
       <p class="mt-2 text-sm text-slate-500">
         Sist verifisert: {formatVerifiedDate(municipality.last_verified)}
