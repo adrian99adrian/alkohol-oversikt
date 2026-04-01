@@ -1,0 +1,805 @@
+{
+  "municipality": {
+    "id": "oslo",
+    "name": "Oslo",
+    "county": "Oslo",
+    "sources": [
+      {
+        "title": "Oslo kommune – salgstider for øl",
+        "url": "https://www.oslo.kommune.no/skatt-og-naring/salg-servering-og-skjenking/salgstider-for-ol/"
+      }
+    ],
+    "last_verified": "2026-03-31"
+  },
+  "days": [
+    {
+      "date": "2026-01-01",
+      "weekday": "torsdag",
+      "day_type": "public_holiday",
+      "day_type_label": "1. nyttårsdag",
+      "beer_sale_allowed": false,
+      "beer_open": null,
+      "beer_close": null,
+      "beer_close_large_stores": null,
+      "is_deviation": true,
+      "comment": "1. nyttårsdag – salg av øl er ikke tillatt",
+      "vinmonopolet_summary": "Stengt"
+    },
+    {
+      "date": "2026-01-02",
+      "weekday": "fredag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": "10:00–18:00"
+    },
+    {
+      "date": "2026-01-03",
+      "weekday": "lørdag",
+      "day_type": "saturday",
+      "day_type_label": "Lørdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "18:00",
+      "beer_close_large_stores": null,
+      "is_deviation": true,
+      "comment": "Lørdag – ølsalg stenger kl. 18:00",
+      "vinmonopolet_summary": "10:00–18:00"
+    }
+  ],
+  "vinmonopolet_stores": [
+    {
+      "store_id": "104",
+      "name": "Oslo, Briskeby",
+      "address": "Briskebyveien 48, 0259 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "111",
+      "name": "Oslo, Frogner",
+      "address": "Elisenbergveien 37, 0265 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "114",
+      "name": "Oslo, Aker Brygge",
+      "address": "Bryggegata 9, 0250 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "115",
+      "name": "Oslo, Grünerløkka",
+      "address": "Nordre gate 16, 0551 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "117",
+      "name": "Oslo, Alna",
+      "address": "Strømsveien 245, 0668 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "118",
+      "name": "Oslo, Oslo S",
+      "address": "Jernbanetorget 1, 0154 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "122",
+      "name": "Oslo, Holmlia",
+      "address": "Holmlia Senter, Holmliaveien 75, 1255 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "127",
+      "name": "Oslo, CC Vest",
+      "address": "Lilleakerveien 16, 0283 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "132",
+      "name": "Oslo, Linderud",
+      "address": "Erich Mogensøns vei 38, 0594 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "136",
+      "name": "Oslo, Colosseum",
+      "address": "Sørkedalsveien 10, 0369 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "138",
+      "name": "Oslo, Manglerud",
+      "address": "Plogveien 6, 0679 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "141",
+      "name": "Oslo, Paleet",
+      "address": "Karl Johans gate 37-43, 0162 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "143",
+      "name": "Oslo, Oslo City",
+      "address": "Stenersgata 1, 0050 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "145",
+      "name": "Oslo, Tveita",
+      "address": "Tvetenveien 150, 0671 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "152",
+      "name": "Oslo, Sandaker",
+      "address": "Sandakerveien 59, 0477 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "161",
+      "name": "Oslo, Storo",
+      "address": "Storo Shopping, Vitaminveien 7, 0485 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "162",
+      "name": "Oslo, Stovner",
+      "address": "Stovner Senter 3c, 0985 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "178",
+      "name": "Oslo, Kiellandsplass",
+      "address": "Wdm. Thranes gate 72, 0175 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "182",
+      "name": "Oslo, Hasle Torg",
+      "address": "Grenseveien 50, 0579 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "286",
+      "name": "Oslo, Steen & Strøm",
+      "address": "Kongens gate 23, 0157 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "334",
+      "name": "Oslo, Ullevaal Stadion",
+      "address": "Sognsvn. 75, 0855 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "335",
+      "name": "Oslo, Røa",
+      "address": "Tore Hals Mejdells vei 5, 0751 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "361",
+      "name": "Oslo, Grønland Basar",
+      "address": "Tøyengata 2, 0190 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "374",
+      "name": "Oslo, Lambertseter",
+      "address": "Cecilie Thoresensvei 17, 1153 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "389",
+      "name": "Oslo, Grorud",
+      "address": "Bergensveien 2-4, 0963 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "393",
+      "name": "Oslo, Skøyen",
+      "address": "Karenslyst alle 58, 0277 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "403",
+      "name": "Oslo, Mortensrud",
+      "address": "Lofsrudveien 6, 1281 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "417",
+      "name": "Oslo, Nydalen",
+      "address": "Nydalsveien 33, 0484 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "440",
+      "name": "Oslo, Bøler",
+      "address": "Utmarkveien 1, 0689 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "454",
+      "name": "Oslo, Vinderen",
+      "address": "Slemdalsveien 70A, 0370 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "459",
+      "name": "Oslo, Carl Berner",
+      "address": "Hasleveien 10, 0571 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "471",
+      "name": "Oslo, Valkyrien",
+      "address": "Valkyriegata 1, 0366 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "474",
+      "name": "Oslo, Bjørvika",
+      "address": "Rostockgata 130, 0194 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "475",
+      "name": "Oslo, Bryn",
+      "address": "Østensjøveien 79, 0667 Oslo",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    }
+  ]
+}

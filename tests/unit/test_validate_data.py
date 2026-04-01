@@ -85,14 +85,14 @@ class TestValidateGeneratedMunicipality:
     def test_valid_generated_passes(self, sample_municipality_sandefjord):
         cal = build_calendar(date(2026, 1, 1), num_days=365)
         result = build_municipality(sample_municipality_sandefjord, cal)
-        errors = validate_generated_municipality(result["days"], cal)
+        errors = validate_generated_municipality(result, result["days"], cal)
         assert errors == []
 
     def test_missing_day_fails(self, sample_municipality_sandefjord):
         cal = build_calendar(date(2026, 1, 1), num_days=365)
         result = build_municipality(sample_municipality_sandefjord, cal)
         del result["days"][100]  # Remove a day
-        errors = validate_generated_municipality(result["days"], cal)
+        errors = validate_generated_municipality(result, result["days"], cal)
         assert len(errors) > 0
 
 

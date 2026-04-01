@@ -5,9 +5,11 @@ import type { DayData } from "../types";
 interface Props {
   label: string;
   day: DayData | null;
+  vinmonopoletText?: string;
+  storeCount?: number;
 }
 
-const { label, day } = Astro.props;
+const { label, day, vinmonopoletText, storeCount = 0 } = Astro.props;
 
 function formatDate(dateStr: string): string {
   const [year, month, dayNum] = dateStr.split("-");
@@ -43,6 +45,13 @@ function formatDate(dateStr: string): string {
         <p class="text-slate-200">
           Ølsalg: <span class="font-semibold text-red-400">Stengt</span>
           <span class="text-sm text-slate-400"> ({day.day_type_label})</span>
+        </p>
+      )}
+
+      {storeCount > 0 && vinmonopoletText && (
+        <p class="mt-2 text-slate-200">
+          Vinmonopolet: <span class="font-semibold text-white">{vinmonopoletText}</span>
+          <span class="text-sm text-slate-400"> ({storeCount} {storeCount === 1 ? "butikk" : "butikker"})</span>
         </p>
       )}
 

@@ -1,0 +1,116 @@
+---
+import type { ResolvedStore, DayData } from "../types";
+
+interface Props {
+  stores: ResolvedStore[];
+  days: DayData[];
+}
+
+const { stores, days } = Astro.props;
+
+const INITIAL_SHOW = 3;
+const hasMore = stores.length > INITIAL_SHOW;
+const visibleStores = hasMore ? stores.slice(0, INITIAL_SHOW) : stores;
+const hiddenStores = hasMore ? stores.slice(INITIAL_SHOW) : [];
+
+const weekdayShort: Record<string, string> = {
+  mandag: "man",
+  tirsdag: "tir",
+  onsdag: "ons",
+  torsdag: "tor",
+  fredag: "fre",
+  lørdag: "lør",
+  søndag: "søn",
+};
+
+function formatDateShort(dateStr: string): string {
+  const [, month, day] = dateStr.split("-");
+  return `${day}.${month}`;
+}
+---
+
+{stores.length > 0 && (
+  <section>
+    <h2 class="mb-4 text-lg font-semibold text-slate-200">
+      Vinmonopolet i {stores[0].name.split(",")[0]}
+    </h2>
+
+    <div class="space-y-4">
+      {visibleStores.map((store) => (
+        <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
+          <h3 class="font-semibold text-white">{store.name}</h3>
+          <p class="mb-3 text-sm text-slate-400">{store.address}</p>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="border-b border-slate-700 text-slate-400">
+                  <th class="pb-1 pr-2 font-medium">Dato</th>
+                  <th class="pb-1 pr-2 font-medium">Dag</th>
+                  <th class="pb-1 font-medium">Åpningstid</th>
+                </tr>
+              </thead>
+              <tbody>
+                {store.hours.map((h, i) => (
+                  <tr class:list={[
+                    "border-b border-slate-700/50",
+                    i === 0 && "bg-slate-800/80",
+                  ]}>
+                    <td class="py-1 pr-2 text-slate-300">{formatDateShort(h.date)}</td>
+                    <td class="py-1 pr-2 text-slate-300">
+                      {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
+                    </td>
+                    <td class="py-1 text-slate-200">
+                      {h.open && h.close ? `${h.open}–${h.close}` : "Stengt"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {hasMore && (
+      <details class="mt-4">
+        <summary class="cursor-pointer text-sm text-slate-400 hover:text-slate-200">
+          Vis alle {stores.length} butikker
+        </summary>
+        <div class="mt-4 space-y-4">
+          {hiddenStores.map((store) => (
+            <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
+              <h3 class="font-semibold text-white">{store.name}</h3>
+              <p class="mb-3 text-sm text-slate-400">{store.address}</p>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                      <th class="pb-1 pr-2 font-medium">Dato</th>
+                      <th class="pb-1 pr-2 font-medium">Dag</th>
+                      <th class="pb-1 font-medium">Åpningstid</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {store.hours.map((h, i) => (
+                      <tr class="border-b border-slate-700/50">
+                        <td class="py-1 pr-2 text-slate-300">{formatDateShort(h.date)}</td>
+                        <td class="py-1 pr-2 text-slate-300">
+                          {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
+                        </td>
+                        <td class="py-1 text-slate-200">
+                          {h.open && h.close ? `${h.open}–${h.close}` : "Stengt"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </div>
+      </details>
+    )}
+  </section>
+)}

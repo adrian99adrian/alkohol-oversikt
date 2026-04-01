@@ -1,0 +1,101 @@
+{
+  "municipality": {
+    "id": "larvik",
+    "name": "Larvik",
+    "county": "Vestfold og Telemark",
+    "sources": [
+      {
+        "title": "Larvik kommune – salgstider for øl",
+        "url": "https://www.larvik.kommune.no/naering-og-utvikling/skjenking-servering-og-tobakk/salgstider-for-oel-i-dagligvarebutikker-i-larvik/"
+      }
+    ],
+    "last_verified": "2026-03-31"
+  },
+  "days": [
+    {
+      "date": "2026-01-01",
+      "weekday": "torsdag",
+      "day_type": "public_holiday",
+      "day_type_label": "1. nyttårsdag",
+      "beer_sale_allowed": false,
+      "beer_open": null,
+      "beer_close": null,
+      "beer_close_large_stores": null,
+      "is_deviation": true,
+      "comment": "1. nyttårsdag – salg av øl er ikke tillatt",
+      "vinmonopolet_summary": "Stengt"
+    },
+    {
+      "date": "2026-01-02",
+      "weekday": "fredag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": "10:00–17:00 / 10:00–18:00"
+    },
+    {
+      "date": "2026-01-03",
+      "weekday": "lørdag",
+      "day_type": "saturday",
+      "day_type_label": "Lørdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "18:00",
+      "beer_close_large_stores": null,
+      "is_deviation": true,
+      "comment": "Lørdag – ølsalg stenger kl. 18:00",
+      "vinmonopolet_summary": "10:00–17:00 / 10:00–18:00"
+    }
+  ],
+  "vinmonopolet_stores": [
+    {
+      "store_id": "258",
+      "name": "Larvik",
+      "address": "Nansetgata 11, 3256 Larvik",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "18:00"
+        }
+      ]
+    },
+    {
+      "store_id": "404",
+      "name": "Stavern",
+      "address": "Larviksveien 12B, 3290 Stavern",
+      "hours": [
+        {
+          "date": "2026-01-01",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-01-02",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-01-03",
+          "open": "10:00",
+          "close": "17:00"
+        }
+      ]
+    }
+  ]
+}

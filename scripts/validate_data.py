@@ -87,7 +87,9 @@ def validate_calendar(calendar: list[dict]) -> list[str]:
     return errors
 
 
-def validate_generated_municipality(days: list[dict], calendar: list[dict]) -> list[str]:
+def validate_generated_municipality(
+    gen_data: dict, days: list[dict], calendar: list[dict]
+) -> list[str]:
     """Validate generated municipality data against calendar."""
     errors = []
 
@@ -101,6 +103,38 @@ def validate_generated_municipality(days: list[dict], calendar: list[dict]) -> l
     extra = gen_dates - cal_dates
     if extra:
         errors.append(f"Extra {len(extra)} dates not in calendar: {sorted(extra)[:5]}...")
+
+    # Validate vinmonopolet_summary on each day
+    for day in days:
+        if "vinmonopolet_summary" not in day:
+            errors.append(f"{day['date']}: missing vinmonopolet_summary field")
+            break  # Only report once
+
+    # Validate vinmonopolet_stores
+    if "vinmonopolet_stores" not in gen_data:
+        errors.append("Missing vinmonopolet_stores field")
+    else:
+        stores = gen_data["vinmonopolet_stores"]
+        for store in stores:
+            sid = store.get("store_id", "?")
+            for field in ("store_id", "name", "address", "hours"):
+                if field not in store:
+                    errors.append(f"vinmonopolet_stores[{sid}]: missing '{field}'")
+            hours = store.get("hours", [])
+            if len(hours) != min(14, len(days)):
+                errors.append(
+                    f"vinmonopolet_stores[{sid}]: expected {min(14, len(days))} "
+                    f"hours entries, got {len(hours)}"
+                )
+            # Verify hour dates match the first 14 calendar days
+            day_dates = [d["date"] for d in days[:14]]
+            for i, h in enumerate(hours):
+                if i < len(day_dates) and h.get("date") != day_dates[i]:
+                    errors.append(
+                        f"vinmonopolet_stores[{sid}]: hours[{i}].date "
+                        f"{h.get('date')} != {day_dates[i]}"
+                    )
+                    break
 
     return errors
 
@@ -274,7 +308,7 @@ def main() -> int:
                     gen_data = json.load(f)
                 days = gen_data.get("days", [])
 
-                errors = validate_generated_municipality(days, calendar)
+                errors = validate_generated_municipality(gen_data, days, calendar)
                 all_errors.extend(f"{path.name}: {e}" for e in errors)
 
                 errors = validate_national_max_compliance(days)

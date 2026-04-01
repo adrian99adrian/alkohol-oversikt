@@ -413,15 +413,21 @@ class TestFetchAllStores:
         assert mock_fetch_page.call_count == 1
 
     @patch("fetch_vinmonopolet.fetch_page")
-    def test_raises_on_count_mismatch(self, mock_fetch_page):
+    def test_deduplicates_stores_across_pages(self, mock_fetch_page):
         page0 = {
-            "pagination": {"totalPages": 1, "totalResults": 5},
-            "stores": [{"name": "1"}, {"name": "2"}],
+            "pagination": {"totalPages": 2, "totalResults": 4},
+            "stores": [{"name": "A"}, {"name": "B"}],
         }
-        mock_fetch_page.return_value = page0
+        page1 = {
+            "pagination": {"totalPages": 2, "totalResults": 4},
+            "stores": [{"name": "A"}, {"name": "C"}],
+        }
+        mock_fetch_page.side_effect = [page0, page1]
 
-        with pytest.raises(ValueError, match="Expected 5.*got 2"):
-            fetch_all_stores(MagicMock())
+        stores = fetch_all_stores(MagicMock())
+        names = {s["name"] for s in stores}
+        assert names == {"A", "B", "C"}
+        assert len(stores) == 3
 
 
 @pytest.mark.slow

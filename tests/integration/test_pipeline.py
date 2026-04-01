@@ -27,19 +27,19 @@ class TestFullPipeline:
     def test_sandefjord_generates_valid_data(self, sample_municipality_sandefjord):
         result, calendar = _run_pipeline(sample_municipality_sandefjord, date(2026, 1, 1))
         assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result["days"], calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
     def test_larvik_generates_valid_data(self, sample_municipality_larvik):
         result, calendar = _run_pipeline(sample_municipality_larvik, date(2026, 1, 1))
         assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result["days"], calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
     def test_oslo_generates_valid_data(self, sample_municipality_oslo):
         result, calendar = _run_pipeline(sample_municipality_oslo, date(2026, 1, 1))
         assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result["days"], calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
 

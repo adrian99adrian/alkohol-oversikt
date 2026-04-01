@@ -137,3 +137,29 @@ class TestFrontendBuild:
         html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
         assert "Tilbake" in html
         assert "/alkohol-oversikt/" in html
+
+    def test_municipality_page_has_vinmonopolet_column(self, docs_dir: Path) -> None:
+        """Municipality page table has a Vinmonopolet column."""
+        html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
+        assert "Vinm." in html
+
+    def test_municipality_page_has_vinmonopolet_section(self, docs_dir: Path) -> None:
+        """Municipality page has Vinmonopolet store list section."""
+        html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
+        assert "Vinmonopolet" in html
+
+    def test_municipality_page_has_sources(self, docs_dir: Path) -> None:
+        """Municipality page has sources section with links."""
+        html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
+        assert "Kilder" in html
+        assert "Sist verifisert" in html
+
+    def test_municipality_page_has_disclaimer(self, docs_dir: Path) -> None:
+        """Municipality page has disclaimer text."""
+        html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
+        assert "alkoholloven" in html
+
+    def test_oslo_has_expand_toggle(self, docs_dir: Path) -> None:
+        """Oslo municipality page has expandable store list (34 stores)."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Vis alle" in html
