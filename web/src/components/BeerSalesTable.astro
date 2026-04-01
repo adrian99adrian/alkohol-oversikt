@@ -1,18 +1,6 @@
 ---
 import DayBadge from "./DayBadge.astro";
-
-interface DayData {
-  date: string;
-  weekday: string;
-  day_type: string;
-  day_type_label: string;
-  beer_sale_allowed: boolean;
-  beer_open: string | null;
-  beer_close: string | null;
-  beer_close_large_stores: string | null;
-  is_deviation: boolean;
-  comment: string | null;
-}
+import type { DayData } from "../types";
 
 interface Props {
   days: DayData[];

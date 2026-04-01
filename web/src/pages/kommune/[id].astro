@@ -4,30 +4,7 @@ import path from "node:path";
 import Base from "../../layouts/Base.astro";
 import DayCard from "../../components/DayCard.astro";
 import BeerSalesTable from "../../components/BeerSalesTable.astro";
-
-interface DayData {
-  date: string;
-  weekday: string;
-  day_type: string;
-  day_type_label: string;
-  beer_sale_allowed: boolean;
-  beer_open: string | null;
-  beer_close: string | null;
-  beer_close_large_stores: string | null;
-  is_deviation: boolean;
-  comment: string | null;
-}
-
-interface MunicipalityData {
-  municipality: {
-    id: string;
-    name: string;
-    county: string;
-    sources: { title: string; url: string }[];
-    last_verified: string;
-  };
-  days: DayData[];
-}
+import type { MunicipalityData } from "../../types";
 
 export function getStaticPaths() {
   const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -54,9 +31,17 @@ const { municipality, days } = data;
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
 
-// days[0] = today, days[1] = tomorrow (pipeline generates starting from today)
+// Compare first day in data to the actual build date to detect stale data
+const buildDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+const dataIsFresh = days.length > 0 && days[0].date === buildDate;
+
 const today = days[0] ?? null;
 const tomorrow = days[1] ?? null;
+
+function formatCardLabel(dateStr: string): string {
+  const [, month, day] = dateStr.split("-");
+  return `${day}.${month}`;
+}
 
 // First 14 days for the table
 const tableDays = days.slice(0, 14);
@@ -80,8 +65,8 @@ function formatDeviationDate(dateStr: string): string {
 
     <!-- Today and Tomorrow cards -->
     <div class="mb-6 grid gap-4 sm:grid-cols-2">
-      <DayCard label="I dag" day={today} />
-      <DayCard label="I morgen" day={tomorrow} />
+      <DayCard label={dataIsFresh ? "I dag" : today ? formatCardLabel(today.date) : "—"} day={today} />
+      <DayCard label={dataIsFresh ? "I morgen" : tomorrow ? formatCardLabel(tomorrow.date) : "—"} day={tomorrow} />
     </div>
 
     <!-- Next deviation alert -->
