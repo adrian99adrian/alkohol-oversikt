@@ -39,8 +39,12 @@ jobs:
         run: python scripts/build_calendar.py
 
       # 2. Fetch Vinmonopolet store hours from API
+      #    continue-on-error: if the API is down, the pipeline can still
+      #    build from checked-in vinmonopolet.json — validate_data.py
+      #    will catch if the data is too stale or missing.
       - name: Fetch Vinmonopolet
         run: python scripts/fetch_vinmonopolet.py
+        continue-on-error: true
 
       # 3. Calculate per-municipality sales times
       - name: Build municipalities
