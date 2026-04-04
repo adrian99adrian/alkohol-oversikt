@@ -109,6 +109,13 @@ def validate_generated_municipality(
         if "vinmonopolet_summary" not in day:
             errors.append(f"{day['date']}: missing vinmonopolet_summary field")
             break  # Only report once
+        summary = day["vinmonopolet_summary"]
+        if summary is not None and not isinstance(summary, dict):
+            errors.append(f"{day['date']}: vinmonopolet_summary must be dict or null")
+            break
+        if isinstance(summary, dict) and "type" not in summary:
+            errors.append(f"{day['date']}: vinmonopolet_summary missing 'type' field")
+            break
 
     # Validate vinmonopolet_stores
     if "vinmonopolet_stores" not in gen_data:

@@ -13,7 +13,7 @@ from pathlib import Path
 
 from build_calendar import build_calendar, get_today_oslo
 from sales import build_day_entry
-from vinmonopolet_hours import build_resolved_stores, summarize_vinmonopolet
+from vinmonopolet_hours import build_day_summaries, build_resolved_stores, summarize_vinmonopolet
 
 
 def build_municipality(
@@ -47,6 +47,7 @@ def build_municipality(
     # Resolve per-store 14-day hours (first 14 days only)
     calendar_14 = calendar[:14]
     resolved_stores = build_resolved_stores(stores, calendar_14)
+    day_summaries = build_day_summaries(stores, calendar_14) if stores else []
 
     return {
         "municipality": {
@@ -58,6 +59,7 @@ def build_municipality(
         },
         "days": days,
         "vinmonopolet_stores": resolved_stores,
+        "vinmonopolet_day_summary": day_summaries,
     }
 
 

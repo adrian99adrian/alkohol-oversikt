@@ -44,34 +44,63 @@ def resolve_store_hours(store: dict, date_str: str, day_type: str) -> dict | Non
     return store.get("standard_hours", {}).get(weekday_key)
 
 
-def summarize_vinmonopolet(stores: list[dict], date_str: str, day_type: str) -> str | None:
-    """Generate a summary string for the table column.
+def summarize_vinmonopolet(stores: list[dict], date_str: str, day_type: str) -> dict | None:
+    """Generate a summary dict for the DayCard and table display.
 
     Returns:
     - None if no stores
-    - "Stengt" if all stores closed
-    - "10:00–18:00" if all open stores have the same hours
-    - "10:00–17:00 / 10:00–18:00" if stores have different hours
+    - {"type": "closed", ...} if all stores closed
+    - {"type": "uniform", ...} if all open stores have the same hours
+    - {"type": "range", ...} if open stores have different hours
     """
     if not stores:
         return None
 
     resolved = [resolve_store_hours(s, date_str, day_type) for s in stores]
-    open_stores = [h for h in resolved if h is not None]
+    open_hours = [h for h in resolved if h is not None]
+    open_count = len(open_hours)
+    closed_count = len(resolved) - open_count
 
-    if not open_stores:
-        return "Stengt"
+    if not open_hours:
+        return {"type": "closed", "open_count": 0, "closed_count": closed_count}
 
-    unique_hours = sorted(
-        {(h["open"], h["close"]) for h in open_stores},
-        key=lambda x: x[1],
-    )
+    unique_hours = {(h["open"], h["close"]) for h in open_hours}
 
     if len(unique_hours) == 1:
-        o, c = unique_hours[0]
-        return f"{o}\u2013{c}"
+        o, c = next(iter(unique_hours))
+        return {
+            "type": "uniform",
+            "open": o,
+            "close": c,
+            "open_count": open_count,
+            "closed_count": closed_count,
+        }
 
-    return " / ".join(f"{o}\u2013{c}" for o, c in unique_hours)
+    open_times = sorted(h["open"] for h in open_hours)
+    close_times = sorted(h["close"] for h in open_hours)
+    return {
+        "type": "range",
+        "min_open": open_times[0],
+        "max_open": open_times[-1],
+        "min_close": close_times[0],
+        "max_close": close_times[-1],
+        "open_count": open_count,
+        "closed_count": closed_count,
+    }
+
+
+def build_day_summaries(stores: list[dict], calendar_days: list[dict]) -> list[dict | None]:
+    """Build aggregated day-level summaries for the 14-day window.
+
+    Returns one summary dict (or None) per calendar day, with the date included.
+    """
+    result = []
+    for day in calendar_days:
+        summary = summarize_vinmonopolet(stores, day["date"], day["day_type"])
+        if summary is not None:
+            summary["date"] = day["date"]
+        result.append(summary)
+    return result
 
 
 def build_resolved_stores(stores: list[dict], calendar_days: list[dict]) -> list[dict]:

@@ -191,13 +191,13 @@ def _build_comment(
 
     if day_type in _FORBIDDEN_DAY_TYPES:
         label = day_info["day_type_label"]
-        return f"{label} – salg av øl er ikke tillatt"
+        return f"{label} — salg av øl er ikke tillatt"
 
     parts = []
     label = day_info["day_type_label"]
 
     if close:
-        parts.append(f"{label} – ølsalg stenger kl. {close}")
+        parts.append(f"{label} — ølsalg stenger kl. {close}")
 
     if ls_close:
         threshold = municipality["beer_sales"].get("large_store_threshold_sqm", 100)

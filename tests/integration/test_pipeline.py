@@ -197,11 +197,13 @@ class TestVinmonopoletIntegration:
             vinmonopolet_stores=[self.SAMPLE_STORE],
         )
         day0 = result["days"][0]
-        assert day0["vinmonopolet_summary"] == "10:00\u201316:00"
+        assert day0["vinmonopolet_summary"]["type"] == "uniform"
+        assert day0["vinmonopolet_summary"]["open"] == "10:00"
+        assert day0["vinmonopolet_summary"]["close"] == "16:00"
 
-        # Holiday should be Stengt
+        # Holiday should be closed
         day1 = result["days"][1]  # Skjærtorsdag
-        assert day1["vinmonopolet_summary"] == "Stengt"
+        assert day1["vinmonopolet_summary"]["type"] == "closed"
 
     def test_vinmonopolet_summary_null_beyond_14_days(self, sample_municipality_sandefjord):
         """Days beyond 14 have vinmonopolet_summary = null."""
