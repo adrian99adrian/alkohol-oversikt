@@ -62,13 +62,9 @@ if [ -n "$IGNORED" ]; then
 fi
 
 # ── 3. Generated data freshness ────────────────────────────────────
-# Integration tests call build_municipality with --days 3, which
-# overwrites data/generated/municipalities/*.json with tiny test
-# snapshots starting from 2026-01-01. If you commit after running
-# tests without rebuilding, the site will show stale/broken data.
-#
-# This check looks at the first "date" field in each staged
-# municipality JSON and verifies it matches today.
+# Ensures that staged municipality JSON files start from today.
+# Catches accidental commits of stale data (e.g. built with a past
+# --start-date or an outdated local copy).
 
 STAGED_GENERATED=$(git diff --cached --name-only -- 'data/generated/municipalities/*.json')
 

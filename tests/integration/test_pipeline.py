@@ -314,6 +314,27 @@ class TestVinmonopoletIntegration:
         assert validate_generated_municipality(result, result["days"], calendar) == []
 
 
+def _setup_tmp_data_dir(tmp_path: Path) -> None:
+    """Mirror the real data/ directory structure inside tmp_path for CLI tests."""
+    real_data = Path(__file__).parent.parent.parent / "data"
+
+    # Copy municipality source configs
+    muni_dir = tmp_path / "municipalities"
+    muni_dir.mkdir()
+    for f in (real_data / "municipalities").glob("*.json"):
+        (muni_dir / f.name).write_bytes(f.read_bytes())
+
+    # Copy town_municipality_map.json (used by _load_vinmonopolet_stores)
+    (tmp_path / "town_municipality_map.json").write_bytes(
+        (real_data / "town_municipality_map.json").read_bytes()
+    )
+
+    # Create minimal vinmonopolet.json (stores are optional)
+    gen_dir = tmp_path / "generated"
+    gen_dir.mkdir()
+    (gen_dir / "vinmonopolet.json").write_text('{"stores": []}', encoding="utf-8")
+
+
 class TestMainCLI:
     """Verify CLI entry point and fail-fast behavior."""
 
@@ -324,8 +345,9 @@ class TestMainCLI:
             with pytest.raises(SystemExit, match="1"):
                 main()
 
-    def test_id_generates_output(self):
+    def test_id_generates_output(self, tmp_path):
         """--id with a valid municipality should produce a JSON file."""
+        _setup_tmp_data_dir(tmp_path)
         args = [
             "prog",
             "--id",
@@ -334,24 +356,35 @@ class TestMainCLI:
             "2026-01-01",
             "--days",
             "3",
+            "--data-dir",
+            str(tmp_path),
         ]
         with patch("sys.argv", args):
             main()
 
-        gen_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
-        output = gen_dir / "sandefjord.json"
+        output = tmp_path / "generated" / "municipalities" / "sandefjord.json"
         assert output.exists()
         with open(output, encoding="utf-8") as f:
             data = json.load(f)
         assert data["municipality"]["id"] == "sandefjord"
         assert len(data["days"]) == 3
 
-    def test_all_generates_all_municipalities(self):
+    def test_all_generates_all_municipalities(self, tmp_path):
         """--all should generate a file for every municipality."""
-        args = ["prog", "--all", "--start-date", "2026-01-01", "--days", "3"]
+        _setup_tmp_data_dir(tmp_path)
+        args = [
+            "prog",
+            "--all",
+            "--start-date",
+            "2026-01-01",
+            "--days",
+            "3",
+            "--data-dir",
+            str(tmp_path),
+        ]
         with patch("sys.argv", args):
             main()
 
-        gen_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
+        gen_dir = tmp_path / "generated" / "municipalities"
         files = sorted(gen_dir.glob("*.json"))
         assert len(files) >= 4  # sandefjord, larvik, oslo, trondheim

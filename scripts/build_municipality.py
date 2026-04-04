@@ -94,12 +94,18 @@ def main() -> None:
     group.add_argument("--id", type=str, help="Generate for a specific municipality ID")
     parser.add_argument("--days", type=int, default=365, help="Number of days (default: 365)")
     parser.add_argument("--start-date", type=str, default=None, help="Start date YYYY-MM-DD")
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=Path(__file__).parent.parent / "data",
+        help="Path to data directory (default: data/)",
+    )
     args = parser.parse_args()
 
     start = date.fromisoformat(args.start_date) if args.start_date else get_today_oslo()
     calendar = build_calendar(start, num_days=args.days)
 
-    data_dir = Path(__file__).parent.parent / "data"
+    data_dir = args.data_dir
     municipalities_dir = data_dir / "municipalities"
     output_dir = data_dir / "generated" / "municipalities"
     output_dir.mkdir(parents=True, exist_ok=True)
