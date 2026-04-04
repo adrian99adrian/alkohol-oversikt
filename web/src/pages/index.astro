@@ -48,7 +48,7 @@ const oldestLastVerified = municipalities.length > 0
     <div
       id="search-container"
       class="relative mb-10 w-full max-w-md"
-      data-municipalities={JSON.stringify(municipalities)}
+      data-municipalities={JSON.stringify(municipalities.map(({ id, name }) => ({ id, name })))}
       data-base={base}
     >
       <input

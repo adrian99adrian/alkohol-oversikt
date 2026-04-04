@@ -40,8 +40,9 @@ jobs:
 
       # 2. Fetch Vinmonopolet store hours from API
       #    continue-on-error: if the API is down, the pipeline can still
-      #    build from checked-in vinmonopolet.json — validate_data.py
-      #    will catch if the data is too stale or missing.
+      #    build from checked-in vinmonopolet.json. The warning step below
+      #    alerts when this happens. Note: validate_data.py checks schema
+      #    but does not detect stale fetched_at dates.
       - name: Fetch Vinmonopolet
         id: fetch-vinmonopolet
         run: python scripts/fetch_vinmonopolet.py
