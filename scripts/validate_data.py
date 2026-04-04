@@ -117,6 +117,27 @@ def validate_generated_municipality(
             errors.append(f"{day['date']}: vinmonopolet_summary missing 'type' field")
             break
 
+    # Validate vinmonopolet_day_summary
+    if "vinmonopolet_day_summary" not in gen_data:
+        errors.append("Missing vinmonopolet_day_summary field")
+    else:
+        day_summary = gen_data["vinmonopolet_day_summary"]
+        has_stores = len(gen_data.get("vinmonopolet_stores", [])) > 0
+        if has_stores:
+            expected_len = min(14, len(days))
+            if len(day_summary) != expected_len:
+                errors.append(
+                    f"vinmonopolet_day_summary: expected {expected_len} entries, "
+                    f"got {len(day_summary)}"
+                )
+        for i, entry in enumerate(day_summary):
+            if entry is not None and not isinstance(entry, dict):
+                errors.append(f"vinmonopolet_day_summary[{i}]: must be dict or null")
+                break
+            if isinstance(entry, dict) and "type" not in entry:
+                errors.append(f"vinmonopolet_day_summary[{i}]: missing 'type' field")
+                break
+
     # Validate vinmonopolet_stores
     if "vinmonopolet_stores" not in gen_data:
         errors.append("Missing vinmonopolet_stores field")

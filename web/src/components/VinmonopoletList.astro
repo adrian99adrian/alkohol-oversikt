@@ -26,10 +26,7 @@ function formatDateShort(dateStr: string): string {
   return `${day}.${month}`;
 }
 
-// Check if any day in the summary has type "range"
-const hasRangeDays = daySummary.some((s) => s?.type === "range");
-
-const mapsUrl = `https://www.google.com/maps/search/nærmeste+vinmonopolet+${municipalityId}`;
+const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærmeste vinmonopolet ${municipalityId}`)}`;
 ---
 
 {stores.length > 0 && (
@@ -46,14 +43,8 @@ const mapsUrl = `https://www.google.com/maps/search/nærmeste+vinmonopolet+${mun
             <tr class="border-b border-slate-700 text-slate-400">
               <th class="pb-1 pr-2 font-medium">Dato</th>
               <th class="pb-1 pr-2 font-medium">Dag</th>
-              {hasRangeDays ? (
-                <>
-                  <th class="pb-1 pr-2 font-medium">Åpner</th>
-                  <th class="pb-1 font-medium">Stenger</th>
-                </>
-              ) : (
-                <th class="pb-1 font-medium">Åpningstid</th>
-              )}
+              <th class="pb-1 pr-2 font-medium">Åpner</th>
+              <th class="pb-1 font-medium">Stenger</th>
             </tr>
           </thead>
           <tbody>
@@ -69,20 +60,12 @@ const mapsUrl = `https://www.google.com/maps/search/nærmeste+vinmonopolet+${mun
                   {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
                 </td>
                 {!summary || summary.type === "closed" ? (
-                  hasRangeDays ? (
-                    <td colspan={2} class="py-1 text-red-400">Stengt</td>
-                  ) : (
-                    <td class="py-1 text-red-400">Stengt</td>
-                  )
+                  <td colspan={2} class="py-1 text-red-400">Stengt</td>
                 ) : summary.type === "uniform" ? (
-                  hasRangeDays ? (
-                    <>
-                      <td class="py-1 pr-2 text-slate-200">{summary.open}</td>
-                      <td class="py-1 text-slate-200">{summary.close}</td>
-                    </>
-                  ) : (
-                    <td class="py-1 text-slate-200">{summary.open}–{summary.close}</td>
-                  )
+                  <>
+                    <td class="py-1 pr-2 text-slate-200">{summary.open}</td>
+                    <td class="py-1 text-slate-200">{summary.close}</td>
+                  </>
                 ) : (
                   <>
                     <td class="py-1 pr-2 text-slate-200">

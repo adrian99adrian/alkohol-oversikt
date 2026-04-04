@@ -98,7 +98,7 @@ def build_day_summaries(stores: list[dict], calendar_days: list[dict]) -> list[d
     for day in calendar_days:
         summary = summarize_vinmonopolet(stores, day["date"], day["day_type"])
         if summary is not None:
-            summary["date"] = day["date"]
+            summary = {**summary, "date": day["date"]}
         result.append(summary)
     return result
 
