@@ -1,5 +1,6 @@
 ---
 import type { ResolvedStore, DayData, VinmonopoletDaySummary } from "../types";
+import { weekdayShort, formatDateShort } from "../lib/dateFormat";
 
 interface Props {
   stores: ResolvedStore[];
@@ -10,21 +11,6 @@ interface Props {
 }
 
 const { stores, days, daySummary, municipalityName, municipalityId } = Astro.props;
-
-const weekdayShort: Record<string, string> = {
-  mandag: "man",
-  tirsdag: "tir",
-  onsdag: "ons",
-  torsdag: "tor",
-  fredag: "fre",
-  lørdag: "lør",
-  søndag: "søn",
-};
-
-function formatDateShort(dateStr: string): string {
-  const [, month, day] = dateStr.split("-");
-  return `${day}.${month}`;
-}
 
 const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærmeste vinmonopolet ${municipalityId}`)}`;
 ---

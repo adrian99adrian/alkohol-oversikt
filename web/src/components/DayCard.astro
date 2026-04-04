@@ -1,6 +1,7 @@
 ---
 import DayBadge from "./DayBadge.astro";
 import type { DayData, VinmonopoletSummary } from "../types";
+import { formatDateLong } from "../lib/dateFormat";
 
 interface Props {
   label: string;
@@ -9,11 +10,6 @@ interface Props {
 }
 
 const { label, day, vinmonopoletSummary } = Astro.props;
-
-function formatDate(dateStr: string): string {
-  const [year, month, dayNum] = dateStr.split("-");
-  return `${dayNum}.${month}.${year}`;
-}
 
 function storeLabel(count: number): string {
   return count === 1 ? "butikk" : "butikker";
@@ -26,7 +22,7 @@ function storeLabel(count: number): string {
   {day ? (
     <div>
       <p class="mb-2 text-sm text-slate-400">
-        {day.weekday.charAt(0).toUpperCase() + day.weekday.slice(1)} {formatDate(day.date)}
+        {day.weekday.charAt(0).toUpperCase() + day.weekday.slice(1)} {formatDateLong(day.date)}
       </p>
 
       <div class="mb-3">
