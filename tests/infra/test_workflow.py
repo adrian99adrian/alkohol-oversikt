@@ -70,3 +70,11 @@ class TestCiWorkflow:
         steps = self.workflow["jobs"]["sonar"]["steps"]
         gate_step = next(s for s in steps if "sonarcloud.io/api/issues/search" in s.get("run", ""))
         assert "sonar-project.properties" in gate_step.get("run", "")
+
+    def test_issue_gate_scopes_to_pr_on_pull_request(self) -> None:
+        """On PRs, the gate must scope the query using pullRequest= parameter."""
+        steps = self.workflow["jobs"]["sonar"]["steps"]
+        gate_step = next(s for s in steps if "sonarcloud.io/api/issues/search" in s.get("run", ""))
+        run_script = gate_step.get("run", "")
+        assert "pullRequest=" in run_script or "pullRequest=${" in run_script
+        assert "PR_NUMBER" in str(gate_step.get("env", {}))
