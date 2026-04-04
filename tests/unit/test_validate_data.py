@@ -95,6 +95,34 @@ class TestValidateGeneratedMunicipality:
         errors = validate_generated_municipality(result, result["days"], cal)
         assert len(errors) > 0
 
+    def test_invalid_vinmonopolet_summary_type_fails(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=365)
+        result = build_municipality(sample_municipality_sandefjord, cal)
+        result["days"][0]["vinmonopolet_summary"] = {"type": "invalid"}
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert any("invalid type" in e for e in errors)
+
+    def test_string_vinmonopolet_summary_fails(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=365)
+        result = build_municipality(sample_municipality_sandefjord, cal)
+        result["days"][0]["vinmonopolet_summary"] = "10:00-18:00"
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert any("must be dict or null" in e for e in errors)
+
+    def test_missing_vinmonopolet_day_summary_fails(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=365)
+        result = build_municipality(sample_municipality_sandefjord, cal)
+        del result["vinmonopolet_day_summary"]
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert any("Missing vinmonopolet_day_summary" in e for e in errors)
+
+    def test_invalid_vinmonopolet_day_summary_type_fails(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=365)
+        result = build_municipality(sample_municipality_sandefjord, cal)
+        result["vinmonopolet_day_summary"] = [{"type": "bogus", "date": "2026-01-01"}]
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert any("invalid type" in e for e in errors)
+
 
 # --- National max compliance ---
 
