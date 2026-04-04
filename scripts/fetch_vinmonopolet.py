@@ -90,7 +90,7 @@ def derive_standard_hours(
     for entry in opening_times:
         iso_date = _parse_date(entry["date"])
         d = date.fromisoformat(iso_date)
-        wd = d.weekday()  # 0=Monday, 6=Sunday
+        wd = d.weekday()  # Monday is 0, Sunday is 6
         if wd == 6:  # Sunday always None
             continue
         if iso_date in special_dates:
