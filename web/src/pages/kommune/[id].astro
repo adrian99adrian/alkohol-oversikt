@@ -66,7 +66,7 @@ function formatVerifiedDate(dateStr: string): string {
 }
 ---
 
-<Base title={`${municipality.name} — Alkohol-oversikt`}>
+<Base title={`${municipality.name} — Alkohol-oversikt`} buildDate={buildDate} lastVerified={municipality.last_verified}>
   <div>
     <a href={basePath} class="mb-4 inline-block text-sm text-slate-400 hover:text-slate-200">
       ← Tilbake

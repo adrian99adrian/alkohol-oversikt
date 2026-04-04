@@ -43,8 +43,13 @@ jobs:
       #    build from checked-in vinmonopolet.json — validate_data.py
       #    will catch if the data is too stale or missing.
       - name: Fetch Vinmonopolet
+        id: fetch-vinmonopolet
         run: python scripts/fetch_vinmonopolet.py
         continue-on-error: true
+
+      - name: Warn on Vinmonopolet fetch failure
+        if: steps.fetch-vinmonopolet.outcome == 'failure'
+        run: echo "::warning::Vinmonopolet API fetch failed — deploying with cached store hours from checked-in vinmonopolet.json"
 
       # 3. Calculate per-municipality sales times
       - name: Build municipalities

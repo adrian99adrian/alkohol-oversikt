@@ -6,6 +6,7 @@ import Base from "../layouts/Base.astro";
 interface Municipality {
   id: string;
   name: string;
+  lastVerified: string;
 }
 
 const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -16,7 +17,11 @@ if (fs.existsSync(dataDir)) {
   municipalities = files.map((file: string) => {
     const raw = fs.readFileSync(path.join(dataDir, file), "utf-8");
     const data = JSON.parse(raw);
-    return { id: data.municipality.id, name: data.municipality.name };
+    return {
+      id: data.municipality.id,
+      name: data.municipality.name,
+      lastVerified: data.municipality.last_verified,
+    };
   });
 }
 
@@ -25,9 +30,14 @@ municipalities.sort((a, b) => a.name.localeCompare(b.name, "no"));
 // Ensure base always ends with a slash for URL concatenation
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
+const buildDate = new Date().toISOString().slice(0, 10);
+const oldestLastVerified = municipalities.length > 0
+  ? municipalities.reduce((oldest, m) => m.lastVerified < oldest ? m.lastVerified : oldest, municipalities[0].lastVerified)
+  : undefined;
 ---
 
-<Base title="Alkohol-oversikt">
+<Base title="Alkohol-oversikt" buildDate={buildDate} lastVerified={oldestLastVerified}>
   <div class="flex flex-col items-center text-center">
     <h1 class="mb-2 text-3xl font-bold text-white">Alkohol-oversikt</h1>
     <p class="mb-8 text-slate-300">
