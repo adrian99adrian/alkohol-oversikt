@@ -27,11 +27,11 @@ const basePath = base.endsWith("/") ? base : `${base}/`;
       </p>
     </div>
 
-    <noscript>
-      <p class="mb-6 text-slate-400">
-        Siden ble ikke funnet.
-      </p>
-    </noscript>
+    <!--
+      No-JS fallback: #generic-message is visible by default, so users
+      without JavaScript always see the generic 404. The kommune-specific
+      message only appears when the inline script detects a /kommune/<id> path.
+    -->
 
     <a
       href={basePath}

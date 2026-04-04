@@ -200,11 +200,7 @@ class TestFrontendBuild:
         assert "Denne kommunen eksisterer ikke eller er ikke implementert enda" in html
 
     def test_404_has_homepage_link(self, docs_dir: Path) -> None:
-        """404 page links back to the homepage."""
+        """404 page has a visible link back to the homepage."""
         html = (docs_dir / "404.html").read_text(encoding="utf-8")
-        assert "/alkohol-oversikt/" in html
-
-    def test_404_has_noscript_fallback(self, docs_dir: Path) -> None:
-        """404 page has noscript fallback for JS-disabled browsers."""
-        html = (docs_dir / "404.html").read_text(encoding="utf-8")
-        assert "<noscript>" in html
+        assert 'href="/alkohol-oversikt/"' in html
+        assert "forsiden" in html.lower()
