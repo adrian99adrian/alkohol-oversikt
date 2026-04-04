@@ -109,6 +109,38 @@ def validate_generated_municipality(
         if "vinmonopolet_summary" not in day:
             errors.append(f"{day['date']}: missing vinmonopolet_summary field")
             break  # Only report once
+        summary = day["vinmonopolet_summary"]
+        if summary is not None and not isinstance(summary, dict):
+            errors.append(f"{day['date']}: vinmonopolet_summary must be dict or null")
+            break
+        if isinstance(summary, dict):
+            stype = summary.get("type")
+            if stype not in {"uniform", "range", "closed"}:
+                errors.append(f"{day['date']}: vinmonopolet_summary invalid type '{stype}'")
+                break
+
+    # Validate vinmonopolet_day_summary
+    if "vinmonopolet_day_summary" not in gen_data:
+        errors.append("Missing vinmonopolet_day_summary field")
+    else:
+        day_summary = gen_data["vinmonopolet_day_summary"]
+        has_stores = len(gen_data.get("vinmonopolet_stores", [])) > 0
+        if has_stores:
+            expected_len = min(14, len(days))
+            if len(day_summary) != expected_len:
+                errors.append(
+                    f"vinmonopolet_day_summary: expected {expected_len} entries, "
+                    f"got {len(day_summary)}"
+                )
+        for i, entry in enumerate(day_summary):
+            if entry is not None and not isinstance(entry, dict):
+                errors.append(f"vinmonopolet_day_summary[{i}]: must be dict or null")
+                break
+            if isinstance(entry, dict):
+                etype = entry.get("type")
+                if etype not in {"uniform", "range", "closed"}:
+                    errors.append(f"vinmonopolet_day_summary[{i}]: invalid type '{etype}'")
+                    break
 
     # Validate vinmonopolet_stores
     if "vinmonopolet_stores" not in gen_data:

@@ -9,7 +9,23 @@ export interface DayData {
   beer_close_large_stores: string | null;
   is_deviation: boolean;
   comment: string | null;
-  vinmonopolet_summary: string | null;
+  vinmonopolet_summary: VinmonopoletSummary | null;
+}
+
+export interface VinmonopoletSummary {
+  type: "uniform" | "range" | "closed";
+  open?: string;
+  close?: string;
+  min_open?: string;
+  max_open?: string;
+  min_close?: string;
+  max_close?: string;
+  open_count: number;
+  closed_count: number;
+}
+
+export interface VinmonopoletDaySummary extends VinmonopoletSummary {
+  date: string;
 }
 
 export interface StoreDay {
@@ -35,4 +51,5 @@ export interface MunicipalityData {
   };
   days: DayData[];
   vinmonopolet_stores: ResolvedStore[];
+  vinmonopolet_day_summary: (VinmonopoletDaySummary | null)[];
 }

@@ -159,7 +159,8 @@ class TestFrontendBuild:
         html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
         assert "alkoholloven" in html
 
-    def test_oslo_has_expand_toggle(self, docs_dir: Path) -> None:
-        """Oslo municipality page has expandable store list (34 stores)."""
+    def test_oslo_has_store_directory_and_maps_link(self, docs_dir: Path) -> None:
+        """Oslo municipality page has store directory and Google Maps link."""
         html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
-        assert "Vis alle" in html
+        assert "Butikker" in html
+        assert "Finn nærmeste Vinmonopolet" in html

@@ -27,7 +27,7 @@ export function getStaticPaths() {
 }
 
 const { data } = Astro.props as { data: MunicipalityData };
-const { municipality, days, vinmonopolet_stores } = data;
+const { municipality, days, vinmonopolet_stores, vinmonopolet_day_summary } = data;
 
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
@@ -55,13 +55,8 @@ function formatDeviationDate(dateStr: string): string {
   return `${day}.${month}`;
 }
 
-// Vinmonopolet summary for day cards
-const storeCount = vinmonopolet_stores.length;
-function vinmonopoletCardText(summary: string | null): string {
-  if (!summary) return "Stengt";
-  if (summary === "Stengt") return "Stengt";
-  return `Åpent ${summary}`;
-}
+// Vinmonopolet day summary for the table (first 14 days)
+const daySummary = vinmonopolet_day_summary ?? [];
 
 // Format last_verified as dd.mm.yyyy
 function formatVerifiedDate(dateStr: string): string {
@@ -83,14 +78,12 @@ function formatVerifiedDate(dateStr: string): string {
       <DayCard
         label={dataIsFresh ? "I dag" : today ? formatCardLabel(today.date) : "—"}
         day={today}
-        vinmonopoletText={today ? vinmonopoletCardText(today.vinmonopolet_summary) : undefined}
-        storeCount={storeCount}
+        vinmonopoletSummary={today?.vinmonopolet_summary}
       />
       <DayCard
         label={dataIsFresh ? "I morgen" : tomorrow ? formatCardLabel(tomorrow.date) : "—"}
         day={tomorrow}
-        vinmonopoletText={tomorrow ? vinmonopoletCardText(tomorrow.vinmonopolet_summary) : undefined}
-        storeCount={storeCount}
+        vinmonopoletSummary={tomorrow?.vinmonopolet_summary}
       />
     </div>
 
@@ -118,7 +111,7 @@ function formatVerifiedDate(dateStr: string): string {
 
     <!-- Vinmonopolet store list -->
     <div class="mb-8">
-      <VinmonopoletList stores={vinmonopolet_stores} days={tableDays} municipalityName={municipality.name} />
+      <VinmonopoletList stores={vinmonopolet_stores} days={tableDays} daySummary={daySummary} municipalityName={municipality.name} municipalityId={municipality.id} />
     </div>
 
     <!-- Sources -->
@@ -132,7 +125,7 @@ function formatVerifiedDate(dateStr: string): string {
             </a>
           </li>
         ))}
-        {storeCount > 0 && (
+        {vinmonopolet_stores.length > 0 && (
           <li>
             <a href="https://www.vinmonopolet.no" class="text-slate-300 underline hover:text-white" target="_blank" rel="noopener noreferrer">
               Vinmonopolet API

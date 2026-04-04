@@ -2,11 +2,12 @@
 
 Tests the functions that resolve store hours for each day in the 14-day
 window, combining actual_hours (days 1-7) with standard_hours fallback
-(days 8-14), and generate summary strings for the table column.
+(days 8-14), and generate summary dicts for the frontend.
 """
 
 import pytest
 from vinmonopolet_hours import (
+    build_day_summaries,
     build_resolved_stores,
     resolve_store_hours,
     summarize_vinmonopolet,
@@ -69,6 +70,35 @@ def sample_store_b():
             "2026-04-05": None,
             "2026-04-06": None,
             "2026-04-07": {"open": "10:00", "close": "17:00"},
+        },
+    }
+
+
+@pytest.fixture
+def sample_store_c():
+    """A third store with different opening time."""
+    return {
+        "store_id": "505",
+        "name": "Sentrum",
+        "municipality": "oslo",
+        "address": "Storgata 10, 0155 Oslo",
+        "standard_hours": {
+            "monday": {"open": "09:00", "close": "18:00"},
+            "tuesday": {"open": "09:00", "close": "18:00"},
+            "wednesday": {"open": "09:00", "close": "18:00"},
+            "thursday": {"open": "09:00", "close": "18:00"},
+            "friday": {"open": "09:00", "close": "18:00"},
+            "saturday": {"open": "10:00", "close": "15:00"},
+            "sunday": None,
+        },
+        "actual_hours": {
+            "2026-04-01": {"open": "09:00", "close": "16:00"},
+            "2026-04-02": None,
+            "2026-04-03": None,
+            "2026-04-04": {"open": "10:00", "close": "15:00"},
+            "2026-04-05": None,
+            "2026-04-06": None,
+            "2026-04-07": {"open": "09:00", "close": "18:00"},
         },
     }
 
@@ -170,43 +200,169 @@ class TestResolveStoreHours:
 
 
 class TestSummarizeVinmonopolet:
-    """Test summary string generation for the table column."""
+    """Test summary dict generation for DayCard and table display."""
 
     def test_no_stores(self):
         """No stores in municipality returns None."""
         result = summarize_vinmonopolet([], "2026-04-01", "weekday")
         assert result is None
 
-    def test_one_store_open(self, sample_store):
-        """Single open store shows hours."""
+    def test_one_store_open_uniform(self, sample_store):
+        """Single open store returns uniform summary with counts."""
         result = summarize_vinmonopolet([sample_store], "2026-04-01", "pre_holiday")
-        assert result == "10:00–16:00"
+        assert result == {
+            "type": "uniform",
+            "open": "10:00",
+            "close": "16:00",
+            "open_count": 1,
+            "closed_count": 0,
+        }
 
     def test_one_store_closed(self, sample_store):
-        """Single closed store shows Stengt."""
+        """Single closed store returns closed summary."""
         result = summarize_vinmonopolet([sample_store], "2026-04-02", "public_holiday")
-        assert result == "Stengt"
+        assert result == {
+            "type": "closed",
+            "open_count": 0,
+            "closed_count": 1,
+        }
 
-    def test_multiple_stores_same_hours(self, sample_store):
-        """Multiple stores with same hours show those hours."""
+    def test_multiple_stores_same_hours_uniform(self, sample_store):
+        """Multiple stores with same hours return uniform summary."""
         store2 = {**sample_store, "store_id": "999", "name": "Other"}
         result = summarize_vinmonopolet([sample_store, store2], "2026-04-01", "pre_holiday")
-        assert result == "10:00–16:00"
+        assert result == {
+            "type": "uniform",
+            "open": "10:00",
+            "close": "16:00",
+            "open_count": 2,
+            "closed_count": 0,
+        }
 
-    def test_multiple_stores_different_hours(self, sample_store, sample_store_b):
-        """Multiple stores with different hours show range."""
-        # Apr 7: store_a closes 18:00, store_b closes 17:00
+    def test_multiple_stores_different_close_times(self, sample_store, sample_store_b):
+        """Stores with different closing times return range summary."""
+        # Apr 7: store_a closes 18:00, store_b closes 17:00, both open 10:00
         result = summarize_vinmonopolet([sample_store, sample_store_b], "2026-04-07", "weekday")
         assert result is not None
-        assert "17:00" in result
-        assert "18:00" in result
+        assert result["type"] == "range"
+        assert result["min_open"] == "10:00"
+        assert result["max_open"] == "10:00"
+        assert result["min_close"] == "17:00"
+        assert result["max_close"] == "18:00"
+        assert result["open_count"] == 2
+        assert result["closed_count"] == 0
+
+    def test_multiple_stores_different_open_and_close(self, sample_store, sample_store_c):
+        """Stores with different open AND close times return range summary."""
+        # Apr 7: store_a opens 10:00 closes 18:00, store_c opens 09:00 closes 18:00
+        result = summarize_vinmonopolet([sample_store, sample_store_c], "2026-04-07", "weekday")
+        assert result is not None
+        assert result["type"] == "range"
+        assert result["min_open"] == "09:00"
+        assert result["max_open"] == "10:00"
+        assert result["min_close"] == "18:00"
+        assert result["max_close"] == "18:00"
 
     def test_multiple_stores_all_closed(self, sample_store, sample_store_b):
-        """All stores closed shows Stengt."""
+        """All stores closed returns closed summary with total count."""
         result = summarize_vinmonopolet(
             [sample_store, sample_store_b], "2026-04-02", "public_holiday"
         )
-        assert result == "Stengt"
+        assert result == {
+            "type": "closed",
+            "open_count": 0,
+            "closed_count": 2,
+        }
+
+    def test_some_stores_open_some_closed(self, sample_store):
+        """Mix of open and closed stores shows correct counts."""
+        # Create a store that is closed on Apr 1 via actual_hours
+        closed_store = {
+            **sample_store,
+            "store_id": "888",
+            "name": "Closed One",
+            "actual_hours": {
+                **sample_store["actual_hours"],
+                "2026-04-01": None,
+            },
+        }
+        result = summarize_vinmonopolet([sample_store, closed_store], "2026-04-01", "pre_holiday")
+        assert result is not None
+        assert result["type"] == "uniform"
+        assert result["open_count"] == 1
+        assert result["closed_count"] == 1
+
+    def test_range_with_some_closed(self, sample_store, sample_store_b):
+        """Range summary with some stores closed includes closed_count."""
+        closed_store = {
+            **sample_store,
+            "store_id": "888",
+            "name": "Closed One",
+            "actual_hours": {
+                **sample_store["actual_hours"],
+                "2026-04-07": None,
+            },
+        }
+        # Apr 7: store_a 10:00-18:00, store_b 10:00-17:00, closed_store closed
+        result = summarize_vinmonopolet(
+            [sample_store, sample_store_b, closed_store], "2026-04-07", "weekday"
+        )
+        assert result is not None
+        assert result["type"] == "range"
+        assert result["open_count"] == 2
+        assert result["closed_count"] == 1
+
+
+# --- build_day_summaries tests ---
+
+
+class TestBuildDaySummaries:
+    """Test aggregated day-level summaries for the 14-day window."""
+
+    def test_output_length(self, sample_store, sample_calendar_days):
+        """Returns one summary per calendar day."""
+        result = build_day_summaries([sample_store], sample_calendar_days)
+        assert len(result) == 14
+
+    def test_dates_match_calendar(self, sample_store, sample_calendar_days):
+        """Each summary entry has the correct date."""
+        result = build_day_summaries([sample_store], sample_calendar_days)
+        for i, entry in enumerate(result):
+            if entry is not None:
+                assert entry["date"] == sample_calendar_days[i]["date"]
+
+    def test_closed_day_type(self, sample_store, sample_calendar_days):
+        """Public holiday returns closed type."""
+        result = build_day_summaries([sample_store], sample_calendar_days)
+        # Apr 2 (index 1) is public_holiday, store is closed
+        entry = result[1]
+        assert entry is not None
+        assert entry["type"] == "closed"
+
+    def test_open_day_type(self, sample_store, sample_calendar_days):
+        """Normal open day returns uniform type for single store."""
+        result = build_day_summaries([sample_store], sample_calendar_days)
+        # Apr 1 (index 0) is pre_holiday, store is open
+        entry = result[0]
+        assert entry is not None
+        assert entry["type"] == "uniform"
+        assert entry["open"] == "10:00"
+
+    def test_range_day_with_multiple_stores(
+        self, sample_store, sample_store_b, sample_calendar_days
+    ):
+        """Multiple stores with different hours produce range type."""
+        result = build_day_summaries([sample_store, sample_store_b], sample_calendar_days)
+        # Apr 7 (index 6): store_a 18:00, store_b 17:00
+        entry = result[6]
+        assert entry is not None
+        assert entry["type"] == "range"
+
+    def test_empty_stores(self, sample_calendar_days):
+        """No stores returns list of None entries."""
+        result = build_day_summaries([], sample_calendar_days)
+        assert len(result) == 14
+        assert all(entry is None for entry in result)
 
 
 # --- build_resolved_stores tests ---

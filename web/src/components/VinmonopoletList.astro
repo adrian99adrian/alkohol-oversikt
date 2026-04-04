@@ -1,18 +1,15 @@
 ---
-import type { ResolvedStore, DayData } from "../types";
+import type { ResolvedStore, DayData, VinmonopoletDaySummary } from "../types";
 
 interface Props {
   stores: ResolvedStore[];
   days: DayData[];
+  daySummary: (VinmonopoletDaySummary | null)[];
   municipalityName: string;
+  municipalityId: string;
 }
 
-const { stores, days, municipalityName } = Astro.props;
-
-const INITIAL_SHOW = 3;
-const hasMore = stores.length > INITIAL_SHOW;
-const visibleStores = hasMore ? stores.slice(0, INITIAL_SHOW) : stores;
-const hiddenStores = hasMore ? stores.slice(INITIAL_SHOW) : [];
+const { stores, days, daySummary, municipalityName, municipalityId } = Astro.props;
 
 const weekdayShort: Record<string, string> = {
   mandag: "man",
@@ -28,6 +25,8 @@ function formatDateShort(dateStr: string): string {
   const [, month, day] = dateStr.split("-");
   return `${day}.${month}`;
 }
+
+const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærmeste vinmonopolet ${municipalityId}`)}`;
 ---
 
 {stores.length > 0 && (
@@ -36,82 +35,74 @@ function formatDateShort(dateStr: string): string {
       Vinmonopolet i {municipalityName}
     </h2>
 
-    <div class="space-y-4">
-      {visibleStores.map((store) => (
-        <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
-          <h3 class="font-semibold text-white">{store.name}</h3>
-          <p class="mb-3 text-sm text-slate-400">{store.address}</p>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead>
-                <tr class="border-b border-slate-700 text-slate-400">
-                  <th class="pb-1 pr-2 font-medium">Dato</th>
-                  <th class="pb-1 pr-2 font-medium">Dag</th>
-                  <th class="pb-1 font-medium">Åpningstid</th>
-                </tr>
-              </thead>
-              <tbody>
-                {store.hours.map((h, i) => (
-                  <tr class:list={[
-                    "border-b border-slate-700/50",
-                    i === 0 && "bg-slate-800/80",
-                  ]}>
-                    <td class="py-1 pr-2 text-slate-300">{formatDateShort(h.date)}</td>
-                    <td class="py-1 pr-2 text-slate-300">
-                      {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
+    <!-- Aggregated 14-day table -->
+    <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-slate-700 text-slate-400">
+              <th class="pb-1 pr-2 font-medium">Dato</th>
+              <th class="pb-1 pr-2 font-medium">Dag</th>
+              <th class="pb-1 pr-2 font-medium">Åpner</th>
+              <th class="pb-1 font-medium">Stenger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {daySummary.map((summary, i) => (
+              <tr class:list={[
+                "border-b border-slate-700/50",
+                i === 0 && "bg-slate-800/80",
+              ]}>
+                <td class="py-1 pr-2 text-slate-300">
+                  {summary ? formatDateShort(summary.date) : (i < days.length ? formatDateShort(days[i].date) : "")}
+                </td>
+                <td class="py-1 pr-2 text-slate-300">
+                  {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
+                </td>
+                {!summary || summary.type === "closed" ? (
+                  <td colspan={2} class="py-1 text-red-400">Stengt</td>
+                ) : summary.type === "uniform" ? (
+                  <>
+                    <td class="py-1 pr-2 text-slate-200">{summary.open}</td>
+                    <td class="py-1 text-slate-200">{summary.close}</td>
+                  </>
+                ) : (
+                  <>
+                    <td class="py-1 pr-2 text-slate-200">
+                      {summary.min_open === summary.max_open
+                        ? summary.min_open
+                        : `${summary.min_open}–${summary.max_open}`}
                     </td>
                     <td class="py-1 text-slate-200">
-                      {h.open && h.close ? `${h.open}–${h.close}` : "Stengt"}
+                      {summary.min_close === summary.max_close
+                        ? summary.min_close
+                        : `${summary.min_close}–${summary.max_close}`}
                     </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    {hasMore && (
-      <details class="mt-4">
-        <summary class="cursor-pointer text-sm text-slate-400 hover:text-slate-200">
-          Vis alle {stores.length} butikker
-        </summary>
-        <div class="mt-4 space-y-4">
-          {hiddenStores.map((store) => (
-            <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
-              <h3 class="font-semibold text-white">{store.name}</h3>
-              <p class="mb-3 text-sm text-slate-400">{store.address}</p>
-
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                  <thead>
-                    <tr class="border-b border-slate-700 text-slate-400">
-                      <th class="pb-1 pr-2 font-medium">Dato</th>
-                      <th class="pb-1 pr-2 font-medium">Dag</th>
-                      <th class="pb-1 font-medium">Åpningstid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {store.hours.map((h, i) => (
-                      <tr class="border-b border-slate-700/50">
-                        <td class="py-1 pr-2 text-slate-300">{formatDateShort(h.date)}</td>
-                        <td class="py-1 pr-2 text-slate-300">
-                          {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
-                        </td>
-                        <td class="py-1 text-slate-200">
-                          {h.open && h.close ? `${h.open}–${h.close}` : "Stengt"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))}
-        </div>
-      </details>
-    )}
+    <!-- Store directory -->
+    <div class="mt-6">
+      <h3 class="mb-2 text-sm font-semibold text-slate-300">Butikker ({stores.length})</h3>
+      <ul class="space-y-1 text-sm text-slate-400">
+        {stores.map((store) => (
+          <li>{store.name} — {store.address}</li>
+        ))}
+      </ul>
+      <a
+        href={mapsUrl}
+        class="mt-3 inline-block text-sm text-slate-300 underline hover:text-white"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Finn nærmeste Vinmonopolet
+      </a>
+    </div>
   </section>
 )}

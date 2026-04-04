@@ -1,19 +1,22 @@
 ---
 import DayBadge from "./DayBadge.astro";
-import type { DayData } from "../types";
+import type { DayData, VinmonopoletSummary } from "../types";
 
 interface Props {
   label: string;
   day: DayData | null;
-  vinmonopoletText?: string;
-  storeCount?: number;
+  vinmonopoletSummary?: VinmonopoletSummary | null;
 }
 
-const { label, day, vinmonopoletText, storeCount = 0 } = Astro.props;
+const { label, day, vinmonopoletSummary } = Astro.props;
 
 function formatDate(dateStr: string): string {
   const [year, month, dayNum] = dateStr.split("-");
   return `${dayNum}.${month}.${year}`;
+}
+
+function storeLabel(count: number): string {
+  return count === 1 ? "butikk" : "butikker";
 }
 ---
 
@@ -48,11 +51,43 @@ function formatDate(dateStr: string): string {
         </p>
       )}
 
-      {storeCount > 0 && vinmonopoletText && (
+      {vinmonopoletSummary && vinmonopoletSummary.type === "closed" && (
         <p class="mt-2 text-slate-200">
-          Vinmonopolet: <span class="font-semibold text-white">{vinmonopoletText}</span>
-          <span class="text-sm text-slate-400"> ({storeCount} {storeCount === 1 ? "butikk" : "butikker"})</span>
+          Vinmonopolet: <span class="font-semibold text-red-400">Stengt</span>
+          <span class="text-sm text-slate-400"> ({vinmonopoletSummary.closed_count} {storeLabel(vinmonopoletSummary.closed_count)})</span>
         </p>
+      )}
+
+      {vinmonopoletSummary && vinmonopoletSummary.type === "uniform" && (
+        <div class="mt-2">
+          <p class="text-slate-200">
+            Vinmonopolet: <span class="font-semibold text-white">Åpent {vinmonopoletSummary.open}–{vinmonopoletSummary.close}</span>
+            <span class="text-sm text-slate-400"> ({vinmonopoletSummary.open_count} {storeLabel(vinmonopoletSummary.open_count)})</span>
+          </p>
+          {vinmonopoletSummary.closed_count > 0 && (
+            <p class="mt-1 text-sm text-slate-400">
+              {vinmonopoletSummary.closed_count} {storeLabel(vinmonopoletSummary.closed_count)} stengt
+            </p>
+          )}
+        </div>
+      )}
+
+      {vinmonopoletSummary && vinmonopoletSummary.type === "range" && (
+        <div class="mt-2">
+          <p class="text-slate-200">
+            Vinmonopolet: <span class="font-semibold text-white">Åpner {vinmonopoletSummary.min_open === vinmonopoletSummary.max_open ? vinmonopoletSummary.min_open : `${vinmonopoletSummary.min_open}–${vinmonopoletSummary.max_open}`}</span>
+            <span class="text-sm text-slate-400"> ({vinmonopoletSummary.open_count} {storeLabel(vinmonopoletSummary.open_count)})</span>
+          </p>
+          <p class="text-slate-200">
+            Vinmonopolet: <span class="font-semibold text-white">Stenger {vinmonopoletSummary.min_close === vinmonopoletSummary.max_close ? vinmonopoletSummary.min_close : `${vinmonopoletSummary.min_close}–${vinmonopoletSummary.max_close}`}</span>
+            <span class="text-sm text-slate-400"> ({vinmonopoletSummary.open_count} {storeLabel(vinmonopoletSummary.open_count)})</span>
+          </p>
+          {vinmonopoletSummary.closed_count > 0 && (
+            <p class="mt-1 text-sm text-slate-400">
+              {vinmonopoletSummary.closed_count} {storeLabel(vinmonopoletSummary.closed_count)} stengt
+            </p>
+          )}
+        </div>
       )}
 
       {day.comment && (
