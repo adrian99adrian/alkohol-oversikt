@@ -172,3 +172,15 @@ class TestFrontendBuild:
         html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
         assert "Butikker" in html
         assert "Finn nærmeste Vinmonopolet" in html
+
+    def test_footer_has_build_timestamp(self, docs_dir: Path) -> None:
+        """Footer shows build date on all pages."""
+        for page in ("index.html", "kommune/oslo/index.html"):
+            html = (docs_dir / page).read_text(encoding="utf-8")
+            assert "Sist oppdatert" in html, f"Missing build timestamp in {page}"
+
+    def test_footer_has_last_verified(self, docs_dir: Path) -> None:
+        """Footer shows last-verified date on all pages."""
+        for page in ("index.html", "kommune/oslo/index.html"):
+            html = (docs_dir / page).read_text(encoding="utf-8")
+            assert "Regler sist sjekket" in html, f"Missing last-verified in {page}"
