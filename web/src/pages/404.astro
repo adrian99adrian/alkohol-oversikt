@@ -1,0 +1,69 @@
+---
+import Base from "../layouts/Base.astro";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+---
+
+<Base title="Siden ble ikke funnet — Alkohol-oversikt">
+  <div class="flex flex-col items-center text-center">
+    <p class="mb-4 text-6xl font-bold text-slate-600">404</p>
+
+    <div id="generic-message">
+      <h1 class="mb-2 text-2xl font-semibold text-white">
+        Siden ble ikke funnet
+      </h1>
+      <p class="mb-6 text-slate-400">
+        Beklager, vi finner ikke siden du leter etter.
+      </p>
+    </div>
+
+    <div id="kommune-message" class="hidden">
+      <h1 class="mb-2 text-2xl font-semibold text-white">
+        Denne kommunen eksisterer ikke eller er ikke implementert enda
+      </h1>
+      <p class="mb-6 text-slate-400">
+        Vi jobber med å legge til flere kommuner.
+      </p>
+    </div>
+
+    <noscript>
+      <p class="mb-6 text-slate-400">
+        Siden ble ikke funnet.
+      </p>
+    </noscript>
+
+    <a
+      href={basePath}
+      class="rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-slate-200 hover:border-slate-400 hover:text-white"
+    >
+      &larr; Gå til forsiden
+    </a>
+  </div>
+
+  <script define:vars={{ basePath }}>
+    const path = window.location.pathname;
+
+    // Strip the base URL prefix to get the relative path
+    const basePrefix = basePath.endsWith("/")
+      ? basePath.slice(0, -1)
+      : basePath;
+    let relative = path;
+    if (path.startsWith(basePrefix)) {
+      relative = path.slice(basePrefix.length);
+    }
+
+    // Normalize: ensure leading slash, strip trailing slash
+    if (!relative.startsWith("/")) relative = "/" + relative;
+    if (relative.endsWith("/") && relative.length > 1)
+      relative = relative.slice(0, -1);
+
+    // Match /kommune/<id> (exactly one segment after /kommune/)
+    const kommunePattern = /^\/kommune\/[^/]+$/;
+
+    if (kommunePattern.test(relative)) {
+      document.getElementById("generic-message")?.classList.add("hidden");
+      document.getElementById("kommune-message")?.classList.remove("hidden");
+    }
+  </script>
+</Base>
