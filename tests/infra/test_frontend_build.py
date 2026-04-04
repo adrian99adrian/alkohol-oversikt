@@ -184,3 +184,23 @@ class TestFrontendBuild:
         for page in ("index.html", "kommune/oslo/index.html"):
             html = (docs_dir / page).read_text(encoding="utf-8")
             assert "Regler sist sjekket" in html, f"Missing last-verified in {page}"
+
+    def test_404_html_exists(self, docs_dir: Path) -> None:
+        """Build output contains 404.html at the root."""
+        assert (docs_dir / "404.html").exists()
+
+    def test_404_has_generic_message(self, docs_dir: Path) -> None:
+        """404 page contains the generic not-found message."""
+        html = (docs_dir / "404.html").read_text(encoding="utf-8")
+        assert "Siden ble ikke funnet" in html
+
+    def test_404_has_kommune_message(self, docs_dir: Path) -> None:
+        """404 page contains the municipality-specific not-found message."""
+        html = (docs_dir / "404.html").read_text(encoding="utf-8")
+        assert "Denne kommunen eksisterer ikke eller er ikke implementert enda" in html
+
+    def test_404_has_homepage_link(self, docs_dir: Path) -> None:
+        """404 page has a visible link back to the homepage."""
+        html = (docs_dir / "404.html").read_text(encoding="utf-8")
+        assert 'href="/alkohol-oversikt/"' in html
+        assert "forsiden" in html.lower()
