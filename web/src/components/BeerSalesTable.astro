@@ -1,6 +1,7 @@
 ---
 import DayBadge from "./DayBadge.astro";
 import type { DayData, VinmonopoletSummary } from "../types";
+import { weekdayShort, formatDateShort } from "../lib/dateFormat";
 
 interface Props {
   days: DayData[];
@@ -13,21 +14,6 @@ function formatVinmonopolet(summary: VinmonopoletSummary | null): string {
   if (summary.type === "uniform") return `${summary.open}–${summary.close}`;
   // range: show earliest open to latest close for compact display
   return `${summary.min_open}–${summary.max_close}`;
-}
-
-const weekdayShort: Record<string, string> = {
-  mandag: "man",
-  tirsdag: "tir",
-  onsdag: "ons",
-  torsdag: "tor",
-  fredag: "fre",
-  lørdag: "lør",
-  søndag: "søn",
-};
-
-function formatDateShort(dateStr: string): string {
-  const [, month, day] = dateStr.split("-");
-  return `${day}.${month}`;
 }
 
 const hasVinmonopolet = days.some((d) => d.vinmonopolet_summary !== null);

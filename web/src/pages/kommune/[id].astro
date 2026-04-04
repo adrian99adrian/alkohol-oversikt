@@ -7,6 +7,7 @@ import DayTypeLegend from "../../components/DayTypeLegend.astro";
 import BeerSalesTable from "../../components/BeerSalesTable.astro";
 import VinmonopoletList from "../../components/VinmonopoletList.astro";
 import type { MunicipalityData } from "../../types";
+import { formatDateShort, formatDateLong } from "../../lib/dateFormat";
 
 export function getStaticPaths() {
   const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -40,30 +41,14 @@ const dataIsFresh = days.length > 0 && days[0].date === buildDate;
 const today = days[0] ?? null;
 const tomorrow = days[1] ?? null;
 
-function formatCardLabel(dateStr: string): string {
-  const [, month, day] = dateStr.split("-");
-  return `${day}.${month}`;
-}
-
 // First 14 days for the table
 const tableDays = days.slice(0, 14);
 
 // Next deviation: first day (inclusive of today) where is_deviation is true
 const nextDeviation = days.find((d) => d.is_deviation) ?? null;
 
-function formatDeviationDate(dateStr: string): string {
-  const [, month, day] = dateStr.split("-");
-  return `${day}.${month}`;
-}
-
 // Vinmonopolet day summary for the table (first 14 days)
 const daySummary = vinmonopolet_day_summary ?? [];
-
-// Format last_verified as dd.mm.yyyy
-function formatVerifiedDate(dateStr: string): string {
-  const [year, month, day] = dateStr.split("-");
-  return `${day}.${month}.${year}`;
-}
 ---
 
 <Base title={`${municipality.name} — Alkohol-oversikt`} buildDate={buildDate} lastVerified={municipality.last_verified}>
@@ -81,12 +66,12 @@ function formatVerifiedDate(dateStr: string): string {
     <!-- Today and Tomorrow cards -->
     <div class="mb-6 grid gap-4 sm:grid-cols-2">
       <DayCard
-        label={dataIsFresh ? "I dag" : today ? formatCardLabel(today.date) : "—"}
+        label={dataIsFresh ? "I dag" : today ? formatDateShort(today.date) : "—"}
         day={today}
         vinmonopoletSummary={today?.vinmonopolet_summary}
       />
       <DayCard
-        label={dataIsFresh ? "I morgen" : tomorrow ? formatCardLabel(tomorrow.date) : "—"}
+        label={dataIsFresh ? "I morgen" : tomorrow ? formatDateShort(tomorrow.date) : "—"}
         day={tomorrow}
         vinmonopoletSummary={tomorrow?.vinmonopolet_summary}
       />
@@ -98,7 +83,7 @@ function formatVerifiedDate(dateStr: string): string {
         <p class="text-sm text-amber-200">
           <span class="font-semibold">Neste avvik:</span>{" "}
           {nextDeviation.weekday.charAt(0).toUpperCase() + nextDeviation.weekday.slice(1)}{" "}
-          {formatDeviationDate(nextDeviation.date)} —{" "}
+          {formatDateShort(nextDeviation.date)} —{" "}
           {nextDeviation.comment ?? nextDeviation.day_type_label}
         </p>
       </div>
@@ -139,7 +124,7 @@ function formatVerifiedDate(dateStr: string): string {
         )}
       </ul>
       <p class="mt-2 text-sm text-slate-500">
-        Sist verifisert: {formatVerifiedDate(municipality.last_verified)}
+        Sist verifisert: {formatDateLong(municipality.last_verified)}
       </p>
     </section>
 
