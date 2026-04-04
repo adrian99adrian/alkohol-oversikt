@@ -49,6 +49,72 @@ class TestFullPipeline:
         assert validate_national_max_compliance(result["days"]) == []
 
 
+class TestTrondheimPipeline:
+    """Full pipeline validation for Trondheim."""
+
+    def test_trondheim_generates_valid_data(self, sample_municipality_trondheim):
+        result, calendar = _run_pipeline(sample_municipality_trondheim, date(2026, 1, 1))
+        assert validate_calendar(calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
+        assert validate_national_max_compliance(result["days"]) == []
+
+
+class TestTrondheimEaster:
+    """Verify Easter 2026 produces correct results for Trondheim."""
+
+    def test_easter_sequence(self, sample_municipality_trondheim):
+        result, _ = _run_pipeline(sample_municipality_trondheim, date(2026, 4, 1), days=7)
+        by_date = {d["date"]: d for d in result["days"]}
+
+        # Apr 1 — pre_holiday (day before Skjærtorsdag)
+        assert by_date["2026-04-01"]["day_type"] == "pre_holiday"
+        assert by_date["2026-04-01"]["beer_close"] == "18:00"
+
+        # Apr 2 — Skjærtorsdag (public holiday)
+        assert not by_date["2026-04-02"]["beer_sale_allowed"]
+
+        # Apr 3 — Langfredag (public holiday)
+        assert not by_date["2026-04-03"]["beer_sale_allowed"]
+
+        # Apr 4 — Påskeaften (special_day for Trondheim: 15:00)
+        assert by_date["2026-04-04"]["day_type"] == "special_day"
+        assert by_date["2026-04-04"]["beer_close"] == "15:00"
+
+        # Apr 5 — 1. påskedag (public holiday)
+        assert not by_date["2026-04-05"]["beer_sale_allowed"]
+
+        # Apr 6 — 2. påskedag (public holiday)
+        assert not by_date["2026-04-06"]["beer_sale_allowed"]
+
+        # Apr 7 — regular Tuesday
+        assert by_date["2026-04-07"]["day_type"] == "weekday"
+        assert by_date["2026-04-07"]["beer_close"] == "20:00"
+
+
+class TestTrondheimSpecialDays:
+    """Verify Trondheim-specific special day behavior."""
+
+    def test_new_years_eve_not_special(self, sample_municipality_trondheim):
+        """Nyttårsaften is NOT a special day in Trondheim — pre_holiday 18:00."""
+        result, _ = _run_pipeline(sample_municipality_trondheim, date(2026, 12, 31), days=1)
+        day = result["days"][0]
+        assert day["beer_close"] == "18:00"
+
+    def test_pre_ascension_uses_weekday(self, sample_municipality_trondheim):
+        """Day before Kristi himmelfartsdag keeps weekday hours: 20:00."""
+        result, _ = _run_pipeline(sample_municipality_trondheim, date(2026, 5, 13), days=1)
+        day = result["days"][0]
+        assert day["day_type"] == "pre_holiday"
+        assert day["beer_close"] == "20:00"
+
+    def test_whit_eve_is_special(self, sample_municipality_trondheim):
+        """Pinseaften is special in Trondheim — close at 15:00."""
+        result, _ = _run_pipeline(sample_municipality_trondheim, date(2026, 5, 23), days=1)
+        day = result["days"][0]
+        assert day["day_type"] == "special_day"
+        assert day["beer_close"] == "15:00"
+
+
 class TestEaster2026:
     """Verify Easter 2026 produces correct results for Sandefjord."""
 
@@ -288,4 +354,4 @@ class TestMainCLI:
 
         gen_dir = Path(__file__).parent.parent.parent / "data" / "generated" / "municipalities"
         files = sorted(gen_dir.glob("*.json"))
-        assert len(files) >= 3  # sandefjord, larvik, oslo
+        assert len(files) >= 4  # sandefjord, larvik, oslo, trondheim

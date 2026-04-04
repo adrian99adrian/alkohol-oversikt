@@ -94,6 +94,28 @@ class TestMunicipalClose:
         day_info = _classify(date(2026, 12, 24))
         assert municipal_close(day_info, sample_municipality_oslo) == "18:00"
 
+    def test_trondheim_weekday(self, sample_municipality_trondheim):
+        day_info = _classify(date(2026, 3, 10))
+        assert municipal_close(day_info, sample_municipality_trondheim) == "20:00"
+
+    def test_trondheim_saturday(self, sample_municipality_trondheim):
+        day_info = _classify(date(2026, 3, 7))
+        assert municipal_close(day_info, sample_municipality_trondheim) == "18:00"
+
+    def test_trondheim_special_day_christmas_eve(self, sample_municipality_trondheim):
+        day_info = _classify(date(2026, 12, 24))
+        assert municipal_close(day_info, sample_municipality_trondheim) == "15:00"
+
+    def test_trondheim_easter_eve_is_special(self, sample_municipality_trondheim):
+        """Trondheim lists easter_eve as special day — close at 15:00."""
+        day_info = _classify(date(2026, 4, 4))
+        assert municipal_close(day_info, sample_municipality_trondheim) == "15:00"
+
+    def test_trondheim_new_years_eve_not_special(self, sample_municipality_trondheim):
+        """Trondheim does NOT list new_years_eve — uses pre_holiday close 18:00."""
+        day_info = _classify(date(2026, 12, 31))
+        assert municipal_close(day_info, sample_municipality_trondheim) == "18:00"
+
     def test_sunday_returns_none(self, sample_municipality_sandefjord):
         day_info = _classify(date(2026, 3, 8))
         assert municipal_close(day_info, sample_municipality_sandefjord) is None
@@ -120,6 +142,14 @@ class TestMunicipalOpen:
     def test_larvik_weekday(self, sample_municipality_larvik):
         day_info = _classify(date(2026, 3, 10))
         assert municipal_open(day_info, sample_municipality_larvik) == "08:00"
+
+    def test_trondheim_weekday(self, sample_municipality_trondheim):
+        day_info = _classify(date(2026, 3, 10))
+        assert municipal_open(day_info, sample_municipality_trondheim) == "09:00"
+
+    def test_trondheim_saturday(self, sample_municipality_trondheim):
+        day_info = _classify(date(2026, 3, 7))
+        assert municipal_open(day_info, sample_municipality_trondheim) == "09:00"
 
     def test_forbidden_day_returns_none(self, sample_municipality_sandefjord):
         day_info = _classify(date(2026, 3, 8))  # Sunday
@@ -169,6 +199,25 @@ class TestLarvikAscensionException:
         """April 1, 2026 (Wed before Skjærtorsdag) still uses pre_holiday: 18:00."""
         day_info = _classify(date(2026, 4, 1))
         assert closing_time(day_info, sample_municipality_larvik) == "18:00"
+
+
+# --- Trondheim Ascension Day exception ---
+
+
+class TestTrondheimAscensionException:
+    """Day before Kristi himmelfartsdag uses weekday hours in Trondheim."""
+
+    def test_day_before_ascension_uses_weekday(self, sample_municipality_trondheim):
+        """May 13 2026 (Wed) before Ascension (May 14): weekday 20:00."""
+        day_info = _classify(date(2026, 5, 13))
+        assert day_info["day_type"] == "pre_holiday"
+        assert day_info["pre_holiday_for"] == "ascension_day"
+        assert closing_time(day_info, sample_municipality_trondheim) == "20:00"
+
+    def test_other_pre_holiday_not_affected(self, sample_municipality_trondheim):
+        """April 1, 2026 (Wed before Skjærtorsdag) still uses pre_holiday: 18:00."""
+        day_info = _classify(date(2026, 4, 1))
+        assert closing_time(day_info, sample_municipality_trondheim) == "18:00"
 
 
 # --- Oslo large store rule ---
