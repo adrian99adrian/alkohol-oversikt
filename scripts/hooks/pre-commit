@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+# Pre-commit hook for alkohol-oversikt
+#
+# Setup (run once per machine after cloning):
+#   git config core.hooksPath scripts/hooks
+#
+# What this does:
+#   Runs automatically before every "git commit". If any check fails,
+#   the commit is blocked and you'll see an error explaining what to fix.
+#
+# Checks:
+#   1. Lint    — runs ruff check + format on the whole project
+#   2. Guard   — blocks commits that include gitignored files
+#   3. Fresh   — ensures generated municipality data starts from today
+#
+
+# ── 1. Lint ─────────────────────────────────────────────────────────
+# Only runs if Python files are being committed.
+# Checks the WHOLE project (not just staged files) because a change
+# in one file can cause lint errors in another.
+
+if git diff --cached --name-only --diff-filter=ACM | grep -q '\.py$'; then
+
+    # Check ruff is installed
+    if ! command -v ruff >/dev/null 2>&1; then
+        echo "[pre-commit] WARNING: ruff not found, skipping lint checks"
+    else
+        echo "[pre-commit] Running ruff check..."
+        if ! ruff check .; then
+            echo ""
+            echo "[pre-commit] BLOCKED: ruff check found issues."
+            exit 1
+        fi
+
+        echo "[pre-commit] Running ruff format --check..."
+        if ! ruff format --check .; then
+            echo ""
+            echo "[pre-commit] BLOCKED: formatting issues found."
+            echo "  Fix with: ruff format ."
+            exit 1
+        fi
+    fi
+fi
+
+# ── 2. Gitignore guard ─────────────────────────────────────────────
+# Catches files that were force-added (git add -f) despite being in
+# .gitignore. Prevents accidental commits of local-only files like
+# CLAUDE.md or editor configs.
+#
+# --no-index: check gitignore rules even for files already in the index
+# --stdin:    read file paths from stdin instead of arguments
+
+IGNORED=$(git diff --cached --name-only | git check-ignore --stdin --no-index 2>/dev/null || true)
+
+if [ -n "$IGNORED" ]; then
+    echo "[pre-commit] BLOCKED: gitignored files are staged:"
+    echo "$IGNORED" | sed 's/^/  /'
+    echo ""
+    echo "  Remove with: git reset HEAD <file>"
+    exit 1
+fi
+
+# ── 3. Generated data freshness ────────────────────────────────────
+# Integration tests call build_municipality with --days 3, which
+# overwrites data/generated/municipalities/*.json with tiny test
+# snapshots starting from 2026-01-01. If you commit after running
+# tests without rebuilding, the site will show stale/broken data.
+#
+# This check looks at the first "date" field in each staged
+# municipality JSON and verifies it matches today.
+
+STAGED_GENERATED=$(git diff --cached --name-only -- 'data/generated/municipalities/*.json')
+
+if [ -n "$STAGED_GENERATED" ]; then
+    TODAY=$(date +%Y-%m-%d)
+
+    for file in $STAGED_GENERATED; do
+        # Read the staged version (not the working tree version)
+        FIRST_DATE=$(git show ":$file" | grep -m1 '"date":' | grep -o '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}')
+
+        if [ -n "$FIRST_DATE" ] && [ "$FIRST_DATE" != "$TODAY" ]; then
+            echo "[pre-commit] BLOCKED: stale generated data in $file"
+            echo "  First date: $FIRST_DATE (expected $TODAY)"
+            echo ""
+            echo "  Tests likely overwrote the generated files."
+            echo "  Fix: python scripts/build_municipality.py --all"
+            exit 1
+        fi
+    done
+fi
+
+echo "[pre-commit] All checks passed."
