@@ -13,6 +13,7 @@ build/
 *.egg
 .venv/
 venv/
+.ruff_cache
 
 # Node
 node_modules/

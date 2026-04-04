@@ -1,12 +1,20 @@
 ---
 import DayBadge from "./DayBadge.astro";
-import type { DayData } from "../types";
+import type { DayData, VinmonopoletSummary } from "../types";
 
 interface Props {
   days: DayData[];
 }
 
 const { days } = Astro.props;
+
+function formatVinmonopolet(summary: VinmonopoletSummary | null): string {
+  if (!summary || summary.type === "closed") return "Stengt";
+  if (summary.type === "uniform") return `${summary.open}–${summary.close}`;
+  // range: show closing time range
+  if (summary.min_close === summary.max_close) return `${summary.open ?? summary.min_open}–${summary.min_close}`;
+  return `${summary.min_close}–${summary.max_close}`;
+}
 
 const weekdayShort: Record<string, string> = {
   mandag: "man",
@@ -54,7 +62,7 @@ const hasVinmonopolet = days.some((d) => d.vinmonopolet_summary !== null);
           </td>
           {hasVinmonopolet && (
             <td class="py-2 pr-3 text-slate-200">
-              {day.vinmonopolet_summary ?? "—"}
+              {formatVinmonopolet(day.vinmonopolet_summary)}
             </td>
           )}
           <td class="py-2 text-sm text-slate-400">
