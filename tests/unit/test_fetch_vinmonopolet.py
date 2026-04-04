@@ -141,6 +141,78 @@ class TestDeriveStandardHours:
         # Mon=17, Tue=18, Wed=19, Fri=18. Mode is 18 (appears twice).
         assert result["thursday"] == {"open": "10:00", "close": "18:00"}
 
+    def test_all_special_week_with_previous(self):
+        """All-special week (juleuka) preserves per-day hours from previous."""
+        from tests.conftest import _make_opening_time
+
+        # Christmas week 2025: Mon Dec 22 – Sat Dec 27, all special
+        opening_times = [
+            _make_opening_time("2025-12-22", open_h=10, close_h=16, weekday="Mandag"),
+            _make_opening_time("2025-12-23", open_h=10, close_h=16, weekday="Tirsdag"),
+            _make_opening_time("2025-12-24", open_h=10, close_h=13, weekday="Onsdag"),
+            _make_opening_time("2025-12-25", closed=True, weekday="Torsdag"),
+            _make_opening_time("2025-12-26", closed=True, weekday="Fredag"),
+            _make_opening_time("2025-12-27", closed=True, weekday="Lørdag"),
+            _make_opening_time("2025-12-28", closed=True, weekday="Søndag"),
+        ]
+        specials = [
+            _make_opening_time("2025-12-22", open_h=10, close_h=16, weekday="Mandag"),
+            _make_opening_time("2025-12-23", open_h=10, close_h=16, weekday="Tirsdag"),
+            _make_opening_time("2025-12-24", open_h=10, close_h=13, weekday="Onsdag"),
+            _make_opening_time("2025-12-25", closed=True, weekday="Torsdag"),
+            _make_opening_time("2025-12-26", closed=True, weekday="Fredag"),
+            _make_opening_time("2025-12-27", closed=True, weekday="Lørdag"),
+        ]
+        previous = {
+            "monday": {"open": "10:00", "close": "18:00"},
+            "tuesday": {"open": "10:00", "close": "18:00"},
+            "wednesday": {"open": "10:00", "close": "18:00"},
+            "thursday": {"open": "10:00", "close": "19:00"},
+            "friday": {"open": "10:00", "close": "19:00"},
+            "saturday": {"open": "10:00", "close": "15:00"},
+            "sunday": None,
+        }
+        result = derive_standard_hours(opening_times, specials, previous=previous)
+        assert result["monday"] == {"open": "10:00", "close": "18:00"}
+        assert result["tuesday"] == {"open": "10:00", "close": "18:00"}
+        assert result["wednesday"] == {"open": "10:00", "close": "18:00"}
+        assert result["thursday"] == {"open": "10:00", "close": "19:00"}
+        assert result["friday"] == {"open": "10:00", "close": "19:00"}
+        assert result["saturday"] == {"open": "10:00", "close": "15:00"}
+        assert result["sunday"] is None
+
+    def test_all_special_week_without_previous(self):
+        """All-special week without previous data falls back to None."""
+        from tests.conftest import _make_opening_time
+
+        # Same Christmas week, no previous data available
+        opening_times = [
+            _make_opening_time("2025-12-22", open_h=10, close_h=16, weekday="Mandag"),
+            _make_opening_time("2025-12-23", open_h=10, close_h=16, weekday="Tirsdag"),
+            _make_opening_time("2025-12-24", open_h=10, close_h=13, weekday="Onsdag"),
+            _make_opening_time("2025-12-25", closed=True, weekday="Torsdag"),
+            _make_opening_time("2025-12-26", closed=True, weekday="Fredag"),
+            _make_opening_time("2025-12-27", closed=True, weekday="Lørdag"),
+            _make_opening_time("2025-12-28", closed=True, weekday="Søndag"),
+        ]
+        specials = [
+            _make_opening_time("2025-12-22", open_h=10, close_h=16, weekday="Mandag"),
+            _make_opening_time("2025-12-23", open_h=10, close_h=16, weekday="Tirsdag"),
+            _make_opening_time("2025-12-24", open_h=10, close_h=13, weekday="Onsdag"),
+            _make_opening_time("2025-12-25", closed=True, weekday="Torsdag"),
+            _make_opening_time("2025-12-26", closed=True, weekday="Fredag"),
+            _make_opening_time("2025-12-27", closed=True, weekday="Lørdag"),
+        ]
+        result = derive_standard_hours(opening_times, specials)
+        # No non-special days and no previous data — all fall back to None
+        assert result["monday"] is None
+        assert result["tuesday"] is None
+        assert result["wednesday"] is None
+        assert result["thursday"] is None
+        assert result["friday"] is None
+        assert result["saturday"] is None
+        assert result["sunday"] is None
+
 
 class TestBuildActualHours:
     """Verify actual_hours preserves raw 7-day API data."""
