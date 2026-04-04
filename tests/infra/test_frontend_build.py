@@ -95,6 +95,7 @@ class TestFrontendBuild:
         assert "/alkohol-oversikt/kommune/oslo/" in html
         assert "/alkohol-oversikt/kommune/sandefjord/" in html
         assert "/alkohol-oversikt/kommune/larvik/" in html
+        assert "/alkohol-oversikt/kommune/trondheim/" in html
 
     def test_index_contains_municipality_names(self, docs_dir: Path) -> None:
         """Landing page displays municipality names."""
@@ -102,10 +103,11 @@ class TestFrontendBuild:
         assert "Oslo" in html
         assert "Sandefjord" in html
         assert "Larvik" in html
+        assert "Trondheim" in html
 
     def test_municipality_pages_exist(self, docs_dir: Path) -> None:
         """Build generates a page for each municipality."""
-        for muni in ("oslo", "sandefjord", "larvik"):
+        for muni in ("oslo", "sandefjord", "larvik", "trondheim"):
             page = docs_dir / "kommune" / muni / "index.html"
             assert page.exists(), f"Missing municipality page: {page}"
 
@@ -158,6 +160,12 @@ class TestFrontendBuild:
         """Municipality page has disclaimer text."""
         html = (docs_dir / "kommune" / "sandefjord" / "index.html").read_text(encoding="utf-8")
         assert "alkoholloven" in html
+
+    def test_municipality_page_has_legend(self, docs_dir: Path) -> None:
+        """Municipality page contains the day type color legend."""
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Vanlige salgstider" in html
+        assert "Salg ikke tillatt" in html
 
     def test_oslo_has_store_directory_and_maps_link(self, docs_dir: Path) -> None:
         """Oslo municipality page has store directory and Google Maps link."""

@@ -1,0 +1,24 @@
+{
+  "id": "trondheim",
+  "name": "Trondheim",
+  "county": "Trøndelag",
+  "beer_sales": {
+    "weekday_open": "09:00",
+    "weekday_close": "20:00",
+    "saturday_open": "09:00",
+    "saturday_close": "18:00",
+    "pre_holiday_close": "18:00",
+    "special_day_close": "15:00",
+    "special_days": ["christmas_eve", "easter_eve", "whit_eve"],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
+  },
+  "sources": [
+    {
+      "title": "Trondheim kommune – forskrift om salgstider (Lovdata)",
+      "url": "https://lovdata.no/dokument/LF/forskrift/2024-05-02-846"
+    }
+  ],
+  "last_verified": "2026-04-04"
+}

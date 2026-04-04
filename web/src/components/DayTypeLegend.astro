@@ -1,0 +1,21 @@
+---
+import { dayTypeColorMap } from "../lib/dayTypeColors";
+
+const items = [
+  { dayType: "weekday", label: "Hverdag", description: "Vanlige salgstider" },
+  { dayType: "saturday", label: "Lørdag", description: "Reduserte salgstider" },
+  { dayType: "pre_holiday", label: "Helligdagsaften", description: "Sterkt reduserte salgstider" },
+  { dayType: "public_holiday", label: "Stengt", description: "Salg ikke tillatt" },
+];
+---
+
+<div class="flex flex-wrap gap-x-4 gap-y-1">
+  {items.map((item) => (
+    <span class="flex items-center gap-1.5 text-xs text-slate-400">
+      <span class={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${dayTypeColorMap[item.dayType]}`}>
+        {item.label}
+      </span>
+      {item.description}
+    </span>
+  ))}
+</div>

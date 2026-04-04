@@ -71,6 +71,14 @@ def sample_municipality_oslo(project_root: Path) -> dict:
 
 
 @pytest.fixture
+def sample_municipality_trondheim(project_root: Path) -> dict:
+    """Load Trondheim municipality JSON."""
+    path = project_root / "data" / "municipalities" / "trondheim.json"
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+@pytest.fixture
 def all_municipalities(project_root: Path) -> list[dict]:
     """Load all municipality JSON files from data/municipalities/."""
     municipalities_dir = project_root / "data" / "municipalities"
