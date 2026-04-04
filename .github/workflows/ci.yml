@@ -73,3 +73,22 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Verify zero SonarCloud issues
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          set -euo pipefail
+          PROJECT_KEY=$(grep '^sonar.projectKey=' sonar-project.properties | cut -d= -f2)
+          for attempt in 1 2 3; do
+            RESPONSE=$(curl --fail --silent --show-error -u "${SONAR_TOKEN}:" \
+              "https://sonarcloud.io/api/issues/search?componentKeys=${PROJECT_KEY}&issueStatuses=OPEN,CONFIRMED&ps=1")
+            TOTAL=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['total'])")
+            if [ -n "$TOTAL" ]; then break; fi
+            echo "Retry $attempt..."
+            sleep 5
+          done
+          echo "Open SonarCloud issues: $TOTAL"
+          if [ "$TOTAL" -gt 0 ]; then
+            echo "::error::SonarCloud has $TOTAL open issue(s). Fix them before merging."
+            exit 1
+          fi

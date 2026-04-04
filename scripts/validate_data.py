@@ -39,6 +39,8 @@ NATIONAL_MAX = {
     "special_day": "18:00",
 }
 
+_JSON_GLOB = "*.json"
+
 
 def validate_municipality_schema(data: dict) -> list[str]:
     """Validate a municipality JSON file. Returns list of errors."""
@@ -87,12 +89,9 @@ def validate_calendar(calendar: list[dict]) -> list[str]:
     return errors
 
 
-def validate_generated_municipality(
-    gen_data: dict, days: list[dict], calendar: list[dict]
-) -> list[str]:
-    """Validate generated municipality data against calendar."""
+def _validate_date_coverage(days: list[dict], calendar: list[dict]) -> list[str]:
+    """Check generated days match calendar dates exactly."""
     errors = []
-
     cal_dates = {entry["date"] for entry in calendar}
     gen_dates = {entry["date"] for entry in days}
 
@@ -104,70 +103,94 @@ def validate_generated_municipality(
     if extra:
         errors.append(f"Extra {len(extra)} dates not in calendar: {sorted(extra)[:5]}...")
 
-    # Validate vinmonopolet_summary on each day
+    return errors
+
+
+def _validate_vinmonopolet_summaries(days: list[dict]) -> list[str]:
+    """Validate vinmonopolet_summary field on each day. Stops at first error."""
+    errors = []
     for day in days:
         if "vinmonopolet_summary" not in day:
             errors.append(f"{day['date']}: missing vinmonopolet_summary field")
-            break  # Only report once
+            return errors
         summary = day["vinmonopolet_summary"]
         if summary is not None and not isinstance(summary, dict):
             errors.append(f"{day['date']}: vinmonopolet_summary must be dict or null")
-            break
+            return errors
         if isinstance(summary, dict):
             stype = summary.get("type")
             if stype not in {"uniform", "range", "closed"}:
                 errors.append(f"{day['date']}: vinmonopolet_summary invalid type '{stype}'")
-                break
+                return errors
+    return errors
 
-    # Validate vinmonopolet_day_summary
+
+def _validate_day_summary(gen_data: dict, num_days: int) -> list[str]:
+    """Validate vinmonopolet_day_summary field. Stops at first type error."""
+    errors = []
     if "vinmonopolet_day_summary" not in gen_data:
         errors.append("Missing vinmonopolet_day_summary field")
-    else:
-        day_summary = gen_data["vinmonopolet_day_summary"]
-        has_stores = len(gen_data.get("vinmonopolet_stores", [])) > 0
-        if has_stores:
-            expected_len = min(14, len(days))
-            if len(day_summary) != expected_len:
-                errors.append(
-                    f"vinmonopolet_day_summary: expected {expected_len} entries, "
-                    f"got {len(day_summary)}"
-                )
-        for i, entry in enumerate(day_summary):
-            if entry is not None and not isinstance(entry, dict):
-                errors.append(f"vinmonopolet_day_summary[{i}]: must be dict or null")
-                break
-            if isinstance(entry, dict):
-                etype = entry.get("type")
-                if etype not in {"uniform", "range", "closed"}:
-                    errors.append(f"vinmonopolet_day_summary[{i}]: invalid type '{etype}'")
-                    break
+        return errors
 
-    # Validate vinmonopolet_stores
+    day_summary = gen_data["vinmonopolet_day_summary"]
+    has_stores = len(gen_data.get("vinmonopolet_stores", [])) > 0
+    if has_stores:
+        expected_len = min(14, num_days)
+        if len(day_summary) != expected_len:
+            errors.append(
+                f"vinmonopolet_day_summary: expected {expected_len} entries, got {len(day_summary)}"
+            )
+    for i, entry in enumerate(day_summary):
+        if entry is not None and not isinstance(entry, dict):
+            errors.append(f"vinmonopolet_day_summary[{i}]: must be dict or null")
+            return errors
+        if isinstance(entry, dict):
+            etype = entry.get("type")
+            if etype not in {"uniform", "range", "closed"}:
+                errors.append(f"vinmonopolet_day_summary[{i}]: invalid type '{etype}'")
+                return errors
+    return errors
+
+
+def _validate_store_entries(gen_data: dict, days: list[dict]) -> list[str]:
+    """Validate vinmonopolet_stores entries. Stops date check at first mismatch."""
+    errors = []
     if "vinmonopolet_stores" not in gen_data:
         errors.append("Missing vinmonopolet_stores field")
-    else:
-        stores = gen_data["vinmonopolet_stores"]
-        for store in stores:
-            sid = store.get("store_id", "?")
-            for field in ("store_id", "name", "address", "hours"):
-                if field not in store:
-                    errors.append(f"vinmonopolet_stores[{sid}]: missing '{field}'")
-            hours = store.get("hours", [])
-            if len(hours) != min(14, len(days)):
-                errors.append(
-                    f"vinmonopolet_stores[{sid}]: expected {min(14, len(days))} "
-                    f"hours entries, got {len(hours)}"
-                )
-            # Verify hour dates match the first 14 calendar days
-            day_dates = [d["date"] for d in days[:14]]
-            for i, h in enumerate(hours):
-                if i < len(day_dates) and h.get("date") != day_dates[i]:
-                    errors.append(
-                        f"vinmonopolet_stores[{sid}]: hours[{i}].date "
-                        f"{h.get('date')} != {day_dates[i]}"
-                    )
-                    break
+        return errors
 
+    stores = gen_data["vinmonopolet_stores"]
+    for store in stores:
+        sid = store.get("store_id", "?")
+        for field in ("store_id", "name", "address", "hours"):
+            if field not in store:
+                errors.append(f"vinmonopolet_stores[{sid}]: missing '{field}'")
+        hours = store.get("hours", [])
+        if len(hours) != min(14, len(days)):
+            errors.append(
+                f"vinmonopolet_stores[{sid}]: expected {min(14, len(days))} "
+                f"hours entries, got {len(hours)}"
+            )
+        day_dates = [d["date"] for d in days[:14]]
+        for i, h in enumerate(hours):
+            if i < len(day_dates) and h.get("date") != day_dates[i]:
+                errors.append(
+                    f"vinmonopolet_stores[{sid}]: hours[{i}].date {h.get('date')} != {day_dates[i]}"
+                )
+                break
+
+    return errors
+
+
+def validate_generated_municipality(
+    gen_data: dict, days: list[dict], calendar: list[dict]
+) -> list[str]:
+    """Validate generated municipality data against calendar."""
+    errors: list[str] = []
+    errors.extend(_validate_date_coverage(days, calendar))
+    errors.extend(_validate_vinmonopolet_summaries(days))
+    errors.extend(_validate_day_summary(gen_data, len(days)))
+    errors.extend(_validate_store_entries(gen_data, days))
     return errors
 
 
@@ -204,13 +227,120 @@ _TIME_RE = re.compile(r"^\d{2}:\d{2}$")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
+def _validate_vm_metadata(metadata: dict, num_stores: int) -> list[str]:
+    """Validate vinmonopolet metadata fields."""
+    errors = []
+    if "fetched_at" not in metadata:
+        errors.append("Missing metadata.fetched_at")
+    if "window_start" not in metadata or "window_end" not in metadata:
+        errors.append("Missing metadata.window_start or window_end")
+    if metadata.get("total_stores") != num_stores:
+        errors.append(
+            f"metadata.total_stores ({metadata.get('total_stores')}) != len(stores) ({num_stores})"
+        )
+    return errors
+
+
+def _validate_store_fields(stores: list[dict]) -> list[str]:
+    """Validate required fields, numeric store_id, and duplicates."""
+    errors = []
+    seen_ids: set[str] = set()
+    for i, store in enumerate(stores):
+        sid = store.get("store_id", f"index-{i}")
+        for field in REQUIRED_STORE_FIELDS:
+            if field not in store:
+                errors.append(f"Store {sid}: missing field '{field}'")
+        if "store_id" in store and not store["store_id"].isdigit():
+            errors.append(f"Store {sid}: store_id must be numeric")
+        if sid in seen_ids:
+            errors.append(f"Duplicate store_id: {sid}")
+        seen_ids.add(sid)
+    return errors
+
+
+def _validate_standard_hours(store: dict) -> list[str]:
+    """Validate standard_hours for a single store."""
+    errors = []
+    sid = store.get("store_id", "?")
+    sh = store.get("standard_hours", {})
+    for day in WEEKDAY_KEYS:
+        if day not in sh:
+            errors.append(f"Store {sid}: missing standard_hours.{day}")
+    if sh.get("sunday") is not None:
+        errors.append(f"Store {sid}: sunday must be null")
+    for day in WEEKDAY_KEYS:
+        val = sh.get(day)
+        if (
+            val is not None
+            and day != "sunday"
+            and not (_TIME_RE.match(val.get("open", "")) and _TIME_RE.match(val.get("close", "")))
+        ):
+            errors.append(f"Store {sid}: invalid time in standard_hours.{day}")
+    return errors
+
+
+def _validate_actual_hours(store: dict) -> list[str]:
+    """Validate actual_hours for a single store."""
+    errors = []
+    sid = store.get("store_id", "?")
+    ah = store.get("actual_hours", {})
+    if len(ah) != 7:
+        errors.append(f"Store {sid}: actual_hours must have exactly 7 entries, got {len(ah)}")
+    for dk, dv in ah.items():
+        if not _DATE_RE.match(dk):
+            errors.append(f"Store {sid}: invalid date key in actual_hours: {dk}")
+        if dv is not None and not (
+            _TIME_RE.match(dv.get("open", "")) and _TIME_RE.match(dv.get("close", ""))
+        ):
+            errors.append(f"Store {sid}: invalid time in actual_hours.{dk}")
+    return errors
+
+
+def _validate_window_dates(store: dict, metadata: dict) -> list[str]:
+    """Validate actual_hours date window matches metadata."""
+    errors = []
+    ah = store.get("actual_hours", {})
+    if len(ah) != 7:
+        return errors
+    if "window_start" not in metadata or "window_end" not in metadata:
+        return errors
+    sid = store.get("store_id", "?")
+    store_dates = sorted(ah.keys())
+    if store_dates[0] != metadata.get("window_start"):
+        errors.append(f"Store {sid}: actual_hours start {store_dates[0]} != window_start")
+    if store_dates[-1] != metadata.get("window_end"):
+        errors.append(f"Store {sid}: actual_hours end {store_dates[-1]} != window_end")
+    return errors
+
+
+def _validate_municipality_coverage(
+    stores: list[dict], municipalities_dir: Path | None
+) -> tuple[list[str], list[str]]:
+    """Check municipality coverage. Returns (coverage_info, unmapped_info)."""
+    coverage_info = []
+    unmapped_info = []
+
+    if municipalities_dir and municipalities_dir.exists():
+        configured = {p.stem for p in municipalities_dir.glob(_JSON_GLOB)}
+        mapped = {s["municipality"] for s in stores if s.get("municipality")}
+        missing = configured - mapped
+        if missing:
+            coverage_info.append(f"Municipalities with no Vinmonopolet stores: {sorted(missing)}")
+
+    unmapped = sum(1 for s in stores if s.get("municipality") is None)
+    if unmapped:
+        unmapped_info.append(f"{unmapped} stores have municipality=null (not mapped)")
+
+    return coverage_info, unmapped_info
+
+
 def validate_vinmonopolet(
     data: dict,
     municipalities_dir: Path | None = None,
 ) -> tuple[list[str], list[str]]:
     """Validate vinmonopolet.json. Returns (errors, info messages)."""
-    errors = []
-    info = []
+    errors: list[str] = []
+    info: list[str] = []
 
     if "metadata" not in data:
         errors.append("Missing metadata")
@@ -222,142 +352,97 @@ def validate_vinmonopolet(
     metadata = data["metadata"]
     stores = data["stores"]
 
-    # Metadata checks
-    if "fetched_at" not in metadata:
-        errors.append("Missing metadata.fetched_at")
-    if "window_start" not in metadata or "window_end" not in metadata:
-        errors.append("Missing metadata.window_start or window_end")
-    if metadata.get("total_stores") != len(stores):
-        errors.append(
-            f"metadata.total_stores ({metadata.get('total_stores')}) != len(stores) ({len(stores)})"
-        )
+    errors.extend(_validate_vm_metadata(metadata, len(stores)))
 
     if len(stores) == 0:
         errors.append("No stores found")
         return errors, info
 
-    # Per-store validation
-    seen_ids: set[str] = set()
-    window_dates = (
-        {metadata["window_start"], metadata["window_end"]}
-        if "window_start" in metadata and "window_end" in metadata
-        else set()
-    )
+    errors.extend(_validate_store_fields(stores))
+    for store in stores:
+        errors.extend(_validate_standard_hours(store))
+        errors.extend(_validate_actual_hours(store))
+        errors.extend(_validate_window_dates(store, metadata))
 
-    for i, store in enumerate(stores):
-        sid = store.get("store_id", f"index-{i}")
-
-        for field in REQUIRED_STORE_FIELDS:
-            if field not in store:
-                errors.append(f"Store {sid}: missing field '{field}'")
-
-        # store_id must be numeric
-        if "store_id" in store and not store["store_id"].isdigit():
-            errors.append(f"Store {sid}: store_id must be numeric")
-
-        # Duplicate check
-        if sid in seen_ids:
-            errors.append(f"Duplicate store_id: {sid}")
-        seen_ids.add(sid)
-
-        # standard_hours
-        sh = store.get("standard_hours", {})
-        for day in WEEKDAY_KEYS:
-            if day not in sh:
-                errors.append(f"Store {sid}: missing standard_hours.{day}")
-        if sh.get("sunday") is not None:
-            errors.append(f"Store {sid}: sunday must be null")
-        for day in WEEKDAY_KEYS:
-            val = sh.get(day)
-            if val is not None and day != "sunday":
-                if not (
-                    _TIME_RE.match(val.get("open", "")) and _TIME_RE.match(val.get("close", ""))
-                ):
-                    errors.append(f"Store {sid}: invalid time in standard_hours.{day}")
-
-        # actual_hours
-        ah = store.get("actual_hours", {})
-        if len(ah) != 7:
-            errors.append(f"Store {sid}: actual_hours must have exactly 7 entries, got {len(ah)}")
-        for dk, dv in ah.items():
-            if not _DATE_RE.match(dk):
-                errors.append(f"Store {sid}: invalid date key in actual_hours: {dk}")
-            if dv is not None:
-                if not (_TIME_RE.match(dv.get("open", "")) and _TIME_RE.match(dv.get("close", ""))):
-                    errors.append(f"Store {sid}: invalid time in actual_hours.{dk}")
-
-        # Check actual_hours window matches metadata
-        if len(ah) == 7 and window_dates:
-            store_dates = sorted(ah.keys())
-            if store_dates[0] != metadata.get("window_start"):
-                errors.append(f"Store {sid}: actual_hours start {store_dates[0]} != window_start")
-            if store_dates[-1] != metadata.get("window_end"):
-                errors.append(f"Store {sid}: actual_hours end {store_dates[-1]} != window_end")
-
-    # Municipality coverage: check which configured municipalities have no stores
-    if municipalities_dir and municipalities_dir.exists():
-        configured = {p.stem for p in municipalities_dir.glob("*.json")}
-        mapped = {s["municipality"] for s in stores if s.get("municipality")}
-        missing = configured - mapped
-        if missing:
-            info.append(f"Municipalities with no Vinmonopolet stores: {sorted(missing)}")
-
-    # Informational: count unmapped stores
-    unmapped = sum(1 for s in stores if s.get("municipality") is None)
-    if unmapped:
-        info.append(f"{unmapped} stores have municipality=null (not mapped)")
+    coverage_info, unmapped_info = _validate_municipality_coverage(stores, municipalities_dir)
+    info.extend(coverage_info)
+    info.extend(unmapped_info)
 
     return errors, info
+
+
+def _validate_municipality_files(municipalities_dir: Path) -> list[str]:
+    """Validate all municipality source JSON files."""
+    errors = []
+    for path in sorted(municipalities_dir.glob(_JSON_GLOB)):
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        file_errors = validate_municipality_schema(data)
+        if file_errors:
+            errors.extend(f"{path.name}: {e}" for e in file_errors)
+    return errors
+
+
+def _validate_calendar_file(calendar_path: Path) -> tuple[list[str], list[dict] | None]:
+    """Validate calendar.json. Returns (errors, loaded calendar or None)."""
+    if not calendar_path.exists():
+        return [], None
+    with open(calendar_path, encoding="utf-8") as f:
+        calendar = json.load(f)
+    errors = validate_calendar(calendar)
+    return [f"calendar.json: {e}" for e in errors], calendar
+
+
+def _validate_generated_files(gen_dir: Path, calendar: list[dict]) -> list[str]:
+    """Validate all generated municipality files against calendar."""
+    errors = []
+    for path in sorted(gen_dir.glob(_JSON_GLOB)):
+        with open(path, encoding="utf-8") as f:
+            gen_data = json.load(f)
+        days = gen_data.get("days", [])
+        file_errors = validate_generated_municipality(gen_data, days, calendar)
+        errors.extend(f"{path.name}: {e}" for e in file_errors)
+        file_errors = validate_national_max_compliance(days)
+        errors.extend(f"{path.name}: {e}" for e in file_errors)
+    return errors
+
+
+def _validate_vinmonopolet_file(
+    vinmonopolet_path: Path, municipalities_dir: Path
+) -> tuple[list[str], list[str]]:
+    """Validate vinmonopolet.json file. Returns (errors, info)."""
+    if not vinmonopolet_path.exists():
+        return [], []
+    with open(vinmonopolet_path, encoding="utf-8") as f:
+        vinmonopolet_data = json.load(f)
+    errors, info = validate_vinmonopolet(vinmonopolet_data, municipalities_dir)
+    return [f"vinmonopolet.json: {e}" for e in errors], info
 
 
 def main() -> int:
     """CLI entry point. Returns 0 on success, 1 on failure."""
     data_dir = Path(__file__).parent.parent / "data"
-    all_errors = []
-
-    # Validate municipality source files
     municipalities_dir = data_dir / "municipalities"
-    for path in sorted(municipalities_dir.glob("*.json")):
-        with open(path, encoding="utf-8") as f:
-            data = json.load(f)
-        errors = validate_municipality_schema(data)
-        if errors:
-            all_errors.extend(f"{path.name}: {e}" for e in errors)
 
-    # Validate calendar
+    all_errors = _validate_municipality_files(municipalities_dir)
+
     calendar_path = data_dir / "generated" / "calendar.json"
-    if calendar_path.exists():
-        with open(calendar_path, encoding="utf-8") as f:
-            calendar = json.load(f)
-        errors = validate_calendar(calendar)
-        all_errors.extend(f"calendar.json: {e}" for e in errors)
+    cal_errors, calendar = _validate_calendar_file(calendar_path)
+    all_errors.extend(cal_errors)
 
-        # Validate generated municipalities
+    if calendar is not None:
         gen_dir = data_dir / "generated" / "municipalities"
         if gen_dir.exists():
-            for path in sorted(gen_dir.glob("*.json")):
-                with open(path, encoding="utf-8") as f:
-                    gen_data = json.load(f)
-                days = gen_data.get("days", [])
-
-                errors = validate_generated_municipality(gen_data, days, calendar)
-                all_errors.extend(f"{path.name}: {e}" for e in errors)
-
-                errors = validate_national_max_compliance(days)
-                all_errors.extend(f"{path.name}: {e}" for e in errors)
+            all_errors.extend(_validate_generated_files(gen_dir, calendar))
     else:
         print("Note: calendar.json not found (run build_calendar.py first)")
 
-    # Validate vinmonopolet
     vinmonopolet_path = data_dir / "generated" / "vinmonopolet.json"
-    if vinmonopolet_path.exists():
-        with open(vinmonopolet_path, encoding="utf-8") as f:
-            vinmonopolet_data = json.load(f)
-        errors, info = validate_vinmonopolet(vinmonopolet_data, municipalities_dir)
-        all_errors.extend(f"vinmonopolet.json: {e}" for e in errors)
-        for msg in info:
-            print(f"  Info: {msg}")
-    else:
+    vm_errors, vm_info = _validate_vinmonopolet_file(vinmonopolet_path, municipalities_dir)
+    all_errors.extend(vm_errors)
+    for msg in vm_info:
+        print(f"  Info: {msg}")
+    if not vinmonopolet_path.exists():
         print("Note: vinmonopolet.json not found (run fetch_vinmonopolet.py first)")
 
     if all_errors:
