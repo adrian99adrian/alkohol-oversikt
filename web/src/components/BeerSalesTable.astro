@@ -11,9 +11,8 @@ const { days } = Astro.props;
 function formatVinmonopolet(summary: VinmonopoletSummary | null): string {
   if (!summary || summary.type === "closed") return "Stengt";
   if (summary.type === "uniform") return `${summary.open}–${summary.close}`;
-  // range: show closing time range
-  if (summary.min_close === summary.max_close) return `${summary.open ?? summary.min_open}–${summary.min_close}`;
-  return `${summary.min_close}–${summary.max_close}`;
+  // range: show earliest open to latest close for compact display
+  return `${summary.min_open}–${summary.max_close}`;
 }
 
 const weekdayShort: Record<string, string> = {
