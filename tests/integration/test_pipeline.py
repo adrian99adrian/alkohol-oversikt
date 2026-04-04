@@ -329,7 +329,7 @@ def _setup_tmp_data_dir(tmp_path: Path) -> None:
         (real_data / "town_municipality_map.json").read_bytes()
     )
 
-    # Create minimal vinmonopolet.json (stores are optional)
+    # Minimal stub — stores are optional for municipality generation
     gen_dir = tmp_path / "generated"
     gen_dir.mkdir()
     (gen_dir / "vinmonopolet.json").write_text('{"stores": []}', encoding="utf-8")
