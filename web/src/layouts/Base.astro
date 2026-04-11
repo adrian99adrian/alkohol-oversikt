@@ -1,18 +1,19 @@
 ---
 import { formatDateLong } from "../lib/dateFormat";
+import { siteUrl } from "../lib/config";
 
 interface Props {
   title: string;
   description?: string;
-  url?: string;
+  canonicalPath?: string;
   buildDate?: string;
   lastVerified?: string;
 }
 
-const { title, description, url, buildDate, lastVerified } = Astro.props;
+const { title, description, canonicalPath, buildDate, lastVerified } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const siteUrl = "https://adrian99adrian.github.io/alkohol-oversikt";
 const ogImageUrl = `${siteUrl}/og-image.png`;
+const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : undefined;
 ---
 
 <!doctype html>
@@ -25,8 +26,10 @@ const ogImageUrl = `${siteUrl}/og-image.png`;
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
-    {url && <meta property="og:url" content={url} />}
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="475" />
+    <meta property="og:image:height" content="300" />
   </head>
   <body class="min-h-screen bg-slate-900 text-slate-100">
     <nav class="border-b border-slate-700 bg-slate-800">
