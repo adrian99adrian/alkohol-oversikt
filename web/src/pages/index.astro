@@ -34,7 +34,13 @@ const buildDate = new Date().toISOString().slice(0, 10);
 const oldestLastVerified = findOldestLastVerified(municipalities);
 ---
 
-<Base title="Alkohol-oversikt" buildDate={buildDate} lastVerified={oldestLastVerified}>
+<Base
+  title="Alkohol-oversikt"
+  description="Finn ut når ølsalget og Vinmonopolet stenger i din kommune."
+  canonicalPath="/"
+  buildDate={buildDate}
+  lastVerified={oldestLastVerified}
+>
   <div class="flex flex-col items-center text-center">
     <h1 class="mb-2 text-3xl font-bold text-white">Alkohol-oversikt</h1>
     <p class="mb-8 text-slate-300">
