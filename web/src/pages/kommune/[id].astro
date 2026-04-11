@@ -44,8 +44,8 @@ const tomorrow = days[1] ?? null;
 // First 14 days for the table
 const tableDays = days.slice(0, 14);
 
-// Next deviation: first day (inclusive of today) where is_deviation is true
-const nextDeviation = days.find((d) => d.is_deviation) ?? null;
+// Next deviation: first day within the 14-day window where is_deviation is true
+const nextDeviation = tableDays.find((d) => d.is_deviation) ?? null;
 
 // Vinmonopolet day summary for the table (first 14 days)
 const daySummary = vinmonopolet_day_summary ?? [];

@@ -10,48 +10,24 @@
 #   the commit is blocked and you'll see an error explaining what to fix.
 #
 # Checks:
-#   1. Lint    — runs ruff check + format on the whole project
-#   2. Guard   — blocks commits that include gitignored files
-#   3. Fresh   — ensures generated municipality data starts from today
+#   1. Guard   — blocks commits that include gitignored files
+#   2. Gate    — skips lint/tests if no code files are staged
+#   3. Lint    — runs ruff check + format on the whole project
+#   4. Tests   — runs the full pytest suite (including slow/network tests)
+#   5. Fresh   — ensures generated municipality data starts from today
 #
 
-# ── 1. Lint ─────────────────────────────────────────────────────────
-# Only runs if Python files are being committed.
-# Checks the WHOLE project (not just staged files) because a change
-# in one file can cause lint errors in another.
+# ── 1. Gitignore guard ─────────────────────────────────────────────
+# Catches files that were force-added (git add -f) despite being in
+# .gitignore. Prevents accidental commits of local-only files.
 
-if git diff --cached --name-only --diff-filter=ACM | grep -q '\.py$'; then
+STAGED=$(git diff --cached --name-only)
 
-    # Check ruff is installed
-    if ! command -v ruff >/dev/null 2>&1; then
-        echo "[pre-commit] WARNING: ruff not found, skipping lint checks"
-    else
-        echo "[pre-commit] Running ruff check..."
-        if ! ruff check .; then
-            echo ""
-            echo "[pre-commit] BLOCKED: ruff check found issues."
-            exit 1
-        fi
-
-        echo "[pre-commit] Running ruff format --check..."
-        if ! ruff format --check .; then
-            echo ""
-            echo "[pre-commit] BLOCKED: formatting issues found."
-            echo "  Fix with: ruff format ."
-            exit 1
-        fi
-    fi
+if [ -z "$STAGED" ]; then
+    exit 0
 fi
 
-# ── 2. Gitignore guard ─────────────────────────────────────────────
-# Catches files that were force-added (git add -f) despite being in
-# .gitignore. Prevents accidental commits of local-only files like
-# CLAUDE.md or editor configs.
-#
-# --no-index: check gitignore rules even for files already in the index
-# --stdin:    read file paths from stdin instead of arguments
-
-IGNORED=$(git diff --cached --name-only | git check-ignore --stdin --no-index 2>/dev/null || true)
+IGNORED=$(echo "$STAGED" | git check-ignore --stdin --no-index 2>/dev/null || true)
 
 if [ -n "$IGNORED" ]; then
     echo "[pre-commit] BLOCKED: gitignored files are staged:"
@@ -61,10 +37,68 @@ if [ -n "$IGNORED" ]; then
     exit 1
 fi
 
-# ── 3. Generated data freshness ────────────────────────────────────
+echo "[pre-commit] gitignore check passed."
+
+# ── 2. Relevant-change gate ───────────────────────────────────────
+# Only run lint + tests when code-related files are staged.
+
+RELEVANT=$(echo "$STAGED" | grep -E '\.py$|\.ya?ml$|\.sh$|\.toml$|\.txt$|\.json$|\.astro$|\.ts$|\.mjs$|\.properties$' || true)
+
+if [ -z "$RELEVANT" ]; then
+    echo "[pre-commit] no code changes staged — skipping lint and tests."
+else
+    echo "[pre-commit] code changes detected — running lint and tests."
+
+    # ── 3. Lint ────────────────────────────────────────────────────
+    # Only runs if Python files are being committed.
+    # Checks the WHOLE project (not just staged files) because a change
+    # in one file can cause lint errors in another.
+
+    if echo "$STAGED" | grep -q '\.py$'; then
+
+        if ! command -v ruff >/dev/null 2>&1; then
+            echo "[pre-commit] WARNING: ruff not found, skipping lint checks"
+        else
+            echo "[pre-commit] Running ruff check..."
+            if ! ruff check .; then
+                echo ""
+                echo "[pre-commit] BLOCKED: ruff check found issues."
+                exit 1
+            fi
+
+            echo "[pre-commit] Running ruff format --check..."
+            if ! ruff format --check .; then
+                echo ""
+                echo "[pre-commit] BLOCKED: formatting issues found."
+                echo "  Fix with: ruff format ."
+                exit 1
+            fi
+        fi
+    fi
+
+    # ── 4. Tests ───────────────────────────────────────────────────
+    # Only run when Python files are staged — frontend-only changes
+    # can't affect Python test results.
+
+    if echo "$STAGED" | grep -q '\.py$'; then
+        if ! command -v pytest >/dev/null 2>&1; then
+            echo "[pre-commit] WARNING: pytest not found, skipping tests"
+        else
+            echo "[pre-commit] Running pytest..."
+            if ! pytest -q tests/; then
+                echo ""
+                echo "[pre-commit] BLOCKED: tests failed."
+                exit 1
+            fi
+        fi
+    fi
+fi
+
+# ── 5. Generated data freshness ───────────────────────────────────
 # Ensures that staged municipality JSON files start from today.
 # Catches accidental commits of stale data (e.g. built with a past
 # --start-date or an outdated local copy).
+# Runs independently of the code-change gate.
 
 STAGED_GENERATED=$(git diff --cached --name-only -- 'data/generated/municipalities/*.json')
 
