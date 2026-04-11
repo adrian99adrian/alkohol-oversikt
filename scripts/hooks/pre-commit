@@ -85,7 +85,7 @@ else
             echo "[pre-commit] WARNING: pytest not found, skipping tests"
         else
             echo "[pre-commit] Running pytest..."
-            if ! pytest -q tests/ -m "not slow"; then
+            if ! pytest -q tests/; then
                 echo ""
                 echo "[pre-commit] BLOCKED: tests failed."
                 exit 1
