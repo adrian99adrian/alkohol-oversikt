@@ -172,6 +172,7 @@ def build_day_entry(d: date, day_info: dict, municipality: dict) -> dict:
         is_deviation = close != normal_saturday or ls_close is not None
     else:  # Mon–Fri
         normal_weekday = min("20:00", beer["weekday_close"])
+        # close is None when sale is forbidden (public holiday) → always a deviation
         is_deviation = close != normal_weekday or ls_close is not None
 
     # Build comment

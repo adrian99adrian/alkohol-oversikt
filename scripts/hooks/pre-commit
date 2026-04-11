@@ -77,15 +77,19 @@ else
     fi
 
     # ── 4. Tests ───────────────────────────────────────────────────
+    # Only run when Python files are staged — frontend-only changes
+    # can't affect Python test results.
 
-    if ! command -v pytest >/dev/null 2>&1; then
-        echo "[pre-commit] WARNING: pytest not found, skipping tests"
-    else
-        echo "[pre-commit] Running pytest..."
-        if ! pytest -q tests/ -m "not slow"; then
-            echo ""
-            echo "[pre-commit] BLOCKED: tests failed."
-            exit 1
+    if echo "$STAGED" | grep -q '\.py$'; then
+        if ! command -v pytest >/dev/null 2>&1; then
+            echo "[pre-commit] WARNING: pytest not found, skipping tests"
+        else
+            echo "[pre-commit] Running pytest..."
+            if ! pytest -q tests/ -m "not slow"; then
+                echo ""
+                echo "[pre-commit] BLOCKED: tests failed."
+                exit 1
+            fi
         fi
     fi
 fi
