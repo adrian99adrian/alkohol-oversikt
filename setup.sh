@@ -7,17 +7,19 @@ chmod +x scripts/hooks/pre-commit 2>/dev/null || true
 echo "Git hooks configured. Pre-commit hook is now active."
 
 # ── Python dependencies ────────────────────────────────────────────
-# Try normal pip first; fall back to --user if blocked by PEP 668
-# (externally-managed-environment, common on Debian/Ubuntu and WSL).
-if pip install -r requirements.txt 2>/dev/null; then
-  echo "Python dependencies installed."
-elif pip install --user -r requirements.txt 2>/dev/null; then
-  echo "Python dependencies installed (--user)."
+# On Windows (Git Bash / WSL), pip.exe is the native Windows pip.
+# Prefer pip.exe so we don't accidentally hit WSL's locked-down Python.
+if command -v pip.exe >/dev/null 2>&1; then
+  PIP=pip.exe
+elif command -v pip >/dev/null 2>&1; then
+  PIP=pip
 else
-  echo "ERROR: could not install Python dependencies."
-  echo "  Try: python -m pip install -r requirements.txt"
+  echo "ERROR: pip not found. Install Python first: https://www.python.org/"
   exit 1
 fi
+
+$PIP install -r requirements.txt
+echo "Python dependencies installed."
 
 # ── Frontend dependencies ──────────────────────────────────────────
 if command -v npm >/dev/null 2>&1; then
