@@ -7,9 +7,11 @@ chmod +x scripts/hooks/pre-commit 2>/dev/null || true
 echo "Git hooks configured. Pre-commit hook is now active."
 
 # ── Python dependencies ────────────────────────────────────────────
-# On Windows (Git Bash / WSL), pip.exe is the native Windows pip.
-# Prefer pip.exe so we don't accidentally hit WSL's locked-down Python.
-if command -v pip.exe >/dev/null 2>&1; then
+# Prefer "python -m pip" so we respect an active virtualenv.
+# Fall back to pip.exe (Windows native) then pip.
+if python -m pip --version >/dev/null 2>&1; then
+  PIP="python -m pip"
+elif command -v pip.exe >/dev/null 2>&1; then
   PIP=pip.exe
 elif command -v pip >/dev/null 2>&1; then
   PIP=pip
@@ -18,14 +20,18 @@ else
   exit 1
 fi
 
-if $PIP install -r requirements.txt 2>/dev/null; then
-  echo "Python dependencies installed."
-elif $PIP install --user -r requirements.txt; then
+if ! $PIP install -r requirements.txt; then
+  echo ""
+  echo "pip install failed. Retrying with --user..."
+  if ! $PIP install --user -r requirements.txt; then
+    echo ""
+    echo "ERROR: could not install Python dependencies."
+    echo "  Try using a virtual environment: python -m venv .venv && source .venv/bin/activate"
+    exit 1
+  fi
   echo "Python dependencies installed (--user)."
 else
-  echo "ERROR: could not install Python dependencies."
-  echo "  Try using a virtual environment: python -m venv .venv && source .venv/bin/activate"
-  exit 1
+  echo "Python dependencies installed."
 fi
 
 # ── Frontend dependencies ──────────────────────────────────────────

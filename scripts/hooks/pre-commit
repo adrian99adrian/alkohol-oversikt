@@ -13,7 +13,7 @@
 #   1. Guard   — blocks commits that include gitignored files
 #   2. Gate    — skips lint/tests if no code files are staged
 #   3. Lint    — runs ruff check + format on the whole project
-#   4. Tests   — runs pytest (excluding slow/network tests)
+#   4. Tests   — runs the full pytest suite (including slow/network tests)
 #   5. Fresh   — ensures generated municipality data starts from today
 #
 

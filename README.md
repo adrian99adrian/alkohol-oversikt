@@ -16,5 +16,5 @@ The pre-commit hook runs automatically before every `git commit` and checks:
 
 1. **Gitignore guard** — blocks accidentally staged gitignored files
 2. **Lint** — `ruff check` + `ruff format` on the whole project
-3. **Tests** — `pytest` (excluding slow/network tests)
+3. **Tests** — full `pytest` suite (including slow/network tests)
 4. **Generated data freshness** — ensures municipality data hasn't been overwritten by test output
