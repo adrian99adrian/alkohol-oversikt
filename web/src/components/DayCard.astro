@@ -2,6 +2,8 @@
 import DayBadge from "./DayBadge.astro";
 import type { DayData, VinmonopoletSummary } from "../types";
 import { formatDateLong } from "../lib/dateFormat";
+import { storeLabel, formatVinmonopoletRange } from "../lib/vinmonopolet";
+import { capitalizeFirst } from "../lib/dataUtils";
 
 interface Props {
   label: string;
@@ -10,10 +12,6 @@ interface Props {
 }
 
 const { label, day, vinmonopoletSummary } = Astro.props;
-
-function storeLabel(count: number): string {
-  return count === 1 ? "butikk" : "butikker";
-}
 ---
 
 <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
@@ -22,7 +20,7 @@ function storeLabel(count: number): string {
   {day ? (
     <div>
       <p class="mb-2 text-sm text-slate-400">
-        {day.weekday.charAt(0).toUpperCase() + day.weekday.slice(1)} {formatDateLong(day.date)}
+        {capitalizeFirst(day.weekday)} {formatDateLong(day.date)}
       </p>
 
       <div class="mb-3">
@@ -71,11 +69,11 @@ function storeLabel(count: number): string {
       {vinmonopoletSummary && vinmonopoletSummary.type === "range" && (
         <div class="mt-2">
           <p class="text-slate-200">
-            Vinmonopolet: <span class="font-semibold text-white">Åpner {vinmonopoletSummary.min_open === vinmonopoletSummary.max_open ? vinmonopoletSummary.min_open : `${vinmonopoletSummary.min_open}–${vinmonopoletSummary.max_open}`}</span>
+            Vinmonopolet: <span class="font-semibold text-white">Åpner {formatVinmonopoletRange(vinmonopoletSummary.min_open!, vinmonopoletSummary.max_open!)}</span>
             <span class="text-sm text-slate-400"> ({vinmonopoletSummary.open_count} {storeLabel(vinmonopoletSummary.open_count)})</span>
           </p>
           <p class="text-slate-200">
-            Vinmonopolet: <span class="font-semibold text-white">Stenger {vinmonopoletSummary.min_close === vinmonopoletSummary.max_close ? vinmonopoletSummary.min_close : `${vinmonopoletSummary.min_close}–${vinmonopoletSummary.max_close}`}</span>
+            Vinmonopolet: <span class="font-semibold text-white">Stenger {formatVinmonopoletRange(vinmonopoletSummary.min_close!, vinmonopoletSummary.max_close!)}</span>
             <span class="text-sm text-slate-400"> ({vinmonopoletSummary.open_count} {storeLabel(vinmonopoletSummary.open_count)})</span>
           </p>
           {vinmonopoletSummary.closed_count > 0 && (

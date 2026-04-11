@@ -1,12 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
+import { normalizeBasePath } from "../lib/dataUtils";
 
-const base = import.meta.env.BASE_URL;
-const basePath = base.endsWith("/") ? base : `${base}/`;
+const basePath = normalizeBasePath(import.meta.env.BASE_URL);
 ---
 
 <Base title="Siden ble ikke funnet — Alkohol-oversikt">
-  <div class="flex flex-col items-center text-center">
+  <div id="not-found" class="flex flex-col items-center text-center" data-base-path={basePath}>
     <p class="mb-4 text-6xl font-bold text-slate-600">404</p>
 
     <div id="generic-message">
@@ -41,27 +41,15 @@ const basePath = base.endsWith("/") ? base : `${base}/`;
     </a>
   </div>
 
-  <script define:vars={{ basePath }}>
-    const path = window.location.pathname;
+  <script>
+    import { stripBasePrefix, normalizePath, isKommunePath } from "../lib/pathUtils";
 
-    // Strip the base URL prefix to get the relative path
-    const basePrefix = basePath.endsWith("/")
-      ? basePath.slice(0, -1)
-      : basePath;
-    let relative = path;
-    if (path.startsWith(basePrefix)) {
-      relative = path.slice(basePrefix.length);
-    }
+    const container = document.getElementById("not-found")!;
+    const basePath = container.dataset.basePath ?? "/";
 
-    // Normalize: ensure leading slash, strip trailing slash
-    if (!relative.startsWith("/")) relative = "/" + relative;
-    if (relative.endsWith("/") && relative.length > 1)
-      relative = relative.slice(0, -1);
+    const relative = normalizePath(stripBasePrefix(window.location.pathname, basePath));
 
-    // Match /kommune/<id> (exactly one segment after /kommune/)
-    const kommunePattern = /^\/kommune\/[^/]+$/;
-
-    if (kommunePattern.test(relative)) {
+    if (isKommunePath(relative)) {
       document.getElementById("generic-message")?.classList.add("hidden");
       document.getElementById("kommune-message")?.classList.remove("hidden");
     }

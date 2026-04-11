@@ -1,4 +1,6 @@
 ---
+import { formatDateLong } from "../lib/dateFormat";
+
 interface Props {
   title: string;
   buildDate?: string;
@@ -7,11 +9,6 @@ interface Props {
 
 const { title, buildDate, lastVerified } = Astro.props;
 const base = import.meta.env.BASE_URL;
-
-function formatDateNorwegian(dateStr: string): string {
-  const [year, month, day] = dateStr.split("-");
-  return `${day}.${month}.${year}`;
-}
 ---
 
 <!doctype html>
@@ -54,8 +51,8 @@ function formatDateNorwegian(dateStr: string): string {
         </div>
         {buildDate && (
           <p class="mt-1 text-slate-500">
-            Sist oppdatert: {formatDateNorwegian(buildDate)}
-            {lastVerified && <span> · Regler sist sjekket: {formatDateNorwegian(lastVerified)}</span>}
+            Sist oppdatert: {formatDateLong(buildDate)}
+            {lastVerified && <span> · Regler sist sjekket: {formatDateLong(lastVerified)}</span>}
           </p>
         )}
       </div>

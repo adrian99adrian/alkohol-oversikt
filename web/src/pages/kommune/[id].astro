@@ -8,6 +8,7 @@ import BeerSalesTable from "../../components/BeerSalesTable.astro";
 import VinmonopoletList from "../../components/VinmonopoletList.astro";
 import type { MunicipalityData } from "../../types";
 import { formatDateShort, formatDateLong } from "../../lib/dateFormat";
+import { normalizeBasePath, isDataFresh, findNextDeviation, capitalizeFirst } from "../../lib/dataUtils";
 
 export function getStaticPaths() {
   const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -31,12 +32,11 @@ export function getStaticPaths() {
 const { data } = Astro.props as { data: MunicipalityData };
 const { municipality, days, vinmonopolet_stores, vinmonopolet_day_summary } = data;
 
-const base = import.meta.env.BASE_URL;
-const basePath = base.endsWith("/") ? base : `${base}/`;
+const basePath = normalizeBasePath(import.meta.env.BASE_URL);
 
 // Compare first day in data to the actual build date to detect stale data
 const buildDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-const dataIsFresh = days.length > 0 && days[0].date === buildDate;
+const dataIsFresh = isDataFresh(days, buildDate);
 
 const today = days[0] ?? null;
 const tomorrow = days[1] ?? null;
@@ -45,7 +45,7 @@ const tomorrow = days[1] ?? null;
 const tableDays = days.slice(0, 14);
 
 // Next deviation: first day within the 14-day window where is_deviation is true
-const nextDeviation = tableDays.find((d) => d.is_deviation) ?? null;
+const nextDeviation = findNextDeviation(tableDays);
 
 // Vinmonopolet day summary for the table (first 14 days)
 const daySummary = vinmonopolet_day_summary ?? [];
@@ -82,7 +82,7 @@ const daySummary = vinmonopolet_day_summary ?? [];
       <div class="mb-6 rounded-lg border border-amber-700 bg-amber-900/30 p-3">
         <p class="text-sm text-amber-200">
           <span class="font-semibold">Neste avvik:</span>{" "}
-          {nextDeviation.weekday.charAt(0).toUpperCase() + nextDeviation.weekday.slice(1)}{" "}
+          {capitalizeFirst(nextDeviation.weekday)}{" "}
           {formatDateShort(nextDeviation.date)} —{" "}
           {nextDeviation.comment ?? nextDeviation.day_type_label}
         </p>
