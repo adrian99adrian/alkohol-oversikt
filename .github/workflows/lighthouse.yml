@@ -1,0 +1,23 @@
+name: Lighthouse
+
+on:
+  workflow_run:
+    workflows: ["Build & Deploy"]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  audit:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Lighthouse audit
+        uses: treosh/lighthouse-ci-action@2f8dda6cf4de56e82bd3b9af63f12d81d44688f0 # v12
+        with:
+          urls: |
+            https://adrian99adrian.github.io/alkohol-oversikt/
+            https://adrian99adrian.github.io/alkohol-oversikt/kommune/oslo/
+          budgetPath: .github/lighthouse-budget.json
+          uploadArtifacts: true

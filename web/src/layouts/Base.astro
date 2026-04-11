@@ -3,12 +3,16 @@ import { formatDateLong } from "../lib/dateFormat";
 
 interface Props {
   title: string;
+  description?: string;
+  url?: string;
   buildDate?: string;
   lastVerified?: string;
 }
 
-const { title, buildDate, lastVerified } = Astro.props;
+const { title, description, url, buildDate, lastVerified } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const siteUrl = "https://adrian99adrian.github.io/alkohol-oversikt";
+const ogImageUrl = `${siteUrl}/og-image.png`;
 ---
 
 <!doctype html>
@@ -17,6 +21,12 @@ const base = import.meta.env.BASE_URL;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="website" />
+    {url && <meta property="og:url" content={url} />}
+    <meta property="og:image" content={ogImageUrl} />
   </head>
   <body class="min-h-screen bg-slate-900 text-slate-100">
     <nav class="border-b border-slate-700 bg-slate-800">

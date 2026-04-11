@@ -73,19 +73,19 @@ const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærme
     <!-- Store directory -->
     <div class="mt-6">
       <h3 class="mb-2 text-sm font-semibold text-slate-300">Butikker ({stores.length})</h3>
-      <ul class="space-y-1 text-sm text-slate-400">
-        {stores.map((store) => (
-          <li>{store.name} — {store.address}</li>
-        ))}
-      </ul>
       <a
         href={mapsUrl}
-        class="mt-3 inline-block text-sm text-slate-300 underline hover:text-white"
+        class="mb-3 inline-block text-sm text-slate-300 underline hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
       >
         Finn nærmeste Vinmonopolet
       </a>
+      <ul class="space-y-1 text-sm text-slate-400">
+        {stores.map((store) => (
+          <li>{store.name} — {store.address}</li>
+        ))}
+      </ul>
     </div>
   </section>
 )}

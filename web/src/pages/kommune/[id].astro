@@ -51,7 +51,13 @@ const nextDeviation = findNextDeviation(tableDays);
 const daySummary = vinmonopolet_day_summary ?? [];
 ---
 
-<Base title={`${municipality.name} — Alkohol-oversikt`} buildDate={buildDate} lastVerified={municipality.last_verified}>
+<Base
+  title={`${municipality.name} — Alkohol-oversikt`}
+  description={`Se når ølsalget stenger og Vinmonopolet er åpent i ${municipality.name}.`}
+  url={`https://adrian99adrian.github.io/alkohol-oversikt/kommune/${municipality.id}/`}
+  buildDate={buildDate}
+  lastVerified={municipality.last_verified}
+>
   <div>
     <a href={basePath} class="mb-4 inline-block text-sm text-slate-400 hover:text-slate-200">
       ← Tilbake
