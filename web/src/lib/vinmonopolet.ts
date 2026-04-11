@@ -5,7 +5,11 @@ export function formatVinmonopolet(
   summary: VinmonopoletSummary | null,
 ): string {
   if (!summary || summary.type === "closed") return "Stengt";
-  if (summary.type === "uniform") return `${summary.open}\u2013${summary.close}`;
+  if (summary.type === "uniform") {
+    if (!summary.open || !summary.close) return "Stengt";
+    return `${summary.open}\u2013${summary.close}`;
+  }
+  if (!summary.min_open || !summary.max_close) return "Stengt";
   return `${summary.min_open}\u2013${summary.max_close}`;
 }
 

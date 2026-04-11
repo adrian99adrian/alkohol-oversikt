@@ -44,13 +44,13 @@ describe("formatVinmonopolet", () => {
     expect(formatVinmonopolet(summary)).toBe("09:00\u201320:00");
   });
 
-  it("handles uniform type with missing open/close as undefined", () => {
+  it("falls back to Stengt for uniform type with missing open/close", () => {
     const summary: VinmonopoletSummary = {
       type: "uniform",
       open_count: 1,
       closed_count: 0,
     };
-    expect(formatVinmonopolet(summary)).toBe("undefined\u2013undefined");
+    expect(formatVinmonopolet(summary)).toBe("Stengt");
   });
 });
 

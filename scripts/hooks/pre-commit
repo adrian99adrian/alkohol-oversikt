@@ -99,7 +99,7 @@ else
     if echo "$STAGED" | grep -q '^web/'; then
         if [ -f web/package.json ] && grep -q '"test"' web/package.json; then
             echo "[pre-commit] Running frontend tests..."
-            if ! (cd web && npx vitest run); then
+            if ! (cd web && npm test); then
                 echo ""
                 echo "[pre-commit] BLOCKED: frontend tests failed."
                 exit 1
