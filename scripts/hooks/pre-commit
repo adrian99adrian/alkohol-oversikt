@@ -76,7 +76,7 @@ else
         fi
     fi
 
-    # ── 4. Tests ───────────────────────────────────────────────────
+    # ── 4a. Python tests ────────────────────────────────────────────
     # Only run when Python files are staged — frontend-only changes
     # can't affect Python test results.
 
@@ -88,6 +88,20 @@ else
             if ! pytest -q tests/; then
                 echo ""
                 echo "[pre-commit] BLOCKED: tests failed."
+                exit 1
+            fi
+        fi
+    fi
+
+    # ── 4b. Frontend tests ────────────────────────────────────────
+    # Only run when files under web/ are staged.
+
+    if echo "$STAGED" | grep -q '^web/'; then
+        if [ -f web/package.json ] && grep -q '"test"' web/package.json; then
+            echo "[pre-commit] Running frontend tests..."
+            if ! (cd web && npx vitest run); then
+                echo ""
+                echo "[pre-commit] BLOCKED: frontend tests failed."
                 exit 1
             fi
         fi

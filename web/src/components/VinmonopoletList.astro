@@ -1,6 +1,7 @@
 ---
 import type { ResolvedStore, DayData, VinmonopoletDaySummary } from "../types";
 import { weekdayShort, formatDateShort } from "../lib/dateFormat";
+import { formatVinmonopoletRange } from "../lib/vinmonopolet";
 
 interface Props {
   stores: ResolvedStore[];
@@ -55,14 +56,10 @@ const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærme
                 ) : (
                   <>
                     <td class="py-1 pr-2 text-slate-200">
-                      {summary.min_open === summary.max_open
-                        ? summary.min_open
-                        : `${summary.min_open}–${summary.max_open}`}
+                      {formatVinmonopoletRange(summary.min_open!, summary.max_open!)}
                     </td>
                     <td class="py-1 text-slate-200">
-                      {summary.min_close === summary.max_close
-                        ? summary.min_close
-                        : `${summary.min_close}–${summary.max_close}`}
+                      {formatVinmonopoletRange(summary.min_close!, summary.max_close!)}
                     </td>
                   </>
                 )}
