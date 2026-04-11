@@ -162,16 +162,17 @@ def build_day_entry(d: date, day_info: dict, municipality: dict) -> dict:
     # Sundays are always closed — never a surprise.  Saturdays always close
     # at min(18:00, municipal saturday_close) — also expected.  Only flag
     # days whose closing time is earlier (or None) compared to the norm.
+    # Also flag days where large stores have a special early close.
     beer = municipality["beer_sales"]
     weekday_num = d.weekday()
     if weekday_num == 6:  # Sunday — always closed, never a deviation
         is_deviation = False
     elif weekday_num == 5:  # Saturday
         normal_saturday = min("18:00", beer["saturday_close"])
-        is_deviation = close != normal_saturday
+        is_deviation = close != normal_saturday or ls_close is not None
     else:  # Mon–Fri
         normal_weekday = min("20:00", beer["weekday_close"])
-        is_deviation = close != normal_weekday
+        is_deviation = close != normal_weekday or ls_close is not None
 
     # Build comment
     comment = _build_comment(enriched, municipality, close, ls_close)

@@ -308,6 +308,19 @@ class TestIsDeviation:
         entry = build_day_entry(date(2026, 5, 13), day_info, sample_municipality_larvik)
         assert not entry["is_deviation"]
 
+    def test_public_holiday_on_saturday_is_deviation(self, sample_municipality_sandefjord):
+        """1. mai 2027 falls on a Saturday — closed instead of open, is a deviation."""
+        day_info = _classify(date(2027, 5, 1))
+        entry = build_day_entry(date(2027, 5, 1), day_info, sample_municipality_sandefjord)
+        assert entry["is_deviation"]
+
+    def test_large_store_close_on_saturday_is_deviation(self, sample_municipality_oslo):
+        """Whit eve 2026 is a Saturday — normal beer_close but large stores close early."""
+        day_info = _classify(date(2026, 5, 23))
+        entry = build_day_entry(date(2026, 5, 23), day_info, sample_municipality_oslo)
+        assert entry["is_deviation"]
+        assert entry["beer_close_large_stores"] is not None
+
 
 # --- Output schema ---
 

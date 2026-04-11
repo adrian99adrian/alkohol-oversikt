@@ -42,7 +42,7 @@ echo "[pre-commit] gitignore check passed."
 # ── 2. Relevant-change gate ───────────────────────────────────────
 # Only run lint + tests when code-related files are staged.
 
-RELEVANT=$(echo "$STAGED" | grep -E '\.py$|\.ya?ml$|\.sh$|\.toml$|\.txt$|\.astro$|\.ts$|\.mjs$|\.properties$' || true)
+RELEVANT=$(echo "$STAGED" | grep -E '\.py$|\.ya?ml$|\.sh$|\.toml$|\.txt$|\.json$|\.astro$|\.ts$|\.mjs$|\.properties$' || true)
 
 if [ -z "$RELEVANT" ]; then
     echo "[pre-commit] no code changes staged — skipping lint and tests."

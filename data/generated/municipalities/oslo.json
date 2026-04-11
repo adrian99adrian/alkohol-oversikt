@@ -647,7 +647,7 @@
       "beer_open": "08:00",
       "beer_close": "18:00",
       "beer_close_large_stores": "16:00",
-      "is_deviation": false,
+      "is_deviation": true,
       "comment": "Pinseaften — ølsalg stenger kl. 18:00. Butikker over 100 m² stenger kl. 16:00",
       "vinmonopolet_summary": null
     },
