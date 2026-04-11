@@ -1,0 +1,33 @@
+name: Data Correction
+description: Report incorrect sale times or store hours
+title: "[Data] "
+labels: ["data"]
+body:
+  - type: input
+    id: municipality
+    attributes:
+      label: Municipality
+      description: Which municipality has incorrect data?
+    validations:
+      required: true
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong
+      description: Describe what is incorrect (e.g., wrong closing time, missing store, wrong day type)
+    validations:
+      required: true
+  - type: textarea
+    id: correct-info
+    attributes:
+      label: Correct information
+      description: What should it be?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Link to official source or reference for the correct information
+    validations:
+      required: false
