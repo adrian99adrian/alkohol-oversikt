@@ -1,0 +1,24 @@
+{
+  "id": "bergen",
+  "name": "Bergen",
+  "county": "Vestland",
+  "beer_sales": {
+    "weekday_open": "08:00",
+    "weekday_close": "20:00",
+    "saturday_open": "08:00",
+    "saturday_close": "18:00",
+    "pre_holiday_close": "18:00",
+    "special_day_close": "18:00",
+    "special_days": ["easter_eve", "whit_eve", "christmas_eve", "new_years_eve"],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
+  },
+  "sources": [
+    {
+      "title": "Bergen kommune – Forskrift om salgs-, skjenke- og åpningstider 2024–2028",
+      "url": "https://www.bergen.kommune.no/innbyggerhjelpen/naring-avgifter-og-anskaffelser/naring/bevilling-og-tillatelser/retningslinjer-for-tildeling-av-salgsog-skjenkebevillinger-og-forskrift-om-salgsskjenkeog-apningstider"
+    }
+  ],
+  "last_verified": "2026-04-12"
+}

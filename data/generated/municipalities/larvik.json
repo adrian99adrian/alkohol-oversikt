@@ -142,11 +142,9 @@
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
+        "type": "uniform",
+        "open": "10:00",
+        "close": "16:00",
         "open_count": 2,
         "closed_count": 0
       }
@@ -281,11 +279,9 @@
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
+        "type": "uniform",
+        "open": "10:00",
+        "close": "16:00",
         "open_count": 2,
         "closed_count": 0
       }
@@ -4893,7 +4889,7 @@
         {
           "date": "2026-04-18",
           "open": "10:00",
-          "close": "18:00"
+          "close": "16:00"
         },
         {
           "date": "2026-04-19",
@@ -4928,7 +4924,7 @@
         {
           "date": "2026-04-25",
           "open": "10:00",
-          "close": "18:00"
+          "close": "16:00"
         }
       ]
     },
@@ -4970,7 +4966,7 @@
         {
           "date": "2026-04-18",
           "open": "10:00",
-          "close": "17:00"
+          "close": "16:00"
         },
         {
           "date": "2026-04-19",
@@ -5005,7 +5001,7 @@
         {
           "date": "2026-04-25",
           "open": "10:00",
-          "close": "17:00"
+          "close": "16:00"
         }
       ]
     }
@@ -5064,11 +5060,9 @@
       "date": "2026-04-17"
     },
     {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
+      "type": "uniform",
+      "open": "10:00",
+      "close": "16:00",
       "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-18"
@@ -5126,15 +5120,13 @@
       "date": "2026-04-24"
     },
     {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
+      "type": "uniform",
+      "open": "10:00",
+      "close": "16:00",
       "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-25"
     }
   ],
-  "vinmonopolet_fetched_at": "2026-04-04T19:14:21.622521+02:00"
+  "vinmonopolet_fetched_at": "2026-04-12T18:24:57.261190+02:00"
 }
