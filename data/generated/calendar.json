@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-04-12",
-    "weekday": "søndag",
-    "day_type": "sunday",
-    "day_type_label": "Søndag",
-    "is_public_holiday": false,
-    "is_pre_holiday": false,
-    "pre_holiday_for": null,
-    "is_special_day": false,
-    "special_day_key": null,
-    "holiday_name": null
-  },
-  {
     "date": "2026-04-13",
     "weekday": "mandag",
     "day_type": "weekday",
@@ -4372,6 +4360,18 @@
     "weekday": "søndag",
     "day_type": "sunday",
     "day_type_label": "Søndag",
+    "is_public_holiday": false,
+    "is_pre_holiday": false,
+    "pre_holiday_for": null,
+    "is_special_day": false,
+    "special_day_key": null,
+    "holiday_name": null
+  },
+  {
+    "date": "2027-04-12",
+    "weekday": "mandag",
+    "day_type": "weekday",
+    "day_type_label": "Hverdag",
     "is_public_holiday": false,
     "is_pre_holiday": false,
     "pre_holiday_for": null,

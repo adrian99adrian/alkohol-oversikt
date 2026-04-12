@@ -112,12 +112,18 @@ class TestFrontendBuild:
             assert page.exists(), f"Missing municipality page: {page}"
 
     def test_municipality_page_has_day_cards(self, docs_dir: Path) -> None:
-        """Municipality page contains today/tomorrow day cards (date labels when stale)."""
+        """Municipality page contains today/tomorrow day cards (date labels when stale).
+
+        When frontend buildDate (UTC) matches data[0].date (Europe/Oslo), cards
+        show "I dag" / "I morgen". When they disagree (common around midnight
+        UTC), cards fall back to formatted dates like "12.04".
+        """
+        import re
+
         html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
-        # When data is fresh, cards show "I dag" / "I morgen".
-        # When data is stale, cards show formatted dates (e.g. "01.01").
         has_fresh_labels = "I dag" in html and "I morgen" in html
-        has_date_labels = "01.01" in html and "02.01" in html
+        # Stale fallback: at least two DD.MM date labels adjacent to the day cards.
+        has_date_labels = len(re.findall(r"\b\d{2}\.\d{2}\b", html)) >= 2
         assert has_fresh_labels or has_date_labels
 
     def test_municipality_page_has_table(self, docs_dir: Path) -> None:
