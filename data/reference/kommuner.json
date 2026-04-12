@@ -1186,7 +1186,7 @@
       "county": "Innlandet",
       "municipality": "Os",
       "id": "os",
-      "borders": null,
+      "borders": [],
       "bugs": []
     },
     {
@@ -1788,7 +1788,7 @@
       "county": "Vestland",
       "municipality": "Bjørnafjorden",
       "id": "bjornafjorden",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
