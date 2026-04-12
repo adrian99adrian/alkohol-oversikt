@@ -1,5 +1,6 @@
 """Infrastructure tests: frontend build output."""
 
+import json
 import os
 import shutil
 import subprocess
@@ -111,14 +112,29 @@ class TestFrontendBuild:
             page = docs_dir / "kommune" / muni / "index.html"
             assert page.exists(), f"Missing municipality page: {page}"
 
-    def test_municipality_page_has_day_cards(self, docs_dir: Path) -> None:
-        """Municipality page contains today/tomorrow day cards (date labels when stale)."""
+    def test_municipality_page_has_day_cards(self, _project_root: Path, docs_dir: Path) -> None:
+        """Municipality page contains today/tomorrow day cards.
+
+        When frontend buildDate (UTC) matches data[0].date (Europe/Oslo), cards
+        show "I dag" / "I morgen". When they disagree (common around midnight
+        UTC), cards fall back to the specific first-day/second-day dates in
+        DD.MM form. We read those dates from the generated JSON so the test
+        pins the day-card rendering itself, not incidental DD.MM strings
+        elsewhere on the page.
+        """
+        generated = _project_root / "data" / "generated" / "municipalities" / "oslo.json"
+        data = json.loads(generated.read_text(encoding="utf-8"))
+        # DD.MM from YYYY-MM-DD
+        today_label = data["days"][0]["date"][8:10] + "." + data["days"][0]["date"][5:7]
+        tomorrow_label = data["days"][1]["date"][8:10] + "." + data["days"][1]["date"][5:7]
+
         html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
-        # When data is fresh, cards show "I dag" / "I morgen".
-        # When data is stale, cards show formatted dates (e.g. "01.01").
         has_fresh_labels = "I dag" in html and "I morgen" in html
-        has_date_labels = "01.01" in html and "02.01" in html
-        assert has_fresh_labels or has_date_labels
+        has_stale_labels = today_label in html and tomorrow_label in html
+        assert has_fresh_labels or has_stale_labels, (
+            f"day cards must show 'I dag'/'I morgen' or the specific dates "
+            f"{today_label}/{tomorrow_label}"
+        )
 
     def test_municipality_page_has_table(self, docs_dir: Path) -> None:
         """Municipality page contains the beer sales table with all columns."""

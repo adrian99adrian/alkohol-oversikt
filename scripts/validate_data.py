@@ -457,12 +457,36 @@ def _validate_vinmonopolet_file(
     return [f"vinmonopolet.json: {e}" for e in errors], info
 
 
+def _validate_town_municipality_map(data_dir: Path) -> list[str]:
+    """Ensure every value in town_municipality_map.json matches a kommune JSON.
+
+    Without this check, a typo or a stale override (e.g. pointing at a kommune
+    we never added) silently labels stores with an id that no page consumes,
+    and those stores disappear from the rendered site.
+    """
+    errors = []
+    path = data_dir / "town_municipality_map.json"
+    if not path.exists():
+        return errors
+    with open(path, encoding="utf-8") as f:
+        overrides = json.load(f)
+    known_ids = {p.stem for p in (data_dir / "municipalities").glob(_JSON_GLOB)}
+    for town, kommune_id in overrides.items():
+        if kommune_id not in known_ids:
+            errors.append(
+                f"town_municipality_map.json: {town!r} -> {kommune_id!r} "
+                f"but no data/municipalities/{kommune_id}.json exists"
+            )
+    return errors
+
+
 def main() -> int:
     """CLI entry point. Returns 0 on success, 1 on failure."""
     data_dir = Path(__file__).parent.parent / "data"
     municipalities_dir = data_dir / "municipalities"
 
     all_errors = _validate_municipality_files(municipalities_dir)
+    all_errors.extend(_validate_town_municipality_map(data_dir))
 
     calendar_path = data_dir / "generated" / "calendar.json"
     cal_errors, calendar = _validate_calendar_file(calendar_path)

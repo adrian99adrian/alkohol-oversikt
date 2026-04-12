@@ -17,6 +17,7 @@ from validate_data import (
     _validate_standard_hours,
     _validate_store_entries,
     _validate_store_fields,
+    _validate_town_municipality_map,
     _validate_vinmonopolet_file,
     _validate_vinmonopolet_summaries,
     _validate_vm_metadata,
@@ -93,6 +94,36 @@ class TestValidateMunicipalitySchema:
         data["last_verified"] = None
         errors = validate_municipality_schema(data)
         assert errors == []
+
+
+# --- town_municipality_map.json validation ---
+
+
+class TestValidateTownMunicipalityMap:
+    """Verify that every override value points to an existing kommune JSON."""
+
+    def _setup(self, tmp_path, overrides: dict, kommune_ids: list[str]):
+        (tmp_path / "municipalities").mkdir()
+        for kid in kommune_ids:
+            (tmp_path / "municipalities" / f"{kid}.json").write_text("{}", encoding="utf-8")
+        (tmp_path / "town_municipality_map.json").write_text(
+            json.dumps(overrides), encoding="utf-8"
+        )
+
+    def test_valid_map_passes(self, tmp_path):
+        self._setup(tmp_path, {"Foo": "bar", "Baz": "qux"}, ["bar", "qux"])
+        assert _validate_town_municipality_map(tmp_path) == []
+
+    def test_override_to_unknown_kommune_fails(self, tmp_path):
+        self._setup(tmp_path, {"Foo": "bar", "Baz": "missing"}, ["bar"])
+        errors = _validate_town_municipality_map(tmp_path)
+        assert len(errors) == 1
+        assert "'Baz' -> 'missing'" in errors[0]
+        assert "no data/municipalities/missing.json" in errors[0]
+
+    def test_missing_map_file_is_ok(self, tmp_path):
+        (tmp_path / "municipalities").mkdir()
+        assert _validate_town_municipality_map(tmp_path) == []
 
 
 # --- Calendar validation ---
