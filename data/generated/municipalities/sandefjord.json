@@ -13,25 +13,6 @@
   },
   "days": [
     {
-      "date": "2026-04-11",
-      "weekday": "lørdag",
-      "day_type": "saturday",
-      "day_type_label": "Lørdag",
-      "beer_sale_allowed": true,
-      "beer_open": "06:00",
-      "beer_close": "18:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": "Lørdag — ølsalg stenger kl. 18:00",
-      "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-12",
       "weekday": "søndag",
       "day_type": "sunday",
@@ -285,7 +266,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 1,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-26",
@@ -4836,6 +4823,19 @@
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-11",
+      "weekday": "søndag",
+      "day_type": "sunday",
+      "day_type_label": "Søndag",
+      "beer_sale_allowed": false,
+      "beer_open": null,
+      "beer_close": null,
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": "Søndag — salg av øl er ikke tillatt",
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_stores": [
@@ -4844,11 +4844,6 @@
       "name": "Sandefjord",
       "address": "Jernbanealleen 13, 3210 Sandefjord",
       "hours": [
-        {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
         {
           "date": "2026-04-12",
           "open": null,
@@ -4913,19 +4908,16 @@
           "date": "2026-04-24",
           "open": "10:00",
           "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
-      "closed_count": 0,
-      "date": "2026-04-11"
-    },
     {
       "type": "closed",
       "open_count": 0,
@@ -5025,6 +5017,15 @@
       "open_count": 1,
       "closed_count": 0,
       "date": "2026-04-24"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 1,
+      "closed_count": 0,
+      "date": "2026-04-25"
     }
-  ]
+  ],
+  "vinmonopolet_fetched_at": "2026-04-04T19:14:21.622521+02:00"
 }

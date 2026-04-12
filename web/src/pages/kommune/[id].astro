@@ -8,7 +8,14 @@ import BeerSalesTable from "../../components/BeerSalesTable.astro";
 import VinmonopoletList from "../../components/VinmonopoletList.astro";
 import type { MunicipalityData } from "../../types";
 import { formatDateShort, formatDateLong } from "../../lib/dateFormat";
-import { normalizeBasePath, isDataFresh, findNextDeviation, capitalizeFirst } from "../../lib/dataUtils";
+import {
+  normalizeBasePath,
+  isDataFresh,
+  findNextDeviation,
+  capitalizeFirst,
+  isVinmonopoletStale,
+  VINMONOPOLET_STALE_THRESHOLD_DAYS,
+} from "../../lib/dataUtils";
 
 export function getStaticPaths() {
   const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -49,6 +56,20 @@ const nextDeviation = findNextDeviation(tableDays);
 
 // Vinmonopolet day summary for the table (first 14 days)
 const daySummary = vinmonopolet_day_summary ?? [];
+
+// Vinmonopolet staleness check (build-time snapshot).
+// Only show the warning when this municipality actually has stores — otherwise
+// the Vinmonopolet section is hidden and the warning would be misleading.
+const vinmonopoletFetchedAt = data.vinmonopolet_fetched_at;
+const isVinmonopoletWarning =
+  vinmonopolet_stores.length > 0 &&
+  isVinmonopoletStale(vinmonopoletFetchedAt, VINMONOPOLET_STALE_THRESHOLD_DAYS);
+// Slice YYYY-MM-DD out of the ISO timestamp to keep the producer's local-day
+// (fetch_vinmonopolet writes Europe/Oslo local time), avoiding UTC drift when
+// formatting for display.
+const fetchedAtFormatted = vinmonopoletFetchedAt
+  ? formatDateLong(vinmonopoletFetchedAt.slice(0, 10))
+  : null;
 ---
 
 <Base
@@ -68,6 +89,16 @@ const daySummary = vinmonopolet_day_summary ?? [];
     <div class="mb-6">
       <DayTypeLegend />
     </div>
+
+    <!-- Vinmonopolet staleness warning -->
+    {isVinmonopoletWarning && (
+      <div class="mb-6 rounded-lg border border-amber-700 bg-amber-900/30 p-3">
+        <p class="text-sm text-amber-200">
+          ⚠️ Problemer med å hente Vinmonopolet-data, åpningstidene kan være utdaterte ⚠️
+          {fetchedAtFormatted && <span> (sist hentet {fetchedAtFormatted})</span>}
+        </p>
+      </div>
+    )}
 
     <!-- Today and Tomorrow cards -->
     <div class="mb-6 grid gap-4 sm:grid-cols-2">

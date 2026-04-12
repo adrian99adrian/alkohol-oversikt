@@ -20,10 +20,19 @@ def _run_pipeline(
     start: date,
     days: int = 365,
     vinmonopolet_stores: list[dict] | None = None,
+    vinmonopolet_fetched_at: str | None = None,
 ) -> tuple[dict, list[dict]]:
     """Run the full pipeline for a municipality."""
     calendar = build_calendar(start, num_days=days)
-    result = build_municipality(municipality, calendar, vinmonopolet_stores=vinmonopolet_stores)
+    # Default a valid timestamp when stores are provided so validation passes
+    if vinmonopolet_stores and vinmonopolet_fetched_at is None:
+        vinmonopolet_fetched_at = "2026-04-01T10:00:00+02:00"
+    result = build_municipality(
+        municipality,
+        calendar,
+        vinmonopolet_stores=vinmonopolet_stores,
+        vinmonopolet_fetched_at=vinmonopolet_fetched_at,
+    )
     return result, calendar
 
 
@@ -368,6 +377,57 @@ class TestMainCLI:
             data = json.load(f)
         assert data["municipality"]["id"] == "sandefjord"
         assert len(data["days"]) == 3
+
+    def test_empty_stores_fixture_no_metadata_propagates_none(self, tmp_path):
+        """Fixture with {"stores": []} and no metadata must not break; fetched_at is None."""
+        _setup_tmp_data_dir(tmp_path)
+        args = [
+            "prog",
+            "--id",
+            "sandefjord",
+            "--start-date",
+            "2026-01-01",
+            "--days",
+            "3",
+            "--data-dir",
+            str(tmp_path),
+        ]
+        with patch("sys.argv", args):
+            main()
+
+        output = tmp_path / "generated" / "municipalities" / "sandefjord.json"
+        with open(output, encoding="utf-8") as f:
+            data = json.load(f)
+        assert "vinmonopolet_fetched_at" in data
+        assert data["vinmonopolet_fetched_at"] is None
+
+    def test_fetched_at_propagates_from_metadata(self, tmp_path):
+        """fetched_at in vinmonopolet.json metadata must be written to municipality JSON."""
+        _setup_tmp_data_dir(tmp_path)
+        # Overwrite the stub with one that has metadata
+        vinmonopolet_path = tmp_path / "generated" / "vinmonopolet.json"
+        vinmonopolet_path.write_text(
+            '{"metadata": {"fetched_at": "2026-04-12T10:00:00+02:00"}, "stores": []}',
+            encoding="utf-8",
+        )
+        args = [
+            "prog",
+            "--id",
+            "sandefjord",
+            "--start-date",
+            "2026-01-01",
+            "--days",
+            "3",
+            "--data-dir",
+            str(tmp_path),
+        ]
+        with patch("sys.argv", args):
+            main()
+
+        output = tmp_path / "generated" / "municipalities" / "sandefjord.json"
+        with open(output, encoding="utf-8") as f:
+            data = json.load(f)
+        assert data["vinmonopolet_fetched_at"] == "2026-04-12T10:00:00+02:00"
 
     def test_all_generates_all_municipalities(self, tmp_path):
         """--all should generate a file for every municipality."""

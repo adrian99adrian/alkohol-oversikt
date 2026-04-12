@@ -13,25 +13,6 @@
   },
   "days": [
     {
-      "date": "2026-04-11",
-      "weekday": "lørdag",
-      "day_type": "saturday",
-      "day_type_label": "Lørdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "18:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": "Lørdag — ølsalg stenger kl. 18:00",
-      "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 34,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-12",
       "weekday": "søndag",
       "day_type": "sunday",
@@ -285,7 +266,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 34,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-26",
@@ -4836,6 +4823,19 @@
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-11",
+      "weekday": "søndag",
+      "day_type": "sunday",
+      "day_type_label": "Søndag",
+      "beer_sale_allowed": false,
+      "beer_open": null,
+      "beer_close": null,
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": "Søndag — salg av øl er ikke tillatt",
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_stores": [
@@ -4844,11 +4844,6 @@
       "name": "Oslo, Briskeby",
       "address": "Briskebyveien 48, 0259 Oslo",
       "hours": [
-        {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
         {
           "date": "2026-04-12",
           "open": null,
@@ -4911,6 +4906,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -4922,11 +4922,6 @@
       "address": "Elisenbergveien 37, 0265 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -4988,6 +4983,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -4999,11 +4999,6 @@
       "address": "Bryggegata 9, 0250 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5065,6 +5060,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5076,11 +5076,6 @@
       "address": "Nordre gate 16, 0551 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5142,6 +5137,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5153,11 +5153,6 @@
       "address": "Strømsveien 245, 0668 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5219,6 +5214,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5230,11 +5230,6 @@
       "address": "Jernbanetorget 1, 0154 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5296,6 +5291,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5307,11 +5307,6 @@
       "address": "Holmlia Senter, Holmliaveien 75, 1255 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5373,6 +5368,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5384,11 +5384,6 @@
       "address": "Lilleakerveien 16, 0283 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5450,6 +5445,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5461,11 +5461,6 @@
       "address": "Erich Mogensøns vei 38, 0594 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5527,6 +5522,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5538,11 +5538,6 @@
       "address": "Sørkedalsveien 10, 0369 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5604,6 +5599,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5615,11 +5615,6 @@
       "address": "Plogveien 6, 0679 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5681,6 +5676,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5692,11 +5692,6 @@
       "address": "Karl Johans gate 37-43, 0162 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5758,6 +5753,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5769,11 +5769,6 @@
       "address": "Stenersgata 1, 0050 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5835,6 +5830,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5846,11 +5846,6 @@
       "address": "Tvetenveien 150, 0671 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5912,6 +5907,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5923,11 +5923,6 @@
       "address": "Sandakerveien 59, 0477 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -5989,6 +5984,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6000,11 +6000,6 @@
       "address": "Storo Shopping, Vitaminveien 7, 0485 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6066,6 +6061,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6077,11 +6077,6 @@
       "address": "Stovner Senter 3c, 0985 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6143,6 +6138,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6154,11 +6154,6 @@
       "address": "Wdm. Thranes gate 72, 0175 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6220,6 +6215,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6231,11 +6231,6 @@
       "address": "Grenseveien 50, 0579 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6297,6 +6292,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6308,11 +6308,6 @@
       "address": "Kongens gate 23, 0157 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6374,6 +6369,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6385,11 +6385,6 @@
       "address": "Sognsvn. 75, 0855 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6451,6 +6446,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6462,11 +6462,6 @@
       "address": "Tore Hals Mejdells vei 5, 0751 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6528,6 +6523,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6539,11 +6539,6 @@
       "address": "Tøyengata 2, 0190 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6605,6 +6600,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6616,11 +6616,6 @@
       "address": "Cecilie Thoresensvei 17, 1153 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6682,6 +6677,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6693,11 +6693,6 @@
       "address": "Bergensveien 2-4, 0963 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6759,6 +6754,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6770,11 +6770,6 @@
       "address": "Karenslyst alle 58, 0277 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6836,6 +6831,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6847,11 +6847,6 @@
       "address": "Lofsrudveien 6, 1281 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6913,6 +6908,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -6924,11 +6924,6 @@
       "address": "Nydalsveien 33, 0484 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -6990,6 +6985,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -7001,11 +7001,6 @@
       "address": "Utmarkveien 1, 0689 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -7067,6 +7062,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -7078,11 +7078,6 @@
       "address": "Slemdalsveien 70A, 0370 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -7144,6 +7139,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -7155,11 +7155,6 @@
       "address": "Hasleveien 10, 0571 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -7221,6 +7216,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -7232,11 +7232,6 @@
       "address": "Valkyriegata 1, 0366 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -7298,6 +7293,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -7309,11 +7309,6 @@
       "address": "Rostockgata 130, 0194 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -7375,6 +7370,11 @@
         },
         {
           "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
           "open": "10:00",
           "close": "18:00"
         }
@@ -7386,11 +7386,6 @@
       "address": "Østensjøveien 79, 0667 Oslo",
       "hours": [
         {
-          "date": "2026-04-11",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-12",
           "open": null,
           "close": null
@@ -7454,19 +7449,16 @@
           "date": "2026-04-24",
           "open": "10:00",
           "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 34,
-      "closed_count": 0,
-      "date": "2026-04-11"
-    },
     {
       "type": "closed",
       "open_count": 0,
@@ -7566,6 +7558,15 @@
       "open_count": 34,
       "closed_count": 0,
       "date": "2026-04-24"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 34,
+      "closed_count": 0,
+      "date": "2026-04-25"
     }
-  ]
+  ],
+  "vinmonopolet_fetched_at": "2026-04-04T19:14:21.622521+02:00"
 }

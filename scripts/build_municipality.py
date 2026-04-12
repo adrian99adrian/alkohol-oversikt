@@ -20,11 +20,13 @@ def build_municipality(
     municipality: dict,
     calendar: list[dict],
     vinmonopolet_stores: list[dict] | None = None,
+    vinmonopolet_fetched_at: str | None = None,
 ) -> dict:
     """Build the complete output for a municipality.
 
-    Returns a dict with 'municipality' metadata, 'days' array, and
-    'vinmonopolet_stores' with resolved 14-day hours.
+    Returns a dict with 'municipality' metadata, 'days' array,
+    'vinmonopolet_stores' with resolved 14-day hours, and
+    'vinmonopolet_fetched_at' timestamp from the source fetch.
     """
     stores = vinmonopolet_stores or []
     max_vinmonopolet_days = 14
@@ -60,6 +62,7 @@ def build_municipality(
         "days": days,
         "vinmonopolet_stores": resolved_stores,
         "vinmonopolet_day_summary": day_summaries,
+        "vinmonopolet_fetched_at": vinmonopolet_fetched_at,
     }
 
 
@@ -68,14 +71,18 @@ def _load_municipality(path: Path) -> dict:
         return json.load(f)
 
 
-def _load_vinmonopolet_stores(data_dir: Path) -> dict[str, list[dict]]:
+def _load_vinmonopolet_stores(
+    data_dir: Path,
+) -> tuple[dict[str, list[dict]], str | None]:
     """Load Vinmonopolet stores grouped by municipality ID.
 
-    Returns a dict mapping municipality_id -> list of store dicts.
+    Returns a tuple of (stores_by_municipality_id, fetched_at_timestamp).
+    The fetched_at comes from metadata.fetched_at in vinmonopolet.json, or
+    None if the file is missing or has no metadata.
     """
     path = data_dir / "generated" / "vinmonopolet.json"
     if not path.exists():
-        return {}
+        return {}, None
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
     stores_by_muni: dict[str, list[dict]] = {}
@@ -83,7 +90,8 @@ def _load_vinmonopolet_stores(data_dir: Path) -> dict[str, list[dict]]:
         muni = store.get("municipality")
         if muni:
             stores_by_muni.setdefault(muni, []).append(store)
-    return stores_by_muni
+    fetched_at = data.get("metadata", {}).get("fetched_at")
+    return stores_by_muni, fetched_at
 
 
 def main() -> None:
@@ -110,7 +118,7 @@ def main() -> None:
     output_dir = data_dir / "generated" / "municipalities"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    vinmonopolet_by_muni = _load_vinmonopolet_stores(data_dir)
+    vinmonopolet_by_muni, vinmonopolet_fetched_at = _load_vinmonopolet_stores(data_dir)
 
     if args.all:
         paths = sorted(municipalities_dir.glob("*.json"))
@@ -128,7 +136,12 @@ def main() -> None:
         municipality = _load_municipality(path)
         muni_id = municipality["id"]
         stores = vinmonopolet_by_muni.get(muni_id, [])
-        result = build_municipality(municipality, calendar, vinmonopolet_stores=stores)
+        result = build_municipality(
+            municipality,
+            calendar,
+            vinmonopolet_stores=stores,
+            vinmonopolet_fetched_at=vinmonopolet_fetched_at,
+        )
 
         output_path = output_dir / f"{municipality['id']}.json"
         with open(output_path, "w", encoding="utf-8") as f:

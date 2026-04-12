@@ -16,7 +16,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Lighthouse audit
-        uses: treosh/lighthouse-ci-action@2f8dda6cf4de56e82bd3b9af63f12d81d44688f0 # v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           urls: |
             https://adrian99adrian.github.io/alkohol-oversikt/

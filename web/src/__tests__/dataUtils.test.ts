@@ -5,6 +5,8 @@ import {
   findNextDeviation,
   findOldestLastVerified,
   capitalizeFirst,
+  isVinmonopoletStale,
+  VINMONOPOLET_STALE_THRESHOLD_DAYS,
 } from "../lib/dataUtils";
 import type { DayData } from "../types";
 
@@ -123,5 +125,54 @@ describe("capitalizeFirst", () => {
 
   it("handles empty string", () => {
     expect(capitalizeFirst("")).toBe("");
+  });
+});
+
+describe("isVinmonopoletStale", () => {
+  // Reference: April 12, 2026 12:00 UTC+2 as "now"
+  const now = new Date("2026-04-12T12:00:00+02:00");
+
+  it("returns false for undefined input", () => {
+    expect(isVinmonopoletStale(undefined, 2, now)).toBe(false);
+  });
+
+  it("returns false for empty string", () => {
+    expect(isVinmonopoletStale("", 2, now)).toBe(false);
+  });
+
+  it("returns false for invalid timestamp", () => {
+    expect(isVinmonopoletStale("not-a-timestamp", 2, now)).toBe(false);
+  });
+
+  it("returns false for fresh data (same day)", () => {
+    expect(isVinmonopoletStale("2026-04-12T06:00:00+02:00", 2, now)).toBe(false);
+  });
+
+  it("returns false for data within threshold", () => {
+    // 1 day old, threshold 2 days
+    expect(isVinmonopoletStale("2026-04-11T12:00:00+02:00", 2, now)).toBe(false);
+  });
+
+  it("returns true for stale data (5 days old)", () => {
+    expect(isVinmonopoletStale("2026-04-07T12:00:00+02:00", 2, now)).toBe(true);
+  });
+
+  it("handles Python ISO format with timezone", () => {
+    // 10 days old
+    expect(isVinmonopoletStale("2026-04-02T10:00:00+02:00", 2, now)).toBe(true);
+  });
+
+  it("returns false exactly at the threshold boundary", () => {
+    // Exactly 2 days old (48 hours) — not yet past threshold
+    expect(isVinmonopoletStale("2026-04-10T12:00:00+02:00", 2, now)).toBe(false);
+  });
+
+  it("returns true just past the threshold", () => {
+    // 2 days + 1 second
+    expect(isVinmonopoletStale("2026-04-10T11:59:59+02:00", 2, now)).toBe(true);
+  });
+
+  it("exports a reasonable threshold constant", () => {
+    expect(VINMONOPOLET_STALE_THRESHOLD_DAYS).toBe(2);
   });
 });

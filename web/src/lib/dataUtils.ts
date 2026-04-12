@@ -33,3 +33,24 @@ export function findOldestLastVerified(
 export function capitalizeFirst(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+/** Maximum acceptable age of Vinmonopolet data (in days) before showing a staleness warning. */
+export const VINMONOPOLET_STALE_THRESHOLD_DAYS = 2;
+
+/**
+ * Check whether a Vinmonopolet fetched_at timestamp is older than maxAgeDays.
+ * Returns false for undefined/empty/invalid inputs (graceful — no warning shown).
+ * The `now` parameter enables deterministic testing.
+ */
+export function isVinmonopoletStale(
+  fetchedAt: string | null | undefined,
+  maxAgeDays: number,
+  now: Date = new Date(),
+): boolean {
+  if (!fetchedAt) return false;
+  const fetchedTime = new Date(fetchedAt).getTime();
+  if (Number.isNaN(fetchedTime)) return false;
+  const ageMs = now.getTime() - fetchedTime;
+  const maxAgeMs = maxAgeDays * 24 * 60 * 60 * 1000;
+  return ageMs > maxAgeMs;
+}

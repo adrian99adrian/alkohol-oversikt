@@ -37,6 +37,9 @@ fi
 # ── Frontend dependencies ──────────────────────────────────────────
 if command -v npm >/dev/null 2>&1; then
   (cd web && npm install)
+  # Generate .astro/types.d.ts so TypeScript/IDE type-checking works
+  # without needing `npm run dev` first.
+  (cd web && npx astro sync)
   echo "Frontend dependencies installed."
 else
   echo "WARNING: npm not found — skipping frontend dependencies."
