@@ -35,6 +35,21 @@ export function capitalizeFirst(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * Select items whose `id` is in `featuredIds`, preserving the order of
+ * `featuredIds`. Unknown ids are skipped silently.
+ */
+export function selectFeatured<T extends { id: string }>(
+  items: T[],
+  featuredIds: readonly string[],
+): T[] {
+  const byId = new Map(items.map((m) => [m.id, m]));
+  return featuredIds.flatMap((id) => {
+    const match = byId.get(id);
+    return match ? [match] : [];
+  });
+}
+
 /** Maximum acceptable age of Vinmonopolet data (in days) before showing a staleness warning. */
 export const VINMONOPOLET_STALE_THRESHOLD_DAYS = 2;
 

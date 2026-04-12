@@ -173,7 +173,24 @@ class TestFrontendBuild:
         assert "Butikker" in html
         assert "Finn nærmeste Vinmonopolet" in html
 
-    def test_footer_has_build_timestamp(self, docs_dir: Path) -> None:
+    def test_featured_kommuner_on_index(self, docs_dir: Path) -> None:
+        """'Mest besøkte kommuner' section shows exactly the curated short-list.
+
+        The full kommune set is still searchable via the search box; this
+        quick-links section is intentionally pinned so it doesn't balloon
+        as coverage grows.
+        """
+        import re
+
+        expected = {"Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø", "Sandefjord", "Larvik"}
+        html = (docs_dir / "index.html").read_text(encoding="utf-8")
+        # Grab everything after the "Mest besøkte kommuner" heading up to the end of that section.
+        match = re.search(r"Mest besøkte kommuner.*?</section>", html, flags=re.DOTALL)
+        assert match, "Missing 'Mest besøkte kommuner' section"
+        section = match.group(0)
+        # Quick-links render as <a ...>Name</a>; pull the label out.
+        names = {m.strip() for m in re.findall(r">([^<>]+)</a>", section)}
+        assert names == expected, f"featured set mismatch: got {names}, expected {expected}"
         """Footer shows build date on all pages."""
         for page in ("index.html", "kommune/oslo/index.html"):
             html = (docs_dir / page).read_text(encoding="utf-8")

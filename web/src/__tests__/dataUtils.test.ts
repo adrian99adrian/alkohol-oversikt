@@ -6,6 +6,7 @@ import {
   findOldestLastVerified,
   capitalizeFirst,
   isVinmonopoletStale,
+  selectFeatured,
   VINMONOPOLET_STALE_THRESHOLD_DAYS,
 } from "../lib/dataUtils";
 import type { DayData } from "../types";
@@ -131,6 +132,38 @@ describe("findOldestLastVerified", () => {
     expect(
       findOldestLastVerified([{ lastVerified: null }, { lastVerified: null }]),
     ).toBeUndefined();
+  });
+});
+
+describe("selectFeatured", () => {
+  const items = [
+    { id: "oslo", name: "Oslo" },
+    { id: "bergen", name: "Bergen" },
+    { id: "alta", name: "Alta" },
+    { id: "trondheim", name: "Trondheim" },
+  ];
+
+  it("returns only items matching the featured ids", () => {
+    const got = selectFeatured(items, ["oslo", "bergen"]);
+    expect(got.map((i) => i.id).sort()).toEqual(["bergen", "oslo"]);
+  });
+
+  it("silently skips unknown ids", () => {
+    const got = selectFeatured(items, ["oslo", "nonexistent", "bergen"]);
+    expect(got.map((i) => i.id)).toEqual(["oslo", "bergen"]);
+  });
+
+  it("preserves the order of featuredIds", () => {
+    const got = selectFeatured(items, ["trondheim", "oslo", "bergen"]);
+    expect(got.map((i) => i.id)).toEqual(["trondheim", "oslo", "bergen"]);
+  });
+
+  it("returns empty when featuredIds is empty", () => {
+    expect(selectFeatured(items, [])).toEqual([]);
+  });
+
+  it("returns empty when items is empty", () => {
+    expect(selectFeatured([], ["oslo"])).toEqual([]);
   });
 });
 

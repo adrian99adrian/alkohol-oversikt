@@ -2,7 +2,21 @@
 import fs from "node:fs";
 import path from "node:path";
 import Base from "../layouts/Base.astro";
-import { normalizeBasePath, findOldestLastVerified } from "../lib/dataUtils";
+import { normalizeBasePath, findOldestLastVerified, selectFeatured } from "../lib/dataUtils";
+
+/**
+ * Kommuner surfaced as quick-link buttons on the landing page.
+ * The full list is still searchable via the search box above.
+ */
+const FEATURED_IDS = [
+  "oslo",
+  "bergen",
+  "trondheim",
+  "stavanger",
+  "tromso",
+  "sandefjord",
+  "larvik",
+];
 
 interface Municipality {
   id: string;
@@ -36,6 +50,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
 const oldestLastVerified = findOldestLastVerified(municipalities);
 const verifiedCount = municipalities.filter((m) => m.verified).length;
 const totalCount = municipalities.length;
+const featuredMunicipalities = selectFeatured(municipalities, FEATURED_IDS);
 ---
 
 <Base
@@ -78,7 +93,7 @@ const totalCount = municipalities.length;
     <section class="w-full max-w-md">
       <h2 class="mb-4 text-left text-lg font-semibold text-slate-200">Mest besøkte kommuner</h2>
       <div class="flex flex-wrap gap-3">
-        {municipalities.map((m) => (
+        {featuredMunicipalities.map((m) => (
           <a
             href={`${base}kommune/${m.id}/`}
             class="rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-slate-200 hover:border-slate-400 hover:text-white"
