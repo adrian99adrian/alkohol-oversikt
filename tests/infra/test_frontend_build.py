@@ -173,6 +173,48 @@ class TestFrontendBuild:
         assert "Butikker" in html
         assert "Finn nærmeste Vinmonopolet" in html
 
+    def test_unverified_banner_text_on_unverified_page(self, docs_dir: Path) -> None:
+        """Every unverified kommune page shows the exact 'ikke verifisert' banner.
+
+        Fauske is one of the bulk-seeded unverified kommuner. The banner copy
+        is a trust signal — if it changes, we want CI to catch it before
+        shipping.
+        """
+        html = (docs_dir / "kommune" / "fauske" / "index.html").read_text(encoding="utf-8")
+        expected = (
+            "Ølsalgsreglene for Fauske er ikke verifisert. Tidene kan avvike fra nasjonale regler."
+        )
+        assert expected in html, "Missing or wrong unverified banner in fauske/index.html"
+
+    def test_verified_page_has_no_unverified_banner(self, docs_dir: Path) -> None:
+        """Verified kommuner must NOT show the 'ikke verifisert' banner.
+
+        Guards against the banner accidentally rendering on every page,
+        which would undermine the verification signal.
+        """
+        html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "ikke verifisert" not in html, (
+            "Verified kommune page unexpectedly shows 'ikke verifisert' banner"
+        )
+
+    def test_featured_section_excludes_bulk_seeded_kommuner(self, docs_dir: Path) -> None:
+        """'Mest besøkte kommuner' must not silently balloon to include every bulk-seeded kommune.
+
+        Pairs with test_featured_kommuner_on_index (which checks the positive
+        set). This asserts the negative: a known bulk-seeded kommune like
+        Haugesund is reachable via search but never a quick-link button.
+        """
+        import re
+
+        html = (docs_dir / "index.html").read_text(encoding="utf-8")
+        match = re.search(r"Mest besøkte kommuner.*?</section>", html, flags=re.DOTALL)
+        assert match, "Missing 'Mest besøkte kommuner' section"
+        section = match.group(0)
+        for unwanted in ("Haugesund", "Fauske", "Drammen", "Kristiansand"):
+            assert unwanted not in section, (
+                f"{unwanted} leaked into featured quick-links (should only be in search)"
+            )
+
     def test_featured_kommuner_on_index(self, docs_dir: Path) -> None:
         """'Mest besøkte kommuner' section shows exactly the curated short-list.
 
@@ -191,6 +233,8 @@ class TestFrontendBuild:
         # Quick-links render as <a ...>Name</a>; pull the label out.
         names = {m.strip() for m in re.findall(r">([^<>]+)</a>", section)}
         assert names == expected, f"featured set mismatch: got {names}, expected {expected}"
+
+    def test_footer_has_build_timestamp(self, docs_dir: Path) -> None:
         """Footer shows build date on all pages."""
         for page in ("index.html", "kommune/oslo/index.html"):
             html = (docs_dir / page).read_text(encoding="utf-8")
