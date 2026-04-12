@@ -57,6 +57,18 @@ class TestFullPipeline:
         assert validate_generated_municipality(result, result["days"], calendar) == []
         assert validate_national_max_compliance(result["days"]) == []
 
+    def test_bergen_generates_valid_data(self, sample_municipality_bergen):
+        result, calendar = _run_pipeline(sample_municipality_bergen, date(2026, 1, 1))
+        assert validate_calendar(calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
+        assert validate_national_max_compliance(result["days"]) == []
+
+    def test_stavanger_generates_valid_data(self, sample_municipality_stavanger):
+        result, calendar = _run_pipeline(sample_municipality_stavanger, date(2026, 1, 1))
+        assert validate_calendar(calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
+        assert validate_national_max_compliance(result["days"]) == []
+
 
 class TestTrondheimPipeline:
     """Full pipeline validation for Trondheim."""
@@ -447,4 +459,4 @@ class TestMainCLI:
 
         gen_dir = tmp_path / "generated" / "municipalities"
         files = sorted(gen_dir.glob("*.json"))
-        assert len(files) >= 4  # sandefjord, larvik, oslo, trondheim
+        assert len(files) >= 6  # sandefjord, larvik, oslo, trondheim, bergen, stavanger
