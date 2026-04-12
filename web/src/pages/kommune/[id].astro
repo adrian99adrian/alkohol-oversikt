@@ -82,7 +82,7 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
   description={`Se når ølsalget stenger og Vinmonopolet er åpent i ${municipality.name}.`}
   canonicalPath={`/kommune/${municipality.id}/`}
   buildDate={buildDate}
-  lastVerified={municipality.last_verified}
+  lastVerified={municipality.last_verified ?? undefined}
 >
   <div>
     <a href={basePath} class="mb-4 inline-block text-sm text-slate-400 hover:text-slate-200">
@@ -94,6 +94,15 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
     <div class="mb-6">
       <DayTypeLegend />
     </div>
+
+    <!-- Unverified beer-sales rules warning (highest-priority trust signal) -->
+    {!municipality.verified && (
+      <div class="mb-6 rounded-lg border border-amber-700 bg-amber-900/30 p-3">
+        <p class="text-sm text-amber-200">
+          <span class="font-semibold">NB:</span> Ølsalgsreglene for {municipality.name} er ikke verifisert. Tidene kan avvike fra lokale regler.
+        </p>
+      </div>
+    )}
 
     <!-- Vinmonopolet staleness warning -->
     {isVinmonopoletWarning && (
@@ -174,9 +183,11 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
           </li>
         )}
       </ul>
-      <p class="mt-2 text-sm text-slate-500">
-        Sist verifisert: {formatDateLong(municipality.last_verified)}
-      </p>
+      {municipality.last_verified && (
+        <p class="mt-2 text-sm text-slate-500">
+          Sist verifisert: {formatDateLong(municipality.last_verified)}
+        </p>
+      )}
     </section>
 
     <!-- Disclaimer -->

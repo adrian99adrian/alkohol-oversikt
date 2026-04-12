@@ -47,7 +47,8 @@ export interface MunicipalityData {
     name: string;
     county: string;
     sources: { title: string; url: string }[];
-    last_verified: string;
+    last_verified: string | null;
+    verified: boolean;
   };
   days: DayData[];
   vinmonopolet_stores: ResolvedStore[];

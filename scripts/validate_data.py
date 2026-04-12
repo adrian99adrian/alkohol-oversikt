@@ -19,7 +19,9 @@ REQUIRED_MUNICIPALITY_FIELDS = [
     "beer_sales",
     "sources",
     "last_verified",
+    "verified",
 ]
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 REQUIRED_BEER_SALES_FIELDS = [
     "weekday_open",
     "weekday_close",
@@ -42,23 +44,41 @@ NATIONAL_MAX = {
 _JSON_GLOB = "*.json"
 
 
+def _check_required_fields(data: dict) -> list[str]:
+    return [f"Missing required field: {f}" for f in REQUIRED_MUNICIPALITY_FIELDS if f not in data]
+
+
+def _check_beer_sales_fields(data: dict) -> list[str]:
+    if "beer_sales" not in data:
+        return []
+    beer = data["beer_sales"]
+    return [f"Missing beer_sales field: {f}" for f in REQUIRED_BEER_SALES_FIELDS if f not in beer]
+
+
+def _check_verified_invariants(data: dict) -> list[str]:
+    """Enforce: verified is boolean, and last_verified is YYYY-MM-DD iff verified is true."""
+    if "verified" not in data:
+        return []
+    verified = data["verified"]
+    if not isinstance(verified, bool):
+        return [f"verified must be boolean, got {type(verified).__name__}"]
+    if "last_verified" not in data:
+        return []
+    lv = data["last_verified"]
+    if verified and not (isinstance(lv, str) and _DATE_RE.match(lv)):
+        return ["last_verified must be YYYY-MM-DD string when verified is true"]
+    if not verified and lv is not None:
+        return ["last_verified must be null when verified is false"]
+    return []
+
+
 def validate_municipality_schema(data: dict) -> list[str]:
     """Validate a municipality JSON file. Returns list of errors."""
-    errors = []
-
-    for field in REQUIRED_MUNICIPALITY_FIELDS:
-        if field not in data:
-            errors.append(f"Missing required field: {field}")
-
-    if "beer_sales" in data:
-        beer = data["beer_sales"]
-        for field in REQUIRED_BEER_SALES_FIELDS:
-            if field not in beer:
-                errors.append(f"Missing beer_sales field: {field}")
-
+    errors = _check_required_fields(data)
+    errors.extend(_check_beer_sales_fields(data))
     if "sources" in data and len(data.get("sources", [])) == 0:
         errors.append("Must have at least one source")
-
+    errors.extend(_check_verified_invariants(data))
     return errors
 
 

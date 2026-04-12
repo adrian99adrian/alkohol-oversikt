@@ -39,7 +39,7 @@ class TestMunicipalityFiles:
             assert isinstance(data, dict), f"{name}: not a JSON object"
 
     def test_required_fields(self, municipalities):
-        required = {"id", "name", "county", "beer_sales", "sources", "last_verified"}
+        required = {"id", "name", "county", "beer_sales", "sources", "last_verified", "verified"}
         for name, data in municipalities:
             missing = required - data.keys()
             assert not missing, f"{name}: missing fields {missing}"
@@ -96,9 +96,14 @@ class TestMunicipalityFiles:
     def test_last_verified_format(self, municipalities):
         for name, data in municipalities:
             lv = data["last_verified"]
-            assert re.match(r"^\d{4}-\d{2}-\d{2}$", lv), (
-                f"{name}: last_verified {lv!r} not YYYY-MM-DD"
-            )
+            if data["verified"]:
+                assert isinstance(lv, str) and re.match(r"^\d{4}-\d{2}-\d{2}$", lv), (
+                    f"{name}: last_verified {lv!r} must be YYYY-MM-DD when verified=true"
+                )
+            else:
+                assert lv is None, (
+                    f"{name}: last_verified must be null when verified=false, got {lv!r}"
+                )
 
     def test_id_matches_filename(self, municipalities):
         for name, data in municipalities:

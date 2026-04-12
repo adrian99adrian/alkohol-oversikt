@@ -180,10 +180,20 @@ class TestFrontendBuild:
             assert "Sist oppdatert" in html, f"Missing build timestamp in {page}"
 
     def test_footer_has_last_verified(self, docs_dir: Path) -> None:
-        """Footer shows last-verified date on all pages."""
-        for page in ("index.html", "kommune/oslo/index.html"):
-            html = (docs_dir / page).read_text(encoding="utf-8")
-            assert "Regler sist sjekket" in html, f"Missing last-verified in {page}"
+        """Footer surfaces a verification signal on all pages.
+
+        Index shows a site-wide coverage summary ("Verifisert: X av Y kommuner");
+        per-kommune pages show the kommune's own "Regler sist sjekket".
+        """
+        index_html = (docs_dir / "index.html").read_text(encoding="utf-8")
+        assert "Verifisert:" in index_html and "kommuner" in index_html, (
+            "Missing coverage summary in index.html"
+        )
+
+        kommune_html = (docs_dir / "kommune" / "oslo" / "index.html").read_text(encoding="utf-8")
+        assert "Regler sist sjekket" in kommune_html, (
+            "Missing last-verified in kommune/oslo/index.html"
+        )
 
     def test_404_html_exists(self, docs_dir: Path) -> None:
         """Build output contains 404.html at the root."""
