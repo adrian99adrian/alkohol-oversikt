@@ -40,7 +40,11 @@ _MUNICIPALITIES_DIR = Path(__file__).parent.parent.parent / "data" / "municipali
 
 
 def _all_municipality_files() -> list[Path]:
-    return sorted(_MUNICIPALITIES_DIR.glob("*.json"))
+    paths = sorted(_MUNICIPALITIES_DIR.glob("*.json"))
+    # Fail loudly at collection time rather than silently producing zero
+    # parametrized tests if the directory is missing or empty.
+    assert paths, f"No kommune JSONs found in {_MUNICIPALITIES_DIR}"
+    return paths
 
 
 @pytest.mark.parametrize(

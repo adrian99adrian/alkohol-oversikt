@@ -8,6 +8,7 @@ interface Municipality {
   id: string;
   name: string;
   lastVerified: string | null;
+  verified: boolean;
 }
 
 const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -22,6 +23,7 @@ if (fs.existsSync(dataDir)) {
       id: data.municipality.id,
       name: data.municipality.name,
       lastVerified: data.municipality.last_verified,
+      verified: data.municipality.verified,
     };
   });
 }
@@ -32,6 +34,8 @@ const base = normalizeBasePath(import.meta.env.BASE_URL);
 
 const buildDate = new Date().toISOString().slice(0, 10);
 const oldestLastVerified = findOldestLastVerified(municipalities);
+const verifiedCount = municipalities.filter((m) => m.verified).length;
+const totalCount = municipalities.length;
 ---
 
 <Base
@@ -40,6 +44,8 @@ const oldestLastVerified = findOldestLastVerified(municipalities);
   canonicalPath="/"
   buildDate={buildDate}
   lastVerified={oldestLastVerified}
+  verifiedCount={verifiedCount}
+  totalCount={totalCount}
 >
   <div class="flex flex-col items-center text-center">
     <h1 class="mb-2 text-3xl font-bold text-white">Alkohol-oversikt</h1>

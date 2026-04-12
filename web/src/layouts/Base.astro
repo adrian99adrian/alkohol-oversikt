@@ -8,9 +8,17 @@ interface Props {
   canonicalPath?: string;
   buildDate?: string;
   lastVerified?: string;
+  verifiedCount?: number;
+  totalCount?: number;
 }
 
-const { title, description, canonicalPath, buildDate, lastVerified } = Astro.props;
+const { title, description, canonicalPath, buildDate, lastVerified, verifiedCount, totalCount } =
+  Astro.props;
+
+// Site-wide coverage summary: show on the index page only (when counts are supplied).
+// When present, replaces the per-page "Regler sist sjekket" wording so we're honest
+// that not every kommune has been verified.
+const hasCoverageSummary = verifiedCount !== undefined && totalCount !== undefined;
 const base = import.meta.env.BASE_URL;
 const ogImageUrl = `${siteUrl}/og-image.png`;
 const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : undefined;
@@ -65,7 +73,15 @@ const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : undefined;
         {buildDate && (
           <p class="mt-1 text-slate-500">
             Sist oppdatert: {formatDateLong(buildDate)}
-            {lastVerified && <span> · Regler sist sjekket: {formatDateLong(lastVerified)}</span>}
+            {hasCoverageSummary && verifiedCount > 0 && (
+              <span>
+                {" "}· Verifisert: {verifiedCount} av {totalCount} kommuner
+                {lastVerified && <span> · Eldste verifisering: {formatDateLong(lastVerified)}</span>}
+              </span>
+            )}
+            {!hasCoverageSummary && lastVerified && (
+              <span> · Regler sist sjekket: {formatDateLong(lastVerified)}</span>
+            )}
           </p>
         )}
       </div>
