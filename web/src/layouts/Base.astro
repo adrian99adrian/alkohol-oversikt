@@ -73,7 +73,7 @@ const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : undefined;
         {buildDate && (
           <p class="mt-1 text-slate-500">
             Sist oppdatert: {formatDateLong(buildDate)}
-            {hasCoverageSummary && verifiedCount > 0 && (
+            {hasCoverageSummary && (
               <span>
                 {" "}· Verifisert: {verifiedCount} av {totalCount} kommuner
                 {lastVerified && <span> · Eldste verifisering: {formatDateLong(lastVerified)}</span>}

@@ -42,6 +42,15 @@ def test_required_keys_per_entry(kommuner: list[dict]):
         assert not missing, f"{entry.get('id', '?')}: missing {missing}"
 
 
+def test_county_and_municipality_are_non_empty_strings(kommuner: list[dict]):
+    for entry in kommuner:
+        for key in ("county", "municipality"):
+            value = entry[key]
+            assert isinstance(value, str) and value, (
+                f"{entry['id']}: {key} must be a non-empty string, got {value!r}"
+            )
+
+
 def test_ids_are_unique(kommuner: list[dict]):
     ids = [e["id"] for e in kommuner]
     dupes = {i for i in ids if ids.count(i) > 1}
