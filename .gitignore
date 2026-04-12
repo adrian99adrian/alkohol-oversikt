@@ -33,6 +33,7 @@ Thumbs.db
 # Internal notes and tracking (not for distribution)
 notes/
 TODO.md
+alle-kommuner.md
 
 # Environment
 .env
