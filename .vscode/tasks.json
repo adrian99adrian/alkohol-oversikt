@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "npm run astro:sync",
       "options": { "cwd": "${workspaceFolder}/web" },
-      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "presentation": { "reveal": "silent", "revealProblems": "onProblem", "panel": "dedicated" },
       "runOptions": { "runOn": "folderOpen" },
       "problemMatcher": []
     }
