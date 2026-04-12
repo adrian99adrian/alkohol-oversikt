@@ -1,0 +1,4 @@
+# Force LF line endings on shell scripts and git hooks, even on Windows,
+# so bash can execute them without choking on \r characters.
+*.sh text eol=lf
+scripts/hooks/* text eol=lf
