@@ -14,23 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-12",
-      "weekday": "søndag",
-      "day_type": "sunday",
-      "day_type_label": "Søndag",
-      "beer_sale_allowed": false,
-      "beer_open": null,
-      "beer_close": null,
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": {
-        "type": "closed",
-        "open_count": 0,
-        "closed_count": 1
-      }
-    },
-    {
       "date": "2026-04-13",
       "weekday": "mandag",
       "day_type": "weekday",
@@ -42,10 +25,12 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -61,10 +46,12 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -80,10 +67,12 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -102,7 +91,7 @@
         "type": "uniform",
         "open": "10:00",
         "close": "18:00",
-        "open_count": 1,
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -121,7 +110,7 @@
         "type": "uniform",
         "open": "10:00",
         "close": "18:00",
-        "open_count": 1,
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -140,7 +129,7 @@
         "type": "uniform",
         "open": "10:00",
         "close": "16:00",
-        "open_count": 1,
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -158,7 +147,7 @@
       "vinmonopolet_summary": {
         "type": "closed",
         "open_count": 0,
-        "closed_count": 1
+        "closed_count": 2
       }
     },
     {
@@ -173,10 +162,12 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -192,10 +183,12 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -211,10 +204,12 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -233,7 +228,7 @@
         "type": "uniform",
         "open": "10:00",
         "close": "18:00",
-        "open_count": 1,
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -252,7 +247,7 @@
         "type": "uniform",
         "open": "10:00",
         "close": "18:00",
-        "open_count": 1,
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -271,7 +266,7 @@
         "type": "uniform",
         "open": "10:00",
         "close": "16:00",
-        "open_count": 1,
+        "open_count": 2,
         "closed_count": 0
       }
     },
@@ -286,7 +281,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 2
+      }
     },
     {
       "date": "2026-04-27",
@@ -4837,6 +4836,19 @@
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-12",
+      "weekday": "mandag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_stores": [
@@ -4845,11 +4857,6 @@
       "name": "Horten",
       "address": "Sjøsiden, Teatergaten 6, 3187 Horten",
       "hours": [
-        {
-          "date": "2026-04-12",
-          "open": null,
-          "close": null
-        },
         {
           "date": "2026-04-13",
           "open": "10:00",
@@ -4914,38 +4921,120 @@
           "date": "2026-04-25",
           "open": "10:00",
           "close": "16:00"
+        },
+        {
+          "date": "2026-04-26",
+          "open": null,
+          "close": null
+        }
+      ]
+    },
+    {
+      "store_id": "463",
+      "name": "Åsgårdstrand",
+      "address": "Grev Wedelsgate 46, 3179 Åsgårdstrand",
+      "hours": [
+        {
+          "date": "2026-04-13",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-14",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-15",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-16",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-17",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-18",
+          "open": "10:00",
+          "close": "16:00"
+        },
+        {
+          "date": "2026-04-19",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-04-20",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-21",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-22",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-23",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
+          "open": "10:00",
+          "close": "16:00"
+        },
+        {
+          "date": "2026-04-26",
+          "open": null,
+          "close": null
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
     {
-      "type": "closed",
-      "open_count": 0,
-      "closed_count": 1,
-      "date": "2026-04-12"
-    },
-    {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-13"
     },
     {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-14"
     },
     {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-15"
     },
@@ -4953,7 +5042,7 @@
       "type": "uniform",
       "open": "10:00",
       "close": "18:00",
-      "open_count": 1,
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-16"
     },
@@ -4961,7 +5050,7 @@
       "type": "uniform",
       "open": "10:00",
       "close": "18:00",
-      "open_count": 1,
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-17"
     },
@@ -4969,37 +5058,43 @@
       "type": "uniform",
       "open": "10:00",
       "close": "16:00",
-      "open_count": 1,
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-18"
     },
     {
       "type": "closed",
       "open_count": 0,
-      "closed_count": 1,
+      "closed_count": 2,
       "date": "2026-04-19"
     },
     {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-20"
     },
     {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-21"
     },
     {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 1,
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-22"
     },
@@ -5007,7 +5102,7 @@
       "type": "uniform",
       "open": "10:00",
       "close": "18:00",
-      "open_count": 1,
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-23"
     },
@@ -5015,7 +5110,7 @@
       "type": "uniform",
       "open": "10:00",
       "close": "18:00",
-      "open_count": 1,
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-24"
     },
@@ -5023,10 +5118,16 @@
       "type": "uniform",
       "open": "10:00",
       "close": "16:00",
-      "open_count": 1,
+      "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-25"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 2,
+      "date": "2026-04-26"
     }
   ],
-  "vinmonopolet_fetched_at": "2026-04-12T23:20:31.641548+02:00"
+  "vinmonopolet_fetched_at": "2026-04-13T00:14:15.043788+02:00"
 }

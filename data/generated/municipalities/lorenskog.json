@@ -14,19 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-12",
-      "weekday": "søndag",
-      "day_type": "sunday",
-      "day_type_label": "Søndag",
-      "beer_sale_allowed": false,
-      "beer_open": null,
-      "beer_close": null,
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": null
-    },
-    {
       "date": "2026-04-13",
       "weekday": "mandag",
       "day_type": "weekday",
@@ -37,7 +24,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-14",
@@ -50,7 +43,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-15",
@@ -63,7 +62,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-16",
@@ -76,7 +81,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-17",
@@ -89,7 +100,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-18",
@@ -102,7 +119,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "16:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-19",
@@ -115,7 +138,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 2
+      }
     },
     {
       "date": "2026-04-20",
@@ -128,7 +155,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-21",
@@ -141,7 +174,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-22",
@@ -154,7 +193,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-23",
@@ -167,7 +212,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-24",
@@ -180,7 +231,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-25",
@@ -193,7 +250,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Lørdag — ølsalg stenger kl. 18:00",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "16:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-26",
@@ -206,7 +269,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 2
+      }
     },
     {
       "date": "2026-04-27",
@@ -4757,9 +4824,286 @@
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-12",
+      "weekday": "mandag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
-  "vinmonopolet_stores": [],
-  "vinmonopolet_day_summary": [],
-  "vinmonopolet_fetched_at": "2026-04-12T23:20:31.641548+02:00"
+  "vinmonopolet_stores": [
+    {
+      "store_id": "287",
+      "name": "Lørenskog, Triaden",
+      "address": "Gamleveien 88, 1461 Lørenskog",
+      "hours": [
+        {
+          "date": "2026-04-13",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-14",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-15",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-16",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-17",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-18",
+          "open": "10:00",
+          "close": "16:00"
+        },
+        {
+          "date": "2026-04-19",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-04-20",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-21",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-22",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-23",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
+          "open": "10:00",
+          "close": "16:00"
+        },
+        {
+          "date": "2026-04-26",
+          "open": null,
+          "close": null
+        }
+      ]
+    },
+    {
+      "store_id": "473",
+      "name": "Lørenskog, Metro",
+      "address": "Bibliotekgata 30, 1473 Lørenskog",
+      "hours": [
+        {
+          "date": "2026-04-13",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-14",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-15",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-16",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-17",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-18",
+          "open": "10:00",
+          "close": "16:00"
+        },
+        {
+          "date": "2026-04-19",
+          "open": null,
+          "close": null
+        },
+        {
+          "date": "2026-04-20",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-21",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-22",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-23",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-24",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-25",
+          "open": "10:00",
+          "close": "16:00"
+        },
+        {
+          "date": "2026-04-26",
+          "open": null,
+          "close": null
+        }
+      ]
+    }
+  ],
+  "vinmonopolet_day_summary": [
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-13"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-14"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-15"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-16"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-17"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "16:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-18"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 2,
+      "date": "2026-04-19"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-20"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-21"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-22"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-23"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-24"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "16:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-25"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 2,
+      "date": "2026-04-26"
+    }
+  ],
+  "vinmonopolet_fetched_at": "2026-04-13T00:14:15.043788+02:00"
 }

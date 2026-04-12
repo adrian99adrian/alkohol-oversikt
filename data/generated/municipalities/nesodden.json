@@ -14,23 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-12",
-      "weekday": "søndag",
-      "day_type": "sunday",
-      "day_type_label": "Søndag",
-      "beer_sale_allowed": false,
-      "beer_open": null,
-      "beer_close": null,
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": {
-        "type": "closed",
-        "open_count": 0,
-        "closed_count": 1
-      }
-    },
-    {
       "date": "2026-04-13",
       "weekday": "mandag",
       "day_type": "weekday",
@@ -286,7 +269,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 1
+      }
     },
     {
       "date": "2026-04-27",
@@ -4837,6 +4824,19 @@
       "is_deviation": false,
       "comment": "Søndag — salg av øl er ikke tillatt",
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-12",
+      "weekday": "mandag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_stores": [
@@ -4845,11 +4845,6 @@
       "name": "Nesodden",
       "address": "Vestveien 51, 1452 Nesoddtangen",
       "hours": [
-        {
-          "date": "2026-04-12",
-          "open": null,
-          "close": null
-        },
         {
           "date": "2026-04-13",
           "open": "10:00",
@@ -4914,17 +4909,16 @@
           "date": "2026-04-25",
           "open": "10:00",
           "close": "16:00"
+        },
+        {
+          "date": "2026-04-26",
+          "open": null,
+          "close": null
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "closed",
-      "open_count": 0,
-      "closed_count": 1,
-      "date": "2026-04-12"
-    },
     {
       "type": "uniform",
       "open": "10:00",
@@ -5026,7 +5020,13 @@
       "open_count": 1,
       "closed_count": 0,
       "date": "2026-04-25"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 1,
+      "date": "2026-04-26"
     }
   ],
-  "vinmonopolet_fetched_at": "2026-04-12T23:20:31.641548+02:00"
+  "vinmonopolet_fetched_at": "2026-04-13T00:14:15.043788+02:00"
 }
