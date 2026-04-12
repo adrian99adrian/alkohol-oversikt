@@ -58,6 +58,7 @@ def build_municipality(
             "county": municipality["county"],
             "sources": municipality["sources"],
             "last_verified": municipality["last_verified"],
+            "verified": municipality["verified"],
         },
         "days": days,
         "vinmonopolet_stores": resolved_stores,

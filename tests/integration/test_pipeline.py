@@ -36,48 +36,26 @@ def _run_pipeline(
     return result, calendar
 
 
-class TestFullPipeline:
-    """Full pipeline: municipality JSON → calendar → generated output."""
-
-    def test_sandefjord_generates_valid_data(self, sample_municipality_sandefjord):
-        result, calendar = _run_pipeline(sample_municipality_sandefjord, date(2026, 1, 1))
-        assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result, result["days"], calendar) == []
-        assert validate_national_max_compliance(result["days"]) == []
-
-    def test_larvik_generates_valid_data(self, sample_municipality_larvik):
-        result, calendar = _run_pipeline(sample_municipality_larvik, date(2026, 1, 1))
-        assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result, result["days"], calendar) == []
-        assert validate_national_max_compliance(result["days"]) == []
-
-    def test_oslo_generates_valid_data(self, sample_municipality_oslo):
-        result, calendar = _run_pipeline(sample_municipality_oslo, date(2026, 1, 1))
-        assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result, result["days"], calendar) == []
-        assert validate_national_max_compliance(result["days"]) == []
-
-    def test_bergen_generates_valid_data(self, sample_municipality_bergen):
-        result, calendar = _run_pipeline(sample_municipality_bergen, date(2026, 1, 1))
-        assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result, result["days"], calendar) == []
-        assert validate_national_max_compliance(result["days"]) == []
-
-    def test_stavanger_generates_valid_data(self, sample_municipality_stavanger):
-        result, calendar = _run_pipeline(sample_municipality_stavanger, date(2026, 1, 1))
-        assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result, result["days"], calendar) == []
-        assert validate_national_max_compliance(result["days"]) == []
+_MUNICIPALITIES_DIR = Path(__file__).parent.parent.parent / "data" / "municipalities"
 
 
-class TestTrondheimPipeline:
-    """Full pipeline validation for Trondheim."""
+def _all_municipality_files() -> list[Path]:
+    return sorted(_MUNICIPALITIES_DIR.glob("*.json"))
 
-    def test_trondheim_generates_valid_data(self, sample_municipality_trondheim):
-        result, calendar = _run_pipeline(sample_municipality_trondheim, date(2026, 1, 1))
-        assert validate_calendar(calendar) == []
-        assert validate_generated_municipality(result, result["days"], calendar) == []
-        assert validate_national_max_compliance(result["days"]) == []
+
+@pytest.mark.parametrize(
+    "municipality_path",
+    _all_municipality_files(),
+    ids=lambda p: p.stem,
+)
+def test_municipality_pipeline(municipality_path: Path):
+    """Every kommune JSON generates valid pipeline output."""
+    with open(municipality_path, encoding="utf-8") as f:
+        municipality = json.load(f)
+    result, calendar = _run_pipeline(municipality, date(2026, 1, 1))
+    assert validate_calendar(calendar) == []
+    assert validate_generated_municipality(result, result["days"], calendar) == []
+    assert validate_national_max_compliance(result["days"]) == []
 
 
 class TestTrondheimEaster:

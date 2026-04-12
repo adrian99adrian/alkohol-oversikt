@@ -17,16 +17,17 @@ export function findNextDeviation(days: DayData[]): DayData | null {
 
 /**
  * Find the oldest (minimum) lastVerified date from a list of municipalities.
- * Returns undefined if the array is empty.
+ * Ignores entries with null lastVerified (unverified kommuner).
+ * Returns undefined if the array is empty or contains only nulls.
  */
 export function findOldestLastVerified(
-  municipalities: { lastVerified: string }[],
+  municipalities: { lastVerified: string | null }[],
 ): string | undefined {
-  if (municipalities.length === 0) return undefined;
-  return municipalities.reduce(
-    (oldest, m) => (m.lastVerified < oldest ? m.lastVerified : oldest),
-    municipalities[0].lastVerified,
-  );
+  const verified = municipalities
+    .map((m) => m.lastVerified)
+    .filter((d): d is string => d !== null);
+  if (verified.length === 0) return undefined;
+  return verified.reduce((oldest, d) => (d < oldest ? d : oldest), verified[0]);
 }
 
 /** Capitalize the first letter of a string. */

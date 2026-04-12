@@ -7,7 +7,7 @@ import { normalizeBasePath, findOldestLastVerified } from "../lib/dataUtils";
 interface Municipality {
   id: string;
   name: string;
-  lastVerified: string;
+  lastVerified: string | null;
 }
 
 const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");

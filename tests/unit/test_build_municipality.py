@@ -21,6 +21,18 @@ class TestBuildMunicipality:
         assert meta["name"] == "Sandefjord"
         assert "sources" in meta
         assert "last_verified" in meta
+        assert meta["verified"] is True
+
+    def test_verified_false_propagates_with_null_last_verified(
+        self, sample_municipality_sandefjord
+    ):
+        municipality = dict(sample_municipality_sandefjord)
+        municipality["verified"] = False
+        municipality["last_verified"] = None
+        result = self._build(municipality)
+        meta = result["municipality"]
+        assert meta["verified"] is False
+        assert meta["last_verified"] is None
 
     def test_has_days_array(self, sample_municipality_sandefjord):
         result = self._build(sample_municipality_sandefjord)

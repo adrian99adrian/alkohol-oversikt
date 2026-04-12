@@ -1,0 +1,2545 @@
+[
+  {
+    "county": "Oslo",
+    "municipality": "Oslo",
+    "id": "oslo",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Eigersund",
+    "id": "eigersund",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Stavanger",
+    "id": "stavanger",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Haugesund",
+    "id": "haugesund",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Sandnes",
+    "id": "sandnes",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Sokndal",
+    "id": "sokndal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Lund",
+    "id": "lund",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Bjerkreim",
+    "id": "bjerkreim",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Hå",
+    "id": "ha",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Klepp",
+    "id": "klepp",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Time",
+    "id": "time",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Gjesdal",
+    "id": "gjesdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Sola",
+    "id": "sola",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Randaberg",
+    "id": "randaberg",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Strand",
+    "id": "strand",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Hjelmeland",
+    "id": "hjelmeland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Suldal",
+    "id": "suldal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Sauda",
+    "id": "sauda",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Kvitsøy",
+    "id": "kvitsoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Bokn",
+    "id": "bokn",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Tysvær",
+    "id": "tysvaer",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Karmøy",
+    "id": "karmoy",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Utsira",
+    "id": "utsira",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Rogaland",
+    "municipality": "Vindafjord",
+    "id": "vindafjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Kristiansund",
+    "id": "kristiansund",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Molde",
+    "id": "molde",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Ålesund",
+    "id": "alesund",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Vanylven",
+    "id": "vanylven",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Sande i Møre og Romsdal",
+    "id": "sande-i-more-og-romsdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Herøy i Møre og Romsdal",
+    "id": "heroy-i-more-og-romsdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Ulstein",
+    "id": "ulstein",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Hareid",
+    "id": "hareid",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Ørsta",
+    "id": "orsta",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Stranda",
+    "id": "stranda",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Sykkylven",
+    "id": "sykkylven",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Sula",
+    "id": "sula",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Giske",
+    "id": "giske",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Vestnes",
+    "id": "vestnes",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Rauma",
+    "id": "rauma",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Aukra",
+    "id": "aukra",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Averøy",
+    "id": "averoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Gjemnes",
+    "id": "gjemnes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Tingvoll",
+    "id": "tingvoll",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Sunndal",
+    "id": "sunndal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Surnadal",
+    "id": "surnadal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Smøla",
+    "id": "smola",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Aure",
+    "id": "aure",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Volda",
+    "id": "volda",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Fjord",
+    "id": "fjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Hustadvika",
+    "id": "hustadvika",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Møre og Romsdal",
+    "municipality": "Haram",
+    "id": "haram",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Bodø",
+    "id": "bodo",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Narvik",
+    "id": "narvik",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Bindal",
+    "id": "bindal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Sømna",
+    "id": "somna",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Brønnøy",
+    "id": "bronnoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Vega",
+    "id": "vega",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Vevelstad",
+    "id": "vevelstad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Herøy i Nordland",
+    "id": "heroy-i-nordland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Alstahaug",
+    "id": "alstahaug",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Leirfjord",
+    "id": "leirfjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Vefsn",
+    "id": "vefsn",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Grane",
+    "id": "grane",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Hattfjelldal",
+    "id": "hattfjelldal",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Dønna",
+    "id": "donna",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Nesna",
+    "id": "nesna",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Hemnes",
+    "id": "hemnes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Rana",
+    "id": "rana",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Lurøy",
+    "id": "luroy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Træna",
+    "id": "traena",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Rødøy",
+    "id": "rodoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Meløy",
+    "id": "meloy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Gildeskål",
+    "id": "gildeskal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Beiarn",
+    "id": "beiarn",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Saltdal",
+    "id": "saltdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Fauske",
+    "id": "fauske",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Sørfold",
+    "id": "sorfold",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Steigen",
+    "id": "steigen",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Lødingen",
+    "id": "lodingen",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Evenes",
+    "id": "evenes",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Røst",
+    "id": "rost",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Værøy",
+    "id": "vaeroy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Flakstad",
+    "id": "flakstad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Vestvågøy",
+    "id": "vestvagoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Vågan",
+    "id": "vagan",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Hadsel",
+    "id": "hadsel",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Bø i Nordland",
+    "id": "bo-i-nordland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Øksnes",
+    "id": "oksnes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Sortland",
+    "id": "sortland",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Andøy",
+    "id": "andoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Moskenes",
+    "id": "moskenes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Nordland",
+    "municipality": "Hamarøy",
+    "id": "hamaroy",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Halden",
+    "id": "halden",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Moss",
+    "id": "moss",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Sarpsborg",
+    "id": "sarpsborg",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Fredrikstad",
+    "id": "fredrikstad",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Hvaler",
+    "id": "hvaler",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Råde",
+    "id": "rade",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Våler",
+    "id": "valer",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Skiptvet",
+    "id": "skiptvet",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Indre Østfold",
+    "id": "indre-ostfold",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Rakkestad",
+    "id": "rakkestad",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Marker",
+    "id": "marker",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Østfold",
+    "municipality": "Aremark",
+    "id": "aremark",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Bærum",
+    "id": "baerum",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Asker",
+    "id": "asker",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Lillestrøm",
+    "id": "lillestrom",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Nordre Follo",
+    "id": "nordre-follo",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Ullensaker",
+    "id": "ullensaker",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Nesodden",
+    "id": "nesodden",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Frogn",
+    "id": "frogn",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Vestby",
+    "id": "vestby",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Ås",
+    "id": "as",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Enebakk",
+    "id": "enebakk",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Lørenskog",
+    "id": "lorenskog",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Rælingen",
+    "id": "raelingen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Aurskog-Høland",
+    "id": "aurskog-holand",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Nes",
+    "id": "nes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Gjerdrum",
+    "id": "gjerdrum",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Nittedal",
+    "id": "nittedal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Lunner",
+    "id": "lunner",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Jevnaker",
+    "id": "jevnaker",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Nannestad",
+    "id": "nannestad",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Eidsvoll",
+    "id": "eidsvoll",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Akershus",
+    "municipality": "Hurdal",
+    "id": "hurdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Drammen",
+    "id": "drammen",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Kongsberg",
+    "id": "kongsberg",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Ringerike",
+    "id": "ringerike",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Hole",
+    "id": "hole",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Lier",
+    "id": "lier",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Øvre Eiker",
+    "id": "ovre-eiker",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Modum",
+    "id": "modum",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Krødsherad",
+    "id": "krodsherad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Flå",
+    "id": "fla",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Nesbyen",
+    "id": "nesbyen",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Gol",
+    "id": "gol",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Hemsedal",
+    "id": "hemsedal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Ål",
+    "id": "al",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Hol",
+    "id": "hol",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Sigdal",
+    "id": "sigdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Flesberg",
+    "id": "flesberg",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Rollag",
+    "id": "rollag",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Buskerud",
+    "municipality": "Nore og Uvdal",
+    "id": "nore-og-uvdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Kongsvinger",
+    "id": "kongsvinger",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Hamar",
+    "id": "hamar",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Lillehammer",
+    "id": "lillehammer",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Gjøvik",
+    "id": "gjovik",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Ringsaker",
+    "id": "ringsaker",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Løten",
+    "id": "loten",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Stange",
+    "id": "stange",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Nord-Odal",
+    "id": "nord-odal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Sør-Odal",
+    "id": "sor-odal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Eidskog",
+    "id": "eidskog",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Grue",
+    "id": "grue",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Åsnes",
+    "id": "asnes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Våler i Innlandet",
+    "id": "valer-i-innlandet",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Elverum",
+    "id": "elverum",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Trysil",
+    "id": "trysil",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Åmot",
+    "id": "amot",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Stor-Elvdal",
+    "id": "stor-elvdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Rendalen",
+    "id": "rendalen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Engerdal",
+    "id": "engerdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Tolga",
+    "id": "tolga",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Tynset",
+    "id": "tynset",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Alvdal",
+    "id": "alvdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Folldal",
+    "id": "folldal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Os",
+    "id": "os",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Dovre",
+    "id": "dovre",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Lesja",
+    "id": "lesja",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Skjåk",
+    "id": "skjak",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Lom",
+    "id": "lom",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Vågå",
+    "id": "vaga",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Nord-Fron",
+    "id": "nord-fron",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Sel",
+    "id": "sel",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Sør-Fron",
+    "id": "sor-fron",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Ringebu",
+    "id": "ringebu",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Øyer",
+    "id": "oyer",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Gausdal",
+    "id": "gausdal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Østre Toten",
+    "id": "ostre-toten",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Vestre Toten",
+    "id": "vestre-toten",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Gran",
+    "id": "gran",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Søndre Land",
+    "id": "sondre-land",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Nordre Land",
+    "id": "nordre-land",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Sør-Aurdal",
+    "id": "sor-aurdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Etnedal",
+    "id": "etnedal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Nord-Aurdal",
+    "id": "nord-aurdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Vestre Slidre",
+    "id": "vestre-slidre",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Øystre Slidre",
+    "id": "oystre-slidre",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Innlandet",
+    "municipality": "Vang",
+    "id": "vang",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestfold",
+    "municipality": "Horten",
+    "id": "horten",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestfold",
+    "municipality": "Holmestrand",
+    "id": "holmestrand",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestfold",
+    "municipality": "Tønsberg",
+    "id": "tonsberg",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestfold",
+    "municipality": "Sandefjord",
+    "id": "sandefjord",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestfold",
+    "municipality": "Larvik",
+    "id": "larvik",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestfold",
+    "municipality": "Færder",
+    "id": "faerder",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Porsgrunn",
+    "id": "porsgrunn",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Skien",
+    "id": "skien",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Notodden",
+    "id": "notodden",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Siljan",
+    "id": "siljan",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Bamble",
+    "id": "bamble",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Kragerø",
+    "id": "kragero",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Drangedal",
+    "id": "drangedal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Nome",
+    "id": "nome",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Midt-Telemark",
+    "id": "midt-telemark",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Seljord",
+    "id": "seljord",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Hjartdal",
+    "id": "hjartdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Tinn",
+    "id": "tinn",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Kviteseid",
+    "id": "kviteseid",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Nissedal",
+    "id": "nissedal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Fyresdal",
+    "id": "fyresdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Tokke",
+    "id": "tokke",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Telemark",
+    "municipality": "Vinje",
+    "id": "vinje",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Risør",
+    "id": "risor",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Grimstad",
+    "id": "grimstad",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Arendal",
+    "id": "arendal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Kristiansand",
+    "id": "kristiansand",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Lindesnes",
+    "id": "lindesnes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Farsund",
+    "id": "farsund",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Flekkefjord",
+    "id": "flekkefjord",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Gjerstad",
+    "id": "gjerstad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Vegårshei",
+    "id": "vegarshei",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Tvedestrand",
+    "id": "tvedestrand",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Froland",
+    "id": "froland",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Lillesand",
+    "id": "lillesand",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Birkenes",
+    "id": "birkenes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Åmli",
+    "id": "amli",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Iveland",
+    "id": "iveland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Evje og Hornnes",
+    "id": "evje-og-hornnes",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Bygland",
+    "id": "bygland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Valle",
+    "id": "valle",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Bykle",
+    "id": "bykle",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Vennesla",
+    "id": "vennesla",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Åseral",
+    "id": "aseral",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Lyngdal",
+    "id": "lyngdal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Hægebostad",
+    "id": "haegebostad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Kvinesdal",
+    "id": "kvinesdal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Agder",
+    "municipality": "Sirdal",
+    "id": "sirdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Bergen",
+    "id": "bergen",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Kinn",
+    "id": "kinn",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Etne",
+    "id": "etne",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Sveio",
+    "id": "sveio",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Bømlo",
+    "id": "bomlo",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Stord",
+    "id": "stord",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Fitjar",
+    "id": "fitjar",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Tysnes",
+    "id": "tysnes",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Kvinnherad",
+    "id": "kvinnherad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Ullensvang",
+    "id": "ullensvang",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Eidfjord",
+    "id": "eidfjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Ulvik",
+    "id": "ulvik",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Voss",
+    "id": "voss",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Kvam",
+    "id": "kvam",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Samnanger",
+    "id": "samnanger",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Bjørnafjorden",
+    "id": "bjornafjorden",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Austevoll",
+    "id": "austevoll",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Øygarden",
+    "id": "oygarden",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Askøy",
+    "id": "askoy",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Vaksdal",
+    "id": "vaksdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Modalen",
+    "id": "modalen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Osterøy",
+    "id": "osteroy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Alver",
+    "id": "alver",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Austrheim",
+    "id": "austrheim",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Fedje",
+    "id": "fedje",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Masfjorden",
+    "id": "masfjorden",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Gulen",
+    "id": "gulen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Solund",
+    "id": "solund",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Hyllestad",
+    "id": "hyllestad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Høyanger",
+    "id": "hoyanger",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Vik",
+    "id": "vik",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Sogndal",
+    "id": "sogndal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Aurland",
+    "id": "aurland",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Lærdal",
+    "id": "laerdal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Årdal",
+    "id": "ardal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Luster",
+    "id": "luster",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Askvoll",
+    "id": "askvoll",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Fjaler",
+    "id": "fjaler",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Sunnfjord",
+    "id": "sunnfjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Bremanger",
+    "id": "bremanger",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Stad",
+    "id": "stad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Gloppen",
+    "id": "gloppen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Vestland",
+    "municipality": "Stryn",
+    "id": "stryn",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Trondheim",
+    "id": "trondheim",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Steinkjer",
+    "id": "steinkjer",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Namsos",
+    "id": "namsos",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Frøya",
+    "id": "froya",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Osen",
+    "id": "osen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Oppdal",
+    "id": "oppdal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Rennebu",
+    "id": "rennebu",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Røros",
+    "id": "roros",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Holtålen",
+    "id": "holtalen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Midtre Gauldal",
+    "id": "midtre-gauldal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Melhus",
+    "id": "melhus",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Skaun",
+    "id": "skaun",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Malvik",
+    "id": "malvik",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Selbu",
+    "id": "selbu",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Tydal",
+    "id": "tydal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Meråker",
+    "id": "meraker",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Stjørdal",
+    "id": "stjordal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Frosta",
+    "id": "frosta",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Levanger",
+    "id": "levanger",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Verdal",
+    "id": "verdal",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Snåsa",
+    "id": "snasa",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Lierne",
+    "id": "lierne",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Røyrvik",
+    "id": "royrvik",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Namsskogan",
+    "id": "namsskogan",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Grong",
+    "id": "grong",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Høylandet",
+    "id": "hoylandet",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Overhalla",
+    "id": "overhalla",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Flatanger",
+    "id": "flatanger",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Leka",
+    "id": "leka",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Inderøy",
+    "id": "inderoy",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Indre Fosen",
+    "id": "indre-fosen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Heim",
+    "id": "heim",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Hitra",
+    "id": "hitra",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Ørland",
+    "id": "orland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Åfjord",
+    "id": "afjord",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Orkland",
+    "id": "orkland",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Nærøysund",
+    "id": "naeroysund",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Trøndelag",
+    "municipality": "Rindal",
+    "id": "rindal",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Tromsø",
+    "id": "tromso",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Harstad",
+    "id": "harstad",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Troms",
+    "municipality": "Kvæfjord",
+    "id": "kvaefjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Tjeldsund",
+    "id": "tjeldsund",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Troms",
+    "municipality": "Ibestad",
+    "id": "ibestad",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Gratangen",
+    "id": "gratangen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Lavangen",
+    "id": "lavangen",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Troms",
+    "municipality": "Bardu",
+    "id": "bardu",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Salangen",
+    "id": "salangen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Målselv",
+    "id": "malselv",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Sørreisa",
+    "id": "sorreisa",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Dyrøy",
+    "id": "dyroy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Senja",
+    "id": "senja",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Balsfjord",
+    "id": "balsfjord",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Karlsøy",
+    "id": "karlsoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Lyngen",
+    "id": "lyngen",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Storfjord",
+    "id": "storfjord",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Troms",
+    "municipality": "Kåfjord",
+    "id": "kafjord",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Troms",
+    "municipality": "Skjervøy",
+    "id": "skjervoy",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Troms",
+    "municipality": "Nordreisa",
+    "id": "nordreisa",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Troms",
+    "municipality": "Kvænangen",
+    "id": "kvaenangen",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Alta",
+    "id": "alta",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Hammerfest",
+    "id": "hammerfest",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Sør-Varanger",
+    "id": "sor-varanger",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Vadsø",
+    "id": "vadso",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Karasjok",
+    "id": "karasjok",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Kautokeino",
+    "id": "kautokeino",
+    "borders": null,
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Loppa",
+    "id": "loppa",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Hasvik",
+    "id": "hasvik",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Måsøy",
+    "id": "masoy",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Nordkapp",
+    "id": "nordkapp",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Porsanger",
+    "id": "porsanger",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Lebesby",
+    "id": "lebesby",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Gamvik",
+    "id": "gamvik",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Tana",
+    "id": "tana",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Berlevåg",
+    "id": "berlevag",
+    "borders": [],
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Båtsfjord",
+    "id": "batsfjord",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Vardø",
+    "id": "vardo",
+    "borders": null,
+    "bugs": []
+  },
+  {
+    "county": "Finnmark",
+    "municipality": "Nesseby",
+    "id": "nesseby",
+    "borders": [],
+    "bugs": [
+      "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
+    ]
+  }
+]

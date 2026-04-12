@@ -9,7 +9,11 @@
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
     "special_day_close": "16:00",
-    "special_days": ["whit_eve", "christmas_eve", "new_years_eve"],
+    "special_days": [
+      "whit_eve",
+      "christmas_eve",
+      "new_years_eve"
+    ],
     "exceptions": {
       "pre_ascension_day": "weekday"
     }
@@ -20,5 +24,6 @@
       "url": "https://www.larvik.kommune.no/naering-og-utvikling/skjenking-servering-og-tobakk/salgstider-for-oel-i-dagligvarebutikker-i-larvik/"
     }
   ],
-  "last_verified": "2026-03-31"
+  "last_verified": "2026-03-31",
+  "verified": true
 }

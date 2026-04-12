@@ -112,6 +112,26 @@ describe("findOldestLastVerified", () => {
     ];
     expect(findOldestLastVerified(items)).toBe("2026-03-01");
   });
+
+  it("returns undefined for a single null entry", () => {
+    expect(findOldestLastVerified([{ lastVerified: null }])).toBeUndefined();
+  });
+
+  it("ignores nulls and returns oldest non-null date", () => {
+    const items = [
+      { lastVerified: "2026-04-15" },
+      { lastVerified: null },
+      { lastVerified: "2026-03-01" },
+      { lastVerified: null },
+    ];
+    expect(findOldestLastVerified(items)).toBe("2026-03-01");
+  });
+
+  it("returns undefined when all entries are null", () => {
+    expect(
+      findOldestLastVerified([{ lastVerified: null }, { lastVerified: null }]),
+    ).toBeUndefined();
+  });
 });
 
 describe("capitalizeFirst", () => {

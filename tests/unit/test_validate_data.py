@@ -61,6 +61,39 @@ class TestValidateMunicipalitySchema:
         errors = validate_municipality_schema(data)
         assert any("source" in e.lower() for e in errors)
 
+    def test_missing_verified_fails(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        del data["verified"]
+        errors = validate_municipality_schema(data)
+        assert any("verified" in e for e in errors)
+
+    def test_non_boolean_verified_fails(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["verified"] = "yes"
+        errors = validate_municipality_schema(data)
+        assert any("verified" in e and "boolean" in e for e in errors)
+
+    def test_unverified_with_non_null_last_verified_fails(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["verified"] = False
+        data["last_verified"] = "2026-04-12"
+        errors = validate_municipality_schema(data)
+        assert any("null" in e for e in errors)
+
+    def test_verified_with_null_last_verified_fails(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["verified"] = True
+        data["last_verified"] = None
+        errors = validate_municipality_schema(data)
+        assert any("YYYY-MM-DD" in e for e in errors)
+
+    def test_unverified_with_null_last_verified_passes(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["verified"] = False
+        data["last_verified"] = None
+        errors = validate_municipality_schema(data)
+        assert errors == []
+
 
 # --- Calendar validation ---
 

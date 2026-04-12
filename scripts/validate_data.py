@@ -19,7 +19,9 @@ REQUIRED_MUNICIPALITY_FIELDS = [
     "beer_sales",
     "sources",
     "last_verified",
+    "verified",
 ]
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 REQUIRED_BEER_SALES_FIELDS = [
     "weekday_open",
     "weekday_close",
@@ -58,6 +60,17 @@ def validate_municipality_schema(data: dict) -> list[str]:
 
     if "sources" in data and len(data.get("sources", [])) == 0:
         errors.append("Must have at least one source")
+
+    if "verified" in data:
+        verified = data["verified"]
+        if not isinstance(verified, bool):
+            errors.append(f"verified must be boolean, got {type(verified).__name__}")
+        elif "last_verified" in data:
+            lv = data["last_verified"]
+            if verified and not (isinstance(lv, str) and _DATE_RE.match(lv)):
+                errors.append("last_verified must be YYYY-MM-DD string when verified is true")
+            if not verified and lv is not None:
+                errors.append("last_verified must be null when verified is false")
 
     return errors
 
