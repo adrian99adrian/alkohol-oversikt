@@ -7,6 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "astro:sync": "astro sync",
+    "postinstall": "npm run astro:sync",
     "test": "vitest run"
   },
   "dependencies": {

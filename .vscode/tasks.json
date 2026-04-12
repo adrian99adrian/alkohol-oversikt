@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "astro sync",
+      "type": "shell",
+      "command": "npm run astro:sync",
+      "options": { "cwd": "${workspaceFolder}/web" },
+      "presentation": { "reveal": "silent", "revealProblems": "onProblem", "panel": "dedicated" },
+      "runOptions": { "runOn": "folderOpen" },
+      "problemMatcher": []
+    }
+  ]
+}
