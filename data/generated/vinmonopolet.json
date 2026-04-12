@@ -1,7 +1,7 @@
 {
   "metadata": {
     "total_stores": 353,
-    "fetched_at": "2026-04-12T23:03:16.957843+02:00",
+    "fetched_at": "2026-04-12T23:20:31.641548+02:00",
     "window_start": "2026-04-12",
     "window_end": "2026-04-18"
   },
@@ -9051,7 +9051,7 @@
     {
       "store_id": "275",
       "name": "Os",
-      "municipality": "os",
+      "municipality": "bjornafjorden",
       "address": "Hamnevegen 48, 5200 Os",
       "standard_hours": {
         "monday": {

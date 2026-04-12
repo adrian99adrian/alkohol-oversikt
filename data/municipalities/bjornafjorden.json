@@ -1,7 +1,7 @@
 {
-  "id": "os",
-  "name": "Os",
-  "county": "Innlandet",
+  "id": "bjornafjorden",
+  "name": "Bjørnafjorden",
+  "county": "Vestland",
   "beer_sales": {
     "weekday_open": "08:00",
     "weekday_close": "20:00",
@@ -9,12 +9,7 @@
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
     "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+    "special_days": ["easter_eve", "whit_eve", "christmas_eve", "new_years_eve"]
   },
   "sources": [
     {
