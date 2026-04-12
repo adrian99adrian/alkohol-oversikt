@@ -57,12 +57,16 @@ const nextDeviation = findNextDeviation(tableDays);
 // Vinmonopolet day summary for the table (first 14 days)
 const daySummary = vinmonopolet_day_summary ?? [];
 
-// Vinmonopolet staleness check (build-time snapshot)
-const vinmonopoletFetchedAt = data.vinmonopolet_fetched_at ?? undefined;
-const isVinmonopoletWarning = isVinmonopoletStale(
-  vinmonopoletFetchedAt,
-  VINMONOPOLET_STALE_THRESHOLD_DAYS,
-);
+// Vinmonopolet staleness check (build-time snapshot).
+// Only show the warning when this municipality actually has stores — otherwise
+// the Vinmonopolet section is hidden and the warning would be misleading.
+const vinmonopoletFetchedAt = data.vinmonopolet_fetched_at;
+const isVinmonopoletWarning =
+  vinmonopolet_stores.length > 0 &&
+  isVinmonopoletStale(vinmonopoletFetchedAt, VINMONOPOLET_STALE_THRESHOLD_DAYS);
+// Slice YYYY-MM-DD out of the ISO timestamp to keep the producer's local-day
+// (fetch_vinmonopolet writes Europe/Oslo local time), avoiding UTC drift when
+// formatting for display.
 const fetchedAtFormatted = vinmonopoletFetchedAt
   ? formatDateLong(vinmonopoletFetchedAt.slice(0, 10))
   : null;

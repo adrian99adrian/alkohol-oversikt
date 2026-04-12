@@ -43,7 +43,7 @@ export const VINMONOPOLET_STALE_THRESHOLD_DAYS = 2;
  * The `now` parameter enables deterministic testing.
  */
 export function isVinmonopoletStale(
-  fetchedAt: string | undefined,
+  fetchedAt: string | null | undefined,
   maxAgeDays: number,
   now: Date = new Date(),
 ): boolean {
