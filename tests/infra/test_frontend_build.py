@@ -191,6 +191,8 @@ class TestFrontendBuild:
         # Quick-links render as <a ...>Name</a>; pull the label out.
         names = {m.strip() for m in re.findall(r">([^<>]+)</a>", section)}
         assert names == expected, f"featured set mismatch: got {names}, expected {expected}"
+
+    def test_footer_has_build_timestamp(self, docs_dir: Path) -> None:
         """Footer shows build date on all pages."""
         for page in ("index.html", "kommune/oslo/index.html"):
             html = (docs_dir / page).read_text(encoding="utf-8")
