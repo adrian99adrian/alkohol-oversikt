@@ -1,7 +1,7 @@
 {
   "metadata": {
     "total_stores": 353,
-    "fetched_at": "2026-04-12T18:24:57.261190+02:00",
+    "fetched_at": "2026-04-12T23:03:16.957843+02:00",
     "window_start": "2026-04-12",
     "window_end": "2026-04-18"
   },
@@ -213,7 +213,7 @@
     {
       "store_id": "105",
       "name": "Nittedal",
-      "municipality": null,
+      "municipality": "nittedal",
       "address": "Mattias Skytters vei 2/4, 1482 Nittedal",
       "standard_hours": {
         "monday": {
@@ -273,7 +273,7 @@
     {
       "store_id": "106",
       "name": "Suldal",
-      "municipality": null,
+      "municipality": "suldal",
       "address": "Gata 5, 4230 Sand",
       "standard_hours": {
         "monday": null,
@@ -363,7 +363,7 @@
     {
       "store_id": "108",
       "name": "Nesna",
-      "municipality": null,
+      "municipality": "nesna",
       "address": "Idrettsveien 13, 8700 Nesna",
       "standard_hours": {
         "monday": null,
@@ -585,7 +585,7 @@
     {
       "store_id": "113",
       "name": "Porsgrunn, Down Town",
-      "municipality": null,
+      "municipality": "porsgrunn",
       "address": "Kulltangveien 70, 3921 Porsgrunn",
       "standard_hours": {
         "monday": {
@@ -765,7 +765,7 @@
     {
       "store_id": "116",
       "name": "Sandnes, Kvadrat",
-      "municipality": null,
+      "municipality": "sandnes",
       "address": "Gamle Stokkavei 1, 4313 Sandnes",
       "standard_hours": {
         "monday": {
@@ -1527,7 +1527,7 @@
     {
       "store_id": "129",
       "name": "Fitjar",
-      "municipality": null,
+      "municipality": "fitjar",
       "address": "Fitjarsjøen 16-18, 5419 Fitjar",
       "standard_hours": {
         "monday": null,
@@ -1791,7 +1791,7 @@
     {
       "store_id": "134",
       "name": "Nesodden",
-      "municipality": null,
+      "municipality": "nesodden",
       "address": "Vestveien 51, 1452 Nesoddtangen",
       "standard_hours": {
         "monday": {
@@ -2091,7 +2091,7 @@
     {
       "store_id": "139",
       "name": "Overhalla",
-      "municipality": null,
+      "municipality": "overhalla",
       "address": "Namsengata 1, 7863 Overhalla",
       "standard_hours": {
         "monday": null,
@@ -2493,7 +2493,7 @@
     {
       "store_id": "147",
       "name": "Sauda",
-      "municipality": null,
+      "municipality": "sauda",
       "address": "Torggata 1, 4200 Sauda",
       "standard_hours": {
         "monday": {
@@ -2853,7 +2853,7 @@
     {
       "store_id": "153",
       "name": "Samnanger",
-      "municipality": null,
+      "municipality": "samnanger",
       "address": "Bjørkheim 16, 5652 Årland",
       "standard_hours": {
         "monday": null,
@@ -3375,7 +3375,7 @@
     {
       "store_id": "167",
       "name": "Flekkefjord",
-      "municipality": null,
+      "municipality": "flekkefjord",
       "address": "Kirkegaten 14, 4400 Flekkefjord",
       "standard_hours": {
         "monday": {
@@ -4215,7 +4215,7 @@
     {
       "store_id": "181",
       "name": "Skien, Gråtenmoen",
-      "municipality": null,
+      "municipality": "skien",
       "address": "Telemarksvegen 14, 3734 Skien",
       "standard_hours": {
         "monday": {
@@ -4749,7 +4749,7 @@
     {
       "store_id": "200",
       "name": "Alta",
-      "municipality": null,
+      "municipality": "alta",
       "address": "Alta Storsenter, Markedsgata 21-25, 9510 Alta",
       "standard_hours": {
         "monday": {
@@ -4809,7 +4809,7 @@
     {
       "store_id": "201",
       "name": "Arendal",
-      "municipality": null,
+      "municipality": "arendal",
       "address": "Vesterveien 4, 4836 Arendal",
       "standard_hours": {
         "monday": {
@@ -4869,7 +4869,7 @@
     {
       "store_id": "202",
       "name": "Asker",
-      "municipality": null,
+      "municipality": "asker",
       "address": "Knud Askers vei 26, 1383 Asker",
       "standard_hours": {
         "monday": {
@@ -5049,7 +5049,7 @@
     {
       "store_id": "205",
       "name": "Drammen, Bragernes",
-      "municipality": null,
+      "municipality": "drammen",
       "address": "Rådhusgata, Torget Vest 2, 3016 Drammen",
       "standard_hours": {
         "monday": {
@@ -5169,7 +5169,7 @@
     {
       "store_id": "207",
       "name": "Drammen, Strømsø",
-      "municipality": null,
+      "municipality": "drammen",
       "address": "Grønland 43-45, 3045 Drammen",
       "standard_hours": {
         "monday": {
@@ -5409,7 +5409,7 @@
     {
       "store_id": "211",
       "name": "Grimstad",
-      "municipality": null,
+      "municipality": "grimstad",
       "address": "Skolegaten 1, 4876 Grimstad",
       "standard_hours": {
         "monday": {
@@ -5469,7 +5469,7 @@
     {
       "store_id": "212",
       "name": "Fauske",
-      "municipality": null,
+      "municipality": "fauske",
       "address": "Amfi Fauske, Sjøgata 74, 8200 Fauske",
       "standard_hours": {
         "monday": {
@@ -5529,7 +5529,7 @@
     {
       "store_id": "213",
       "name": "Eidsvoll",
-      "municipality": null,
+      "municipality": "eidsvoll",
       "address": "Rådhusgt. 17, 2080 Eidsvoll",
       "standard_hours": {
         "monday": {
@@ -5649,7 +5649,7 @@
     {
       "store_id": "215",
       "name": "Elverum",
-      "municipality": null,
+      "municipality": "elverum",
       "address": "Storgata 10, 2408 Elverum",
       "standard_hours": {
         "monday": {
@@ -5829,7 +5829,7 @@
     {
       "store_id": "218",
       "name": "Haugesund, Sentrum",
-      "municipality": null,
+      "municipality": "haugesund",
       "address": "Skåregt. 92, 5528 Haugesund",
       "standard_hours": {
         "monday": {
@@ -5949,7 +5949,7 @@
     {
       "store_id": "220",
       "name": "Hammerfest",
-      "municipality": null,
+      "municipality": "hammerfest",
       "address": " Sjøgata 6, 9600 Hammerfest",
       "standard_hours": {
         "monday": {
@@ -6189,7 +6189,7 @@
     {
       "store_id": "224",
       "name": "Harstad",
-      "municipality": null,
+      "municipality": "harstad",
       "address": "Alti-senteret, Fjordgata 1, 9405 Harstad",
       "standard_hours": {
         "monday": {
@@ -6249,7 +6249,7 @@
     {
       "store_id": "225",
       "name": "Gol",
-      "municipality": null,
+      "municipality": "gol",
       "address": "Gamlevegen 33, 3550 Gol",
       "standard_hours": {
         "monday": {
@@ -6309,7 +6309,7 @@
     {
       "store_id": "226",
       "name": "Gran",
-      "municipality": null,
+      "municipality": "gran",
       "address": "Smiegata 17, 2750 Gran",
       "standard_hours": {
         "monday": {
@@ -6489,7 +6489,7 @@
     {
       "store_id": "229",
       "name": "Halden",
-      "municipality": null,
+      "municipality": "halden",
       "address": "Walkersgate 4, 1771 Halden",
       "standard_hours": {
         "monday": {
@@ -6549,7 +6549,7 @@
     {
       "store_id": "230",
       "name": "Hamar",
-      "municipality": null,
+      "municipality": "hamar",
       "address": "Utstillingsplassen,Ringgata 53, 2318 Hamar",
       "standard_hours": {
         "monday": {
@@ -6729,7 +6729,7 @@
     {
       "store_id": "233",
       "name": "Holmestrand",
-      "municipality": null,
+      "municipality": "holmestrand",
       "address": "Langgaten 39, 3080 Holmestrand",
       "standard_hours": {
         "monday": {
@@ -6909,7 +6909,7 @@
     {
       "store_id": "236",
       "name": "Levanger",
-      "municipality": null,
+      "municipality": "levanger",
       "address": "Kirkegata 73, 7600 Levanger",
       "standard_hours": {
         "monday": {
@@ -6969,7 +6969,7 @@
     {
       "store_id": "237",
       "name": "Horten",
-      "municipality": null,
+      "municipality": "horten",
       "address": "Sjøsiden, Teatergaten 6, 3187 Horten",
       "standard_hours": {
         "monday": {
@@ -7143,7 +7143,7 @@
     {
       "store_id": "241",
       "name": "Sandnes, Sandnes Sentrum",
-      "municipality": null,
+      "municipality": "sandnes",
       "address": "Gravarsveien 7, 4306 Sandnes",
       "standard_hours": {
         "monday": {
@@ -7311,7 +7311,7 @@
     {
       "store_id": "244",
       "name": "Molde",
-      "municipality": null,
+      "municipality": "molde",
       "address": "Grandgården, Birger Hatlebakksvei 1, 6415 Molde",
       "standard_hours": {
         "monday": {
@@ -7491,7 +7491,7 @@
     {
       "store_id": "247",
       "name": "Kongsberg",
-      "municipality": null,
+      "municipality": "kongsberg",
       "address": "Storgata 28, 3611 Kongsberg",
       "standard_hours": {
         "monday": {
@@ -7611,7 +7611,7 @@
     {
       "store_id": "250",
       "name": "Kongsvinger",
-      "municipality": null,
+      "municipality": "kongsvinger",
       "address": "Gågata 34, 2211 Kongsvinger",
       "standard_hours": {
         "monday": {
@@ -7731,7 +7731,7 @@
     {
       "store_id": "252",
       "name": "Namsos",
-      "municipality": null,
+      "municipality": "namsos",
       "address": "Namsos Storsenter, Verftsgata 2, 7800 Namsos",
       "standard_hours": {
         "monday": {
@@ -7971,7 +7971,7 @@
     {
       "store_id": "256",
       "name": "Narvik",
-      "municipality": null,
+      "municipality": "narvik",
       "address": "Narvik Storsenter, Kongens gate 66, 8514 Narvik",
       "standard_hours": {
         "monday": {
@@ -8211,7 +8211,7 @@
     {
       "store_id": "260",
       "name": "Oppdal",
-      "municipality": null,
+      "municipality": "oppdal",
       "address": "Domusgården, Dovreveien 2, 7340 Oppdal",
       "standard_hours": {
         "monday": {
@@ -8271,7 +8271,7 @@
     {
       "store_id": "261",
       "name": "Sogndal",
-      "municipality": null,
+      "municipality": "sogndal",
       "address": "Hovevg 8, 6856 Sogndal",
       "standard_hours": {
         "monday": {
@@ -8391,7 +8391,7 @@
     {
       "store_id": "263",
       "name": "Lillehammer",
-      "municipality": null,
+      "municipality": "lillehammer",
       "address": "Storgata 62, 2609 Lillehammer",
       "standard_hours": {
         "monday": {
@@ -8811,7 +8811,7 @@
     {
       "store_id": "270",
       "name": "Moss",
-      "municipality": null,
+      "municipality": "moss",
       "address": "Bjørnson Terrasse 2, 1530 Moss",
       "standard_hours": {
         "monday": {
@@ -8871,7 +8871,7 @@
     {
       "store_id": "272",
       "name": "Sortland",
-      "municipality": null,
+      "municipality": "sortland",
       "address": "Strandgt. 24, 8400 Sortland",
       "standard_hours": {
         "monday": {
@@ -8931,7 +8931,7 @@
     {
       "store_id": "273",
       "name": "Notodden",
-      "municipality": null,
+      "municipality": "notodden",
       "address": "Storgata 13, 3674 Notodden",
       "standard_hours": {
         "monday": {
@@ -9051,7 +9051,7 @@
     {
       "store_id": "275",
       "name": "Os",
-      "municipality": null,
+      "municipality": "os",
       "address": "Hamnevegen 48, 5200 Os",
       "standard_hours": {
         "monday": {
@@ -9111,7 +9111,7 @@
     {
       "store_id": "276",
       "name": "Steinkjer",
-      "municipality": null,
+      "municipality": "steinkjer",
       "address": "Sjøfartsgata 6, 7714 Steinkjer",
       "standard_hours": {
         "monday": {
@@ -9171,7 +9171,7 @@
     {
       "store_id": "277",
       "name": "Porsgrunn, Jernbanegata",
-      "municipality": null,
+      "municipality": "porsgrunn",
       "address": "Jernbanegata 3, 3916 Porsgrunn",
       "standard_hours": {
         "monday": {
@@ -9591,7 +9591,7 @@
     {
       "store_id": "285",
       "name": "Sarpsborg, Storbyen",
-      "municipality": null,
+      "municipality": "sarpsborg",
       "address": "Roald Amundsens gate 36, 1723 Sarpsborg",
       "standard_hours": {
         "monday": {
@@ -9891,7 +9891,7 @@
     {
       "store_id": "290",
       "name": "Skien, Lietorvet",
-      "municipality": null,
+      "municipality": "skien",
       "address": "Liegata 10, 3717 Skien",
       "standard_hours": {
         "monday": {
@@ -10071,7 +10071,7 @@
     {
       "store_id": "293",
       "name": "Tynset",
-      "municipality": null,
+      "municipality": "tynset",
       "address": "Brugata 20, 2500 Tynset",
       "standard_hours": {
         "monday": {
@@ -10131,7 +10131,7 @@
     {
       "store_id": "294",
       "name": "Trysil",
-      "municipality": null,
+      "municipality": "trysil",
       "address": "Storvegen 2, 2420 Trysil",
       "standard_hours": {
         "monday": {
@@ -10311,7 +10311,7 @@
     {
       "store_id": "297",
       "name": "Stord",
-      "municipality": null,
+      "municipality": "stord",
       "address": "Hamnegata 11, 5411 Stord",
       "standard_hours": {
         "monday": {
@@ -10371,7 +10371,7 @@
     {
       "store_id": "298",
       "name": "Voss",
-      "municipality": null,
+      "municipality": "voss",
       "address": "Sverresplass 6, 5700 Voss",
       "standard_hours": {
         "monday": {
@@ -10491,7 +10491,7 @@
     {
       "store_id": "300",
       "name": "Rakkestad",
-      "municipality": null,
+      "municipality": "rakkestad",
       "address": "Storgata 2, 1890 Rakkestad",
       "standard_hours": {
         "monday": null,
@@ -10779,7 +10779,7 @@
     {
       "store_id": "305",
       "name": "Vinje",
-      "municipality": null,
+      "municipality": "vinje",
       "address": "Vinjevegen 176, 3890 Vinje",
       "standard_hours": {
         "monday": null,
@@ -10833,7 +10833,7 @@
     {
       "store_id": "306",
       "name": "Lillesand",
-      "municipality": null,
+      "municipality": "lillesand",
       "address": "Storgata 2, 4790 Lillesand",
       "standard_hours": {
         "monday": {
@@ -10893,7 +10893,7 @@
     {
       "store_id": "307",
       "name": "Farsund",
-      "municipality": null,
+      "municipality": "farsund",
       "address": "Vestersiden 1, 4550 Farsund",
       "standard_hours": {
         "monday": {
@@ -11073,7 +11073,7 @@
     {
       "store_id": "310",
       "name": "Stryn",
-      "municipality": null,
+      "municipality": "stryn",
       "address": "Tonningsgate 4, 6783 Stryn",
       "standard_hours": {
         "monday": {
@@ -11193,7 +11193,7 @@
     {
       "store_id": "312",
       "name": "Surnadal",
-      "municipality": null,
+      "municipality": "surnadal",
       "address": "Skeivegen 3, 6650 Surnadal",
       "standard_hours": {
         "monday": {
@@ -11307,7 +11307,7 @@
     {
       "store_id": "314",
       "name": "Hitra",
-      "municipality": null,
+      "municipality": "hitra",
       "address": "Sentrumsgata 5, 7240 Hitra",
       "standard_hours": {
         "monday": null,
@@ -11361,7 +11361,7 @@
     {
       "store_id": "315",
       "name": "Grong",
-      "municipality": null,
+      "municipality": "grong",
       "address": "Granvegen 12, 7870 Grong",
       "standard_hours": {
         "monday": null,
@@ -11565,7 +11565,7 @@
     {
       "store_id": "319",
       "name": "Kautokeino",
-      "municipality": null,
+      "municipality": "kautokeino",
       "address": "Bredbuktnesveien 2, 9520 Kautokeino",
       "standard_hours": {
         "monday": null,
@@ -11607,7 +11607,7 @@
     {
       "store_id": "320",
       "name": "Seljord",
-      "municipality": null,
+      "municipality": "seljord",
       "address": "Vekanvegen 1, 3840 Seljord",
       "standard_hours": {
         "monday": null,
@@ -11661,7 +11661,7 @@
     {
       "store_id": "321",
       "name": "Hvaler",
-      "municipality": null,
+      "municipality": "hvaler",
       "address": "Prinsebakken 3, 1680 Skjærhalden",
       "standard_hours": {
         "monday": {
@@ -11769,7 +11769,7 @@
     {
       "store_id": "323",
       "name": "Tvedestrand",
-      "municipality": null,
+      "municipality": "tvedestrand",
       "address": "Hovedgata 44, 4900 Tvedestrand",
       "standard_hours": {
         "monday": {
@@ -11829,7 +11829,7 @@
     {
       "store_id": "324",
       "name": "Stange",
-      "municipality": null,
+      "municipality": "stange",
       "address": "Storgata 34, 2335 Stange",
       "standard_hours": {
         "monday": {
@@ -12111,7 +12111,7 @@
     {
       "store_id": "329",
       "name": "Stranda",
-      "municipality": null,
+      "municipality": "stranda",
       "address": "Øyna 12, 6200 Stranda",
       "standard_hours": {
         "monday": null,
@@ -12585,7 +12585,7 @@
     {
       "store_id": "337",
       "name": "Verdal",
-      "municipality": null,
+      "municipality": "verdal",
       "address": "Amfiseneret, Jernbanegt. 11, 7650 Verdal",
       "standard_hours": {
         "monday": {
@@ -12879,7 +12879,7 @@
     {
       "store_id": "342",
       "name": "Melhus",
-      "municipality": null,
+      "municipality": "melhus",
       "address": "Melhusvegen 474, 7224 Melhus",
       "standard_hours": {
         "monday": {
@@ -12999,7 +12999,7 @@
     {
       "store_id": "344",
       "name": "Vennesla",
-      "municipality": null,
+      "municipality": "vennesla",
       "address": "Venneslamoen 23, 4700 Vennesla",
       "standard_hours": {
         "monday": {
@@ -13059,7 +13059,7 @@
     {
       "store_id": "345",
       "name": "Lyngdal",
-      "municipality": null,
+      "municipality": "lyngdal",
       "address": "Kirkeveien 3, 4580 Lyngdal",
       "standard_hours": {
         "monday": {
@@ -13227,7 +13227,7 @@
     {
       "store_id": "348",
       "name": "Sykkylven",
-      "municipality": null,
+      "municipality": "sykkylven",
       "address": "Auregata 11, 6230 Sykkylven",
       "standard_hours": {
         "monday": {
@@ -13335,7 +13335,7 @@
     {
       "store_id": "350",
       "name": "Rygge",
-      "municipality": null,
+      "municipality": "moss",
       "address": "Carlbergveien 2, 1526 Moss",
       "standard_hours": {
         "monday": {
@@ -13395,7 +13395,7 @@
     {
       "store_id": "351",
       "name": "Vestby",
-      "municipality": null,
+      "municipality": "vestby",
       "address": "Senterveien 8, 1540 Vestby",
       "standard_hours": {
         "monday": {
@@ -13623,7 +13623,7 @@
     {
       "store_id": "355",
       "name": "Sola, Solakrossen",
-      "municipality": null,
+      "municipality": "sola",
       "address": "Solakrossvegen 2, 4050 Sola",
       "standard_hours": {
         "monday": {
@@ -13725,7 +13725,7 @@
     {
       "store_id": "357",
       "name": "Volda",
-      "municipality": null,
+      "municipality": "volda",
       "address": "Industrigata 12, 6100 Volda",
       "standard_hours": {
         "monday": {
@@ -14121,7 +14121,7 @@
     {
       "store_id": "364",
       "name": "Lom",
-      "municipality": null,
+      "municipality": "lom",
       "address": "Sognefjellsvegen 2, 2686 Lom",
       "standard_hours": {
         "monday": null,
@@ -14169,7 +14169,7 @@
     {
       "store_id": "365",
       "name": "Drangedal",
-      "municipality": null,
+      "municipality": "drangedal",
       "address": "Kåsmyra, Drangedalsveien 3285, 3750 Drangedal",
       "standard_hours": {
         "monday": {
@@ -14223,7 +14223,7 @@
     {
       "store_id": "366",
       "name": "Luster",
-      "municipality": null,
+      "municipality": "luster",
       "address": "Rådhusvegen 5, 6868 Gaupne",
       "standard_hours": {
         "monday": null,
@@ -14265,7 +14265,7 @@
     {
       "store_id": "367",
       "name": "Vanylven",
-      "municipality": null,
+      "municipality": "vanylven",
       "address": "Combisenteret, 6143 Fiskå",
       "standard_hours": {
         "monday": null,
@@ -14685,7 +14685,7 @@
     {
       "store_id": "377",
       "name": "Jevnaker",
-      "municipality": null,
+      "municipality": "jevnaker",
       "address": "Brugata 11 C, 3520 Jevnaker",
       "standard_hours": {
         "monday": null,
@@ -14853,7 +14853,7 @@
     {
       "store_id": "380",
       "name": "Ringebu",
-      "municipality": null,
+      "municipality": "ringebu",
       "address": "Hanstadgata 3, 2630 Ringebu",
       "standard_hours": {
         "monday": {
@@ -15027,7 +15027,7 @@
     {
       "store_id": "383",
       "name": "Malvik",
-      "municipality": null,
+      "municipality": "malvik",
       "address": "Malvik Senter, Svebergveien 3, 7550 Hommelvik",
       "standard_hours": {
         "monday": {
@@ -15087,7 +15087,7 @@
     {
       "store_id": "384",
       "name": "Vestnes",
-      "municipality": null,
+      "municipality": "vestnes",
       "address": "Sjøgata 34, 6390 Vestnes",
       "standard_hours": {
         "monday": null,
@@ -15141,7 +15141,7 @@
     {
       "store_id": "385",
       "name": "Klepp",
-      "municipality": null,
+      "municipality": "klepp",
       "address": "Jærhagen senter, Solavegen 25, 4351 Kleppe",
       "standard_hours": {
         "monday": {
@@ -15261,7 +15261,7 @@
     {
       "store_id": "387",
       "name": "Nesbyen",
-      "municipality": null,
+      "municipality": "nesbyen",
       "address": "Jordeshagen 3, 3540 Nesbyen",
       "standard_hours": {
         "monday": null,
@@ -15435,7 +15435,7 @@
     {
       "store_id": "392",
       "name": "Nannestad",
-      "municipality": null,
+      "municipality": "nannestad",
       "address": "Ekerveien 5, 2030 Nannestad",
       "standard_hours": {
         "monday": null,
@@ -15609,7 +15609,7 @@
     {
       "store_id": "395",
       "name": "Gausdal",
-      "municipality": null,
+      "municipality": "gausdal",
       "address": "Fargeriveien 5, 2651 Østre Gausdal",
       "standard_hours": {
         "monday": null,
@@ -15831,7 +15831,7 @@
     {
       "store_id": "399",
       "name": "Randaberg",
-      "municipality": null,
+      "municipality": "randaberg",
       "address": "Jon Torbergssonsv 21, 4070 Randaberg",
       "standard_hours": {
         "monday": {
@@ -16467,7 +16467,7 @@
     {
       "store_id": "410",
       "name": "Austevoll",
-      "municipality": null,
+      "municipality": "austevoll",
       "address": "Bekkjarvik Torg, 5397 Bekkjarvik",
       "standard_hours": {
         "monday": null,
@@ -16677,7 +16677,7 @@
     {
       "store_id": "414",
       "name": "Askvoll",
-      "municipality": null,
+      "municipality": "askvoll",
       "address": "Askvollvegen 430, 6980 Askvoll",
       "standard_hours": {
         "monday": null,
@@ -16959,7 +16959,7 @@
     {
       "store_id": "419",
       "name": "Hemsedal",
-      "municipality": null,
+      "municipality": "hemsedal",
       "address": "Rampa Kjøpesenter, 3560 Hemsedal",
       "standard_hours": {
         "monday": {
@@ -17175,7 +17175,7 @@
     {
       "store_id": "423",
       "name": "Selbu",
-      "municipality": null,
+      "municipality": "selbu",
       "address": "Gjelbakken 1, 7580 Selbu",
       "standard_hours": {
         "monday": null,
@@ -17319,7 +17319,7 @@
     {
       "store_id": "426",
       "name": "Gjerdrum",
-      "municipality": null,
+      "municipality": "gjerdrum",
       "address": "Gjerdrum Torg, Eivensstuen 2, 2022 Gjerdrum",
       "standard_hours": {
         "monday": null,
@@ -17475,7 +17475,7 @@
     {
       "store_id": "429",
       "name": "Etne",
-      "municipality": null,
+      "municipality": "etne",
       "address": "Etne Kjøpesenter, 5590 Etne",
       "standard_hours": {
         "monday": {
@@ -17535,7 +17535,7 @@
     {
       "store_id": "430",
       "name": "Kvinesdal",
-      "municipality": null,
+      "municipality": "kvinesdal",
       "address": "Elvevegen 2, 4480 Kvinesdal",
       "standard_hours": {
         "monday": null,
@@ -17865,7 +17865,7 @@
     {
       "store_id": "437",
       "name": "Froland",
-      "municipality": null,
+      "municipality": "froland",
       "address": "Frolandsenteret 12, 4820 Froland",
       "standard_hours": {
         "monday": {
@@ -18267,7 +18267,7 @@
     {
       "store_id": "444",
       "name": "Lyngen",
-      "municipality": null,
+      "municipality": "lyngen",
       "address": "Støa Senter, Parkveien 32, 9060 Lyngseidet",
       "standard_hours": {
         "monday": null,
@@ -18825,7 +18825,7 @@
     {
       "store_id": "456",
       "name": "Steigen",
-      "municipality": null,
+      "municipality": "steigen",
       "address": "Myklebostad 8, 8283 Leinesfjord",
       "standard_hours": {
         "monday": null,
@@ -18909,7 +18909,7 @@
     {
       "store_id": "458",
       "name": "Tysnes",
-      "municipality": null,
+      "municipality": "tysnes",
       "address": "Hegglandsveien 31, 5680 Tysnes",
       "standard_hours": {
         "monday": null,
@@ -19071,7 +19071,7 @@
     {
       "store_id": "461",
       "name": "Sarpsborg, Borg",
-      "municipality": null,
+      "municipality": "sarpsborg",
       "address": "Klokkergårdveien 31, 1711 Sarpsborg",
       "standard_hours": {
         "monday": {
@@ -19293,7 +19293,7 @@
     {
       "store_id": "465",
       "name": "Frosta",
-      "municipality": null,
+      "municipality": "frosta",
       "address": "Frostasenteret, Alstadjordet, 7633 Frosta",
       "standard_hours": {
         "monday": null,
@@ -19437,7 +19437,7 @@
     {
       "store_id": "468",
       "name": "Drammen, CC",
-      "municipality": null,
+      "municipality": "drammen",
       "address": "Tomtegata 36, 3012 Drammen",
       "standard_hours": {
         "monday": {
@@ -19917,7 +19917,7 @@
     {
       "store_id": "476",
       "name": "Sveio",
-      "municipality": null,
+      "municipality": "sveio",
       "address": "Sveiogata 66, 5559 Sveio",
       "standard_hours": {
         "monday": null,
@@ -20127,7 +20127,7 @@
     {
       "store_id": "482",
       "name": "Aurland",
-      "municipality": null,
+      "municipality": "aurland",
       "address": "Vangen 6, 5745 Aurland",
       "standard_hours": {
         "monday": null,
