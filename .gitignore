@@ -20,7 +20,8 @@ node_modules/
 .astro/
 
 # IDE
-.vscode/
+.vscode/*
+!.vscode/tasks.json
 .idea/
 *.swp
 *.swo
