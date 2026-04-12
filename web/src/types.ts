@@ -52,4 +52,5 @@ export interface MunicipalityData {
   days: DayData[];
   vinmonopolet_stores: ResolvedStore[];
   vinmonopolet_day_summary: (VinmonopoletDaySummary | null)[];
+  vinmonopolet_fetched_at?: string | null;
 }

@@ -9,7 +9,7 @@ Returns exit code 0 on success, 1 on failure.
 import json
 import re
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 REQUIRED_MUNICIPALITY_FIELDS = [
@@ -191,6 +191,24 @@ def validate_generated_municipality(
     errors.extend(_validate_vinmonopolet_summaries(days))
     errors.extend(_validate_day_summary(gen_data, len(days)))
     errors.extend(_validate_store_entries(gen_data, days))
+    errors.extend(_validate_vinmonopolet_fetched_at(gen_data))
+    return errors
+
+
+def _validate_vinmonopolet_fetched_at(gen_data: dict) -> list[str]:
+    """When stores are present, vinmonopolet_fetched_at must be a valid ISO timestamp."""
+    errors: list[str] = []
+    stores = gen_data.get("vinmonopolet_stores", [])
+    if not stores:
+        return errors
+    fetched_at = gen_data.get("vinmonopolet_fetched_at")
+    if not fetched_at:
+        errors.append("vinmonopolet_fetched_at is required when vinmonopolet_stores is non-empty")
+        return errors
+    try:
+        datetime.fromisoformat(fetched_at)
+    except (TypeError, ValueError):
+        errors.append(f"vinmonopolet_fetched_at is not a valid ISO timestamp: {fetched_at!r}")
     return errors
 
 

@@ -94,3 +94,29 @@ class TestBuildMunicipality:
         }
         for day in result["days"]:
             assert required.issubset(day.keys()), f"Missing: {required - day.keys()}"
+
+
+class TestVinmonopoletFetchedAtPropagation:
+    """Verify vinmonopolet_fetched_at is threaded through to output."""
+
+    def _build(
+        self,
+        municipality: dict,
+        fetched_at: str | None,
+        start: date = date(2026, 1, 1),
+    ) -> dict:
+        calendar = build_calendar(start, num_days=14)
+        return build_municipality(
+            municipality,
+            calendar,
+            vinmonopolet_stores=[],
+            vinmonopolet_fetched_at=fetched_at,
+        )
+
+    def test_fetched_at_included_when_provided(self, sample_municipality_sandefjord):
+        result = self._build(sample_municipality_sandefjord, "2026-04-12T10:00:00+02:00")
+        assert result["vinmonopolet_fetched_at"] == "2026-04-12T10:00:00+02:00"
+
+    def test_fetched_at_is_none_when_missing(self, sample_municipality_sandefjord):
+        result = self._build(sample_municipality_sandefjord, None)
+        assert result["vinmonopolet_fetched_at"] is None

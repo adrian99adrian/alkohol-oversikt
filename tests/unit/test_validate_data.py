@@ -138,6 +138,74 @@ class TestValidateGeneratedMunicipality:
         errors = validate_generated_municipality(result, result["days"], cal)
         assert any("invalid type" in e for e in errors)
 
+    def test_valid_fetched_at_with_stores_passes(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=14)
+        result = build_municipality(
+            sample_municipality_sandefjord,
+            cal,
+            vinmonopolet_stores=[
+                {
+                    "store_id": "1",
+                    "name": "Test",
+                    "municipality": "sandefjord",
+                    "address": "Addr",
+                    "standard_hours": {},
+                    "actual_hours": {},
+                }
+            ],
+            vinmonopolet_fetched_at="2026-04-12T10:00:00+02:00",
+        )
+        errors = validate_generated_municipality(result, result["days"], cal)
+        # May have other errors from minimal store fixture, but not about fetched_at
+        assert not any("vinmonopolet_fetched_at" in e for e in errors)
+
+    def test_missing_fetched_at_with_empty_stores_passes(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=14)
+        result = build_municipality(sample_municipality_sandefjord, cal)
+        # No stores, so fetched_at is not required
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert not any("vinmonopolet_fetched_at" in e for e in errors)
+
+    def test_missing_fetched_at_with_stores_fails(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=14)
+        result = build_municipality(
+            sample_municipality_sandefjord,
+            cal,
+            vinmonopolet_stores=[
+                {
+                    "store_id": "1",
+                    "name": "Test",
+                    "municipality": "sandefjord",
+                    "address": "Addr",
+                    "standard_hours": {},
+                    "actual_hours": {},
+                }
+            ],
+            vinmonopolet_fetched_at=None,
+        )
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert any("vinmonopolet_fetched_at" in e for e in errors)
+
+    def test_invalid_fetched_at_format_fails(self, sample_municipality_sandefjord):
+        cal = build_calendar(date(2026, 1, 1), num_days=14)
+        result = build_municipality(
+            sample_municipality_sandefjord,
+            cal,
+            vinmonopolet_stores=[
+                {
+                    "store_id": "1",
+                    "name": "Test",
+                    "municipality": "sandefjord",
+                    "address": "Addr",
+                    "standard_hours": {},
+                    "actual_hours": {},
+                }
+            ],
+            vinmonopolet_fetched_at="not-a-timestamp",
+        )
+        errors = validate_generated_municipality(result, result["days"], cal)
+        assert any("vinmonopolet_fetched_at" in e for e in errors)
+
 
 # --- Generated municipality helper tests ---
 
