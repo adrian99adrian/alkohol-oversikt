@@ -1,7 +1,7 @@
 {
   "metadata": {
     "total_stores": 353,
-    "fetched_at": "2026-04-13T00:35:36.705563+02:00",
+    "fetched_at": "2026-04-13T00:46:21.128494+02:00",
     "window_start": "2026-04-12",
     "window_end": "2026-04-19"
   },
@@ -51,7 +51,7 @@
     {
       "store_id": "102",
       "name": "Rosendal",
-      "municipality": null,
+      "municipality": "kvinnherad",
       "address": "Skålagato 38, 5470 Rosendal",
       "standard_hours": {
         "monday": null,
@@ -93,7 +93,7 @@
     {
       "store_id": "103",
       "name": "Aksdal",
-      "municipality": null,
+      "municipality": "tysvaer",
       "address": "Rådhusvegen 41, 5570 Aksdal",
       "standard_hours": {
         "monday": {
@@ -123,7 +123,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -147,7 +146,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -155,6 +155,66 @@
       "name": "Oslo, Briskeby",
       "municipality": "oslo",
       "address": "Briskebyveien 48, 0259 Oslo",
+      "standard_hours": {
+        "monday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "tuesday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "wednesday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "thursday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "friday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "saturday": {
+          "open": "10:00",
+          "close": "16:00"
+        },
+        "sunday": null
+      },
+      "actual_hours": {
+        "2026-04-12": null,
+        "2026-04-13": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-14": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-15": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-16": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-17": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-18": {
+          "open": "10:00",
+          "close": "16:00"
+        }
+      }
+    },
+    {
+      "store_id": "105",
+      "name": "Nittedal",
+      "municipality": "nittedal",
+      "address": "Mattias Skytters vei 2/4, 1482 Nittedal",
       "standard_hours": {
         "monday": {
           "open": "10:00",
@@ -208,66 +268,6 @@
           "close": "16:00"
         },
         "2026-04-19": null
-      }
-    },
-    {
-      "store_id": "105",
-      "name": "Nittedal",
-      "municipality": "nittedal",
-      "address": "Mattias Skytters vei 2/4, 1482 Nittedal",
-      "standard_hours": {
-        "monday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "tuesday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "wednesday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "thursday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "friday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "saturday": {
-          "open": "10:00",
-          "close": "16:00"
-        },
-        "sunday": null
-      },
-      "actual_hours": {
-        "2026-04-12": null,
-        "2026-04-13": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-14": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-15": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-16": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-17": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-18": {
-          "open": "10:00",
-          "close": "16:00"
-        }
       }
     },
     {
@@ -315,7 +315,7 @@
     {
       "store_id": "107",
       "name": "Hovden",
-      "municipality": null,
+      "municipality": "bykle",
       "address": "Hovdegrend 1, 4755 Hovden I Setesdal",
       "standard_hours": {
         "monday": null,
@@ -405,7 +405,7 @@
     {
       "store_id": "109",
       "name": "Digerneset",
-      "municipality": null,
+      "municipality": "alesund",
       "address": "Digerneset Næringspark, 6260 Skodje",
       "standard_hours": {
         "monday": {
@@ -435,7 +435,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -459,7 +458,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -525,7 +525,7 @@
     {
       "store_id": "112",
       "name": "Sætre",
-      "municipality": null,
+      "municipality": "asker",
       "address": "Fransåsveien 2, 3475 Sætre",
       "standard_hours": {
         "monday": {
@@ -555,7 +555,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -579,7 +578,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -675,6 +675,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -698,8 +699,7 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -945,7 +945,7 @@
     {
       "store_id": "119",
       "name": "Eggedal",
-      "municipality": null,
+      "municipality": "sigdal",
       "address": "Eggedalsveien 1500, 3359 Eggedal",
       "standard_hours": {
         "monday": null,
@@ -987,7 +987,7 @@
     {
       "store_id": "120",
       "name": "Trondheim, City Syd",
-      "municipality": null,
+      "municipality": "trondheim",
       "address": "Østre Rosten 28, 7075 Tiller",
       "standard_hours": {
         "monday": {
@@ -1167,7 +1167,7 @@
     {
       "store_id": "123",
       "name": "Dokka",
-      "municipality": null,
+      "municipality": "nordre-land",
       "address": "Storgata 31, 2870 Dokka",
       "standard_hours": {
         "monday": {
@@ -1197,7 +1197,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -1221,7 +1220,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -1287,7 +1287,7 @@
     {
       "store_id": "125",
       "name": "Vinstra",
-      "municipality": null,
+      "municipality": "nord-fron",
       "address": "Vinstragata 96, 2640 Vinstra",
       "standard_hours": {
         "monday": {
@@ -1347,7 +1347,7 @@
     {
       "store_id": "126",
       "name": "Krokstadelva",
-      "municipality": null,
+      "municipality": "drammen",
       "address": "Sandsgata 20, 3055 Krokstadelva",
       "standard_hours": {
         "monday": {
@@ -1377,7 +1377,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -1401,7 +1400,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -1437,7 +1437,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -1461,13 +1460,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "128",
       "name": "Stathelle",
-      "municipality": null,
+      "municipality": "bamble",
       "address": "Gangveien 10, 3960 Stathelle",
       "standard_hours": {
         "monday": {
@@ -1599,7 +1599,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -1623,13 +1622,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "131",
       "name": "Noresund",
-      "municipality": null,
+      "municipality": "krodsherad",
       "address": "Krøderfjordveien 1675, 3536 Noresund",
       "standard_hours": {
         "monday": null,
@@ -1650,7 +1650,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -1665,7 +1664,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -1701,7 +1701,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -1725,13 +1724,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "133",
       "name": "Lakselv",
-      "municipality": null,
+      "municipality": "porsanger",
       "address": "Torgsenteret, 9700 Lakselv",
       "standard_hours": {
         "monday": {
@@ -1851,7 +1851,7 @@
     {
       "store_id": "135",
       "name": "Holmen Senter",
-      "municipality": null,
+      "municipality": "asker",
       "address": "Holmensenteret, Vogellund 6, 1394 Nesbru",
       "standard_hours": {
         "monday": {
@@ -1881,7 +1881,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -1905,7 +1904,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -2112,6 +2112,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -2126,8 +2127,7 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -2253,68 +2253,8 @@
     {
       "store_id": "142",
       "name": "Nøtterøy",
-      "municipality": null,
+      "municipality": "faerder",
       "address": "Ørsnesalléen 31, 3120 Nøtterøy",
-      "standard_hours": {
-        "monday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "tuesday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "wednesday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "thursday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "friday": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "saturday": {
-          "open": "10:00",
-          "close": "16:00"
-        },
-        "sunday": null
-      },
-      "actual_hours": {
-        "2026-04-12": null,
-        "2026-04-13": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-14": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-15": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-16": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-17": {
-          "open": "10:00",
-          "close": "18:00"
-        },
-        "2026-04-18": {
-          "open": "10:00",
-          "close": "16:00"
-        }
-      }
-    },
-    {
-      "store_id": "143",
-      "name": "Oslo, Oslo City",
-      "municipality": "oslo",
-      "address": "Stenersgata 1, 0050 Oslo",
       "standard_hours": {
         "monday": {
           "open": "10:00",
@@ -2368,6 +2308,66 @@
           "close": "16:00"
         },
         "2026-04-19": null
+      }
+    },
+    {
+      "store_id": "143",
+      "name": "Oslo, Oslo City",
+      "municipality": "oslo",
+      "address": "Stenersgata 1, 0050 Oslo",
+      "standard_hours": {
+        "monday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "tuesday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "wednesday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "thursday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "friday": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "saturday": {
+          "open": "10:00",
+          "close": "16:00"
+        },
+        "sunday": null
+      },
+      "actual_hours": {
+        "2026-04-12": null,
+        "2026-04-13": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-14": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-15": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-16": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-17": {
+          "open": "10:00",
+          "close": "18:00"
+        },
+        "2026-04-18": {
+          "open": "10:00",
+          "close": "16:00"
+        }
       }
     },
     {
@@ -2703,7 +2703,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -2727,13 +2726,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "151",
       "name": "Måløy",
-      "municipality": null,
+      "municipality": "kinn",
       "address": "Måløy Brygge, 6700 Måløy",
       "standard_hours": {
         "monday": {
@@ -2763,7 +2763,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -2787,7 +2786,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -2874,7 +2874,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -2889,13 +2888,14 @@
         "2026-04-18": {
           "open": "12:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "156",
       "name": "Knarvik",
-      "municipality": null,
+      "municipality": "alver",
       "address": "Kvernhusmyrane 7, 5914 Isdalstø",
       "standard_hours": {
         "monday": {
@@ -2985,7 +2985,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -3009,7 +3008,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -3045,6 +3045,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -3068,8 +3069,7 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -3195,7 +3195,7 @@
     {
       "store_id": "164",
       "name": "Florø",
-      "municipality": null,
+      "municipality": "kinn",
       "address": "Hestenesgata 2, 6900 Florø",
       "standard_hours": {
         "monday": {
@@ -3315,7 +3315,7 @@
     {
       "store_id": "166",
       "name": "Bø i Telemark",
-      "municipality": null,
+      "municipality": "midt-telemark",
       "address": "Stasjonsvegen 28, 3800 Bø I Telemark",
       "standard_hours": {
         "monday": {
@@ -3405,7 +3405,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -3429,7 +3428,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -3615,7 +3615,7 @@
     {
       "store_id": "171",
       "name": "Vikersund",
-      "municipality": null,
+      "municipality": "modum",
       "address": "Vikersundgata 34, 3370 Vikersund",
       "standard_hours": {
         "monday": {
@@ -3675,7 +3675,7 @@
     {
       "store_id": "172",
       "name": "Evje",
-      "municipality": null,
+      "municipality": "evje-og-hornnes",
       "address": "Sentrumsbygget, Nils Heglands vei 49, 4735 Evje",
       "standard_hours": {
         "monday": {
@@ -3705,7 +3705,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -3729,13 +3728,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "173",
       "name": "Slemmestad",
-      "municipality": null,
+      "municipality": "asker",
       "address": "Kirkealleen 1, 3470 Slemmestad",
       "standard_hours": {
         "monday": {
@@ -3855,7 +3855,7 @@
     {
       "store_id": "175",
       "name": "Åndalsnes",
-      "municipality": null,
+      "municipality": "rauma",
       "address": "Strandgata 8, 6300 Åndalsnes",
       "standard_hours": {
         "monday": {
@@ -3915,7 +3915,7 @@
     {
       "store_id": "176",
       "name": "Årnes",
-      "municipality": null,
+      "municipality": "nes",
       "address": "Rådhusgata 11, 2150 Årnes",
       "standard_hours": {
         "monday": {
@@ -3945,7 +3945,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -3969,13 +3968,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "177",
       "name": "Norheimsund",
-      "municipality": null,
+      "municipality": "kvam",
       "address": "Kaien 11, 5600 Norheimsund",
       "standard_hours": {
         "monday": {
@@ -4095,7 +4095,7 @@
     {
       "store_id": "179",
       "name": "Husnes",
-      "municipality": null,
+      "municipality": "kvinnherad",
       "address": "Sentrumsvegen 15, 5460 Husnes",
       "standard_hours": {
         "monday": {
@@ -4185,7 +4185,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -4209,7 +4208,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -4335,7 +4335,7 @@
     {
       "store_id": "183",
       "name": "Ulsteinvik",
-      "municipality": null,
+      "municipality": "ulstein",
       "address": "Blåhuset, Vikemyra 1, 6065 Ulsteinvik",
       "standard_hours": {
         "monday": {
@@ -4395,7 +4395,7 @@
     {
       "store_id": "185",
       "name": "Ørnes",
-      "municipality": null,
+      "municipality": "meloy",
       "address": "Chr. Tidemanns vei 1, 8150 Ørnes",
       "standard_hours": {
         "monday": {
@@ -4455,7 +4455,7 @@
     {
       "store_id": "189",
       "name": "Støren",
-      "municipality": null,
+      "municipality": "midtre-gauldal",
       "address": "Domus Senteret, Stasjonsveien 7, 7290 Støren",
       "standard_hours": {
         "monday": null,
@@ -4599,6 +4599,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -4622,8 +4623,7 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -4659,7 +4659,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -4683,7 +4682,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -4779,7 +4779,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -4803,7 +4802,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -4899,7 +4899,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -4923,13 +4922,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "203",
       "name": "Askim",
-      "municipality": null,
+      "municipality": "indre-ostfold",
       "address": "Haugomgata 17, 1811 Askim",
       "standard_hours": {
         "monday": {
@@ -5109,7 +5109,7 @@
     {
       "store_id": "206",
       "name": "Brekstad",
-      "municipality": null,
+      "municipality": "orland",
       "address": "Yrjars gate 33, 7130 Brekstad",
       "standard_hours": {
         "monday": {
@@ -5139,7 +5139,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -5163,7 +5162,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -5229,7 +5229,7 @@
     {
       "store_id": "208",
       "name": "Brønnøysund",
-      "municipality": null,
+      "municipality": "bronnoy",
       "address": "Havnesenteret, Storgata 58, 8900 Brønnøysund",
       "standard_hours": {
         "monday": {
@@ -5259,7 +5259,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -5283,13 +5282,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "209",
       "name": "Egersund",
-      "municipality": null,
+      "municipality": "eigersund",
       "address": "Nytorget 11, 4370 Egersund",
       "standard_hours": {
         "monday": {
@@ -5349,7 +5349,7 @@
     {
       "store_id": "210",
       "name": "Drøbak",
-      "municipality": null,
+      "municipality": "frogn",
       "address": "Wienerbrødskjæringa 3, 1440 Drøbak",
       "standard_hours": {
         "monday": {
@@ -5499,7 +5499,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -5523,7 +5522,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -5559,7 +5559,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -5583,13 +5582,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "214",
       "name": "Leknes",
-      "municipality": null,
+      "municipality": "vestvagoy",
       "address": "Lofotsenteret, Storgata 8, 8370 Leknes",
       "standard_hours": {
         "monday": {
@@ -5709,7 +5709,7 @@
     {
       "store_id": "216",
       "name": "Finnsnes",
-      "municipality": null,
+      "municipality": "senja",
       "address": "Meierigata 2, 9300 Finnsnes",
       "standard_hours": {
         "monday": {
@@ -5739,7 +5739,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -5763,13 +5762,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "217",
       "name": "Fagernes",
-      "municipality": null,
+      "municipality": "nord-aurdal",
       "address": "Skrautvålveien 6, 2900 Fagernes",
       "standard_hours": {
         "monday": {
@@ -5859,6 +5859,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -5882,8 +5883,7 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -6429,7 +6429,7 @@
     {
       "store_id": "228",
       "name": "Kirkenes",
-      "municipality": null,
+      "municipality": "sor-varanger",
       "address": "Storgata 2, 9900 Kirkenes",
       "standard_hours": {
         "monday": {
@@ -6699,7 +6699,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -6723,7 +6722,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -6759,7 +6759,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -6783,13 +6782,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "234",
       "name": "Kolbotn",
-      "municipality": null,
+      "municipality": "nordre-follo",
       "address": "Kolbotnvn 23, 1410 Kolbotn",
       "standard_hours": {
         "monday": {
@@ -6849,7 +6849,7 @@
     {
       "store_id": "235",
       "name": "Odda",
-      "municipality": null,
+      "municipality": "ullensvang",
       "address": "Odda Kjøpesenter, Eitrheimsvegen 32, 5750 Odda",
       "standard_hours": {
         "monday": {
@@ -6879,7 +6879,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -6903,7 +6902,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -6939,7 +6939,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -6963,7 +6962,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -7029,7 +7029,7 @@
     {
       "store_id": "239",
       "name": "Honningsvåg",
-      "municipality": null,
+      "municipality": "nordkapp",
       "address": "Sjøgata 4, 9750 Honningsvåg",
       "standard_hours": {
         "monday": null,
@@ -7173,7 +7173,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -7197,13 +7196,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "242",
       "name": "Hønefoss",
-      "municipality": null,
+      "municipality": "ringerike",
       "address": "Kong Ringsgate 1, 3510 Hønefoss",
       "standard_hours": {
         "monday": {
@@ -7263,7 +7263,7 @@
     {
       "store_id": "243",
       "name": "Kolvereid",
-      "municipality": null,
+      "municipality": "naeroysund",
       "address": "Sentrumsgata 2, 7970 Kolvereid",
       "standard_hours": {
         "monday": null,
@@ -7287,7 +7287,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": {
@@ -7305,7 +7304,8 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -7431,7 +7431,7 @@
     {
       "store_id": "246",
       "name": "Jessheim",
-      "municipality": null,
+      "municipality": "ullensaker",
       "address": "Ringveien 4, 2050 Jessheim",
       "standard_hours": {
         "monday": {
@@ -7521,6 +7521,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -7544,14 +7545,13 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
       "store_id": "248",
       "name": "Mosjøen",
-      "municipality": null,
+      "municipality": "vefsn",
       "address": "Smågan 2, 8656 Mosjøen",
       "standard_hours": {
         "monday": {
@@ -7671,7 +7671,7 @@
     {
       "store_id": "251",
       "name": "Førde",
-      "municipality": null,
+      "municipality": "sunnfjord",
       "address": "Handelshuset, Naustdalsv. 4, 6800 Førde",
       "standard_hours": {
         "monday": {
@@ -7701,7 +7701,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -7725,7 +7724,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -7761,7 +7761,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -7785,7 +7784,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -7881,7 +7881,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -7905,13 +7904,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "255",
       "name": "Nordfjordeid",
-      "municipality": null,
+      "municipality": "stad",
       "address": "Moengården Vest, Sjøgata 21, 6770 Nordfjordeid",
       "standard_hours": {
         "monday": {
@@ -8121,6 +8121,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -8144,14 +8145,13 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
       "store_id": "259",
       "name": "Sunndalsøra",
-      "municipality": null,
+      "municipality": "sunndal",
       "address": "Sunndalsvegen 17, 6600 Sunndalsøra",
       "standard_hours": {
         "monday": {
@@ -8181,7 +8181,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -8205,7 +8204,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -8241,7 +8241,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -8265,7 +8264,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -8331,7 +8331,7 @@
     {
       "store_id": "262",
       "name": "Orkanger",
-      "municipality": null,
+      "municipality": "orkland",
       "address": "Orkdalsveien 113, 7300 Orkanger",
       "standard_hours": {
         "monday": {
@@ -8571,7 +8571,7 @@
     {
       "store_id": "266",
       "name": "Mandal",
-      "municipality": null,
+      "municipality": "lindesnes",
       "address": "Skarvøyveien 16, 4517 Mandal",
       "standard_hours": {
         "monday": {
@@ -8601,7 +8601,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -8625,13 +8624,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "267",
       "name": "Rudshøgda",
-      "municipality": null,
+      "municipality": "ringsaker",
       "address": "Stolvstadvegen 2, 2360 Rudshøgda",
       "standard_hours": {
         "monday": {
@@ -8691,7 +8691,7 @@
     {
       "store_id": "268",
       "name": "Sandnessjøen",
-      "municipality": null,
+      "municipality": "alstahaug",
       "address": "Amfi Skansen, Torolv Kveldulsonsg 24-26, 8800 Sandnessjøen",
       "standard_hours": {
         "monday": {
@@ -8751,7 +8751,7 @@
     {
       "store_id": "269",
       "name": "Storslett",
-      "municipality": null,
+      "municipality": "nordreisa",
       "address": "Gammen Varehus, Fosseng 2, 9151 Storslett",
       "standard_hours": {
         "monday": {
@@ -8991,7 +8991,7 @@
     {
       "store_id": "274",
       "name": "Otta",
-      "municipality": null,
+      "municipality": "sel",
       "address": "Johan Nygårds gate 12, 2670 Otta",
       "standard_hours": {
         "monday": {
@@ -9021,7 +9021,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -9045,7 +9044,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -9231,7 +9231,7 @@
     {
       "store_id": "278",
       "name": "Bardufoss",
-      "municipality": null,
+      "municipality": "malselv",
       "address": "Andsliveien 25, 9325 Bardufoss",
       "standard_hours": {
         "monday": {
@@ -9261,7 +9261,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -9285,7 +9284,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -9351,7 +9351,7 @@
     {
       "store_id": "281",
       "name": "Rjukan",
-      "municipality": null,
+      "municipality": "tinn",
       "address": "Storgata 17, 3660 Rjukan",
       "standard_hours": {
         "monday": {
@@ -9441,7 +9441,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -9465,7 +9464,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -9501,7 +9501,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -9525,13 +9524,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "284",
       "name": "Svolvær",
-      "municipality": null,
+      "municipality": "vagan",
       "address": "Lofotgata 33, 8300 Svolvær",
       "standard_hours": {
         "monday": {
@@ -9831,7 +9831,7 @@
     {
       "store_id": "289",
       "name": "Ski",
-      "municipality": null,
+      "municipality": "nordre-follo",
       "address": "Jernbanesvingen 6, 1400 Ski",
       "standard_hours": {
         "monday": {
@@ -9861,6 +9861,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -9884,8 +9885,7 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -9951,7 +9951,7 @@
     {
       "store_id": "291",
       "name": "Strømmen",
-      "municipality": null,
+      "municipality": "lillestrom",
       "address": "Strømmen Storsenter, Støperiveien 5, 2010 Strømmen",
       "standard_hours": {
         "monday": {
@@ -10161,7 +10161,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -10185,7 +10184,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -10545,7 +10545,7 @@
     {
       "store_id": "301",
       "name": "Bjørkelangen",
-      "municipality": null,
+      "municipality": "aurskog-holand",
       "address": "Rådhusveien 5, 1940 Bjørkelangen",
       "standard_hours": {
         "monday": {
@@ -10575,7 +10575,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -10599,13 +10598,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "302",
       "name": "Flisa",
-      "municipality": null,
+      "municipality": "asnes",
       "address": "Kaffegata 9, 2270 Flisa",
       "standard_hours": {
         "monday": {
@@ -10665,7 +10665,7 @@
     {
       "store_id": "303",
       "name": "Dombås",
-      "municipality": null,
+      "municipality": "dovre",
       "address": "Sentralplassen 5, 2660 Dombås",
       "standard_hours": {
         "monday": null,
@@ -10719,7 +10719,7 @@
     {
       "store_id": "304",
       "name": "Geilo",
-      "municipality": null,
+      "municipality": "hol",
       "address": "Kyrkjevegen, 3580 Geilo",
       "standard_hours": {
         "monday": {
@@ -10863,7 +10863,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -10887,7 +10886,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -10953,7 +10953,7 @@
     {
       "store_id": "308",
       "name": "Jørpeland",
-      "municipality": null,
+      "municipality": "strand",
       "address": "Rådhusgt. 14a, 4100 Jørpeland",
       "standard_hours": {
         "monday": {
@@ -11253,7 +11253,7 @@
     {
       "store_id": "313",
       "name": "Kyrksæterøra",
-      "municipality": null,
+      "municipality": "heim",
       "address": "Trondheimsveien 7, 7200 Kyrksæterøra",
       "standard_hours": {
         "monday": null,
@@ -11415,7 +11415,7 @@
     {
       "store_id": "316",
       "name": "Andenes",
-      "municipality": null,
+      "municipality": "andoy",
       "address": "Storgata 69, 8480 Andenes",
       "standard_hours": {
         "monday": null,
@@ -11469,7 +11469,7 @@
     {
       "store_id": "317",
       "name": "Storsteinnes",
-      "municipality": null,
+      "municipality": "balsfjord",
       "address": "Rådhusgata 9, 9050 Storsteinnes",
       "standard_hours": {
         "monday": null,
@@ -11544,6 +11544,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -11558,8 +11559,7 @@
         "2026-04-18": {
           "open": "12:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
@@ -11889,7 +11889,7 @@
     {
       "store_id": "325",
       "name": "Sotra",
-      "municipality": null,
+      "municipality": "oygarden",
       "address": "Sartor Senter, 5353 Straume",
       "standard_hours": {
         "monday": {
@@ -11949,7 +11949,7 @@
     {
       "store_id": "326",
       "name": "Bryne",
-      "municipality": null,
+      "municipality": "time",
       "address": "M44 Jupiterveien 2, 4340 Bryne",
       "standard_hours": {
         "monday": {
@@ -11979,7 +11979,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -12003,7 +12002,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -12057,7 +12057,7 @@
     {
       "store_id": "328",
       "name": "Rognan",
-      "municipality": null,
+      "municipality": "saltdal",
       "address": "Kirkegata 26 A, 8250 Rognan",
       "standard_hours": {
         "monday": null,
@@ -12165,7 +12165,7 @@
     {
       "store_id": "330",
       "name": "Rena",
-      "municipality": null,
+      "municipality": "amot",
       "address": "Tollef Kildes gate 26, 2450 Rena",
       "standard_hours": {
         "monday": {
@@ -12285,7 +12285,7 @@
     {
       "store_id": "332",
       "name": "Lena",
-      "municipality": null,
+      "municipality": "ostre-toten",
       "address": "Rådhusgata 27, 2850 Lena",
       "standard_hours": {
         "monday": {
@@ -12345,7 +12345,7 @@
     {
       "store_id": "333",
       "name": "Elnesvågen",
-      "municipality": null,
+      "municipality": "hustadvika",
       "address": "Bølgen kjøpesenter, 6440 Elnesvågen",
       "standard_hours": {
         "monday": {
@@ -12555,7 +12555,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -12579,7 +12578,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -12645,7 +12645,7 @@
     {
       "store_id": "338",
       "name": "Vinterbro",
-      "municipality": null,
+      "municipality": "as",
       "address": "Sjøskogenveien 7, 1407 Vinterbro",
       "standard_hours": {
         "monday": {
@@ -12765,7 +12765,7 @@
     {
       "store_id": "340",
       "name": "Rissa",
-      "municipality": null,
+      "municipality": "indre-fosen",
       "address": "Rådhusveien 6, 7100 Rissa",
       "standard_hours": {
         "monday": null,
@@ -12792,7 +12792,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": {
           "open": "11:00",
@@ -12813,13 +12812,14 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "341",
       "name": "Stokmarknes",
-      "municipality": null,
+      "municipality": "hadsel",
       "address": "Markedsgt. 11, 8450 Stokmarknes",
       "standard_hours": {
         "monday": {
@@ -12939,7 +12939,7 @@
     {
       "store_id": "343",
       "name": "Mysen",
-      "municipality": null,
+      "municipality": "indre-ostfold",
       "address": "Smedgaten 32, 1850 Mysen",
       "standard_hours": {
         "monday": {
@@ -13119,7 +13119,7 @@
     {
       "store_id": "346",
       "name": "Sandane",
-      "municipality": null,
+      "municipality": "gloppen",
       "address": "Grandavegen 10, 6823 Sandane",
       "standard_hours": {
         "monday": null,
@@ -13173,7 +13173,7 @@
     {
       "store_id": "347",
       "name": "Fosnavåg",
-      "municipality": null,
+      "municipality": "heroy-i-more-og-romsdal",
       "address": "Tollåsbakken 2, 6090 Fosnavåg",
       "standard_hours": {
         "monday": null,
@@ -13455,7 +13455,7 @@
     {
       "store_id": "352",
       "name": "Raufoss",
-      "municipality": null,
+      "municipality": "vestre-toten",
       "address": "Storgt. 49, 2830 Raufoss",
       "standard_hours": {
         "monday": {
@@ -13515,7 +13515,7 @@
     {
       "store_id": "353",
       "name": "Ulefoss",
-      "municipality": null,
+      "municipality": "nome",
       "address": "Ulefoss Senter, Kaldekjeldevegen 6, 3830 Ulefoss",
       "standard_hours": {
         "monday": null,
@@ -13563,7 +13563,7 @@
     {
       "store_id": "354",
       "name": "Søgne",
-      "municipality": null,
+      "municipality": "kristiansand",
       "address": "Marie Føreidsvei 10, 4640 Søgne",
       "standard_hours": {
         "monday": {
@@ -13812,7 +13812,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": {
           "open": "11:00",
@@ -13833,13 +13832,14 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "359",
       "name": "Myre",
-      "municipality": null,
+      "municipality": "oksnes",
       "address": "Øksnes Handelspark, Storgata 62, 8430 Myre",
       "standard_hours": {
         "monday": null,
@@ -13866,7 +13866,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": {
           "open": "11:00",
@@ -13887,13 +13886,14 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "360",
       "name": "Setermoen",
-      "municipality": null,
+      "municipality": "bardu",
       "address": "Gammelveien 8, 9360 Bardu",
       "standard_hours": {
         "monday": null,
@@ -14007,7 +14007,7 @@
     {
       "store_id": "362",
       "name": "Liertoppen",
-      "municipality": null,
+      "municipality": "lier",
       "address": "Drammensveien 201, 3420 Lierskogen",
       "standard_hours": {
         "monday": {
@@ -14196,7 +14196,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "11:00",
           "close": "17:00"
@@ -14217,7 +14216,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -14286,6 +14286,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -14300,14 +14301,13 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
       "store_id": "368",
       "name": "Sjøvegan",
-      "municipality": null,
+      "municipality": "salangen",
       "address": "Strandveien 7, 9350 Sjøvegan",
       "standard_hours": {
         "monday": null,
@@ -14475,7 +14475,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -14499,7 +14498,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -14565,7 +14565,7 @@
     {
       "store_id": "375",
       "name": "Hokksund",
-      "municipality": null,
+      "municipality": "ovre-eiker",
       "address": "Tangengata 2B, 3300 Hokksund",
       "standard_hours": {
         "monday": {
@@ -14625,7 +14625,7 @@
     {
       "store_id": "376",
       "name": "Tjøme",
-      "municipality": null,
+      "municipality": "faerder",
       "address": "Østveien 665, 3145 Tjøme",
       "standard_hours": {
         "monday": {
@@ -14655,7 +14655,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -14679,7 +14678,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -14739,7 +14739,7 @@
     {
       "store_id": "378",
       "name": "Sørumsand",
-      "municipality": null,
+      "municipality": "lillestrom",
       "address": "Fru Natvigs vei 1, 1920 Sørumsand",
       "standard_hours": {
         "monday": {
@@ -14799,7 +14799,7 @@
     {
       "store_id": "379",
       "name": "Brattvåg",
-      "municipality": null,
+      "municipality": "haram",
       "address": "Strandgata 40, 6270 Brattvåg",
       "standard_hours": {
         "monday": null,
@@ -14913,7 +14913,7 @@
     {
       "store_id": "381",
       "name": "Re",
-      "municipality": null,
+      "municipality": "tonsberg",
       "address": "Kåpeveien 7, 3174 Revetal",
       "standard_hours": {
         "monday": {
@@ -14973,7 +14973,7 @@
     {
       "store_id": "382",
       "name": "Rørvik",
-      "municipality": null,
+      "municipality": "naeroysund",
       "address": "Leiasenteret, Strandgt 13, 7900 Rørvik",
       "standard_hours": {
         "monday": null,
@@ -15114,7 +15114,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": {
           "open": "11:00",
@@ -15135,7 +15134,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -15231,7 +15231,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -15255,7 +15254,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -15315,7 +15315,7 @@
     {
       "store_id": "388",
       "name": "Skarnes",
-      "municipality": null,
+      "municipality": "sor-odal",
       "address": "Bruvegen 19, 2100 Skarnes",
       "standard_hours": {
         "monday": {
@@ -15519,6 +15519,7 @@
         "sunday": null
       },
       "actual_hours": {
+        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -15542,14 +15543,13 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        },
-        "2026-04-19": null
+        }
       }
     },
     {
       "store_id": "394",
       "name": "Brumunddal",
-      "municipality": null,
+      "municipality": "ringsaker",
       "address": "Mølla Storsenter, Brugt. 16, 2380 Brumunddal",
       "standard_hours": {
         "monday": {
@@ -15663,7 +15663,7 @@
     {
       "store_id": "396",
       "name": "Beitostølen",
-      "municipality": null,
+      "municipality": "oystre-slidre",
       "address": "Bygdinveien 3764, 2953 Beitostølen",
       "standard_hours": {
         "monday": {
@@ -15717,7 +15717,7 @@
     {
       "store_id": "397",
       "name": "Tofte",
-      "municipality": null,
+      "municipality": "asker",
       "address": "Østre Strandvei 12, 3482 Tofte",
       "standard_hours": {
         "monday": null,
@@ -15744,7 +15744,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": {
           "open": "10:00",
@@ -15765,13 +15764,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "398",
       "name": "Stokke",
-      "municipality": null,
+      "municipality": "sandefjord",
       "address": "Kornmagasingata 1, 3160 Stokke",
       "standard_hours": {
         "monday": {
@@ -15891,7 +15891,7 @@
     {
       "store_id": "400",
       "name": "Ølen",
-      "municipality": null,
+      "municipality": "vindafjord",
       "address": "Sandeidvegen 3, 5580 Ølen",
       "standard_hours": {
         "monday": null,
@@ -16173,7 +16173,7 @@
     {
       "store_id": "405",
       "name": "Ålgård",
-      "municipality": null,
+      "municipality": "gjesdal",
       "address": "Ole Nielsensvei 25, 4330 Ålgård",
       "standard_hours": {
         "monday": {
@@ -16203,7 +16203,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -16227,7 +16226,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -16287,7 +16287,7 @@
     {
       "store_id": "407",
       "name": "Sande",
-      "municipality": null,
+      "municipality": "holmestrand",
       "address": "Kostegata 2, 3070 Sande I Vestfold",
       "standard_hours": {
         "monday": {
@@ -16317,7 +16317,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -16341,7 +16340,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -16407,7 +16407,7 @@
     {
       "store_id": "409",
       "name": "Brokelandsheia",
-      "municipality": null,
+      "municipality": "gjerstad",
       "address": "Brokelandsheia, 4993 Sundebru",
       "standard_hours": {
         "monday": {
@@ -16521,7 +16521,7 @@
     {
       "store_id": "411",
       "name": "Koppang",
-      "municipality": null,
+      "municipality": "stor-elvdal",
       "address": "Kjemsjøveien 2, 2480 Koppang",
       "standard_hours": {
         "monday": null,
@@ -16569,7 +16569,7 @@
     {
       "store_id": "412",
       "name": "Rødberg",
-      "municipality": null,
+      "municipality": "nore-og-uvdal",
       "address": "Bråflåtvegen 13, 3630 Rødberg",
       "standard_hours": {
         "monday": null,
@@ -16617,7 +16617,7 @@
     {
       "store_id": "413",
       "name": "Evenskjer",
-      "municipality": null,
+      "municipality": "tjeldsund",
       "address": "Prix Senteret, 9440 Evenskjer",
       "standard_hours": {
         "monday": {
@@ -16725,7 +16725,7 @@
     {
       "store_id": "415",
       "name": "Ytre Enebakk",
-      "municipality": null,
+      "municipality": "enebakk",
       "address": "Vågsenteret, Sagstuveien 1, 1914 Ytre Enebakk",
       "standard_hours": {
         "monday": null,
@@ -17019,7 +17019,7 @@
     {
       "store_id": "420",
       "name": "Bruhagen",
-      "municipality": null,
+      "municipality": "averoy",
       "address": "Averøyveien 24, 6530 Averøy",
       "standard_hours": {
         "monday": null,
@@ -17067,7 +17067,7 @@
     {
       "store_id": "421",
       "name": "Lonevåg",
-      "municipality": null,
+      "municipality": "osteroy",
       "address": "Lonevåg Arena, 5282 Lonevåg",
       "standard_hours": {
         "monday": null,
@@ -17091,7 +17091,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": {
@@ -17109,13 +17108,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "422",
       "name": "Svelvik",
-      "municipality": null,
+      "municipality": "drammen",
       "address": "Storgaten 35, 3060 Svelvik",
       "standard_hours": {
         "monday": {
@@ -17145,7 +17145,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -17169,7 +17168,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -17217,7 +17217,7 @@
     {
       "store_id": "424",
       "name": "Korgen",
-      "municipality": null,
+      "municipality": "hemnes",
       "address": "Meieriveien 1, 8646 Korgen",
       "standard_hours": {
         "monday": null,
@@ -17259,7 +17259,7 @@
     {
       "store_id": "425",
       "name": "Andebu",
-      "municipality": null,
+      "municipality": "sandefjord",
       "address": "Andebu sentrum 24, 3158 Andebu",
       "standard_hours": {
         "monday": {
@@ -17373,7 +17373,7 @@
     {
       "store_id": "427",
       "name": "Bagn",
-      "municipality": null,
+      "municipality": "sor-aurdal",
       "address": "Storebruvegen 3-5, 2930 Bagn",
       "standard_hours": {
         "monday": null,
@@ -17427,7 +17427,7 @@
     {
       "store_id": "428",
       "name": "Bjugn",
-      "municipality": null,
+      "municipality": "orland",
       "address": "Alf Nebbs gate 6, 7160 Bjugn",
       "standard_hours": {
         "monday": null,
@@ -17451,7 +17451,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": {
@@ -17469,7 +17468,8 @@
         "2026-04-18": {
           "open": "11:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -17583,7 +17583,7 @@
     {
       "store_id": "431",
       "name": "Nærbø",
-      "municipality": null,
+      "municipality": "ha",
       "address": "Torggata 2, 4365 Nærbø",
       "standard_hours": {
         "monday": {
@@ -17643,7 +17643,7 @@
     {
       "store_id": "432",
       "name": "Langevåg",
-      "municipality": null,
+      "municipality": "sula",
       "address": "O.A. Devoldvegen 16, 6030 Langevåg",
       "standard_hours": {
         "monday": null,
@@ -17697,7 +17697,7 @@
     {
       "store_id": "433",
       "name": "Radøy",
-      "municipality": null,
+      "municipality": "alver",
       "address": "Radøyvegen 1680, 5936 Manger",
       "standard_hours": {
         "monday": null,
@@ -17895,7 +17895,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -17919,13 +17918,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "438",
       "name": "Hov",
-      "municipality": null,
+      "municipality": "sondre-land",
       "address": "Hovlandsvegen 1, 2860 Hov",
       "standard_hours": {
         "monday": {
@@ -17955,7 +17955,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "11:00",
           "close": "17:00"
@@ -17979,13 +17978,14 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
       "store_id": "439",
       "name": "Moelv",
-      "municipality": null,
+      "municipality": "ringsaker",
       "address": "Storgata 117, 2390 Moelv",
       "standard_hours": {
         "monday": {
@@ -18105,7 +18105,7 @@
     {
       "store_id": "441",
       "name": "Fetsund",
-      "municipality": null,
+      "municipality": "lillestrom",
       "address": "Gamle Fetvei 13, 1900 Fetsund",
       "standard_hours": {
         "monday": {
@@ -18225,7 +18225,7 @@
     {
       "store_id": "443",
       "name": "Herøy",
-      "municipality": null,
+      "municipality": "heroy-i-nordland",
       "address": "Tennveien 1, 8850 Herøy",
       "standard_hours": {
         "monday": null,
@@ -18309,7 +18309,7 @@
     {
       "store_id": "445",
       "name": "Bø i Vesterålen",
-      "municipality": null,
+      "municipality": "bo-i-nordland",
       "address": "Vinjegården Kjøpesenter, Bøveien 508, 8470 Bø I Vesterålen",
       "standard_hours": {
         "monday": null,
@@ -18399,7 +18399,7 @@
     {
       "store_id": "447",
       "name": "Kjøllefjord",
-      "municipality": null,
+      "municipality": "lebesby",
       "address": "Strandveien 150, 9790 Kjøllefjord",
       "standard_hours": {
         "monday": null,
@@ -18441,7 +18441,7 @@
     {
       "store_id": "448",
       "name": "Eikelandsosen",
-      "municipality": null,
+      "municipality": "bjornafjorden",
       "address": "Leiro 25, 5640 Eikelandsosen",
       "standard_hours": {
         "monday": null,
@@ -18462,7 +18462,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -18477,7 +18476,8 @@
         "2026-04-18": {
           "open": "12:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -18573,7 +18573,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -18597,7 +18596,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -18624,7 +18624,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": null,
@@ -18639,7 +18638,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -18765,7 +18765,7 @@
     {
       "store_id": "455",
       "name": "Kløfta",
-      "municipality": null,
+      "municipality": "ullensaker",
       "address": "Trondheimsveien 86, 2040 Kløfta",
       "standard_hours": {
         "monday": {
@@ -19011,7 +19011,7 @@
     {
       "store_id": "460",
       "name": "Trondheim, Heimdal",
-      "municipality": null,
+      "municipality": "trondheim",
       "address": "Ringvålveien 3-7, 7080 Heimdal",
       "standard_hours": {
         "monday": {
@@ -19131,7 +19131,7 @@
     {
       "store_id": "462",
       "name": "Son",
-      "municipality": null,
+      "municipality": "vestby",
       "address": "Båtbyggerveien 21, 1555 Son",
       "standard_hours": {
         "monday": {
@@ -19335,7 +19335,7 @@
     {
       "store_id": "466",
       "name": "Sund",
-      "municipality": null,
+      "municipality": "oygarden",
       "address": "Sund Senter, 5382 Skogsvåg",
       "standard_hours": {
         "monday": null,
@@ -19359,7 +19359,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": null,
         "2026-04-14": null,
         "2026-04-15": {
@@ -19377,7 +19376,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -19557,7 +19557,7 @@
     {
       "store_id": "470",
       "name": "Råholt",
-      "municipality": null,
+      "municipality": "eidsvoll",
       "address": "Gladbakkvegen 1, 2070 Råholt",
       "standard_hours": {
         "monday": {
@@ -19587,7 +19587,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -19611,7 +19610,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -19677,7 +19677,7 @@
     {
       "store_id": "472",
       "name": "Skedsmokorset",
-      "municipality": null,
+      "municipality": "lillestrom",
       "address": "Furuholtet 1, 2020 Skedsmokorset",
       "standard_hours": {
         "monday": {
@@ -19827,7 +19827,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "18:00"
@@ -19851,7 +19850,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {
@@ -19959,7 +19959,7 @@
     {
       "store_id": "477",
       "name": "Fjerdingby",
-      "municipality": null,
+      "municipality": "raelingen",
       "address": "Tangerudvegen 1D, 2008 Fjerdingby",
       "standard_hours": {
         "monday": null,
@@ -20013,7 +20013,7 @@
     {
       "store_id": "479",
       "name": "Buvika",
-      "municipality": null,
+      "municipality": "skaun",
       "address": "Sandavegen 3, 7350 Buvika",
       "standard_hours": {
         "monday": null,
@@ -20067,7 +20067,7 @@
     {
       "store_id": "480",
       "name": "Sola, Tananger",
-      "municipality": null,
+      "municipality": "sola",
       "address": "Risavika Havnering 12, 4056 Tananger",
       "standard_hours": {
         "monday": {
@@ -20097,7 +20097,6 @@
         "sunday": null
       },
       "actual_hours": {
-        "2026-04-12": null,
         "2026-04-13": {
           "open": "10:00",
           "close": "17:00"
@@ -20121,7 +20120,8 @@
         "2026-04-18": {
           "open": "10:00",
           "close": "16:00"
-        }
+        },
+        "2026-04-19": null
       }
     },
     {

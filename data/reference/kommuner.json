@@ -21,7 +21,7 @@
       "county": "Rogaland",
       "municipality": "Eigersund",
       "id": "eigersund",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -70,7 +70,7 @@
       "county": "Rogaland",
       "municipality": "Hå",
       "id": "ha",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -84,14 +84,14 @@
       "county": "Rogaland",
       "municipality": "Time",
       "id": "time",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Rogaland",
       "municipality": "Gjesdal",
       "id": "gjesdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -112,7 +112,7 @@
       "county": "Rogaland",
       "municipality": "Strand",
       "id": "strand",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -154,7 +154,7 @@
       "county": "Rogaland",
       "municipality": "Tysvær",
       "id": "tysvaer",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -175,7 +175,7 @@
       "county": "Rogaland",
       "municipality": "Vindafjord",
       "id": "vindafjord",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -217,14 +217,14 @@
       "county": "Møre og Romsdal",
       "municipality": "Herøy i Møre og Romsdal",
       "id": "heroy-i-more-og-romsdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Ulstein",
       "id": "ulstein",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -259,7 +259,7 @@
       "county": "Møre og Romsdal",
       "municipality": "Sula",
       "id": "sula",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -280,7 +280,7 @@
       "county": "Møre og Romsdal",
       "municipality": "Rauma",
       "id": "rauma",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -294,7 +294,7 @@
       "county": "Møre og Romsdal",
       "municipality": "Averøy",
       "id": "averoy",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -315,7 +315,7 @@
       "county": "Møre og Romsdal",
       "municipality": "Sunndal",
       "id": "sunndal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -357,14 +357,14 @@
       "county": "Møre og Romsdal",
       "municipality": "Hustadvika",
       "id": "hustadvika",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Haram",
       "id": "haram",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -399,7 +399,7 @@
       "county": "Nordland",
       "municipality": "Brønnøy",
       "id": "bronnoy",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -420,14 +420,14 @@
       "county": "Nordland",
       "municipality": "Herøy i Nordland",
       "id": "heroy-i-nordland",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Nordland",
       "municipality": "Alstahaug",
       "id": "alstahaug",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -441,7 +441,7 @@
       "county": "Nordland",
       "municipality": "Vefsn",
       "id": "vefsn",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -478,7 +478,7 @@
       "county": "Nordland",
       "municipality": "Hemnes",
       "id": "hemnes",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -513,7 +513,7 @@
       "county": "Nordland",
       "municipality": "Meløy",
       "id": "meloy",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -534,7 +534,7 @@
       "county": "Nordland",
       "municipality": "Saltdal",
       "id": "saltdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -601,35 +601,35 @@
       "county": "Nordland",
       "municipality": "Vestvågøy",
       "id": "vestvagoy",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Nordland",
       "municipality": "Vågan",
       "id": "vagan",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Nordland",
       "municipality": "Hadsel",
       "id": "hadsel",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Nordland",
       "municipality": "Bø i Nordland",
       "id": "bo-i-nordland",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Nordland",
       "municipality": "Øksnes",
       "id": "oksnes",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -645,7 +645,7 @@
       "county": "Nordland",
       "municipality": "Andøy",
       "id": "andoy",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -724,7 +724,7 @@
       "county": "Østfold",
       "municipality": "Indre Østfold",
       "id": "indre-ostfold",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -773,14 +773,14 @@
       "county": "Akershus",
       "municipality": "Nordre Follo",
       "id": "nordre-follo",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Akershus",
       "municipality": "Ullensaker",
       "id": "ullensaker",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -794,7 +794,7 @@
       "county": "Akershus",
       "municipality": "Frogn",
       "id": "frogn",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -815,7 +815,7 @@
       "county": "Akershus",
       "municipality": "Enebakk",
       "id": "enebakk",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -829,21 +829,21 @@
       "county": "Akershus",
       "municipality": "Rælingen",
       "id": "raelingen",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Akershus",
       "municipality": "Aurskog-Høland",
       "id": "aurskog-holand",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Akershus",
       "municipality": "Nes",
       "id": "nes",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -913,7 +913,7 @@
       "county": "Buskerud",
       "municipality": "Ringerike",
       "id": "ringerike",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -927,28 +927,28 @@
       "county": "Buskerud",
       "municipality": "Lier",
       "id": "lier",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Buskerud",
       "municipality": "Øvre Eiker",
       "id": "ovre-eiker",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Buskerud",
       "municipality": "Modum",
       "id": "modum",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Buskerud",
       "municipality": "Krødsherad",
       "id": "krodsherad",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -990,14 +990,14 @@
       "county": "Buskerud",
       "municipality": "Hol",
       "id": "hol",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Buskerud",
       "municipality": "Sigdal",
       "id": "sigdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1018,7 +1018,7 @@
       "county": "Buskerud",
       "municipality": "Nore og Uvdal",
       "id": "nore-og-uvdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1053,7 +1053,7 @@
       "county": "Innlandet",
       "municipality": "Ringsaker",
       "id": "ringsaker",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1081,7 +1081,7 @@
       "county": "Innlandet",
       "municipality": "Sør-Odal",
       "id": "sor-odal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1102,7 +1102,7 @@
       "county": "Innlandet",
       "municipality": "Åsnes",
       "id": "asnes",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1130,14 +1130,14 @@
       "county": "Innlandet",
       "municipality": "Åmot",
       "id": "amot",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Innlandet",
       "municipality": "Stor-Elvdal",
       "id": "stor-elvdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1193,7 +1193,7 @@
       "county": "Innlandet",
       "municipality": "Dovre",
       "id": "dovre",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1228,14 +1228,14 @@
       "county": "Innlandet",
       "municipality": "Nord-Fron",
       "id": "nord-fron",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Innlandet",
       "municipality": "Sel",
       "id": "sel",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1270,14 +1270,14 @@
       "county": "Innlandet",
       "municipality": "Østre Toten",
       "id": "ostre-toten",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Innlandet",
       "municipality": "Vestre Toten",
       "id": "vestre-toten",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1291,21 +1291,21 @@
       "county": "Innlandet",
       "municipality": "Søndre Land",
       "id": "sondre-land",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Innlandet",
       "municipality": "Nordre Land",
       "id": "nordre-land",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Innlandet",
       "municipality": "Sør-Aurdal",
       "id": "sor-aurdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1319,7 +1319,7 @@
       "county": "Innlandet",
       "municipality": "Nord-Aurdal",
       "id": "nord-aurdal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1333,7 +1333,7 @@
       "county": "Innlandet",
       "municipality": "Øystre Slidre",
       "id": "oystre-slidre",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1382,7 +1382,7 @@
       "county": "Vestfold",
       "municipality": "Færder",
       "id": "faerder",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1417,7 +1417,7 @@
       "county": "Telemark",
       "municipality": "Bamble",
       "id": "bamble",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1438,14 +1438,14 @@
       "county": "Telemark",
       "municipality": "Nome",
       "id": "nome",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Telemark",
       "municipality": "Midt-Telemark",
       "id": "midt-telemark",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1466,7 +1466,7 @@
       "county": "Telemark",
       "municipality": "Tinn",
       "id": "tinn",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1536,7 +1536,7 @@
       "county": "Agder",
       "municipality": "Lindesnes",
       "id": "lindesnes",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1557,7 +1557,7 @@
       "county": "Agder",
       "municipality": "Gjerstad",
       "id": "gjerstad",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1613,7 +1613,7 @@
       "county": "Agder",
       "municipality": "Evje og Hornnes",
       "id": "evje-og-hornnes",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1634,7 +1634,7 @@
       "county": "Agder",
       "municipality": "Bykle",
       "id": "bykle",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1690,7 +1690,7 @@
       "county": "Vestland",
       "municipality": "Kinn",
       "id": "kinn",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1739,14 +1739,14 @@
       "county": "Vestland",
       "municipality": "Kvinnherad",
       "id": "kvinnherad",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Vestland",
       "municipality": "Ullensvang",
       "id": "ullensvang",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1774,7 +1774,7 @@
       "county": "Vestland",
       "municipality": "Kvam",
       "id": "kvam",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1802,7 +1802,7 @@
       "county": "Vestland",
       "municipality": "Øygarden",
       "id": "oygarden",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1830,14 +1830,14 @@
       "county": "Vestland",
       "municipality": "Osterøy",
       "id": "osteroy",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Vestland",
       "municipality": "Alver",
       "id": "alver",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1949,7 +1949,7 @@
       "county": "Vestland",
       "municipality": "Sunnfjord",
       "id": "sunnfjord",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -1963,14 +1963,14 @@
       "county": "Vestland",
       "municipality": "Stad",
       "id": "stad",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Vestland",
       "municipality": "Gloppen",
       "id": "gloppen",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2053,7 +2053,7 @@
       "county": "Trøndelag",
       "municipality": "Midtre Gauldal",
       "id": "midtre-gauldal",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2067,7 +2067,7 @@
       "county": "Trøndelag",
       "municipality": "Skaun",
       "id": "skaun",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2204,14 +2204,14 @@
       "county": "Trøndelag",
       "municipality": "Indre Fosen",
       "id": "indre-fosen",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Trøndelag",
       "municipality": "Heim",
       "id": "heim",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2225,7 +2225,7 @@
       "county": "Trøndelag",
       "municipality": "Ørland",
       "id": "orland",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2239,14 +2239,14 @@
       "county": "Trøndelag",
       "municipality": "Orkland",
       "id": "orkland",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Trøndelag",
       "municipality": "Nærøysund",
       "id": "naeroysund",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2283,7 +2283,7 @@
       "county": "Troms",
       "municipality": "Tjeldsund",
       "id": "tjeldsund",
-      "borders": [],
+      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
       ]
@@ -2315,21 +2315,21 @@
       "county": "Troms",
       "municipality": "Bardu",
       "id": "bardu",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Troms",
       "municipality": "Salangen",
       "id": "salangen",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Troms",
       "municipality": "Målselv",
       "id": "malselv",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2350,14 +2350,14 @@
       "county": "Troms",
       "municipality": "Senja",
       "id": "senja",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Troms",
       "municipality": "Balsfjord",
       "id": "balsfjord",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2403,7 +2403,7 @@
       "county": "Troms",
       "municipality": "Nordreisa",
       "id": "nordreisa",
-      "borders": [],
+      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
       ]
@@ -2435,7 +2435,7 @@
       "county": "Finnmark",
       "municipality": "Sør-Varanger",
       "id": "sor-varanger",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
@@ -2488,14 +2488,14 @@
       "county": "Finnmark",
       "municipality": "Nordkapp",
       "id": "nordkapp",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
       "county": "Finnmark",
       "municipality": "Porsanger",
       "id": "porsanger",
-      "borders": [],
+      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
       ]
@@ -2504,7 +2504,7 @@
       "county": "Finnmark",
       "municipality": "Lebesby",
       "id": "lebesby",
-      "borders": [],
+      "borders": null,
       "bugs": []
     },
     {
