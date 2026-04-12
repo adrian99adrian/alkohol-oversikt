@@ -16,6 +16,7 @@ import {
   isVinmonopoletStale,
   VINMONOPOLET_STALE_THRESHOLD_DAYS,
 } from "../../lib/dataUtils";
+import { hasLateBeerOpening } from "../../lib/beerOpening";
 
 export function getStaticPaths() {
   const dataDir = path.resolve(process.cwd(), "..", "data", "generated", "municipalities");
@@ -50,6 +51,10 @@ const tomorrow = days[1] ?? null;
 
 // First 14 days for the table
 const tableDays = days.slice(0, 14);
+
+// Show a note when this municipality's beer sales open later than the national
+// default (08:00) on any upcoming sales day.
+const showLateOpeningNote = hasLateBeerOpening(tableDays);
 
 // Next deviation: first day within the 14-day window where is_deviation is true
 const nextDeviation = findNextDeviation(tableDays);
@@ -96,6 +101,15 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
         <p class="text-sm text-amber-200">
           ⚠️ Problemer med å hente Vinmonopolet-data, åpningstidene kan være utdaterte ⚠️
           {fetchedAtFormatted && <span> (sist hentet {fetchedAtFormatted})</span>}
+        </p>
+      </div>
+    )}
+
+    <!-- Late beer opening note -->
+    {showLateOpeningNote && (
+      <div class="mb-6 rounded-lg border border-amber-700 bg-amber-900/30 p-3">
+        <p class="text-sm text-amber-200">
+          <span class="font-semibold">Merk:</span> Ølsalget åpner senere enn vanlig i {municipality.name}.
         </p>
       </div>
     )}
