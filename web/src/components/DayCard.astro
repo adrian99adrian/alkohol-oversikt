@@ -30,7 +30,7 @@ const { label, day, vinmonopoletSummary } = Astro.props;
       {day.beer_sale_allowed ? (
         <div>
           <p class="text-slate-200">
-            Ølsalg: Stenger kl. <span class="font-semibold text-white">{day.beer_close}</span>
+            Ølsalg: <span class="font-semibold text-white">{day.beer_open}–{day.beer_close}</span>
           </p>
           {day.beer_close_large_stores && (
             <p class="mt-1 text-sm text-slate-300">
