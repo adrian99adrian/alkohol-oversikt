@@ -38,6 +38,11 @@ REQUIRED_BEER_SALES_FIELDS = [
     "special_days",
 ]
 
+_HHMM_RE = re.compile(r"^\d{2}:\d{2}$")
+_MMDD_RE = re.compile(r"^\d{2}-\d{2}$")
+_ALLOWED_DATE_OVERRIDE_HOURS = {"saturday", "pre_holiday"}
+_ALLOWED_PRE_EASTER_WEEK = {"pre_holiday"}
+
 # National max closing times. pre_holiday can be overridden to weekday (20:00)
 # by municipal exceptions, so we allow up to 20:00 for pre_holiday.
 NATIONAL_MAX = {
@@ -78,10 +83,76 @@ def _check_verified_invariants(data: dict) -> list[str]:
     return []
 
 
+def _check_optional_beer_sales_fields(data: dict) -> list[str]:
+    """Validate shape of the optional schema-extension fields on beer_sales.
+
+    All fields are optional; if present, they must be well-formed.
+    """
+    if "beer_sales" not in data:
+        return []
+    beer = data["beer_sales"]
+    errors: list[str] = []
+
+    if "special_day_open" in beer:
+        val = beer["special_day_open"]
+        if not isinstance(val, str) or not _HHMM_RE.match(val):
+            errors.append("special_day_open must be HH:MM string")
+
+    exceptions = beer.get("exceptions")
+    if isinstance(exceptions, dict) and "pre_easter_week" in exceptions:
+        val = exceptions["pre_easter_week"]
+        if val not in _ALLOWED_PRE_EASTER_WEEK:
+            errors.append(
+                f"exceptions.pre_easter_week must be one of {sorted(_ALLOWED_PRE_EASTER_WEEK)}, "
+                f"got {val!r}"
+            )
+
+    if "date_overrides" in beer:
+        errors.extend(_validate_date_overrides(beer["date_overrides"]))
+
+    return errors
+
+
+def _validate_date_overrides(overrides: object) -> list[str]:
+    """Each entry must be {date: MM-DD, hours: saturday|pre_holiday}."""
+    if not isinstance(overrides, list):
+        return ["date_overrides must be a list"]
+    errors: list[str] = []
+    seen_dates: set[str] = set()
+    for i, entry in enumerate(overrides):
+        if not isinstance(entry, dict):
+            errors.append(f"date_overrides[{i}] must be an object")
+            continue
+        d = entry.get("date")
+        if not isinstance(d, str) or not _MMDD_RE.match(d):
+            errors.append(f"date_overrides[{i}].date must be MM-DD string")
+        elif d in seen_dates:
+            errors.append(f"date_overrides[{i}].date duplicate {d!r}")
+        else:
+            seen_dates.add(d)
+        hours = entry.get("hours")
+        if hours not in _ALLOWED_DATE_OVERRIDE_HOURS:
+            errors.append(
+                f"date_overrides[{i}].hours must be one of "
+                f"{sorted(_ALLOWED_DATE_OVERRIDE_HOURS)}, got {hours!r}"
+            )
+    return errors
+
+
+def _check_notes(data: dict) -> list[str]:
+    if "notes" not in data:
+        return []
+    if not isinstance(data["notes"], str):
+        return ["notes must be a string when present"]
+    return []
+
+
 def validate_municipality_schema(data: dict) -> list[str]:
     """Validate a municipality JSON file. Returns list of errors."""
     errors = _check_required_fields(data)
     errors.extend(_check_beer_sales_fields(data))
+    errors.extend(_check_optional_beer_sales_fields(data))
+    errors.extend(_check_notes(data))
     if "sources" in data and len(data.get("sources", [])) == 0:
         errors.append("Must have at least one source")
     errors.extend(_check_verified_invariants(data))

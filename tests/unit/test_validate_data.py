@@ -96,6 +96,84 @@ class TestValidateMunicipalitySchema:
         assert errors == []
 
 
+class TestSchemaExtensionFields:
+    """Optional fields added for the verification sweep (PR Phase 0)."""
+
+    def test_absent_fields_still_pass(self, sample_municipality_sandefjord):
+        """Existing JSONs with none of the new fields remain valid (backwards-compat)."""
+        errors = validate_municipality_schema(sample_municipality_sandefjord)
+        assert errors == []
+
+    def test_valid_special_day_open(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["special_day_open"] = "08:30"
+        assert validate_municipality_schema(data) == []
+
+    def test_invalid_special_day_open_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["special_day_open"] = "8:30"
+        errors = validate_municipality_schema(data)
+        assert any("special_day_open" in e for e in errors)
+
+    def test_valid_pre_easter_week(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"].setdefault("exceptions", {})["pre_easter_week"] = "pre_holiday"
+        assert validate_municipality_schema(data) == []
+
+    def test_invalid_pre_easter_week_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"].setdefault("exceptions", {})["pre_easter_week"] = "weekday"
+        errors = validate_municipality_schema(data)
+        assert any("pre_easter_week" in e for e in errors)
+
+    def test_valid_date_overrides(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [
+            {"date": "04-30", "hours": "saturday"},
+            {"date": "05-16", "hours": "saturday"},
+            {"date": "12-27", "hours": "pre_holiday"},
+        ]
+        assert validate_municipality_schema(data) == []
+
+    def test_invalid_date_override_date_format_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [{"date": "2026-04-30", "hours": "saturday"}]
+        errors = validate_municipality_schema(data)
+        assert any("date_overrides" in e for e in errors)
+
+    def test_invalid_date_override_hours_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [{"date": "04-30", "hours": "weekday"}]
+        errors = validate_municipality_schema(data)
+        assert any("date_overrides" in e and "hours" in e for e in errors)
+
+    def test_duplicate_date_override_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [
+            {"date": "04-30", "hours": "saturday"},
+            {"date": "04-30", "hours": "pre_holiday"},
+        ]
+        errors = validate_municipality_schema(data)
+        assert any("duplicate" in e.lower() for e in errors)
+
+    def test_date_overrides_must_be_list(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = {"04-30": "saturday"}
+        errors = validate_municipality_schema(data)
+        assert any("date_overrides" in e and "list" in e for e in errors)
+
+    def test_valid_notes(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["notes"] = "Drøbak gamleby har egne tider — denne siden viser kommune-regel."
+        assert validate_municipality_schema(data) == []
+
+    def test_non_string_notes_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["notes"] = 123
+        errors = validate_municipality_schema(data)
+        assert any("notes" in e for e in errors)
+
+
 # --- town_municipality_map.json validation ---
 
 

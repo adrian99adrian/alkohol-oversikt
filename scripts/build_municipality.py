@@ -48,15 +48,19 @@ def build_municipality(
     local_day_summaries = build_day_summaries(local_stores, window_days) if local_stores else []
     nearest_payload = _build_nearest_payload(nearest, window_days) if mode == "nearest" else None
 
+    municipality_out = {
+        "id": municipality["id"],
+        "name": municipality["name"],
+        "county": municipality["county"],
+        "sources": municipality["sources"],
+        "last_verified": municipality["last_verified"],
+        "verified": municipality["verified"],
+    }
+    if "notes" in municipality:
+        municipality_out["notes"] = municipality["notes"]
+
     return {
-        "municipality": {
-            "id": municipality["id"],
-            "name": municipality["name"],
-            "county": municipality["county"],
-            "sources": municipality["sources"],
-            "last_verified": municipality["last_verified"],
-            "verified": municipality["verified"],
-        },
+        "municipality": municipality_out,
         "days": days,
         "vinmonopolet_mode": mode,
         "vinmonopolet_stores": resolved_stores,

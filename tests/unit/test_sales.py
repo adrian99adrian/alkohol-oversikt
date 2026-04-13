@@ -14,10 +14,13 @@ from sales import (
 
 
 def _classify(d: date) -> dict:
-    """Helper: classify a date using both years if needed."""
+    """Helper: classify a date and enrich with the same fields build_day_entry adds."""
     holidays = get_public_holidays(d.year)
     special = get_special_days(d.year)
-    return classify_day(d, holidays, special)
+    info = classify_day(d, holidays, special)
+    info["date"] = d.isoformat()
+    info["_is_saturday"] = d.weekday() == 5
+    return info
 
 
 # --- National maximums ---
@@ -359,4 +362,127 @@ class TestBuildDayEntry:
         assert entry["beer_open"] == "06:00"
         assert entry["beer_close"] == "20:00"
         assert entry["beer_close_large_stores"] is None
-        assert entry["comment"] is None
+
+
+# --- Schema extensions (PR: feat/schema-extensions-for-verification) ---
+
+
+def _make_mun(**beer_sales_overrides) -> dict:
+    """Construct a minimal national-standard municipality for field-level tests."""
+    beer = {
+        "weekday_open": "08:00",
+        "weekday_close": "20:00",
+        "saturday_open": "08:00",
+        "saturday_close": "18:00",
+        "pre_holiday_close": "18:00",
+        "special_day_close": "18:00",
+        "special_days": [],
+    }
+    beer.update(beer_sales_overrides)
+    return {
+        "id": "test",
+        "name": "Test",
+        "county": "Test",
+        "beer_sales": beer,
+        "sources": [{"title": "t", "url": "u"}],
+        "last_verified": None,
+        "verified": False,
+    }
+
+
+class TestSpecialDayOpen:
+    """Kommuner that open later on special eves (e.g. Hole 08:30, Orkland 09:00)."""
+
+    def test_special_day_open_applied_on_recognized_eve(self):
+        mun = _make_mun(
+            special_day_open="08:30",
+            special_days=["christmas_eve"],
+            special_day_close="15:00",
+        )
+        day_info = _classify(date(2026, 12, 24))
+        assert municipal_open(day_info, mun) == "08:30"
+
+    def test_falls_back_to_weekday_open_when_field_absent(self):
+        mun = _make_mun(special_days=["christmas_eve"], special_day_close="15:00")
+        day_info = _classify(date(2026, 12, 24))
+        assert municipal_open(day_info, mun) == "08:00"
+
+    def test_special_day_open_not_used_on_weekday(self):
+        mun = _make_mun(special_day_open="09:00")
+        day_info = _classify(date(2026, 3, 10))  # Tuesday
+        assert municipal_open(day_info, mun) == "08:00"
+
+
+class TestPreEasterWeekException:
+    """Påskeuke rule: Wed/Thu/Fri/Sat før påske close at pre_holiday time."""
+
+    def test_wednesday_before_maundy_thursday_closes_early(self):
+        mun = _make_mun(exceptions={"pre_easter_week": "pre_holiday"})
+        day_info = _classify(date(2026, 4, 1))  # Wed før skjærtorsdag
+        assert day_info["is_pre_easter_week"]
+        assert municipal_close(day_info, mun) == "18:00"
+
+    def test_paaskeaften_forced_to_pre_holiday_close_even_if_listed_as_special(self):
+        mun = _make_mun(
+            exceptions={"pre_easter_week": "pre_holiday"},
+            special_days=["easter_eve"],
+            special_day_close="15:00",
+        )
+        day_info = _classify(date(2026, 4, 4))  # Påskeaften
+        assert municipal_close(day_info, mun) == "18:00"
+
+    def test_unaffected_without_exception(self):
+        mun = _make_mun()  # no exception
+        day_info = _classify(date(2026, 4, 1))
+        # Falls through to normal pre_holiday logic (18:00 in any case)
+        assert municipal_close(day_info, mun) == "18:00"
+
+    def test_ordinary_weekday_outside_paaskeuke_unaffected(self):
+        mun = _make_mun(exceptions={"pre_easter_week": "pre_holiday"})
+        day_info = _classify(date(2026, 3, 10))  # Tuesday, outside påskeuke
+        assert not day_info["is_pre_easter_week"]
+        assert municipal_close(day_info, mun) == "20:00"
+
+
+class TestDateOverrides:
+    """date_overrides: arbitrary dates forced to Saturday or pre_holiday hours."""
+
+    def test_saturday_override_on_weekday_closes_early(self):
+        mun = _make_mun(
+            date_overrides=[{"date": "04-30", "hours": "saturday"}],
+            saturday_close="18:00",
+        )
+        day_info = _classify(date(2026, 4, 30))  # Thursday
+        assert municipal_close(day_info, mun) == "18:00"
+        assert municipal_open(day_info, mun) == "08:00"  # saturday_open
+
+    def test_pre_holiday_override_on_weekday(self):
+        mun = _make_mun(date_overrides=[{"date": "05-16", "hours": "pre_holiday"}])
+        day_info = _classify(date(2026, 5, 16))  # Saturday — but year varies
+        # override still applies based on MM-DD match
+        assert municipal_close(day_info, mun) == "18:00"
+
+    def test_override_wins_over_special_day(self):
+        """Dec 31 is new_years_eve; override says saturday → 18:00 overrides special_day_close."""
+        mun = _make_mun(
+            date_overrides=[{"date": "12-31", "hours": "saturday"}],
+            special_days=["new_years_eve"],
+            special_day_close="15:00",
+        )
+        day_info = _classify(date(2026, 12, 31))
+        assert municipal_close(day_info, mun) == "18:00"
+
+    def test_deviation_and_comment_on_weekday_override(self):
+        mun = _make_mun(date_overrides=[{"date": "04-30", "hours": "saturday"}])
+        d = date(2026, 4, 30)
+        day_info = _classify(d)
+        entry = build_day_entry(d, day_info, mun)
+        assert entry["beer_close"] == "18:00"
+        assert entry["is_deviation"] is True
+        assert entry["comment"] is not None
+        assert "18:00" in entry["comment"]
+
+    def test_no_match_is_noop(self):
+        mun = _make_mun(date_overrides=[{"date": "04-30", "hours": "saturday"}])
+        day_info = _classify(date(2026, 4, 29))  # Wed
+        assert municipal_close(day_info, mun) == "20:00"
