@@ -7,10 +7,16 @@ Returns exit code 0 on success, 1 on failure.
 """
 
 import json
+import math
 import re
 import sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
+
+from geo_bounds import LAT_MAX as _NORWAY_LAT_MAX
+from geo_bounds import LAT_MIN as _NORWAY_LAT_MIN
+from geo_bounds import LNG_MAX as _NORWAY_LNG_MAX
+from geo_bounds import LNG_MIN as _NORWAY_LNG_MIN
 
 REQUIRED_MUNICIPALITY_FIELDS = [
     "id",
@@ -203,15 +209,183 @@ def _validate_store_entries(gen_data: dict, days: list[dict]) -> list[str]:
 
 
 def validate_generated_municipality(
-    gen_data: dict, days: list[dict], calendar: list[dict]
+    gen_data: dict,
+    days: list[dict],
+    calendar: list[dict],
+    kommune_registry_ids: set[str] | None = None,
 ) -> list[str]:
-    """Validate generated municipality data against calendar."""
+    """Validate generated municipality data against calendar.
+
+    When `kommune_registry_ids` is provided, the validator also checks that
+    `nearest_vinmonopolet.source_municipality_id` refers to a known kommune.
+    """
     errors: list[str] = []
     errors.extend(_validate_date_coverage(days, calendar))
     errors.extend(_validate_vinmonopolet_summaries(days))
     errors.extend(_validate_day_summary(gen_data, len(days)))
     errors.extend(_validate_store_entries(gen_data, days))
     errors.extend(_validate_vinmonopolet_fetched_at(gen_data))
+    errors.extend(_validate_vinmonopolet_mode(gen_data, len(days)))
+    errors.extend(_validate_nearest_source_in_registry(gen_data, kommune_registry_ids))
+    return errors
+
+
+def _validate_nearest_source_in_registry(
+    gen_data: dict, kommune_registry_ids: set[str] | None
+) -> list[str]:
+    """Self-consistency: nearest.source_municipality_id must be a real kommune."""
+    if kommune_registry_ids is None:
+        return []
+    nearest = gen_data.get("nearest_vinmonopolet")
+    if not isinstance(nearest, dict):
+        return []
+    source_id = nearest.get("source_municipality_id")
+    if not isinstance(source_id, str) or not source_id:
+        return []
+    if source_id not in kommune_registry_ids:
+        return [
+            f"nearest_vinmonopolet.source_municipality_id {source_id!r} "
+            f"is not in the kommune registry"
+        ]
+    return []
+
+
+_VALID_MODES = ("local", "nearest", "fallback")
+
+
+def _validate_vinmonopolet_mode(gen_data: dict, num_days: int) -> list[str]:
+    """Enforce the strict one-of contract for vinmonopolet_mode.
+
+    Contract summary:
+      - local:    own stores, no nearest, fetched_at set, day_summaries populated
+      - nearest:  no stores, nearest_vinmonopolet set with its own day_summary,
+                  top-level vinmonopolet_day_summary empty, fetched_at set
+      - fallback: everything empty/null
+    """
+    if "vinmonopolet_mode" not in gen_data:
+        return ["vinmonopolet_mode: missing field (legacy data?)"]
+
+    mode = gen_data["vinmonopolet_mode"]
+    if mode not in _VALID_MODES:
+        return [f"vinmonopolet_mode: invalid value {mode!r} (expected one of {_VALID_MODES})"]
+
+    expected_len = min(14, num_days)
+    if mode == "local":
+        return _validate_local_mode(gen_data, expected_len)
+    if mode == "nearest":
+        return _validate_nearest_mode(gen_data, expected_len)
+    return _validate_fallback_mode(gen_data)
+
+
+def _validate_local_mode(gen_data: dict, expected_len: int) -> list[str]:
+    errors: list[str] = []
+    stores = gen_data.get("vinmonopolet_stores", [])
+    day_summary = gen_data.get("vinmonopolet_day_summary", [])
+    if len(stores) == 0:
+        errors.append("mode=local: vinmonopolet_stores must be non-empty")
+    if gen_data.get("nearest_vinmonopolet") is not None:
+        errors.append("mode=local: nearest_vinmonopolet must be null")
+    if not gen_data.get("vinmonopolet_fetched_at"):
+        errors.append("mode=local: vinmonopolet_fetched_at is required")
+    if len(day_summary) != expected_len:
+        errors.append(
+            f"mode=local: vinmonopolet_day_summary length {len(day_summary)} != {expected_len}"
+        )
+    return errors
+
+
+def _validate_nearest_mode(gen_data: dict, expected_len: int) -> list[str]:
+    errors: list[str] = []
+    stores = gen_data.get("vinmonopolet_stores", [])
+    nearest = gen_data.get("nearest_vinmonopolet")
+    day_summary = gen_data.get("vinmonopolet_day_summary", [])
+    if len(stores) != 0:
+        errors.append("mode=nearest: vinmonopolet_stores must be empty")
+    if nearest is None:
+        errors.append("mode=nearest: nearest_vinmonopolet is required")
+    else:
+        errors.extend(_validate_nearest_payload(nearest, expected_len))
+    # Top-level vinmonopolet_day_summary describes this kommune's OWN stores.
+    # In nearest mode it must stay empty — the nearest-store 14-day table is
+    # served from nearest_vinmonopolet.day_summary.
+    if len(day_summary) != 0:
+        errors.append(
+            "mode=nearest: vinmonopolet_day_summary must be empty "
+            "(nearest-store hours live in nearest_vinmonopolet.day_summary)"
+        )
+    if not gen_data.get("vinmonopolet_fetched_at"):
+        errors.append("mode=nearest: vinmonopolet_fetched_at is required")
+    return errors
+
+
+def _validate_fallback_mode(gen_data: dict) -> list[str]:
+    errors: list[str] = []
+    if len(gen_data.get("vinmonopolet_stores", [])) != 0:
+        errors.append("mode=fallback: vinmonopolet_stores must be empty")
+    if gen_data.get("nearest_vinmonopolet") is not None:
+        errors.append("mode=fallback: nearest_vinmonopolet must be null")
+    if gen_data.get("vinmonopolet_fetched_at"):
+        errors.append("mode=fallback: vinmonopolet_fetched_at must be null")
+    if len(gen_data.get("vinmonopolet_day_summary", [])) != 0:
+        errors.append("mode=fallback: vinmonopolet_day_summary must be empty")
+    return errors
+
+
+def _validate_nearest_payload(payload: dict, expected_summary_len: int) -> list[str]:
+    """Validate the nearest_vinmonopolet dict's own shape."""
+    required = {
+        "store",
+        "distance_km",
+        "source_municipality_id",
+        "source_municipality_name",
+        "day_summary",
+    }
+    missing = required - payload.keys()
+    if missing:
+        return [f"nearest_vinmonopolet: missing fields {sorted(missing)}"]
+
+    errors: list[str] = []
+    errors.extend(_check_distance(payload["distance_km"]))
+    errors.extend(_check_source_strings(payload))
+    errors.extend(_check_nearest_day_summary(payload["day_summary"], expected_summary_len))
+    errors.extend(_check_nearest_store(payload["store"]))
+    return errors
+
+
+def _check_distance(distance: object) -> list[str]:
+    if not isinstance(distance, (int, float)) or isinstance(distance, bool):
+        return [f"nearest_vinmonopolet.distance_km must be numeric, got {type(distance).__name__}"]
+    if distance < 0:
+        return [f"nearest_vinmonopolet.distance_km must be non-negative, got {distance}"]
+    return []
+
+
+def _check_source_strings(payload: dict) -> list[str]:
+    errors: list[str] = []
+    for field in ("source_municipality_id", "source_municipality_name"):
+        value = payload[field]
+        if not isinstance(value, str) or not value:
+            errors.append(f"nearest_vinmonopolet.{field} must be a non-empty string")
+    return errors
+
+
+def _check_nearest_day_summary(summary: object, expected_len: int) -> list[str]:
+    if not isinstance(summary, list):
+        return ["nearest_vinmonopolet.day_summary must be a list"]
+    if len(summary) != expected_len:
+        return [f"nearest_vinmonopolet.day_summary length {len(summary)} != {expected_len}"]
+    return []
+
+
+def _check_nearest_store(store: object) -> list[str]:
+    if not isinstance(store, dict):
+        return ["nearest_vinmonopolet.store must be an object"]
+    errors: list[str] = []
+    sid = store.get("store_id", "?")
+    for field in ("store_id", "name", "address"):
+        if field not in store:
+            errors.append(f"nearest_vinmonopolet.store: missing field '{field}'")
+    errors.extend(f"nearest_vinmonopolet.{e}" for e in _validate_store_coords(store, str(sid)))
     return errors
 
 
@@ -257,6 +431,8 @@ REQUIRED_STORE_FIELDS = [
     "name",
     "municipality",
     "address",
+    "lat",
+    "lng",
     "standard_hours",
     "actual_hours",
 ]
@@ -280,7 +456,7 @@ def _validate_vm_metadata(metadata: dict, num_stores: int) -> list[str]:
 
 
 def _validate_store_fields(stores: list[dict]) -> list[str]:
-    """Validate required fields, numeric store_id, and duplicates."""
+    """Validate required fields, numeric store_id, coordinates, and duplicates."""
     errors = []
     seen_ids: set[str] = set()
     for i, store in enumerate(stores):
@@ -293,6 +469,32 @@ def _validate_store_fields(stores: list[dict]) -> list[str]:
         if sid in seen_ids:
             errors.append(f"Duplicate store_id: {sid}")
         seen_ids.add(sid)
+        errors.extend(_validate_store_coords(store, sid))
+    return errors
+
+
+def _validate_store_coords(store: dict, sid: str) -> list[str]:
+    """Strict numeric + in-range checks for a single store's lat/lng.
+
+    The nearest-Vinmonopolet UX would silently collapse to fallback if a bad
+    coord slipped through, so these rules must be strict.
+    """
+    errors: list[str] = []
+    for key, lo, hi in (
+        ("lat", _NORWAY_LAT_MIN, _NORWAY_LAT_MAX),
+        ("lng", _NORWAY_LNG_MIN, _NORWAY_LNG_MAX),
+    ):
+        if key not in store:
+            continue  # already reported by the required-fields loop
+        val = store[key]
+        if isinstance(val, bool) or not isinstance(val, (int, float)):
+            errors.append(f"Store {sid}: {key} must be numeric, got {type(val).__name__}")
+            continue
+        if math.isnan(val) or math.isinf(val):
+            errors.append(f"Store {sid}: {key} is non-finite")
+            continue
+        if not (lo <= val <= hi):
+            errors.append(f"Store {sid}: {key} {val} outside Norway bounds [{lo}, {hi}]")
     return errors
 
 
@@ -431,18 +633,34 @@ def _validate_calendar_file(calendar_path: Path) -> tuple[list[str], list[dict] 
     return [f"calendar.json: {e}" for e in errors], calendar
 
 
-def _validate_generated_files(gen_dir: Path, calendar: list[dict]) -> list[str]:
+def _validate_generated_files(
+    gen_dir: Path,
+    calendar: list[dict],
+    kommune_registry_ids: set[str] | None = None,
+) -> list[str]:
     """Validate all generated municipality files against calendar."""
     errors = []
     for path in sorted(gen_dir.glob(_JSON_GLOB)):
         with open(path, encoding="utf-8") as f:
             gen_data = json.load(f)
         days = gen_data.get("days", [])
-        file_errors = validate_generated_municipality(gen_data, days, calendar)
+        file_errors = validate_generated_municipality(
+            gen_data, days, calendar, kommune_registry_ids=kommune_registry_ids
+        )
         errors.extend(f"{path.name}: {e}" for e in file_errors)
         file_errors = validate_national_max_compliance(days)
         errors.extend(f"{path.name}: {e}" for e in file_errors)
     return errors
+
+
+def _load_kommune_registry_ids(data_dir: Path) -> set[str] | None:
+    """Read kommune ids from data/reference/kommuner.json; None if missing."""
+    path = data_dir / "reference" / "kommuner.json"
+    if not path.exists():
+        return None
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    return {entry["id"] for entry in data.get("kommuner", [])}
 
 
 def _validate_vinmonopolet_file(
@@ -495,7 +713,8 @@ def main() -> int:
     if calendar is not None:
         gen_dir = data_dir / "generated" / "municipalities"
         if gen_dir.exists():
-            all_errors.extend(_validate_generated_files(gen_dir, calendar))
+            registry_ids = _load_kommune_registry_ids(data_dir)
+            all_errors.extend(_validate_generated_files(gen_dir, calendar, registry_ids))
     else:
         print("Note: calendar.json not found (run build_calendar.py first)")
 

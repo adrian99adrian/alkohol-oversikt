@@ -115,13 +115,37 @@ class TestVinmonopoletFetchedAtPropagation:
         self,
         municipality: dict,
         fetched_at: str | None,
+        stores: list | None = None,
         start: date = date(2026, 1, 1),
     ) -> dict:
         calendar = build_calendar(start, num_days=14)
+        # A minimal store so mode resolves to "local" and the fetched_at
+        # contract applies (fallback mode nulls out fetched_at by design).
+        default_store = {
+            "store_id": "1",
+            "name": "Test Store",
+            "municipality": municipality["id"],
+            "address": "addr",
+            "lat": 59.1,
+            "lng": 10.2,
+            "standard_hours": {
+                k: None
+                for k in [
+                    "monday",
+                    "tuesday",
+                    "wednesday",
+                    "thursday",
+                    "friday",
+                    "saturday",
+                    "sunday",
+                ]
+            },
+            "actual_hours": {},
+        }
         return build_municipality(
             municipality,
             calendar,
-            vinmonopolet_stores=[],
+            vinmonopolet_stores=stores if stores is not None else [default_store],
             vinmonopolet_fetched_at=fetched_at,
         )
 
@@ -131,4 +155,11 @@ class TestVinmonopoletFetchedAtPropagation:
 
     def test_fetched_at_is_none_when_missing(self, sample_municipality_sandefjord):
         result = self._build(sample_municipality_sandefjord, None)
+        assert result["vinmonopolet_fetched_at"] is None
+
+    def test_fetched_at_nulled_in_fallback_mode(self, sample_municipality_sandefjord):
+        """Fallback mode (no stores, no nearest) must null out fetched_at —
+        there is no Vinmonopolet data on the page for the timestamp to refer to."""
+        result = self._build(sample_municipality_sandefjord, "2026-04-12T10:00:00+02:00", stores=[])
+        assert result["vinmonopolet_mode"] == "fallback"
         assert result["vinmonopolet_fetched_at"] is None

@@ -169,6 +169,7 @@ def sample_api_store(
             "town": "Sandefjord",
             "country": {"isocode": "NO", "name": "Norway"},
         },
+        "geoPoint": {"latitude": 59.1333, "longitude": 10.2167},
         "openingTimes": sample_opening_times_normal,
         "specialOpeningTimes": [],
     }
@@ -189,6 +190,7 @@ def sample_api_store_easter(
             "town": "Sandefjord",
             "country": {"isocode": "NO", "name": "Norway"},
         },
+        "geoPoint": {"latitude": 59.1333, "longitude": 10.2167},
         "openingTimes": sample_opening_times_easter,
         "specialOpeningTimes": sample_special_opening_times_easter,
     }
