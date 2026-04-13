@@ -152,9 +152,7 @@ def format_address(store: dict) -> str:
     return f"{addr['line1']}, {addr['postalCode']} {addr['town']}"
 
 
-# Norway bounding box — stores outside this box are treated as API corruption.
-_LAT_MIN, _LAT_MAX = 57.0, 72.0
-_LNG_MIN, _LNG_MAX = 4.0, 32.0
+from geo_bounds import in_norway as _in_norway  # noqa: E402
 
 
 def parse_gps_coord(raw: object, *, store_id: str) -> tuple[float, float]:
@@ -199,7 +197,7 @@ def parse_gps_coord(raw: object, *, store_id: str) -> tuple[float, float]:
             f"got {type(raw).__name__}"
         )
 
-    if not (_LAT_MIN <= lat <= _LAT_MAX) or not (_LNG_MIN <= lng <= _LNG_MAX):
+    if not _in_norway(lat, lng):
         raise ValueError(f"store {store_id}: coordinates ({lat}, {lng}) outside Norway bounds")
     return lat, lng
 

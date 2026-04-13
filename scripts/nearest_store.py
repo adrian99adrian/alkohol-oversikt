@@ -14,6 +14,31 @@ import math
 EARTH_RADIUS_KM = 6371.0
 
 
+def _numeric_coord(value: object) -> float | None:
+    """Return value as float if it is a finite int/float, else None.
+
+    Rejects bool (which is a subtype of int in Python) and non-numeric types
+    that would otherwise raise TypeError when passed to math operations.
+    """
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    val = float(value)
+    if math.isnan(val) or math.isinf(val):
+        return None
+    return val
+
+
+def _numeric_store_id(store: dict) -> int:
+    """Extract the numeric store id for deterministic tie-breaking.
+
+    Non-numeric or missing ids sort after any real store id.
+    """
+    try:
+        return int(store["store_id"])
+    except (KeyError, ValueError):
+        return 2**63 - 1
+
+
 def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     """Great-circle distance between two WGS-84 points in kilometers.
 
@@ -41,60 +66,43 @@ def find_nearest_store(
     Determinism:
     - Stores whose own municipality == kommune_entry["id"] are excluded
       (defense in depth — mode logic should already prevent this path).
-    - Stores missing `lat`/`lng` are skipped.
+    - Stores missing / non-numeric / non-finite `lat`/`lng` are skipped.
+    - Kommuner with missing / non-numeric / non-finite coords return None
+      (caller falls back to `fallback` mode rather than crashing the build).
     - Ties within 0.1 km are broken by lowest numeric `store_id`.
 
     Returns: {store, distance_km (rounded 1 decimal), source_municipality_id,
               source_municipality_name} or None.
     """
-    if "lat" not in kommune_entry or "lng" not in kommune_entry:
+    k_lat = _numeric_coord(kommune_entry.get("lat"))
+    k_lng = _numeric_coord(kommune_entry.get("lng"))
+    if k_lat is None or k_lng is None:
         return None
 
-    k_lat = kommune_entry["lat"]
-    k_lng = kommune_entry["lng"]
     own_id = kommune_entry["id"]
 
     candidates: list[tuple[float, dict]] = []
     for store in all_stores:
         if store.get("municipality") == own_id:
             continue
-        lat = store.get("lat")
-        lng = store.get("lng")
-        if not isinstance(lat, (int, float)) or not isinstance(lng, (int, float)):
+        s_lat = _numeric_coord(store.get("lat"))
+        s_lng = _numeric_coord(store.get("lng"))
+        if s_lat is None or s_lng is None:
             continue
-        if isinstance(lat, bool) or isinstance(lng, bool):
-            continue
-        distance = haversine_km(k_lat, k_lng, float(lat), float(lng))
-        candidates.append((distance, store))
+        candidates.append((haversine_km(k_lat, k_lng, s_lat, s_lng), store))
 
     if not candidates:
         return None
 
-    # Sort by (distance, numeric store_id) so ties within epsilon are
-    # broken deterministically by lowest numeric id.
-    def _sort_key(item: tuple[float, dict]) -> tuple[float, int]:
-        distance, store = item
-        try:
-            numeric_id = int(store["store_id"])
-        except (KeyError, ValueError):
-            numeric_id = 2**63 - 1  # push malformed ids to the back
-        return (distance, numeric_id)
-
-    candidates.sort(key=_sort_key)
-    best_distance, best_store = candidates[0]
-
-    # Within the epsilon band, numeric id alone decides (not distance).
-    tied = [(d, s) for d, s in candidates if d - best_distance <= _TIE_EPSILON_KM]
-    if len(tied) > 1:
-
-        def _numeric_id(item: tuple[float, dict]) -> int:
-            try:
-                return int(item[1]["store_id"])
-            except (KeyError, ValueError):
-                return 2**63 - 1
-
-        tied.sort(key=_numeric_id)
-        best_distance, best_store = tied[0]
+    # Tie-break rule: any candidate within _TIE_EPSILON_KM of the minimum
+    # distance is treated as "tied" with it; among the tied, lowest numeric
+    # `store_id` wins. Bucketing would be unreliable at bucket boundaries,
+    # so we do it explicitly in two passes.
+    min_distance = min(d for d, _ in candidates)
+    best_distance, best_store = min(
+        ((d, s) for d, s in candidates if d - min_distance <= _TIE_EPSILON_KM),
+        key=lambda item: _numeric_store_id(item[1]),
+    )
 
     source_id = best_store["municipality"]
     source_entry = kommune_registry.get(source_id, {})

@@ -7,10 +7,16 @@ Returns exit code 0 on success, 1 on failure.
 """
 
 import json
+import math
 import re
 import sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
+
+from geo_bounds import LAT_MAX as _NORWAY_LAT_MAX
+from geo_bounds import LAT_MIN as _NORWAY_LAT_MIN
+from geo_bounds import LNG_MAX as _NORWAY_LNG_MAX
+from geo_bounds import LNG_MIN as _NORWAY_LNG_MIN
 
 REQUIRED_MUNICIPALITY_FIELDS = [
     "id",
@@ -327,6 +333,17 @@ def _validate_nearest_payload(payload: dict, expected_summary_len: int) -> list[
             f"nearest_vinmonopolet.day_summary length {len(summary)} != {expected_summary_len}"
         )
 
+    # The nested store must pass the same coordinate rules as any other store.
+    store = payload["store"]
+    if isinstance(store, dict):
+        sid = store.get("store_id", "?")
+        for field in ("store_id", "name", "address"):
+            if field not in store:
+                errors.append(f"nearest_vinmonopolet.store: missing field '{field}'")
+        errors.extend(f"nearest_vinmonopolet.{e}" for e in _validate_store_coords(store, str(sid)))
+    else:
+        errors.append("nearest_vinmonopolet.store must be an object")
+
     return errors
 
 
@@ -377,10 +394,6 @@ REQUIRED_STORE_FIELDS = [
     "standard_hours",
     "actual_hours",
 ]
-
-# Norway bounding box — must match scripts/fetch_vinmonopolet.py.
-_STORE_LAT_MIN, _STORE_LAT_MAX = 57.0, 72.0
-_STORE_LNG_MIN, _STORE_LNG_MAX = 4.0, 32.0
 WEEKDAY_KEYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 _TIME_RE = re.compile(r"^\d{2}:\d{2}$")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -402,8 +415,6 @@ def _validate_vm_metadata(metadata: dict, num_stores: int) -> list[str]:
 
 def _validate_store_fields(stores: list[dict]) -> list[str]:
     """Validate required fields, numeric store_id, coordinates, and duplicates."""
-    import math as _math
-
     errors = []
     seen_ids: set[str] = set()
     for i, store in enumerate(stores):
@@ -416,25 +427,32 @@ def _validate_store_fields(stores: list[dict]) -> list[str]:
         if sid in seen_ids:
             errors.append(f"Duplicate store_id: {sid}")
         seen_ids.add(sid)
+        errors.extend(_validate_store_coords(store, sid))
+    return errors
 
-        # Coordinate validation — not just presence, but numeric + in-range.
-        # The nearest-Vinmonopolet UX would silently collapse to fallback if
-        # a bad coord slipped through, so these rules must be strict.
-        for key, lo, hi in (
-            ("lat", _STORE_LAT_MIN, _STORE_LAT_MAX),
-            ("lng", _STORE_LNG_MIN, _STORE_LNG_MAX),
-        ):
-            if key not in store:
-                continue  # already reported by the required-fields loop
-            val = store[key]
-            if isinstance(val, bool) or not isinstance(val, (int, float)):
-                errors.append(f"Store {sid}: {key} must be numeric, got {type(val).__name__}")
-                continue
-            if val is None or _math.isnan(val) or _math.isinf(val):
-                errors.append(f"Store {sid}: {key} is non-finite")
-                continue
-            if not (lo <= val <= hi):
-                errors.append(f"Store {sid}: {key} {val} outside Norway bounds [{lo}, {hi}]")
+
+def _validate_store_coords(store: dict, sid: str) -> list[str]:
+    """Strict numeric + in-range checks for a single store's lat/lng.
+
+    The nearest-Vinmonopolet UX would silently collapse to fallback if a bad
+    coord slipped through, so these rules must be strict.
+    """
+    errors: list[str] = []
+    for key, lo, hi in (
+        ("lat", _NORWAY_LAT_MIN, _NORWAY_LAT_MAX),
+        ("lng", _NORWAY_LNG_MIN, _NORWAY_LNG_MAX),
+    ):
+        if key not in store:
+            continue  # already reported by the required-fields loop
+        val = store[key]
+        if isinstance(val, bool) or not isinstance(val, (int, float)):
+            errors.append(f"Store {sid}: {key} must be numeric, got {type(val).__name__}")
+            continue
+        if val is None or math.isnan(val) or math.isinf(val):
+            errors.append(f"Store {sid}: {key} is non-finite")
+            continue
+        if not (lo <= val <= hi):
+            errors.append(f"Store {sid}: {key} {val} outside Norway bounds [{lo}, {hi}]")
     return errors
 
 

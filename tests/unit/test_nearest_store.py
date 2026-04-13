@@ -89,6 +89,34 @@ def test_returns_none_when_kommune_lacks_coords():
     assert find_nearest_store(k, stores, _registry(k)) is None
 
 
+def test_returns_none_when_kommune_coords_are_null():
+    """A kommune registry entry with null lat/lng must not raise TypeError
+    when passed to haversine; return None so caller falls back gracefully."""
+    k = {"id": "sokndal", "municipality": "Sokndal", "county": "R", "lat": None, "lng": None}
+    stores = [_store("1", "flekkefjord", 58.30, 6.66)]
+    assert find_nearest_store(k, stores, {"sokndal": k}) is None
+
+
+def test_returns_none_when_kommune_coords_are_non_numeric():
+    """String/other non-numeric coords also fall through to None instead
+    of raising."""
+    k = {"id": "sokndal", "municipality": "Sokndal", "county": "R", "lat": "58.33", "lng": "6.22"}
+    stores = [_store("1", "flekkefjord", 58.30, 6.66)]
+    assert find_nearest_store(k, stores, {"sokndal": k}) is None
+
+
+def test_returns_none_when_kommune_coords_are_nan():
+    k = {
+        "id": "sokndal",
+        "municipality": "Sokndal",
+        "county": "R",
+        "lat": float("nan"),
+        "lng": 6.22,
+    }
+    stores = [_store("1", "flekkefjord", 58.30, 6.66)]
+    assert find_nearest_store(k, stores, {"sokndal": k}) is None
+
+
 def test_picks_geographically_closest():
     k = _kommune("sokndal", 58.33, 6.22, "Sokndal")
     flekkefjord = _store("100", "flekkefjord", 58.30, 6.66)

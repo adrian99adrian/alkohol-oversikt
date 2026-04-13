@@ -36,16 +36,13 @@ from pathlib import Path
 from typing import Any
 
 import httpx
+from geo_bounds import in_norway
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 USER_AGENT = "alkohol-oversikt/1.0 (https://github.com/adrian99adrian/alkohol-oversikt)"
 SLEEP_SECONDS = 1.1
 REQUEST_TIMEOUT = 30
 MAX_RETRIES = 3
-
-# Norway bounding box (generous).
-LAT_MIN, LAT_MAX = 57.0, 72.0
-LNG_MIN, LNG_MAX = 4.0, 32.0
 
 
 def normalize(text: str) -> str:
@@ -91,9 +88,9 @@ def names_match(expected: str, candidate: str) -> bool:
     return False
 
 
-def coords_in_norway(lat: float, lng: float) -> bool:
-    """True if (lat, lng) is within Norway's bounding box (inclusive)."""
-    return LAT_MIN <= lat <= LAT_MAX and LNG_MIN <= lng <= LNG_MAX
+# Re-export the shared bounding-box check under the local name the rest of
+# this module already uses.
+coords_in_norway = in_norway
 
 
 def result_passes(result: dict, kommune: dict) -> bool:
@@ -335,7 +332,10 @@ def run(
     with factory() as client:
         for entry in registry["kommuner"]:
             kid = entry["id"]
-            if "lat" in entry and "lng" in entry and entry["lat"] is not None:
+            # Only skip if BOTH coords are already populated AND non-null. A
+            # half-written entry (lat set, lng null) would otherwise never be
+            # retried, permanently leaving that kommune unresolvable.
+            if entry.get("lat") is not None and entry.get("lng") is not None:
                 skipped += 1
                 continue
             if kid in overrides:

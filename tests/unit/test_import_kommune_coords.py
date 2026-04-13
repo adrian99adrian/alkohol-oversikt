@@ -351,6 +351,45 @@ def _factory(client: _MockClient):
     return lambda: client
 
 
+def test_run_retries_partially_populated_entry(tmp_path: Path):
+    """An entry with lat set but lng still null must be retried, not skipped.
+
+    A half-written entry is a bug, not a success. Skipping it would leave the
+    registry permanently broken even across re-runs of the importer.
+    """
+    reg = _make_registry(
+        [
+            {
+                "id": "sokndal",
+                "municipality": "Sokndal",
+                "county": "Rogaland",
+                "lat": 58.33,
+                "lng": None,
+                "bugs": [],
+            },
+        ]
+    )
+    reg_path = _write(tmp_path, "kommuner.json", reg)
+    ov_path = _write(tmp_path, "overrides.json", {})
+    un_path = tmp_path / "unresolved.json"
+
+    client = _MockClient([[_result()]])
+    resolved, skipped, _ = mod.run(
+        reg_path,
+        ov_path,
+        un_path,
+        client_factory=_factory(client),
+        sleep_fn=lambda _s: None,
+    )
+    assert resolved == 1
+    assert skipped == 0
+    # Nominatim WAS called (one query succeeded).
+    assert len(client.requests) == 1
+
+    written = json.loads(reg_path.read_text(encoding="utf-8"))
+    assert written["kommuner"][0]["lng"] is not None
+
+
 def test_run_idempotent_skips_existing_coords(tmp_path: Path):
     reg = _make_registry(
         [
