@@ -14,14 +14,17 @@
       "whit_eve",
       "christmas_eve",
       "new_years_eve"
-    ]
+    ],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Ålesund kommune — forskrift om åpningstider for serverings-, salgs- og skjenkesteder (LFO 2017-06-08-1131)",
+      "url": "https://lovdata.no/dokument/LFO/forskrift/2017-06-08-1131"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }
