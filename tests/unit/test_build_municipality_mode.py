@@ -112,9 +112,11 @@ def test_mode_nearest_when_no_local_store_but_coords_available():
     assert len(near["day_summary"]) == 14
 
 
-def test_mode_nearest_mirrors_top_level_day_summary():
-    """In nearest mode, top-level vinmonopolet_day_summary must mirror
-    nearest_vinmonopolet.day_summary so frontend code stays uniform."""
+def test_mode_nearest_does_not_pollute_top_level_or_days():
+    """In nearest mode, top-level vinmonopolet_day_summary describes THIS
+    kommune's own stores and must stay empty. days[i].vinmonopolet_summary
+    must also be None — DayCard / BeerSalesTable render those as this
+    kommune's Vinmonopol-hours and would mislead users otherwise."""
     muni = _muni("sokndal")
     registry = {
         "sokndal": _registry_entry("sokndal", 58.33, 6.22),
@@ -128,10 +130,16 @@ def test_mode_nearest_mirrors_top_level_day_summary():
         all_stores=[_store("1", "flekkefjord", 58.30, 6.66)],
         kommune_registry=registry,
     )
-    assert result["nearest_vinmonopolet"]["day_summary"] == result["vinmonopolet_day_summary"]
+    assert result["vinmonopolet_day_summary"] == []
+    for d in result["days"]:
+        assert d["vinmonopolet_summary"] is None
+    # Nearest-store hours still rendered from nearest_vinmonopolet.day_summary.
+    assert len(result["nearest_vinmonopolet"]["day_summary"]) == 14
 
 
-def test_mode_nearest_days_have_vinmonopolet_summary():
+def test_mode_nearest_days_have_null_vinmonopolet_summary():
+    """Keys are present on every day (shape consistency) but values are None
+    in nearest mode — see comment on build_municipality."""
     muni = _muni("sokndal")
     registry = {
         "sokndal": _registry_entry("sokndal", 58.33, 6.22),
@@ -145,10 +153,9 @@ def test_mode_nearest_days_have_vinmonopolet_summary():
         all_stores=[_store("1", "flekkefjord", 58.30, 6.66)],
         kommune_registry=registry,
     )
-    # First 14 days must have vinmonopolet_summary (may be None if store is
-    # closed that day, but the KEY must be present).
-    for d in result["days"][:14]:
+    for d in result["days"]:
         assert "vinmonopolet_summary" in d
+        assert d["vinmonopolet_summary"] is None
 
 
 def test_mode_nearest_fetched_at_preserved():
@@ -240,7 +247,9 @@ def test_mode_fallback_when_no_stores_anywhere():
 
 
 @pytest.mark.parametrize("days", [1, 3, 7, 14])
-def test_day_summary_length_matches_min_14_days(days):
+def test_nearest_day_summary_length_matches_min_14_days(days):
+    """In nearest mode, the top-level summary is empty — the nearest
+    store's 14-day table lives in nearest_vinmonopolet.day_summary."""
     muni = _muni("sokndal")
     registry = {
         "sokndal": _registry_entry("sokndal"),
@@ -254,12 +263,11 @@ def test_day_summary_length_matches_min_14_days(days):
         all_stores=[_store("1", "flekkefjord", 58.30, 6.66)],
         kommune_registry=registry,
     )
-    expected = min(14, days)
-    assert len(result["vinmonopolet_day_summary"]) == expected
-    assert len(result["nearest_vinmonopolet"]["day_summary"]) == expected
+    assert result["vinmonopolet_day_summary"] == []
+    assert len(result["nearest_vinmonopolet"]["day_summary"]) == min(14, days)
 
 
-def test_days_30_summary_capped_at_14():
+def test_days_30_nearest_summary_capped_at_14():
     muni = _muni("sokndal")
     registry = {
         "sokndal": _registry_entry("sokndal"),
@@ -273,9 +281,9 @@ def test_days_30_summary_capped_at_14():
         all_stores=[_store("1", "flekkefjord", 58.30, 6.66)],
         kommune_registry=registry,
     )
-    assert len(result["vinmonopolet_day_summary"]) == 14
-    # days 14..29 must have vinmonopolet_summary == None
-    for d in result["days"][14:]:
+    assert len(result["nearest_vinmonopolet"]["day_summary"]) == 14
+    # All days must have vinmonopolet_summary == None in nearest mode.
+    for d in result["days"]:
         assert d["vinmonopolet_summary"] is None
 
 

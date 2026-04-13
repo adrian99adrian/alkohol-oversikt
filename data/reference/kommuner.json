@@ -88,8 +88,8 @@
       "municipality": "Klepp",
       "id": "klepp",
       "bugs": [],
-      "lat": 58.78247,
-      "lng": 5.562496
+      "lat": 58.7766391,
+      "lng": 5.6301348
     },
     {
       "county": "Rogaland",
@@ -256,8 +256,8 @@
       "municipality": "Ulstein",
       "id": "ulstein",
       "bugs": [],
-      "lat": 62.337519,
-      "lng": 5.8855052
+      "lat": 62.3441663,
+      "lng": 5.8449047
     },
     {
       "county": "Møre og Romsdal",
@@ -794,8 +794,8 @@
       "municipality": "Hvaler",
       "id": "hvaler",
       "bugs": [],
-      "lat": 59.0249315,
-      "lng": 11.0364644
+      "lat": 59.0280863,
+      "lng": 11.0310863
     },
     {
       "county": "Østfold",
@@ -850,8 +850,8 @@
       "municipality": "Aremark",
       "id": "aremark",
       "bugs": [],
-      "lat": 59.2220293,
-      "lng": 11.6958915
+      "lat": 59.220665,
+      "lng": 11.696854
     },
     {
       "county": "Akershus",
@@ -866,8 +866,8 @@
       "municipality": "Asker",
       "id": "asker",
       "bugs": [],
-      "lat": 59.8569821,
-      "lng": 10.4089809
+      "lat": 59.8368758,
+      "lng": 10.4364061
     },
     {
       "county": "Akershus",
@@ -922,8 +922,8 @@
       "municipality": "Ås",
       "id": "as",
       "bugs": [],
-      "lat": 59.6679155,
-      "lng": 10.800433
+      "lat": 59.6636545,
+      "lng": 10.7910008
     },
     {
       "county": "Akershus",
@@ -978,8 +978,8 @@
       "municipality": "Nittedal",
       "id": "nittedal",
       "bugs": [],
-      "lat": 60.0086419,
-      "lng": 10.9469464
+      "lat": 60.042869,
+      "lng": 10.8816891
     },
     {
       "county": "Akershus",
@@ -1138,8 +1138,8 @@
       "municipality": "Sigdal",
       "id": "sigdal",
       "bugs": [],
-      "lat": 60.1301824,
-      "lng": 9.4097767
+      "lat": 60.0613645,
+      "lng": 9.5073498
     },
     {
       "county": "Buskerud",
@@ -1218,8 +1218,8 @@
       "municipality": "Stange",
       "id": "stange",
       "bugs": [],
-      "lat": 60.715992,
-      "lng": 11.191203
+      "lat": 60.715954,
+      "lng": 11.191496
     },
     {
       "county": "Innlandet",
@@ -1250,16 +1250,16 @@
       "municipality": "Grue",
       "id": "grue",
       "bugs": [],
-      "lat": 60.451205,
-      "lng": 12.053257
+      "lat": 60.4514864,
+      "lng": 12.0551017
     },
     {
       "county": "Innlandet",
       "municipality": "Åsnes",
       "id": "asnes",
       "bugs": [],
-      "lat": 60.613113,
-      "lng": 12.015119
+      "lat": 60.6144348,
+      "lng": 12.0131343
     },
     {
       "county": "Innlandet",
@@ -1618,8 +1618,8 @@
       "municipality": "Bamble",
       "id": "bamble",
       "bugs": [],
-      "lat": 59.0015273,
-      "lng": 9.7449881
+      "lat": 59.0013965,
+      "lng": 9.7459907
     },
     {
       "county": "Telemark",
@@ -2058,8 +2058,8 @@
       "municipality": "Øygarden",
       "id": "oygarden",
       "bugs": [],
-      "lat": 60.4267846,
-      "lng": 4.7265289
+      "lat": 60.3627155,
+      "lng": 5.1222438
     },
     {
       "county": "Vestland",
@@ -2090,8 +2090,8 @@
       "municipality": "Osterøy",
       "id": "osteroy",
       "bugs": [],
-      "lat": 60.523978,
-      "lng": 5.507189
+      "lat": 60.5239105,
+      "lng": 5.5055756
     },
     {
       "county": "Vestland",
@@ -2210,8 +2210,8 @@
       "municipality": "Askvoll",
       "id": "askvoll",
       "bugs": [],
-      "lat": 61.349901,
-      "lng": 5.076421
+      "lat": 61.3453704,
+      "lng": 5.0625928
     },
     {
       "county": "Vestland",
@@ -2336,8 +2336,8 @@
       "municipality": "Holtålen",
       "id": "holtalen",
       "bugs": [],
-      "lat": 62.8653919,
-      "lng": 11.3595676
+      "lat": 62.839659,
+      "lng": 11.3139428
     },
     {
       "county": "Trøndelag",
@@ -2460,8 +2460,8 @@
       "municipality": "Namsskogan",
       "id": "namsskogan",
       "bugs": [],
-      "lat": 64.8444405,
-      "lng": 13.0054767
+      "lat": 64.925371,
+      "lng": 13.1627725
     },
     {
       "county": "Trøndelag",
@@ -2608,8 +2608,8 @@
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
       ],
-      "lat": 68.554699,
-      "lng": 16.2266513
+      "lat": 68.5835829,
+      "lng": 16.5730245
     },
     {
       "county": "Troms",
@@ -2786,8 +2786,8 @@
       "municipality": "Vadsø",
       "id": "vadso",
       "bugs": [],
-      "lat": 70.1124791,
-      "lng": 29.3354739
+      "lat": 70.0741534,
+      "lng": 29.7488551
     },
     {
       "county": "Finnmark",
@@ -2848,8 +2848,8 @@
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
       ],
-      "lat": 70.051174,
-      "lng": 24.95869
+      "lat": 70.0519056,
+      "lng": 24.9562685
     },
     {
       "county": "Finnmark",

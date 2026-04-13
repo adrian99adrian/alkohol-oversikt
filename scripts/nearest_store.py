@@ -53,6 +53,9 @@ def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     return EARTH_RADIUS_KM * c
 
 
+# Distances within this band of the minimum are treated as ties. 0.1 km
+# is roughly the worst-case precision of a rådhus-coordinate → store-coordinate
+# haversine, so anything inside it is within measurement noise.
 _TIE_EPSILON_KM = 0.1
 
 

@@ -332,6 +332,12 @@ def _setup_tmp_data_dir(tmp_path: Path) -> None:
         (real_data / "town_municipality_map.json").read_bytes()
     )
 
+    # Copy kommune registry — nearest-mode resolution reads lat/lng from it.
+    ref_dir = tmp_path / "reference"
+    ref_dir.mkdir()
+    for f in (real_data / "reference").glob("*.json"):
+        (ref_dir / f.name).write_bytes(f.read_bytes())
+
     # Minimal stub — stores are optional for municipality generation
     gen_dir = tmp_path / "generated"
     gen_dir.mkdir()
@@ -371,6 +377,77 @@ class TestMainCLI:
             data = json.load(f)
         assert data["municipality"]["id"] == "sandefjord"
         assert len(data["days"]) == 3
+
+    def test_nearest_mode_end_to_end(self, tmp_path):
+        """End-to-end: a store-less kommune with coords + a nearby store in
+        another kommune must land in `nearest` mode with a populated
+        nearest_vinmonopolet payload. Covers the full CLI → validator path."""
+        _setup_tmp_data_dir(tmp_path)
+        # Pick a kommune that we know is store-less: sokndal. Sokndal's
+        # nearest mapped store in the fixture is in flekkefjord.
+        vinmonopolet_path = tmp_path / "generated" / "vinmonopolet.json"
+        vinmonopolet_path.write_text(
+            json.dumps(
+                {
+                    "metadata": {"fetched_at": "2026-04-13T00:00:00+02:00"},
+                    "stores": [
+                        {
+                            "store_id": "209",
+                            "name": "Flekkefjord",
+                            "municipality": "flekkefjord",
+                            "address": "Elvegata 11, 4400 Flekkefjord",
+                            "lat": 58.2975,
+                            "lng": 6.6619,
+                            "standard_hours": {
+                                k: None
+                                for k in (
+                                    "monday",
+                                    "tuesday",
+                                    "wednesday",
+                                    "thursday",
+                                    "friday",
+                                    "saturday",
+                                    "sunday",
+                                )
+                            },
+                            "actual_hours": {},
+                        }
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+        args = [
+            "prog",
+            "--id",
+            "sokndal",
+            "--start-date",
+            "2026-01-01",
+            "--days",
+            "14",
+            "--data-dir",
+            str(tmp_path),
+        ]
+        with patch("sys.argv", args):
+            main()
+
+        output = tmp_path / "generated" / "municipalities" / "sokndal.json"
+        with open(output, encoding="utf-8") as f:
+            data = json.load(f)
+        assert data["vinmonopolet_mode"] == "nearest"
+        assert data["vinmonopolet_stores"] == []
+        # Top-level summary + per-day summaries stay empty — those render
+        # as this kommune's own Vinmonopol-hours elsewhere in the UI.
+        assert data["vinmonopolet_day_summary"] == []
+        for d in data["days"]:
+            assert d["vinmonopolet_summary"] is None
+        # Nearest payload populated.
+        near = data["nearest_vinmonopolet"]
+        assert near is not None
+        assert near["source_municipality_id"] == "flekkefjord"
+        assert near["source_municipality_name"] == "Flekkefjord"
+        assert near["distance_km"] > 0
+        assert len(near["day_summary"]) == 14
 
     def test_empty_stores_fixture_no_metadata_propagates_none(self, tmp_path):
         """Fixture with {"stores": []} and no metadata must not break; fetched_at is None."""

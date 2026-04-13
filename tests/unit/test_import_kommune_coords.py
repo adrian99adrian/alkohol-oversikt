@@ -225,24 +225,44 @@ def test_pick_unique_match_single_passing():
 
 
 def test_pick_unique_match_ambiguous_different_municipalities():
-    """Two passing results with DIFFERENT municipality names → ambiguous."""
-    k = _kommune(muni="Os")
-    # Both pass (their muni fields each substring-match "Os"), but they
-    # describe different admin areas ("Os" vs "Osen") so they are not
-    # duplicates of the same kommune.
+    """Two passing results with differently-named admin areas in the SAME
+    name family → ambiguous. (Example kept for the same-name-different-
+    kommune case where both candidates legitimately match.)
+
+    Under the tightened names_match, genuine near-collisions are the
+    ones where Nominatim returns two distinct-but-valid relations for
+    the same kommune name, e.g. a historical name vs current — rare in
+    practice but covered here."""
+    k = _kommune(muni="Sokndal", county="Rogaland")
     r1 = {
-        "lat": "60.19",
-        "lon": "5.47",
-        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Os"},
+        "lat": "58.33",
+        "lon": "6.22",
+        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal"},
     }
     r2 = {
-        "lat": "64.29",
-        "lon": "10.53",
-        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Osen"},
+        "lat": "60.50",
+        "lon": "10.50",
+        # Different admin area labelled identically (hypothetical) — both
+        # pass the strict rules, so we reject as ambiguous.
+        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal vest"},
     }
     winner, reason = mod.pick_unique_match([r1, r2], k)
     assert winner is None
     assert "ambiguous" in reason
+
+
+def test_names_match_rejects_prefix_collision_as_asker():
+    """'Ås' must not match 'Asker' — they're different neighbouring kommuner
+    in the same county. Under the old substring rule this was a silent
+    false positive."""
+    assert not mod.names_match("Ås", "Asker")
+    assert not mod.names_match("Asker", "Ås")
+    # Sanity: genuine Agder/Vestfold qualifier matches still pass.
+    assert mod.names_match("Agder", "Agder fylke")
+    assert mod.names_match("Vestfold", "Vestfold og Telemark")
+    # Sanity: diacritic-normalized exact match still passes.
+    assert mod.names_match("Ås", "Ås")
+    assert mod.names_match("Ås", "as")
 
 
 def test_pick_unique_match_deduplicates_same_kommune():
@@ -598,8 +618,10 @@ def test_run_ambiguous_goes_to_unresolved(tmp_path: Path):
     ov_path = _write(tmp_path, "overrides.json", {})
     un_path = tmp_path / "unresolved.json"
 
-    # Two passing results with DIFFERENT municipality names → genuine
-    # ambiguity on every query.
+    # Two passing results with differently-named admin areas → genuine
+    # ambiguity on every query. (Under tightened names_match, "Sokndal"
+    # does not substring-match "Sokndalen" — "sokndalen".startswith("sokndal ")
+    # is False — so we pick a pair that both exact-match the query word.)
     r1 = {
         "lat": "58.30",
         "lon": "6.22",
@@ -608,7 +630,7 @@ def test_run_ambiguous_goes_to_unresolved(tmp_path: Path):
     r2 = {
         "lat": "59.50",
         "lon": "10.50",
-        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndalen"},
+        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal sogn"},
     }
     amb = [r1, r2]
     client = _MockClient([amb, amb, amb])

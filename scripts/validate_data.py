@@ -270,11 +270,14 @@ def _validate_vinmonopolet_mode(gen_data: dict, num_days: int) -> list[str]:
             errors.append("mode=nearest: nearest_vinmonopolet is required")
         else:
             errors.extend(_validate_nearest_payload(nearest, expected_len))
-            if nearest.get("day_summary") != day_summary:
-                errors.append(
-                    "mode=nearest: vinmonopolet_day_summary must mirror "
-                    "nearest_vinmonopolet.day_summary"
-                )
+        # Top-level vinmonopolet_day_summary describes this kommune's OWN
+        # stores. In nearest mode it must stay empty — the nearest-store
+        # 14-day table is served from nearest_vinmonopolet.day_summary.
+        if len(day_summary) != 0:
+            errors.append(
+                "mode=nearest: vinmonopolet_day_summary must be empty "
+                "(nearest-store hours live in nearest_vinmonopolet.day_summary)"
+            )
         if not fetched_at:
             errors.append("mode=nearest: vinmonopolet_fetched_at is required")
 
@@ -448,7 +451,7 @@ def _validate_store_coords(store: dict, sid: str) -> list[str]:
         if isinstance(val, bool) or not isinstance(val, (int, float)):
             errors.append(f"Store {sid}: {key} must be numeric, got {type(val).__name__}")
             continue
-        if val is None or math.isnan(val) or math.isinf(val):
+        if math.isnan(val) or math.isinf(val):
             errors.append(f"Store {sid}: {key} is non-finite")
             continue
         if not (lo <= val <= hi):

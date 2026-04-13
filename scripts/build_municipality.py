@@ -48,39 +48,41 @@ def build_municipality(
 
     if local_stores:
         mode = "local"
-        summary_stores = local_stores
     elif nearest is not None:
         mode = "nearest"
-        summary_stores = [nearest["store"]]
     else:
         mode = "fallback"
-        summary_stores = []
 
+    # `days[i].vinmonopolet_summary` describes THIS kommune's own stores.
+    # In nearest mode we must NOT populate it from the nearest (out-of-kommune)
+    # store — DayCard / BeerSalesTable render it as plain "Vinmonopol-hours"
+    # with no indication of source, which would misleadingly suggest the
+    # kommune has a local Vinmonopol. Those consumers instead read from
+    # `nearest_vinmonopolet.day_summary` via VinmonopoletList.
     days = []
     for i, cal_entry in enumerate(calendar):
         d = date.fromisoformat(cal_entry["date"])
         entry = build_day_entry(d, cal_entry, municipality)
-        if i < max_vinmonopolet_days and summary_stores:
+        if mode == "local" and i < max_vinmonopolet_days and local_stores:
             entry["vinmonopolet_summary"] = summarize_vinmonopolet(
-                summary_stores, cal_entry["date"], cal_entry["day_type"]
+                local_stores, cal_entry["date"], cal_entry["day_type"]
             )
         else:
             entry["vinmonopolet_summary"] = None
         days.append(entry)
 
-    # Per-store resolved 14-day hours are only shown for the local store list;
-    # in nearest-mode we surface the single source store via nearest_vinmonopolet.
     resolved_stores = build_resolved_stores(local_stores, window_days)
-    day_summaries = build_day_summaries(summary_stores, window_days) if summary_stores else []
+    local_day_summaries = build_day_summaries(local_stores, window_days) if local_stores else []
 
     nearest_payload: dict | None = None
     if mode == "nearest" and nearest is not None:
+        nearest_day_summaries = build_day_summaries([nearest["store"]], window_days)
         nearest_payload = {
             "store": build_resolved_stores([nearest["store"]], window_days)[0],
             "distance_km": nearest["distance_km"],
             "source_municipality_id": nearest["source_municipality_id"],
             "source_municipality_name": nearest["source_municipality_name"],
-            "day_summary": day_summaries,
+            "day_summary": nearest_day_summaries,
         }
 
     return {
@@ -95,7 +97,7 @@ def build_municipality(
         "days": days,
         "vinmonopolet_mode": mode,
         "vinmonopolet_stores": resolved_stores,
-        "vinmonopolet_day_summary": day_summaries,
+        "vinmonopolet_day_summary": local_day_summaries,
         "vinmonopolet_fetched_at": vinmonopolet_fetched_at if mode != "fallback" else None,
         "nearest_vinmonopolet": nearest_payload,
     }

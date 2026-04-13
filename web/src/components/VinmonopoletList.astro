@@ -30,8 +30,9 @@ const nearestStoreMapsUrl = nearest
   ? `https://www.google.com/maps/search/${encodeURIComponent(nearest.store.address)}`
   : null;
 
-// In `nearest` mode we render the same table shape using the nearest store's
-// day_summary; the local branch uses the full multi-store summary as before.
+// In `nearest` mode, nearest-store hours are served from nearest.day_summary;
+// the top-level daySummary describes this kommune's own stores and is empty
+// in nearest mode. Local mode uses the multi-store summary as before.
 const tableSummary = mode === "nearest" && nearest ? nearest.day_summary : daySummary;
 ---
 

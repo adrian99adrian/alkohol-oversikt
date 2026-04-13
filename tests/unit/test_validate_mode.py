@@ -226,12 +226,14 @@ def test_nearest_day_summary_wrong_length_errors():
     assert any("day_summary length" in e for e in errors)
 
 
-def test_nearest_top_level_day_summary_does_not_mirror_errors():
+def test_nearest_top_level_day_summary_must_be_empty():
+    """In nearest mode, top-level vinmonopolet_day_summary is reserved for
+    this kommune's own stores — the nearest-store table lives under
+    nearest_vinmonopolet.day_summary and must not leak into the top level."""
     d = _build_nearest()
-    # Corrupt the top-level summary so it no longer mirrors nearest.day_summary.
-    d["vinmonopolet_day_summary"] = list(reversed(d["vinmonopolet_day_summary"]))
+    d["vinmonopolet_day_summary"] = d["nearest_vinmonopolet"]["day_summary"]
     errors = _validate_vinmonopolet_mode(d, 14)
-    assert any("must mirror" in e for e in errors)
+    assert any("mode=nearest" in e and "must be empty" in e for e in errors)
 
 
 def test_nearest_negative_distance_errors():

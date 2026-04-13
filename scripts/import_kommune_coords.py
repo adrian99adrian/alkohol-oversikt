@@ -64,27 +64,37 @@ def normalize(text: str) -> str:
 def names_match(expected: str, candidate: str) -> bool:
     """True if `expected` can be matched against `candidate`.
 
-    Substring match in either direction so "Agder" matches "Agder fylke",
-    "Sande" matches "Sande i Møre og Romsdal", and "Sande i Møre og Romsdal"
-    matches "Sande" (Nominatim often strips disambiguation suffixes).
+    Match rules (tightened after an Ås / Asker false-positive review):
+      - Exact match after normalization (diacritic-stripped, lowercased).
+      - Trailing qualifier with a word boundary: "Agder" matches
+        "Agder fylke"; "Vestfold" matches "Vestfold og Telemark".
+      - " i <fylke>" disambiguation stripped from either side, then
+        exact or word-boundary comparison: "Sande" matches "Sande i Møre
+        og Romsdal".
 
-    Also splits on " i " (Norwegian kommune disambiguation pattern, e.g.
-    "Herøy i Nordland") and accepts when the pre-suffix part matches.
+    Loose substring match is deliberately NOT allowed. Under the old rule
+    "Ås" (normalized "as") matched "Asker", which could silently write
+    wrong coords into kommuner.json when Nominatim returned the longer
+    neighbour as the only top hit.
     """
     if not expected or not candidate:
         return False
-    norm_expected = normalize(expected)
-    norm_candidate = normalize(candidate)
-    if norm_expected in norm_candidate or norm_candidate in norm_expected:
+
+    def _strip_disambig(name: str) -> str:
+        return name.split(" i ")[0].strip()
+
+    e = _strip_disambig(normalize(expected))
+    c = _strip_disambig(normalize(candidate))
+    if not e or not c:
+        return False
+
+    if e == c:
         return True
-    # Strip the Norwegian disambiguation suffix " i <fylke>" and retry.
-    expected_base = norm_expected.split(" i ")[0]
-    candidate_base = norm_candidate.split(" i ")[0]
-    if expected_base and candidate_base:
-        if expected_base == candidate_base:
-            return True
-        if expected_base in candidate_base or candidate_base in expected_base:
-            return True
+    # Trailing qualifier with a hard word boundary.
+    if c.startswith(e + " "):
+        return True
+    if e.startswith(c + " "):
+        return True
     return False
 
 
@@ -300,14 +310,20 @@ def run(
     unresolved_path: Path,
     *,
     dry_run: bool = False,
+    force_ids: set[str] | None = None,
     client_factory: Any = None,
     sleep_fn: Any = time.sleep,
 ) -> tuple[int, int, int]:
     """Run the import. Returns (resolved_count, skipped_count, unresolved_count).
 
+    `force_ids` — when set, entries with ids in the set are re-resolved even
+    if they already have coordinates. Useful after tightening acceptance
+    rules or fixing a bad manual entry.
+
     client_factory is an optional callable returning an httpx.Client context
     manager; tests inject mocks. Defaults to a real client with proper headers.
     """
+    forced = force_ids or set()
     registry = load_json(registry_path, default=None)
     if registry is None:
         raise FileNotFoundError(f"registry not found: {registry_path}")
@@ -334,8 +350,9 @@ def run(
             kid = entry["id"]
             # Only skip if BOTH coords are already populated AND non-null. A
             # half-written entry (lat set, lng null) would otherwise never be
-            # retried, permanently leaving that kommune unresolvable.
-            if entry.get("lat") is not None and entry.get("lng") is not None:
+            # retried, permanently leaving that kommune unresolvable. `--force`
+            # lets the caller re-resolve an otherwise-skipped entry.
+            if kid not in forced and entry.get("lat") is not None and entry.get("lng") is not None:
                 skipped += 1
                 continue
             if kid in overrides:
@@ -373,6 +390,18 @@ def main() -> int:
         help="Path to data directory (default: data/)",
     )
     parser.add_argument("--dry-run", action="store_true", help="Do not write output files")
+    parser.add_argument(
+        "--force",
+        action="append",
+        metavar="KOMMUNE_ID",
+        default=[],
+        help="Re-resolve a specific kommune id even if it already has coords. Repeatable.",
+    )
+    parser.add_argument(
+        "--force-all",
+        action="store_true",
+        help="Re-resolve every kommune (slow: ~357 Nominatim calls).",
+    )
     args = parser.parse_args()
 
     reference_dir = args.data_dir / "reference"
@@ -380,11 +409,17 @@ def main() -> int:
     overrides_path = reference_dir / "kommune_coords_overrides.json"
     unresolved_path = reference_dir / "kommune_coords_unresolved.json"
 
+    force_ids: set[str] = set(args.force)
+    if args.force_all:
+        with registry_path.open("r", encoding="utf-8") as f:
+            force_ids.update(entry["id"] for entry in json.load(f)["kommuner"])
+
     resolved, skipped, unresolved_count = run(
         registry_path,
         overrides_path,
         unresolved_path,
         dry_run=args.dry_run,
+        force_ids=force_ids,
     )
 
     print(

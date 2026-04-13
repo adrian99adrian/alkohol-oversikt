@@ -16,6 +16,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import httpx
+from geo_bounds import in_norway as _in_norway
 
 API_BASE = "https://www.vinmonopolet.no/vmpws/v2/vmp/stores"
 DEFAULT_PAGE_SIZE = 400
@@ -150,9 +151,6 @@ def format_address(store: dict) -> str:
     """Format store address as 'line1, postalCode town'."""
     addr = store["address"]
     return f"{addr['line1']}, {addr['postalCode']} {addr['town']}"
-
-
-from geo_bounds import in_norway as _in_norway  # noqa: E402
 
 
 def parse_gps_coord(raw: object, *, store_id: str) -> tuple[float, float]:
