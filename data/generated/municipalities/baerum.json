@@ -14,25 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-13",
-      "weekday": "mandag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 6,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-14",
       "weekday": "tirsdag",
       "day_type": "weekday",
@@ -286,7 +267,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 6,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-28",
@@ -4837,6 +4824,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-13",
+      "weekday": "tirsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4847,11 +4847,6 @@
       "address": "Rødskiferveien 1, 1352 Kolsås",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -4915,6 +4910,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -4924,11 +4924,6 @@
       "address": "Gamle Ringeriksvei 33a, 1357 Bekkestua",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -4992,6 +4987,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5001,11 +5001,6 @@
       "address": "Leif Tronstads plass 2, 1337 Sandvika",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5069,6 +5064,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5078,11 +5078,6 @@
       "address": "Otto Ruges vei 80, 1361 Østerås",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5146,6 +5141,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5155,11 +5155,6 @@
       "address": "Snarøyaveien 55, 1364 Fornebu",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5223,6 +5218,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5232,11 +5232,6 @@
       "address": "Vertshusveien 2, 1353 Bærums Verk",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5300,19 +5295,16 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "18:00",
-      "open_count": 6,
-      "closed_count": 0,
-      "date": "2026-04-13"
-    },
     {
       "type": "uniform",
       "open": "10:00",
@@ -5412,6 +5404,14 @@
       "open_count": 0,
       "closed_count": 6,
       "date": "2026-04-26"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "18:00",
+      "open_count": 6,
+      "closed_count": 0,
+      "date": "2026-04-27"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

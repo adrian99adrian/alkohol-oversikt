@@ -14,19 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-13",
-      "weekday": "mandag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": null
-    },
-    {
       "date": "2026-04-14",
       "weekday": "tirsdag",
       "day_type": "weekday",
@@ -4757,6 +4744,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-13",
+      "weekday": "tirsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "nearest",
@@ -4769,11 +4769,6 @@
       "name": "Sjøvegan",
       "address": "Strandveien 7, 9350 Sjøvegan",
       "hours": [
-        {
-          "date": "2026-04-13",
-          "open": null,
-          "close": null
-        },
         {
           "date": "2026-04-14",
           "open": null,
@@ -4838,6 +4833,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": null,
+          "close": null
         }
       ]
     },
@@ -4845,12 +4845,6 @@
     "source_municipality_id": "salangen",
     "source_municipality_name": "Salangen",
     "day_summary": [
-      {
-        "type": "closed",
-        "open_count": 0,
-        "closed_count": 1,
-        "date": "2026-04-13"
-      },
       {
         "type": "closed",
         "open_count": 0,
@@ -4944,6 +4938,12 @@
         "open_count": 0,
         "closed_count": 1,
         "date": "2026-04-26"
+      },
+      {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 1,
+        "date": "2026-04-27"
       }
     ]
   }
