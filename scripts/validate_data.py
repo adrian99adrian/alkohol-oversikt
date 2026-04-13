@@ -128,6 +128,37 @@ def _check_optional_beer_sales_fields(data: dict) -> list[str]:
     return errors
 
 
+def _validate_date_override_date(entry: dict, idx: int, seen: set[str]) -> list[str]:
+    """Validate the `date` field of one date_overrides entry.
+
+    Impossible dates (e.g. 02-30, 13-01) match the MM-DD regex but never match
+    a real calendar date, which would silently drop the intended override —
+    so they're rejected at validation time rather than shipping as a no-op.
+    """
+    d = entry.get("date")
+    if not isinstance(d, str) or not _MMDD_RE.match(d):
+        return [f"date_overrides[{idx}].date must be MM-DD string"]
+    if not _is_real_mmdd(d):
+        return [f"date_overrides[{idx}].date {d!r} is not a real calendar date"]
+    if d in seen:
+        return [f"date_overrides[{idx}].date duplicate {d!r}"]
+    seen.add(d)
+    return []
+
+
+def _validate_date_override_hours(entry: dict, idx: int) -> list[str]:
+    """Validate the `hours` field of one date_overrides entry."""
+    if "hours" not in entry:
+        return [f"date_overrides[{idx}].hours is required"]
+    hours = entry["hours"]
+    if hours not in _ALLOWED_DATE_OVERRIDE_HOURS:
+        return [
+            f"date_overrides[{idx}].hours must be one of "
+            f"{sorted(_ALLOWED_DATE_OVERRIDE_HOURS)}, got {hours!r}"
+        ]
+    return []
+
+
 def _validate_date_overrides(overrides: object) -> list[str]:
     """Each entry must be {date: MM-DD (real calendar day), hours: saturday|pre_holiday}."""
     if not isinstance(overrides, list):
@@ -138,28 +169,8 @@ def _validate_date_overrides(overrides: object) -> list[str]:
         if not isinstance(entry, dict):
             errors.append(f"date_overrides[{i}] must be an object")
             continue
-        d = entry.get("date")
-        if not isinstance(d, str) or not _MMDD_RE.match(d):
-            errors.append(f"date_overrides[{i}].date must be MM-DD string")
-        elif not _is_real_mmdd(d):
-            # Impossible dates (e.g. 02-30, 13-01) would silently never match
-            # any real calendar date, dropping the intended override. Reject
-            # at validation time so the typo is caught before data ships.
-            errors.append(f"date_overrides[{i}].date {d!r} is not a real calendar date")
-        elif d in seen_dates:
-            errors.append(f"date_overrides[{i}].date duplicate {d!r}")
-        else:
-            seen_dates.add(d)
-
-        if "hours" not in entry:
-            errors.append(f"date_overrides[{i}].hours is required")
-        else:
-            hours = entry["hours"]
-            if hours not in _ALLOWED_DATE_OVERRIDE_HOURS:
-                errors.append(
-                    f"date_overrides[{i}].hours must be one of "
-                    f"{sorted(_ALLOWED_DATE_OVERRIDE_HOURS)}, got {hours!r}"
-                )
+        errors.extend(_validate_date_override_date(entry, i, seen_dates))
+        errors.extend(_validate_date_override_hours(entry, i))
     return errors
 
 
