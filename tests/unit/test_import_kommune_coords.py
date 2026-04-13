@@ -224,45 +224,59 @@ def test_pick_unique_match_single_passing():
     assert reason == "accepted"
 
 
-def test_pick_unique_match_ambiguous_different_municipalities():
-    """Two passing results with differently-named admin areas in the SAME
-    name family → ambiguous. (Example kept for the same-name-different-
-    kommune case where both candidates legitimately match.)
+# Note: under the strict municipality_match rule, two Nominatim results can
+# only both pass `result_passes` if their first-present muni field is
+# *exactly* the queried kommune name (after diacritic/disambig normalization).
+# In that case `_same_admin_area` always deduplicates them, so the
+# ambiguity-via-different-muni path is unreachable in practice. Ambiguity
+# remains a defensive branch guarding against future rule changes.
 
-    Under the tightened names_match, genuine near-collisions are the
-    ones where Nominatim returns two distinct-but-valid relations for
-    the same kommune name, e.g. a historical name vs current — rare in
-    practice but covered here."""
-    k = _kommune(muni="Sokndal", county="Rogaland")
-    r1 = {
-        "lat": "58.33",
-        "lon": "6.22",
-        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal"},
-    }
-    r2 = {
-        "lat": "60.50",
-        "lon": "10.50",
-        # Different admin area labelled identically (hypothetical) — both
-        # pass the strict rules, so we reject as ambiguous.
-        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal vest"},
-    }
-    winner, reason = mod.pick_unique_match([r1, r2], k)
-    assert winner is None
-    assert "ambiguous" in reason
+
+def test_municipality_match_rejects_subdivision_hit():
+    """'Oslo' must not match 'Oslo sentrum' (a subdivision). Under the old
+    trailing-qualifier rule this was a silent false positive — if Nominatim
+    returned only the subdivision as a top hit, its coords would be written
+    as the kommune rådhus. The municipality check is now strict: exact
+    match after ' i <fylke>' stripping, no prefix/suffix acceptance."""
+    assert not mod.municipality_match("Oslo", "Oslo sentrum")
+    assert not mod.municipality_match("Sokndal", "Sokndal sogn")
+    # Exact matches still pass.
+    assert mod.municipality_match("Oslo", "Oslo")
+    assert mod.municipality_match("Oslo", "oslo")
+    assert mod.municipality_match("Ålesund", "alesund")
+    # " i <fylke>" disambiguation is stripped before comparing.
+    assert mod.municipality_match("Herøy i Nordland", "Herøy")
+    assert mod.municipality_match("Sande", "Sande i Møre og Romsdal")
+
+
+def test_county_match_accepts_trailing_qualifier():
+    """County fields legitimately carry trailing qualifiers in Nominatim."""
+    assert mod.county_match("Agder", "Agder fylke")
+    assert mod.county_match("Vestfold", "Vestfold og Telemark")
+    # Word boundary enforced: no substring false positives.
+    assert not mod.county_match("Aust", "Austagder")
 
 
 def test_names_match_rejects_prefix_collision_as_asker():
     """'Ås' must not match 'Asker' — they're different neighbouring kommuner
     in the same county. Under the old substring rule this was a silent
     false positive."""
-    assert not mod.names_match("Ås", "Asker")
-    assert not mod.names_match("Asker", "Ås")
-    # Sanity: genuine Agder/Vestfold qualifier matches still pass.
-    assert mod.names_match("Agder", "Agder fylke")
-    assert mod.names_match("Vestfold", "Vestfold og Telemark")
-    # Sanity: diacritic-normalized exact match still passes.
-    assert mod.names_match("Ås", "Ås")
-    assert mod.names_match("Ås", "as")
+    assert not mod.municipality_match("Ås", "Asker")
+    assert not mod.municipality_match("Asker", "Ås")
+    # Diacritic-normalized exact match still passes.
+    assert mod.municipality_match("Ås", "Ås")
+    assert mod.municipality_match("Ås", "as")
+
+
+def test_same_admin_area_strips_disambiguation():
+    """Nominatim often returns both 'Herøy' and 'Herøy i Nordland' in one
+    result set; those must be deduplicated, not treated as ambiguous."""
+    r1 = {"address": {"municipality": "Herøy"}}
+    r2 = {"address": {"municipality": "Herøy i Nordland"}}
+    assert mod._same_admin_area(r1, r2)
+    # Different kommuner are still distinct.
+    r3 = {"address": {"municipality": "Oslo"}}
+    assert not mod._same_admin_area(r1, r3)
 
 
 def test_pick_unique_match_deduplicates_same_kommune():
@@ -602,14 +616,17 @@ def test_run_third_fallback_tried_when_first_two_fail(tmp_path: Path):
     assert "kommune" not in last_q
 
 
-def test_run_ambiguous_goes_to_unresolved(tmp_path: Path):
+def test_run_ambiguous_goes_to_unresolved(tmp_path: Path, monkeypatch):
+    """Ambiguity is a defensive branch in pick_unique_match; under strict
+    municipality_match + disambig-aware dedup it cannot be triggered by
+    real Nominatim responses, so we monkeypatch `_same_admin_area` to
+    return False to exercise the branch."""
     reg = _make_registry(
         [
             {
                 "id": "sokndal",
                 "municipality": "Sokndal",
                 "county": "Rogaland",
-                "borders": [],
                 "bugs": [],
             },
         ]
@@ -618,10 +635,8 @@ def test_run_ambiguous_goes_to_unresolved(tmp_path: Path):
     ov_path = _write(tmp_path, "overrides.json", {})
     un_path = tmp_path / "unresolved.json"
 
-    # Two passing results with differently-named admin areas → genuine
-    # ambiguity on every query. (Under tightened names_match, "Sokndal"
-    # does not substring-match "Sokndalen" — "sokndalen".startswith("sokndal ")
-    # is False — so we pick a pair that both exact-match the query word.)
+    monkeypatch.setattr(mod, "_same_admin_area", lambda a, b: False)
+
     r1 = {
         "lat": "58.30",
         "lon": "6.22",
@@ -630,7 +645,7 @@ def test_run_ambiguous_goes_to_unresolved(tmp_path: Path):
     r2 = {
         "lat": "59.50",
         "lon": "10.50",
-        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal sogn"},
+        "address": {"country_code": "no", "county": "Rogaland", "municipality": "Sokndal"},
     }
     amb = [r1, r2]
     client = _MockClient([amb, amb, amb])

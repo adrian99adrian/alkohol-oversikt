@@ -327,3 +327,28 @@ def test_mode_check_integrated_in_full_validator():
     cal = _cal()
     errors = validate_generated_municipality(d, d["days"], cal)
     assert any("invalid value" in e for e in errors)
+
+
+def test_nearest_source_municipality_id_must_be_in_registry():
+    """Self-consistency: source kommune must exist in the registry."""
+    d = _build_nearest()
+    # Pretend the registry only knows sokndal, not flekkefjord.
+    cal = _cal()
+    errors = validate_generated_municipality(d, d["days"], cal, kommune_registry_ids={"sokndal"})
+    assert any("source_municipality_id" in e and "not in the kommune registry" in e for e in errors)
+
+
+def test_nearest_source_municipality_id_passes_when_in_registry():
+    d = _build_nearest()
+    cal = _cal()
+    errors = validate_generated_municipality(
+        d, d["days"], cal, kommune_registry_ids={"sokndal", "flekkefjord"}
+    )
+    assert not any("source_municipality_id" in e for e in errors)
+
+
+def test_registry_check_skipped_when_none_passed():
+    """Back-compat: callers not supplying a registry ids set get no check."""
+    d = _build_nearest()
+    errors = validate_generated_municipality(d, d["days"], _cal())
+    assert not any("source_municipality_id" in e and "registry" in e for e in errors)

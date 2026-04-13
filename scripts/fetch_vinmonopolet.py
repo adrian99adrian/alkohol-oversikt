@@ -156,9 +156,10 @@ def format_address(store: dict) -> str:
 def parse_gps_coord(raw: object, *, store_id: str) -> tuple[float, float]:
     """Parse Vinmonopolet's coordinates into floats.
 
-    The API carries coordinates in `geoPoint: {latitude, longitude}`. An older
-    shape — `gpsCoord: "lat,lng"` string — is accepted for backward
-    compatibility with test fixtures that predate the current API.
+    The API carries coordinates in `geoPoint: {latitude, longitude}`. The
+    legacy `gpsCoord: "lat,lng"` string shape is accepted only for
+    backward compatibility with archived test fixtures; no production
+    code path uses it. Remove when the fixtures are refreshed.
 
     Hard-fails (ValueError) on any abnormality: missing field, wrong shape,
     non-numeric values, or coordinates outside Norway's bounding box. The

@@ -31,7 +31,12 @@ def _numeric_coord(value: object) -> float | None:
 def _numeric_store_id(store: dict) -> int:
     """Extract the numeric store id for deterministic tie-breaking.
 
-    Non-numeric or missing ids sort after any real store id.
+    Non-numeric or missing ids sort after any real store id. Note: if
+    multiple tied candidates share this sentinel (i.e., all lack numeric
+    ids), the tie-break falls through to Python's stable-sort insertion
+    order, which depends on `all_stores` iteration. Every real Vinmonopolet
+    store has a numeric id, so this is a theoretical degradation rather
+    than a practical one — but worth knowing if ever exercised.
     """
     try:
         return int(store["store_id"])

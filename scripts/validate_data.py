@@ -209,9 +209,16 @@ def _validate_store_entries(gen_data: dict, days: list[dict]) -> list[str]:
 
 
 def validate_generated_municipality(
-    gen_data: dict, days: list[dict], calendar: list[dict]
+    gen_data: dict,
+    days: list[dict],
+    calendar: list[dict],
+    kommune_registry_ids: set[str] | None = None,
 ) -> list[str]:
-    """Validate generated municipality data against calendar."""
+    """Validate generated municipality data against calendar.
+
+    When `kommune_registry_ids` is provided, the validator also checks that
+    `nearest_vinmonopolet.source_municipality_id` refers to a known kommune.
+    """
     errors: list[str] = []
     errors.extend(_validate_date_coverage(days, calendar))
     errors.extend(_validate_vinmonopolet_summaries(days))
@@ -219,7 +226,28 @@ def validate_generated_municipality(
     errors.extend(_validate_store_entries(gen_data, days))
     errors.extend(_validate_vinmonopolet_fetched_at(gen_data))
     errors.extend(_validate_vinmonopolet_mode(gen_data, len(days)))
+    errors.extend(_validate_nearest_source_in_registry(gen_data, kommune_registry_ids))
     return errors
+
+
+def _validate_nearest_source_in_registry(
+    gen_data: dict, kommune_registry_ids: set[str] | None
+) -> list[str]:
+    """Self-consistency: nearest.source_municipality_id must be a real kommune."""
+    if kommune_registry_ids is None:
+        return []
+    nearest = gen_data.get("nearest_vinmonopolet")
+    if not isinstance(nearest, dict):
+        return []
+    source_id = nearest.get("source_municipality_id")
+    if not isinstance(source_id, str) or not source_id:
+        return []
+    if source_id not in kommune_registry_ids:
+        return [
+            f"nearest_vinmonopolet.source_municipality_id {source_id!r} "
+            f"is not in the kommune registry"
+        ]
+    return []
 
 
 _VALID_MODES = ("local", "nearest", "fallback")
@@ -594,18 +622,34 @@ def _validate_calendar_file(calendar_path: Path) -> tuple[list[str], list[dict] 
     return [f"calendar.json: {e}" for e in errors], calendar
 
 
-def _validate_generated_files(gen_dir: Path, calendar: list[dict]) -> list[str]:
+def _validate_generated_files(
+    gen_dir: Path,
+    calendar: list[dict],
+    kommune_registry_ids: set[str] | None = None,
+) -> list[str]:
     """Validate all generated municipality files against calendar."""
     errors = []
     for path in sorted(gen_dir.glob(_JSON_GLOB)):
         with open(path, encoding="utf-8") as f:
             gen_data = json.load(f)
         days = gen_data.get("days", [])
-        file_errors = validate_generated_municipality(gen_data, days, calendar)
+        file_errors = validate_generated_municipality(
+            gen_data, days, calendar, kommune_registry_ids=kommune_registry_ids
+        )
         errors.extend(f"{path.name}: {e}" for e in file_errors)
         file_errors = validate_national_max_compliance(days)
         errors.extend(f"{path.name}: {e}" for e in file_errors)
     return errors
+
+
+def _load_kommune_registry_ids(data_dir: Path) -> set[str] | None:
+    """Read kommune ids from data/reference/kommuner.json; None if missing."""
+    path = data_dir / "reference" / "kommuner.json"
+    if not path.exists():
+        return None
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    return {entry["id"] for entry in data.get("kommuner", [])}
 
 
 def _validate_vinmonopolet_file(
@@ -658,7 +702,8 @@ def main() -> int:
     if calendar is not None:
         gen_dir = data_dir / "generated" / "municipalities"
         if gen_dir.exists():
-            all_errors.extend(_validate_generated_files(gen_dir, calendar))
+            registry_ids = _load_kommune_registry_ids(data_dir)
+            all_errors.extend(_validate_generated_files(gen_dir, calendar, registry_ids))
     else:
         print("Note: calendar.json not found (run build_calendar.py first)")
 

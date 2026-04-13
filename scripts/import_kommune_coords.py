@@ -61,41 +61,57 @@ def normalize(text: str) -> str:
     return " ".join(stripped.lower().split())
 
 
-def names_match(expected: str, candidate: str) -> bool:
-    """True if `expected` can be matched against `candidate`.
+def _strip_disambig(name: str) -> str:
+    """Drop the Norwegian ' i <fylke>' disambiguation suffix from a normalized name."""
+    return name.split(" i ")[0].strip()
 
-    Match rules (tightened after an Ås / Asker false-positive review):
-      - Exact match after normalization (diacritic-stripped, lowercased).
-      - Trailing qualifier with a word boundary: "Agder" matches
-        "Agder fylke"; "Vestfold" matches "Vestfold og Telemark".
-      - " i <fylke>" disambiguation stripped from either side, then
-        exact or word-boundary comparison: "Sande" matches "Sande i Møre
-        og Romsdal".
 
-    Loose substring match is deliberately NOT allowed. Under the old rule
-    "Ås" (normalized "as") matched "Asker", which could silently write
-    wrong coords into kommuner.json when Nominatim returned the longer
-    neighbour as the only top hit.
+def municipality_match(expected: str, candidate: str) -> bool:
+    """Strict municipality-name equality after normalization.
+
+    Rule: equal after (diacritic-strip → lowercase → strip ' i <fylke>')
+    on both sides. No prefix/suffix acceptance.
+
+    Under a looser "trailing qualifier" rule, `"Sokndal"` would have matched
+    `"Sokndal sogn"` and `"Oslo"` would have matched `"Oslo sentrum"` — so
+    if Nominatim's only top hit was a subdivision, the importer would have
+    written that subdivision's coords as the kommune rådhus. The earlier
+    Ås/Asker fix closed one direction of that class of bug; this function
+    closes the other.
     """
     if not expected or not candidate:
         return False
+    e = _strip_disambig(normalize(expected))
+    c = _strip_disambig(normalize(candidate))
+    return bool(e) and e == c
 
-    def _strip_disambig(name: str) -> str:
-        return name.split(" i ")[0].strip()
 
+def county_match(expected: str, candidate: str) -> bool:
+    """County-name match with word-boundary trailing qualifier.
+
+    Looser than municipality_match because Nominatim legitimately returns
+    county fields with trailing qualifiers: `"Agder fylke"` for Agder,
+    `"Vestfold og Telemark"` for Vestfold. Requires a hard word boundary
+    (space) so substring collisions like `"Aust" ⊂ "Austagder"` are rejected.
+    """
+    if not expected or not candidate:
+        return False
     e = _strip_disambig(normalize(expected))
     c = _strip_disambig(normalize(candidate))
     if not e or not c:
         return False
-
     if e == c:
         return True
-    # Trailing qualifier with a hard word boundary.
     if c.startswith(e + " "):
         return True
     if e.startswith(c + " "):
         return True
     return False
+
+
+# Legacy alias — some tests still call `names_match` directly. New call sites
+# should prefer the explicit municipality_match / county_match pair above.
+names_match = county_match
 
 
 # Re-export the shared bounding-box check under the local name the rest of
@@ -119,18 +135,19 @@ def result_passes(result: dict, kommune: dict) -> bool:
     if address.get("country_code") != "no":
         return False
 
-    # Municipality match is load-bearing — do it first.
+    # Municipality match is load-bearing and STRICT — no prefix/suffix
+    # acceptance, or Nominatim subdivisions ("Oslo sentrum") slip through.
     muni_candidate = address.get("municipality") or address.get("city") or address.get("town") or ""
-    if not names_match(kommune["municipality"], muni_candidate):
+    if not municipality_match(kommune["municipality"], muni_candidate):
         return False
 
-    # County match: try county, state, region, in that order. If none of these
-    # are present, the response describes a place where county/state are merged
-    # (Oslo) — accept on the strength of the municipality+country match.
+    # County match is looser because Nominatim returns trailing qualifiers
+    # ("Agder fylke", "Vestfold og Telemark"). Fall back to state/region if
+    # county is absent — Oslo is its own state and has no county field.
     county_candidates = [
         address.get(key, "") for key in ("county", "state", "region") if address.get(key)
     ]
-    if county_candidates and not any(names_match(kommune["county"], c) for c in county_candidates):
+    if county_candidates and not any(county_match(kommune["county"], c) for c in county_candidates):
         return False
 
     try:
@@ -151,12 +168,19 @@ def _same_admin_area(a: dict, b: dict) -> bool:
     to the same administrative area (either the kommune relation or a node
     within it). Ambiguity at this level is not real ambiguity — Nominatim
     just returns multiple representations of the same place.
+
+    The ' i <fylke>' disambiguation suffix is stripped before comparing —
+    for kommuner like "Herøy i Nordland", Nominatim may return both
+    "Herøy" and "Herøy i Nordland" in the same result set; those are
+    duplicates, not distinct admin areas.
     """
     addr_a = a.get("address", {})
     addr_b = b.get("address", {})
     muni_a = addr_a.get("municipality") or addr_a.get("city") or addr_a.get("town") or ""
     muni_b = addr_b.get("municipality") or addr_b.get("city") or addr_b.get("town") or ""
-    return bool(muni_a) and normalize(muni_a) == normalize(muni_b)
+    if not muni_a or not muni_b:
+        return False
+    return _strip_disambig(normalize(muni_a)) == _strip_disambig(normalize(muni_b))
 
 
 def pick_unique_match(results: list[dict], kommune: dict) -> tuple[dict | None, str]:
