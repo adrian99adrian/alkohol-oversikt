@@ -192,15 +192,29 @@ class TestFrontendBuild:
     def test_unverified_banner_text_on_unverified_page(self, docs_dir: Path) -> None:
         """Every unverified kommune page shows the exact 'ikke verifisert' banner.
 
-        Fauske is one of the bulk-seeded unverified kommuner. The banner copy
-        is a trust signal — if it changes, we want CI to catch it before
-        shipping.
+        Picks an unverified kommune at test time rather than hardcoding one
+        (the verification sweep keeps flipping kommuner to verified=true, so
+        any fixed pick eventually breaks this test).
         """
-        html = (docs_dir / "kommune" / "fauske" / "index.html").read_text(encoding="utf-8")
-        expected = (
-            "Ølsalgsreglene for Fauske er ikke verifisert. Tidene kan avvike fra nasjonale regler."
+        source_dir = Path(__file__).parent.parent.parent / "data" / "municipalities"
+        unverified = next(
+            (
+                json.loads(p.read_text(encoding="utf-8"))
+                for p in sorted(source_dir.glob("*.json"))
+                if not json.loads(p.read_text(encoding="utf-8")).get("verified", True)
+            ),
+            None,
         )
-        assert expected in html, "Missing or wrong unverified banner in fauske/index.html"
+        assert unverified is not None, "No unverified kommune JSON found — pick a fixture manually"
+
+        html = (docs_dir / "kommune" / unverified["id"] / "index.html").read_text(encoding="utf-8")
+        expected = (
+            f"Ølsalgsreglene for {unverified['name']} er ikke verifisert. "
+            "Tidene kan avvike fra nasjonale regler."
+        )
+        assert expected in html, (
+            f"Missing or wrong unverified banner in {unverified['id']}/index.html"
+        )
 
     def test_verified_page_has_no_unverified_banner(self, docs_dir: Path) -> None:
         """Verified kommuner must NOT show the 'ikke verifisert' banner.
