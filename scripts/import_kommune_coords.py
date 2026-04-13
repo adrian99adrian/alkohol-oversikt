@@ -269,7 +269,9 @@ def resolve_kommune(
             reason = f"http error on {query!r}: {type(e).__name__}"
             sleep_fn(SLEEP_SECONDS)
             continue
-        except (ValueError, json.JSONDecodeError) as e:
+        except ValueError as e:
+            # json.JSONDecodeError is a ValueError subclass, so this covers
+            # both malformed JSON and any value error from parsing.
             reason = f"malformed JSON on {query!r}: {e}"
             sleep_fn(SLEEP_SECONDS)
             continue
