@@ -4835,6 +4835,7 @@
       "vinmonopolet_summary": null
     }
   ],
+  "vinmonopolet_mode": "local",
   "vinmonopolet_stores": [
     {
       "store_id": "365",
@@ -5020,5 +5021,6 @@
       "date": "2026-04-26"
     }
   ],
-  "vinmonopolet_fetched_at": "2026-04-13T00:46:21.128494+02:00"
+  "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",
+  "nearest_vinmonopolet": null
 }

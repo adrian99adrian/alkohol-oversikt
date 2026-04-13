@@ -1,11 +1,12 @@
 {
   "_schema": {
-    "description": "Norwegian kommune registry. Reference data only; no code reads this yet. Will be consumed by Phase 3 nearest-Vinmonopolet UX via `borders`.",
+    "description": "Norwegian kommune registry with rådhus coordinates (lat/lng). Consumed by nearest-Vinmonopolet UX in scripts/nearest_store.py.",
     "fields": {
       "county": "Fylke name (post-2024 reform)",
       "municipality": "Norwegian display name (bilingual Sami/Finnish names collapsed to Norwegian)",
       "id": "ASCII slug, lowercase, matches data/municipalities/<id>.json filename when that kommune is added",
-      "borders": "null = kommune has a Vinmonopolet (neighbors not needed). [] = kommune has no Vinmonopolet, neighbors to be populated. [\"id1\",\"id2\",...] = populated neighbor list",
+      "lat": "Latitude of the kommune rådhus (WGS-84), populated via scripts/import_kommune_coords.py",
+      "lng": "Longitude of the kommune rådhus (WGS-84)",
       "bugs": "Array of free-text notes about known issues with this entry"
     }
   },
@@ -14,2544 +15,2901 @@
       "county": "Oslo",
       "municipality": "Oslo",
       "id": "oslo",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.9120805,
+      "lng": 10.7337247
     },
     {
       "county": "Rogaland",
       "municipality": "Eigersund",
       "id": "eigersund",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.4523986,
+      "lng": 6.003177
     },
     {
       "county": "Rogaland",
       "municipality": "Stavanger",
       "id": "stavanger",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.9690243,
+      "lng": 5.7289185
     },
     {
       "county": "Rogaland",
       "municipality": "Haugesund",
       "id": "haugesund",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4102345,
+      "lng": 5.2754194
     },
     {
       "county": "Rogaland",
       "municipality": "Sandnes",
       "id": "sandnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.8534422,
+      "lng": 5.7413789
     },
     {
       "county": "Rogaland",
       "municipality": "Sokndal",
       "id": "sokndal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.2939829,
+      "lng": 6.4390855
     },
     {
       "county": "Rogaland",
       "municipality": "Lund",
       "id": "lund",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.45715,
+      "lng": 6.548427
     },
     {
       "county": "Rogaland",
       "municipality": "Bjerkreim",
       "id": "bjerkreim",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.6545563,
+      "lng": 6.1588697
     },
     {
       "county": "Rogaland",
       "municipality": "Hå",
       "id": "ha",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.6160053,
+      "lng": 5.6450633
     },
     {
       "county": "Rogaland",
       "municipality": "Klepp",
       "id": "klepp",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.78247,
+      "lng": 5.562496
     },
     {
       "county": "Rogaland",
       "municipality": "Time",
       "id": "time",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.736297,
+      "lng": 5.652915
     },
     {
       "county": "Rogaland",
       "municipality": "Gjesdal",
       "id": "gjesdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.7793228,
+      "lng": 6.3171264
     },
     {
       "county": "Rogaland",
       "municipality": "Sola",
       "id": "sola",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.8878679,
+      "lng": 5.6472729
     },
     {
       "county": "Rogaland",
       "municipality": "Randaberg",
       "id": "randaberg",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0210666,
+      "lng": 5.5648766
     },
     {
       "county": "Rogaland",
       "municipality": "Strand",
       "id": "strand",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0235082,
+      "lng": 6.0427557
     },
     {
       "county": "Rogaland",
       "municipality": "Hjelmeland",
       "id": "hjelmeland",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2341276,
+      "lng": 6.179355
     },
     {
       "county": "Rogaland",
       "municipality": "Suldal",
       "id": "suldal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.5432754,
+      "lng": 6.5569344
     },
     {
       "county": "Rogaland",
       "municipality": "Sauda",
       "id": "sauda",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.650698,
+      "lng": 6.3532023
     },
     {
       "county": "Rogaland",
       "municipality": "Kvitsøy",
       "id": "kvitsoy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0084193,
+      "lng": 5.2813125
     },
     {
       "county": "Rogaland",
       "municipality": "Bokn",
       "id": "bokn",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.1925241,
+      "lng": 5.4757026
     },
     {
       "county": "Rogaland",
       "municipality": "Tysvær",
       "id": "tysvaer",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4215565,
+      "lng": 5.447859
     },
     {
       "county": "Rogaland",
       "municipality": "Karmøy",
       "id": "karmoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2808906,
+      "lng": 5.3056686
     },
     {
       "county": "Rogaland",
       "municipality": "Utsira",
       "id": "utsira",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2537162,
+      "lng": 4.7201048
     },
     {
       "county": "Rogaland",
       "municipality": "Vindafjord",
       "id": "vindafjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6041687,
+      "lng": 5.8112778
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Kristiansund",
       "id": "kristiansund",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.1117905,
+      "lng": 7.7318235
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Molde",
       "id": "molde",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.7380051,
+      "lng": 7.1589466
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Ålesund",
       "id": "alesund",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.4711582,
+      "lng": 6.1538037
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Vanylven",
       "id": "vanylven",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.0997517,
+      "lng": 5.5570508
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Sande i Møre og Romsdal",
       "id": "sande-i-more-og-romsdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.2416072,
+      "lng": 5.4403845
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Herøy i Møre og Romsdal",
       "id": "heroy-i-more-og-romsdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.4390366,
+      "lng": 5.2930882
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Ulstein",
       "id": "ulstein",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.337519,
+      "lng": 5.8855052
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Hareid",
       "id": "hareid",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.3691297,
+      "lng": 6.0296469
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Ørsta",
       "id": "orsta",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.1994006,
+      "lng": 6.1308703
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Stranda",
       "id": "stranda",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.3077472,
+      "lng": 6.9446963
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Sykkylven",
       "id": "sykkylven",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.3896333,
+      "lng": 6.5782806
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Sula",
       "id": "sula",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.4401871,
+      "lng": 6.19225
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Giske",
       "id": "giske",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.50072,
+      "lng": 6.1346934
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Vestnes",
       "id": "vestnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.6211656,
+      "lng": 7.0904092
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Rauma",
       "id": "rauma",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.5681157,
+      "lng": 7.6861235
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Aukra",
       "id": "aukra",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.939316,
+      "lng": 6.6786439
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Averøy",
       "id": "averoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.0184552,
+      "lng": 7.3648279
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Gjemnes",
       "id": "gjemnes",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.9189064,
+      "lng": 7.8692606
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Tingvoll",
       "id": "tingvoll",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.9538733,
+      "lng": 8.220096
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Sunndal",
       "id": "sunndal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.6745522,
+      "lng": 8.5620167
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Surnadal",
       "id": "surnadal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.9228432,
+      "lng": 8.7879306
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Smøla",
       "id": "smola",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.4597869,
+      "lng": 8.0115146
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Aure",
       "id": "aure",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 63.2679338,
+      "lng": 8.531272
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Volda",
       "id": "volda",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.0803797,
+      "lng": 6.2744108
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Fjord",
       "id": "fjord",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.2990369,
+      "lng": 7.2614724
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Hustadvika",
       "id": "hustadvika",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.8537387,
+      "lng": 7.1541435
     },
     {
       "county": "Møre og Romsdal",
       "municipality": "Haram",
       "id": "haram",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.7173517,
+      "lng": 6.1470961
     },
     {
       "county": "Nordland",
       "municipality": "Bodø",
       "id": "bodo",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 67.2833525,
+      "lng": 14.3833861
     },
     {
       "county": "Nordland",
       "municipality": "Narvik",
       "id": "narvik",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.4390111,
+      "lng": 17.4274407
     },
     {
       "county": "Nordland",
       "municipality": "Bindal",
       "id": "bindal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 65.0877901,
+      "lng": 12.3774766
     },
     {
       "county": "Nordland",
       "municipality": "Sømna",
       "id": "somna",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 65.3597065,
+      "lng": 12.2236796
     },
     {
       "county": "Nordland",
       "municipality": "Brønnøy",
       "id": "bronnoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 65.4676995,
+      "lng": 12.2059706
     },
     {
       "county": "Nordland",
       "municipality": "Vega",
       "id": "vega",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 65.6753802,
+      "lng": 11.9645762
     },
     {
       "county": "Nordland",
       "municipality": "Vevelstad",
       "id": "vevelstad",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 65.6999966,
+      "lng": 12.4391645
     },
     {
       "county": "Nordland",
       "municipality": "Herøy i Nordland",
       "id": "heroy-i-nordland",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 66.1329116,
+      "lng": 11.6060658
     },
     {
       "county": "Nordland",
       "municipality": "Alstahaug",
       "id": "alstahaug",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 66.019287,
+      "lng": 12.602009
     },
     {
       "county": "Nordland",
       "municipality": "Leirfjord",
       "id": "leirfjord",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 66.0962774,
+      "lng": 12.9772397
     },
     {
       "county": "Nordland",
       "municipality": "Vefsn",
       "id": "vefsn",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 65.8409185,
+      "lng": 13.1997818
     },
     {
       "county": "Nordland",
       "municipality": "Grane",
       "id": "grane",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 65.5384049,
+      "lng": 13.3853859
     },
     {
       "county": "Nordland",
       "municipality": "Hattfjelldal",
       "id": "hattfjelldal",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 65.5976601,
+      "lng": 13.9897027
     },
     {
       "county": "Nordland",
       "municipality": "Dønna",
       "id": "donna",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 66.1662544,
+      "lng": 12.4573928
     },
     {
       "county": "Nordland",
       "municipality": "Nesna",
       "id": "nesna",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 66.1991461,
+      "lng": 13.0171038
     },
     {
       "county": "Nordland",
       "municipality": "Hemnes",
       "id": "hemnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 66.0113546,
+      "lng": 14.1428537
     },
     {
       "county": "Nordland",
       "municipality": "Rana",
       "id": "rana",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 66.311247,
+      "lng": 14.139882
     },
     {
       "county": "Nordland",
       "municipality": "Lurøy",
       "id": "luroy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 66.39291,
+      "lng": 12.8292464
     },
     {
       "county": "Nordland",
       "municipality": "Træna",
       "id": "traena",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 66.5571596,
+      "lng": 11.9193084
     },
     {
       "county": "Nordland",
       "municipality": "Rødøy",
       "id": "rodoy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 66.7118699,
+      "lng": 13.2846107
     },
     {
       "county": "Nordland",
       "municipality": "Meløy",
       "id": "meloy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 66.8720553,
+      "lng": 13.7076607
     },
     {
       "county": "Nordland",
       "municipality": "Gildeskål",
       "id": "gildeskal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 67.0060361,
+      "lng": 13.9437332
     },
     {
       "county": "Nordland",
       "municipality": "Beiarn",
       "id": "beiarn",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 66.8918454,
+      "lng": 14.665143
     },
     {
       "county": "Nordland",
       "municipality": "Saltdal",
       "id": "saltdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 67.1015,
+      "lng": 15.394593
     },
     {
       "county": "Nordland",
       "municipality": "Fauske",
       "id": "fauske",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 67.2608043,
+      "lng": 15.3929345
     },
     {
       "county": "Nordland",
       "municipality": "Sørfold",
       "id": "sorfold",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 67.3482915,
+      "lng": 15.59461
     },
     {
       "county": "Nordland",
       "municipality": "Steigen",
       "id": "steigen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 67.776236,
+      "lng": 15.016158
     },
     {
       "county": "Nordland",
       "municipality": "Lødingen",
       "id": "lodingen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.409967,
+      "lng": 15.9902365
     },
     {
       "county": "Nordland",
       "municipality": "Evenes",
       "id": "evenes",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 68.5233828,
+      "lng": 17.008851
     },
     {
       "county": "Nordland",
       "municipality": "Røst",
       "id": "rost",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 67.5173025,
+      "lng": 12.1152493
     },
     {
       "county": "Nordland",
       "municipality": "Værøy",
       "id": "vaeroy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 67.6637463,
+      "lng": 12.6933677
     },
     {
       "county": "Nordland",
       "municipality": "Flakstad",
       "id": "flakstad",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 68.0928896,
+      "lng": 13.2330999
     },
     {
       "county": "Nordland",
       "municipality": "Vestvågøy",
       "id": "vestvagoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.1483295,
+      "lng": 13.6110728
     },
     {
       "county": "Nordland",
       "municipality": "Vågan",
       "id": "vagan",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.232262,
+      "lng": 14.5623127
     },
     {
       "county": "Nordland",
       "municipality": "Hadsel",
       "id": "hadsel",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.563282,
+      "lng": 14.9082785
     },
     {
       "county": "Nordland",
       "municipality": "Bø i Nordland",
       "id": "bo-i-nordland",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.620277,
+      "lng": 14.4475257
     },
     {
       "county": "Nordland",
       "municipality": "Øksnes",
       "id": "oksnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.9146571,
+      "lng": 15.0868537
     },
     {
       "county": "Nordland",
       "municipality": "Sortland",
       "id": "sortland",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 68.6961696,
+      "lng": 15.4118409
     },
     {
       "county": "Nordland",
       "municipality": "Andøy",
       "id": "andoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.3141272,
+      "lng": 16.118734
     },
     {
       "county": "Nordland",
       "municipality": "Moskenes",
       "id": "moskenes",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 67.9023396,
+      "lng": 13.0418706
     },
     {
       "county": "Nordland",
       "municipality": "Hamarøy",
       "id": "hamaroy",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 67.9218459,
+      "lng": 16.2415845
     },
     {
       "county": "Østfold",
       "municipality": "Halden",
       "id": "halden",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.1225214,
+      "lng": 11.3868066
     },
     {
       "county": "Østfold",
       "municipality": "Moss",
       "id": "moss",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4341395,
+      "lng": 10.6592463
     },
     {
       "county": "Østfold",
       "municipality": "Sarpsborg",
       "id": "sarpsborg",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2815275,
+      "lng": 11.111693
     },
     {
       "county": "Østfold",
       "municipality": "Fredrikstad",
       "id": "fredrikstad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2104475,
+      "lng": 10.9399839
     },
     {
       "county": "Østfold",
       "municipality": "Hvaler",
       "id": "hvaler",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0249315,
+      "lng": 11.0364644
     },
     {
       "county": "Østfold",
       "municipality": "Råde",
       "id": "rade",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.3516778,
+      "lng": 10.871478
     },
     {
       "county": "Østfold",
       "municipality": "Våler",
       "id": "valer",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4643626,
+      "lng": 10.9224376
     },
     {
       "county": "Østfold",
       "municipality": "Skiptvet",
       "id": "skiptvet",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4709117,
+      "lng": 11.1690563
     },
     {
       "county": "Østfold",
       "municipality": "Indre Østfold",
       "id": "indre-ostfold",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.584617,
+      "lng": 11.1607421
     },
     {
       "county": "Østfold",
       "municipality": "Rakkestad",
       "id": "rakkestad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4280279,
+      "lng": 11.343274
     },
     {
       "county": "Østfold",
       "municipality": "Marker",
       "id": "marker",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4795303,
+      "lng": 11.6592283
     },
     {
       "county": "Østfold",
       "municipality": "Aremark",
       "id": "aremark",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2220293,
+      "lng": 11.6958915
     },
     {
       "county": "Akershus",
       "municipality": "Bærum",
       "id": "baerum",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.890094,
+      "lng": 10.526751
     },
     {
       "county": "Akershus",
       "municipality": "Asker",
       "id": "asker",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.8569821,
+      "lng": 10.4089809
     },
     {
       "county": "Akershus",
       "municipality": "Lillestrøm",
       "id": "lillestrom",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.954333,
+      "lng": 11.040098
     },
     {
       "county": "Akershus",
       "municipality": "Nordre Follo",
       "id": "nordre-follo",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.7205239,
+      "lng": 10.8388062
     },
     {
       "county": "Akershus",
       "municipality": "Ullensaker",
       "id": "ullensaker",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.1438925,
+      "lng": 11.1743493
     },
     {
       "county": "Akershus",
       "municipality": "Nesodden",
       "id": "nesodden",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.8556013,
+      "lng": 10.6621688
     },
     {
       "county": "Akershus",
       "municipality": "Frogn",
       "id": "frogn",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6666339,
+      "lng": 10.6356963
     },
     {
       "county": "Akershus",
       "municipality": "Vestby",
       "id": "vestby",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6022845,
+      "lng": 10.7478499
     },
     {
       "county": "Akershus",
       "municipality": "Ås",
       "id": "as",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6679155,
+      "lng": 10.800433
     },
     {
       "county": "Akershus",
       "municipality": "Enebakk",
       "id": "enebakk",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.7645182,
+      "lng": 11.1449601
     },
     {
       "county": "Akershus",
       "municipality": "Lørenskog",
       "id": "lorenskog",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.9321147,
+      "lng": 10.9607693
     },
     {
       "county": "Akershus",
       "municipality": "Rælingen",
       "id": "raelingen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.9255352,
+      "lng": 11.0657661
     },
     {
       "county": "Akershus",
       "municipality": "Aurskog-Høland",
       "id": "aurskog-holand",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.8832282,
+      "lng": 11.5649225
     },
     {
       "county": "Akershus",
       "municipality": "Nes",
       "id": "nes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.1223892,
+      "lng": 11.4656475
     },
     {
       "county": "Akershus",
       "municipality": "Gjerdrum",
       "id": "gjerdrum",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.0787767,
+      "lng": 11.0206123
     },
     {
       "county": "Akershus",
       "municipality": "Nittedal",
       "id": "nittedal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.0086419,
+      "lng": 10.9469464
     },
     {
       "county": "Akershus",
       "municipality": "Lunner",
       "id": "lunner",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.2946825,
+      "lng": 10.6086985
     },
     {
       "county": "Akershus",
       "municipality": "Jevnaker",
       "id": "jevnaker",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.2825545,
+      "lng": 10.4084579
     },
     {
       "county": "Akershus",
       "municipality": "Nannestad",
       "id": "nannestad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.2267034,
+      "lng": 10.9409407
     },
     {
       "county": "Akershus",
       "municipality": "Eidsvoll",
       "id": "eidsvoll",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.3289242,
+      "lng": 11.2612209
     },
     {
       "county": "Akershus",
       "municipality": "Hurdal",
       "id": "hurdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.435169,
+      "lng": 11.0671005
     },
     {
       "county": "Buskerud",
       "municipality": "Drammen",
       "id": "drammen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.744809,
+      "lng": 10.2055095
     },
     {
       "county": "Buskerud",
       "municipality": "Kongsberg",
       "id": "kongsberg",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6650165,
+      "lng": 9.6467997
     },
     {
       "county": "Buskerud",
       "municipality": "Ringerike",
       "id": "ringerike",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.1602003,
+      "lng": 10.2564106
     },
     {
       "county": "Buskerud",
       "municipality": "Hole",
       "id": "hole",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.0821236,
+      "lng": 10.2872041
     },
     {
       "county": "Buskerud",
       "municipality": "Lier",
       "id": "lier",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.7867745,
+      "lng": 10.2432948
     },
     {
       "county": "Buskerud",
       "municipality": "Øvre Eiker",
       "id": "ovre-eiker",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.7711045,
+      "lng": 9.9085555
     },
     {
       "county": "Buskerud",
       "municipality": "Modum",
       "id": "modum",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.973246,
+      "lng": 10.0052086
     },
     {
       "county": "Buskerud",
       "municipality": "Krødsherad",
       "id": "krodsherad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.1924956,
+      "lng": 9.6715142
     },
     {
       "county": "Buskerud",
       "municipality": "Flå",
       "id": "fla",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.4343238,
+      "lng": 9.5403716
     },
     {
       "county": "Buskerud",
       "municipality": "Nesbyen",
       "id": "nesbyen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.5468243,
+      "lng": 9.0283417
     },
     {
       "county": "Buskerud",
       "municipality": "Gol",
       "id": "gol",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7513391,
+      "lng": 9.0123018
     },
     {
       "county": "Buskerud",
       "municipality": "Hemsedal",
       "id": "hemsedal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.86153,
+      "lng": 8.56526
     },
     {
       "county": "Buskerud",
       "municipality": "Ål",
       "id": "al",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.6972655,
+      "lng": 8.5037405
     },
     {
       "county": "Buskerud",
       "municipality": "Hol",
       "id": "hol",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.5328359,
+      "lng": 8.206608
     },
     {
       "county": "Buskerud",
       "municipality": "Sigdal",
       "id": "sigdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.1301824,
+      "lng": 9.4097767
     },
     {
       "county": "Buskerud",
       "municipality": "Flesberg",
       "id": "flesberg",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.8326546,
+      "lng": 9.5829983
     },
     {
       "county": "Buskerud",
       "municipality": "Rollag",
       "id": "rollag",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.0156726,
+      "lng": 9.2080743
     },
     {
       "county": "Buskerud",
       "municipality": "Nore og Uvdal",
       "id": "nore-og-uvdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.2920795,
+      "lng": 8.4172635
     },
     {
       "county": "Innlandet",
       "municipality": "Kongsvinger",
       "id": "kongsvinger",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.191263,
+      "lng": 11.998941
     },
     {
       "county": "Innlandet",
       "municipality": "Hamar",
       "id": "hamar",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7944595,
+      "lng": 11.0787189
     },
     {
       "county": "Innlandet",
       "municipality": "Lillehammer",
       "id": "lillehammer",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.1146445,
+      "lng": 10.4674395
     },
     {
       "county": "Innlandet",
       "municipality": "Gjøvik",
       "id": "gjovik",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7947374,
+      "lng": 10.6927815
     },
     {
       "county": "Innlandet",
       "municipality": "Ringsaker",
       "id": "ringsaker",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7617522,
+      "lng": 10.9416234
     },
     {
       "county": "Innlandet",
       "municipality": "Løten",
       "id": "loten",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.8652754,
+      "lng": 11.3728513
     },
     {
       "county": "Innlandet",
       "municipality": "Stange",
       "id": "stange",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.715992,
+      "lng": 11.191203
     },
     {
       "county": "Innlandet",
       "municipality": "Nord-Odal",
       "id": "nord-odal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.4398571,
+      "lng": 11.5848758
     },
     {
       "county": "Innlandet",
       "municipality": "Sør-Odal",
       "id": "sor-odal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.2534685,
+      "lng": 11.682981
     },
     {
       "county": "Innlandet",
       "municipality": "Eidskog",
       "id": "eidskog",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.985618,
+      "lng": 12.1248997
     },
     {
       "county": "Innlandet",
       "municipality": "Grue",
       "id": "grue",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.451205,
+      "lng": 12.053257
     },
     {
       "county": "Innlandet",
       "municipality": "Åsnes",
       "id": "asnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.613113,
+      "lng": 12.015119
     },
     {
       "county": "Innlandet",
       "municipality": "Våler i Innlandet",
       "id": "valer-i-innlandet",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.8134311,
+      "lng": 12.0147437
     },
     {
       "county": "Innlandet",
       "municipality": "Elverum",
       "id": "elverum",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.881563,
+      "lng": 11.5637184
     },
     {
       "county": "Innlandet",
       "municipality": "Trysil",
       "id": "trysil",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.3154045,
+      "lng": 12.2640982
     },
     {
       "county": "Innlandet",
       "municipality": "Åmot",
       "id": "amot",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.1316286,
+      "lng": 11.3731618
     },
     {
       "county": "Innlandet",
       "municipality": "Stor-Elvdal",
       "id": "stor-elvdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.5815693,
+      "lng": 10.9025108
     },
     {
       "county": "Innlandet",
       "municipality": "Rendalen",
       "id": "rendalen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.8065682,
+      "lng": 11.2021599
     },
     {
       "county": "Innlandet",
       "municipality": "Engerdal",
       "id": "engerdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.9734157,
+      "lng": 11.9400962
     },
     {
       "county": "Innlandet",
       "municipality": "Tolga",
       "id": "tolga",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.3718777,
+      "lng": 11.0704637
     },
     {
       "county": "Innlandet",
       "municipality": "Tynset",
       "id": "tynset",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.2738015,
+      "lng": 10.7760688
     },
     {
       "county": "Innlandet",
       "municipality": "Alvdal",
       "id": "alvdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.1085181,
+      "lng": 10.6347908
     },
     {
       "county": "Innlandet",
       "municipality": "Folldal",
       "id": "folldal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.1562497,
+      "lng": 9.9737143
     },
     {
       "county": "Innlandet",
       "municipality": "Os",
       "id": "os",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.4953575,
+      "lng": 11.227971
     },
     {
       "county": "Innlandet",
       "municipality": "Dovre",
       "id": "dovre",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.1146265,
+      "lng": 9.4403671
     },
     {
       "county": "Innlandet",
       "municipality": "Lesja",
       "id": "lesja",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.1876705,
+      "lng": 8.6254935
     },
     {
       "county": "Innlandet",
       "municipality": "Skjåk",
       "id": "skjak",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.9349863,
+      "lng": 7.9145358
     },
     {
       "county": "Innlandet",
       "municipality": "Lom",
       "id": "lom",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.7142578,
+      "lng": 8.4258977
     },
     {
       "county": "Innlandet",
       "municipality": "Vågå",
       "id": "vaga",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.7019796,
+      "lng": 8.9945507
     },
     {
       "county": "Innlandet",
       "municipality": "Nord-Fron",
       "id": "nord-fron",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.5955907,
+      "lng": 9.7493966
     },
     {
       "county": "Innlandet",
       "municipality": "Sel",
       "id": "sel",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.7728362,
+      "lng": 9.5341808
     },
     {
       "county": "Innlandet",
       "municipality": "Sør-Fron",
       "id": "sor-fron",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.6029785,
+      "lng": 9.9357713
     },
     {
       "county": "Innlandet",
       "municipality": "Ringebu",
       "id": "ringebu",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.5572191,
+      "lng": 10.3649275
     },
     {
       "county": "Innlandet",
       "municipality": "Øyer",
       "id": "oyer",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.2649844,
+      "lng": 10.4130209
     },
     {
       "county": "Innlandet",
       "municipality": "Gausdal",
       "id": "gausdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.2640681,
+      "lng": 9.8532187
     },
     {
       "county": "Innlandet",
       "municipality": "Østre Toten",
       "id": "ostre-toten",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.6769826,
+      "lng": 10.8172675
     },
     {
       "county": "Innlandet",
       "municipality": "Vestre Toten",
       "id": "vestre-toten",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7258387,
+      "lng": 10.6076509
     },
     {
       "county": "Innlandet",
       "municipality": "Gran",
       "id": "gran",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.392298,
+      "lng": 10.559015
     },
     {
       "county": "Innlandet",
       "municipality": "Søndre Land",
       "id": "sondre-land",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.699175,
+      "lng": 10.3506633
     },
     {
       "county": "Innlandet",
       "municipality": "Nordre Land",
       "id": "nordre-land",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.8344931,
+      "lng": 10.0756986
     },
     {
       "county": "Innlandet",
       "municipality": "Sør-Aurdal",
       "id": "sor-aurdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.666507,
+      "lng": 9.6886194
     },
     {
       "county": "Innlandet",
       "municipality": "Etnedal",
       "id": "etnedal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.9635472,
+      "lng": 9.6441632
     },
     {
       "county": "Innlandet",
       "municipality": "Nord-Aurdal",
       "id": "nord-aurdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.9854411,
+      "lng": 9.2366719
     },
     {
       "county": "Innlandet",
       "municipality": "Vestre Slidre",
       "id": "vestre-slidre",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.0533526,
+      "lng": 8.9256654
     },
     {
       "county": "Innlandet",
       "municipality": "Øystre Slidre",
       "id": "oystre-slidre",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.2510155,
+      "lng": 9.1164967
     },
     {
       "county": "Innlandet",
       "municipality": "Vang",
       "id": "vang",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.1922086,
+      "lng": 8.4695189
     },
     {
       "county": "Vestfold",
       "municipality": "Horten",
       "id": "horten",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.415237,
+      "lng": 10.4847991
     },
     {
       "county": "Vestfold",
       "municipality": "Holmestrand",
       "id": "holmestrand",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.489849,
+      "lng": 10.315411
     },
     {
       "county": "Vestfold",
       "municipality": "Tønsberg",
       "id": "tonsberg",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2701259,
+      "lng": 10.4111439
     },
     {
       "county": "Vestfold",
       "municipality": "Sandefjord",
       "id": "sandefjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.128876,
+      "lng": 10.2196933
     },
     {
       "county": "Vestfold",
       "municipality": "Larvik",
       "id": "larvik",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0515181,
+      "lng": 10.0282679
     },
     {
       "county": "Vestfold",
       "municipality": "Færder",
       "id": "faerder",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.224258,
+      "lng": 10.409599
     },
     {
       "county": "Telemark",
       "municipality": "Porsgrunn",
       "id": "porsgrunn",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.141052,
+      "lng": 9.6555146
     },
     {
       "county": "Telemark",
       "municipality": "Skien",
       "id": "skien",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.207484,
+      "lng": 9.6106697
     },
     {
       "county": "Telemark",
       "municipality": "Notodden",
       "id": "notodden",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.5599114,
+      "lng": 9.2603047
     },
     {
       "county": "Telemark",
       "municipality": "Siljan",
       "id": "siljan",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.309899,
+      "lng": 9.6894157
     },
     {
       "county": "Telemark",
       "municipality": "Bamble",
       "id": "bamble",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0015273,
+      "lng": 9.7449881
     },
     {
       "county": "Telemark",
       "municipality": "Kragerø",
       "id": "kragero",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.8679855,
+      "lng": 9.4111137
     },
     {
       "county": "Telemark",
       "municipality": "Drangedal",
       "id": "drangedal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0908937,
+      "lng": 8.9687835
     },
     {
       "county": "Telemark",
       "municipality": "Nome",
       "id": "nome",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.2793435,
+      "lng": 9.270652
     },
     {
       "county": "Telemark",
       "municipality": "Midt-Telemark",
       "id": "midt-telemark",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4127808,
+      "lng": 9.0661983
     },
     {
       "county": "Telemark",
       "municipality": "Seljord",
       "id": "seljord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4871647,
+      "lng": 8.6510869
     },
     {
       "county": "Telemark",
       "municipality": "Hjartdal",
       "id": "hjartdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6930294,
+      "lng": 8.690956
     },
     {
       "county": "Telemark",
       "municipality": "Tinn",
       "id": "tinn",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.8786337,
+      "lng": 8.5936102
     },
     {
       "county": "Telemark",
       "municipality": "Kviteseid",
       "id": "kviteseid",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.409654,
+      "lng": 8.4827924
     },
     {
       "county": "Telemark",
       "municipality": "Nissedal",
       "id": "nissedal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.0497365,
+      "lng": 8.5280135
     },
     {
       "county": "Telemark",
       "municipality": "Fyresdal",
       "id": "fyresdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.144754,
+      "lng": 8.0370834
     },
     {
       "county": "Telemark",
       "municipality": "Tokke",
       "id": "tokke",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.4634656,
+      "lng": 7.946134
     },
     {
       "county": "Telemark",
       "municipality": "Vinje",
       "id": "vinje",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.8071383,
+      "lng": 7.7137703
     },
     {
       "county": "Agder",
       "municipality": "Risør",
       "id": "risor",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.7185103,
+      "lng": 9.2121032
     },
     {
       "county": "Agder",
       "municipality": "Grimstad",
       "id": "grimstad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.345601,
+      "lng": 8.59757
     },
     {
       "county": "Agder",
       "municipality": "Arendal",
       "id": "arendal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.4604001,
+      "lng": 8.7650301
     },
     {
       "county": "Agder",
       "municipality": "Kristiansand",
       "id": "kristiansand",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.1467297,
+      "lng": 7.9970236
     },
     {
       "county": "Agder",
       "municipality": "Lindesnes",
       "id": "lindesnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.026345,
+      "lng": 7.4501455
     },
     {
       "county": "Agder",
       "municipality": "Farsund",
       "id": "farsund",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.0955008,
+      "lng": 6.8037551
     },
     {
       "county": "Agder",
       "municipality": "Flekkefjord",
       "id": "flekkefjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.2980181,
+      "lng": 6.6631909
     },
     {
       "county": "Agder",
       "municipality": "Gjerstad",
       "id": "gjerstad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.8782545,
+      "lng": 8.9797421
     },
     {
       "county": "Agder",
       "municipality": "Vegårshei",
       "id": "vegarshei",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.7501534,
+      "lng": 8.8638558
     },
     {
       "county": "Agder",
       "municipality": "Tvedestrand",
       "id": "tvedestrand",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.6226715,
+      "lng": 8.9314575
     },
     {
       "county": "Agder",
       "municipality": "Froland",
       "id": "froland",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.5872846,
+      "lng": 8.600438
     },
     {
       "county": "Agder",
       "municipality": "Lillesand",
       "id": "lillesand",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.249718,
+      "lng": 8.3785808
     },
     {
       "county": "Agder",
       "municipality": "Birkenes",
       "id": "birkenes",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.4394635,
+      "lng": 8.2377999
     },
     {
       "county": "Agder",
       "municipality": "Åmli",
       "id": "amli",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.7659385,
+      "lng": 8.4833936
     },
     {
       "county": "Agder",
       "municipality": "Iveland",
       "id": "iveland",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.4330267,
+      "lng": 7.9556843
     },
     {
       "county": "Agder",
       "municipality": "Evje og Hornnes",
       "id": "evje-og-hornnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.5860538,
+      "lng": 7.8615068
     },
     {
       "county": "Agder",
       "municipality": "Bygland",
       "id": "bygland",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.8314632,
+      "lng": 7.7975955
     },
     {
       "county": "Agder",
       "municipality": "Valle",
       "id": "valle",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 59.1690716,
+      "lng": 7.4247694
     },
     {
       "county": "Agder",
       "municipality": "Bykle",
       "id": "bykle",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.355669,
+      "lng": 7.3571612
     },
     {
       "county": "Agder",
       "municipality": "Vennesla",
       "id": "vennesla",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.2687834,
+      "lng": 7.9723851
     },
     {
       "county": "Agder",
       "municipality": "Åseral",
       "id": "aseral",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.6174268,
+      "lng": 7.411179
     },
     {
       "county": "Agder",
       "municipality": "Lyngdal",
       "id": "lyngdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.138322,
+      "lng": 7.0682929
     },
     {
       "county": "Agder",
       "municipality": "Hægebostad",
       "id": "haegebostad",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.4763867,
+      "lng": 7.2289212
     },
     {
       "county": "Agder",
       "municipality": "Kvinesdal",
       "id": "kvinesdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 58.3160613,
+      "lng": 6.9631337
     },
     {
       "county": "Agder",
       "municipality": "Sirdal",
       "id": "sirdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 58.6650817,
+      "lng": 6.7158142
     },
     {
       "county": "Vestland",
       "municipality": "Bergen",
       "id": "bergen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.3920142,
+      "lng": 5.328032
     },
     {
       "county": "Vestland",
       "municipality": "Kinn",
       "id": "kinn",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.9355694,
+      "lng": 5.1141541
     },
     {
       "county": "Vestland",
       "municipality": "Etne",
       "id": "etne",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.7985899,
+      "lng": 6.294995
     },
     {
       "county": "Vestland",
       "municipality": "Sveio",
       "id": "sveio",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.6137062,
+      "lng": 5.4117567
     },
     {
       "county": "Vestland",
       "municipality": "Bømlo",
       "id": "bomlo",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.793728,
+      "lng": 5.1755866
     },
     {
       "county": "Vestland",
       "municipality": "Stord",
       "id": "stord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.7809936,
+      "lng": 5.4998299
     },
     {
       "county": "Vestland",
       "municipality": "Fitjar",
       "id": "fitjar",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.9174122,
+      "lng": 5.3163856
     },
     {
       "county": "Vestland",
       "municipality": "Tysnes",
       "id": "tysnes",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.005769,
+      "lng": 5.500032
     },
     {
       "county": "Vestland",
       "municipality": "Kvinnherad",
       "id": "kvinnherad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 59.984167,
+      "lng": 6.0124812
     },
     {
       "county": "Vestland",
       "municipality": "Ullensvang",
       "id": "ullensvang",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.06722,
+      "lng": 6.5458321
     },
     {
       "county": "Vestland",
       "municipality": "Eidfjord",
       "id": "eidfjord",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.4259387,
+      "lng": 7.2457097
     },
     {
       "county": "Vestland",
       "municipality": "Ulvik",
       "id": "ulvik",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.6049908,
+      "lng": 7.2250607
     },
     {
       "county": "Vestland",
       "municipality": "Voss",
       "id": "voss",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.6837067,
+      "lng": 6.4079051
     },
     {
       "county": "Vestland",
       "municipality": "Kvam",
       "id": "kvam",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.3698638,
+      "lng": 6.1431022
     },
     {
       "county": "Vestland",
       "municipality": "Samnanger",
       "id": "samnanger",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.4059729,
+      "lng": 5.7820264
     },
     {
       "county": "Vestland",
       "municipality": "Bjørnafjorden",
       "id": "bjornafjorden",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.1855038,
+      "lng": 5.4697477
     },
     {
       "county": "Vestland",
       "municipality": "Austevoll",
       "id": "austevoll",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.0949895,
+      "lng": 5.2221666
     },
     {
       "county": "Vestland",
       "municipality": "Øygarden",
       "id": "oygarden",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.4267846,
+      "lng": 4.7265289
     },
     {
       "county": "Vestland",
       "municipality": "Askøy",
       "id": "askoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.409148,
+      "lng": 5.2259811
     },
     {
       "county": "Vestland",
       "municipality": "Vaksdal",
       "id": "vaksdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.59031,
+      "lng": 5.822742
     },
     {
       "county": "Vestland",
       "municipality": "Modalen",
       "id": "modalen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.8796735,
+      "lng": 5.9613624
     },
     {
       "county": "Vestland",
       "municipality": "Osterøy",
       "id": "osteroy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.523978,
+      "lng": 5.507189
     },
     {
       "county": "Vestland",
       "municipality": "Alver",
       "id": "alver",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.5490921,
+      "lng": 5.2856457
     },
     {
       "county": "Vestland",
       "municipality": "Austrheim",
       "id": "austrheim",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7939165,
+      "lng": 4.8721264
     },
     {
       "county": "Vestland",
       "municipality": "Fedje",
       "id": "fedje",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.7928865,
+      "lng": 4.4788217
     },
     {
       "county": "Vestland",
       "municipality": "Masfjorden",
       "id": "masfjorden",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.8442382,
+      "lng": 5.4029908
     },
     {
       "county": "Vestland",
       "municipality": "Gulen",
       "id": "gulen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 60.9614587,
+      "lng": 5.1550322
     },
     {
       "county": "Vestland",
       "municipality": "Solund",
       "id": "solund",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.0507558,
+      "lng": 4.5253601
     },
     {
       "county": "Vestland",
       "municipality": "Hyllestad",
       "id": "hyllestad",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.1683881,
+      "lng": 5.2496216
     },
     {
       "county": "Vestland",
       "municipality": "Høyanger",
       "id": "hoyanger",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.2188105,
+      "lng": 6.0732032
     },
     {
       "county": "Vestland",
       "municipality": "Vik",
       "id": "vik",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.0349664,
+      "lng": 6.5941051
     },
     {
       "county": "Vestland",
       "municipality": "Sogndal",
       "id": "sogndal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.329791,
+      "lng": 6.7203648
     },
     {
       "county": "Vestland",
       "municipality": "Aurland",
       "id": "aurland",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 60.905546,
+      "lng": 7.1873528
     },
     {
       "county": "Vestland",
       "municipality": "Lærdal",
       "id": "laerdal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.098559,
+      "lng": 7.481268
     },
     {
       "county": "Vestland",
       "municipality": "Årdal",
       "id": "ardal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.2363695,
+      "lng": 7.70285
     },
     {
       "county": "Vestland",
       "municipality": "Luster",
       "id": "luster",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.4031462,
+      "lng": 7.2978126
     },
     {
       "county": "Vestland",
       "municipality": "Askvoll",
       "id": "askvoll",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.349901,
+      "lng": 5.076421
     },
     {
       "county": "Vestland",
       "municipality": "Fjaler",
       "id": "fjaler",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.2805683,
+      "lng": 5.4792565
     },
     {
       "county": "Vestland",
       "municipality": "Sunnfjord",
       "id": "sunnfjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.4501264,
+      "lng": 5.8574435
     },
     {
       "county": "Vestland",
       "municipality": "Bremanger",
       "id": "bremanger",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 61.8481029,
+      "lng": 5.0571352
     },
     {
       "county": "Vestland",
       "municipality": "Stad",
       "id": "stad",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.9067678,
+      "lng": 5.9933484
     },
     {
       "county": "Vestland",
       "municipality": "Gloppen",
       "id": "gloppen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.7296525,
+      "lng": 6.177925
     },
     {
       "county": "Vestland",
       "municipality": "Stryn",
       "id": "stryn",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 61.7922109,
+      "lng": 6.4952742
     },
     {
       "county": "Trøndelag",
       "municipality": "Trondheim",
       "id": "trondheim",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 63.4281163,
+      "lng": 10.396921
     },
     {
       "county": "Trøndelag",
       "municipality": "Steinkjer",
       "id": "steinkjer",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 64.0128528,
+      "lng": 11.4966744
     },
     {
       "county": "Trøndelag",
       "municipality": "Namsos",
       "id": "namsos",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 64.4660318,
+      "lng": 11.4970533
     },
     {
       "county": "Trøndelag",
       "municipality": "Frøya",
       "id": "froya",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.729957,
+      "lng": 8.824111
     },
     {
       "county": "Trøndelag",
       "municipality": "Osen",
       "id": "osen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 64.2987272,
+      "lng": 10.5127572
     },
     {
       "county": "Trøndelag",
       "municipality": "Oppdal",
       "id": "oppdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 62.5948881,
+      "lng": 9.6877109
     },
     {
       "county": "Trøndelag",
       "municipality": "Rennebu",
       "id": "rennebu",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.7662727,
+      "lng": 9.88733
     },
     {
       "county": "Trøndelag",
       "municipality": "Røros",
       "id": "roros",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 62.5753406,
+      "lng": 11.3879866
     },
     {
       "county": "Trøndelag",
       "municipality": "Holtålen",
       "id": "holtalen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 62.8653919,
+      "lng": 11.3595676
     },
     {
       "county": "Trøndelag",
       "municipality": "Midtre Gauldal",
       "id": "midtre-gauldal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.0390456,
+      "lng": 10.2870157
     },
     {
       "county": "Trøndelag",
       "municipality": "Melhus",
       "id": "melhus",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.2874511,
+      "lng": 10.2762031
     },
     {
       "county": "Trøndelag",
       "municipality": "Skaun",
       "id": "skaun",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.323938,
+      "lng": 10.0674605
     },
     {
       "county": "Trøndelag",
       "municipality": "Malvik",
       "id": "malvik",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.4106598,
+      "lng": 10.7937595
     },
     {
       "county": "Trøndelag",
       "municipality": "Selbu",
       "id": "selbu",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.2178134,
+      "lng": 11.0394833
     },
     {
       "county": "Trøndelag",
       "municipality": "Tydal",
       "id": "tydal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 63.0447488,
+      "lng": 11.6504077
     },
     {
       "county": "Trøndelag",
       "municipality": "Meråker",
       "id": "meraker",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 63.414756,
+      "lng": 11.7479665
     },
     {
       "county": "Trøndelag",
       "municipality": "Stjørdal",
       "id": "stjordal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.4683319,
+      "lng": 10.9181514
     },
     {
       "county": "Trøndelag",
       "municipality": "Frosta",
       "id": "frosta",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.5876765,
+      "lng": 10.6992051
     },
     {
       "county": "Trøndelag",
       "municipality": "Levanger",
       "id": "levanger",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.7458556,
+      "lng": 11.2998157
     },
     {
       "county": "Trøndelag",
       "municipality": "Verdal",
       "id": "verdal",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.7934409,
+      "lng": 11.4877108
     },
     {
       "county": "Trøndelag",
       "municipality": "Snåsa",
       "id": "snasa",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 64.1852608,
+      "lng": 12.6227839
     },
     {
       "county": "Trøndelag",
       "municipality": "Lierne",
       "id": "lierne",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 64.463893,
+      "lng": 13.5929272
     },
     {
       "county": "Trøndelag",
       "municipality": "Røyrvik",
       "id": "royrvik",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 64.8152809,
+      "lng": 13.5420776
     },
     {
       "county": "Trøndelag",
       "municipality": "Namsskogan",
       "id": "namsskogan",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 64.8444405,
+      "lng": 13.0054767
     },
     {
       "county": "Trøndelag",
       "municipality": "Grong",
       "id": "grong",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 64.5307972,
+      "lng": 12.6372383
     },
     {
       "county": "Trøndelag",
       "municipality": "Høylandet",
       "id": "hoylandet",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 64.627583,
+      "lng": 12.3004577
     },
     {
       "county": "Trøndelag",
       "municipality": "Overhalla",
       "id": "overhalla",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 64.4938775,
+      "lng": 11.9474686
     },
     {
       "county": "Trøndelag",
       "municipality": "Flatanger",
       "id": "flatanger",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 64.5013624,
+      "lng": 10.8952825
     },
     {
       "county": "Trøndelag",
       "municipality": "Leka",
       "id": "leka",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 65.0924314,
+      "lng": 11.7050938
     },
     {
       "county": "Trøndelag",
       "municipality": "Inderøy",
       "id": "inderoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.8761345,
+      "lng": 11.2884092
     },
     {
       "county": "Trøndelag",
       "municipality": "Indre Fosen",
       "id": "indre-fosen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.5832121,
+      "lng": 9.9592991
     },
     {
       "county": "Trøndelag",
       "municipality": "Heim",
       "id": "heim",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.2470498,
+      "lng": 9.0903952
     },
     {
       "county": "Trøndelag",
       "municipality": "Hitra",
       "id": "hitra",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.6016581,
+      "lng": 8.9742076
     },
     {
       "county": "Trøndelag",
       "municipality": "Ørland",
       "id": "orland",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.765244,
+      "lng": 9.8094093
     },
     {
       "county": "Trøndelag",
       "municipality": "Åfjord",
       "id": "afjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.9617426,
+      "lng": 10.224886
     },
     {
       "county": "Trøndelag",
       "municipality": "Orkland",
       "id": "orkland",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 63.2812718,
+      "lng": 9.663568
     },
     {
       "county": "Trøndelag",
       "municipality": "Nærøysund",
       "id": "naeroysund",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 64.9287375,
+      "lng": 11.1822807
     },
     {
       "county": "Trøndelag",
       "municipality": "Rindal",
       "id": "rindal",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 63.0550962,
+      "lng": 9.212795
     },
     {
       "county": "Troms",
       "municipality": "Tromsø",
       "id": "tromso",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.6512069,
+      "lng": 18.9550604
     },
     {
       "county": "Troms",
       "municipality": "Harstad",
       "id": "harstad",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 68.798675,
+      "lng": 16.5394615
     },
     {
       "county": "Troms",
       "municipality": "Kvæfjord",
       "id": "kvaefjord",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 68.7720251,
+      "lng": 16.1729831
     },
     {
       "county": "Troms",
       "municipality": "Tjeldsund",
       "id": "tjeldsund",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 68.554699,
+      "lng": 16.2266513
     },
     {
       "county": "Troms",
       "municipality": "Ibestad",
       "id": "ibestad",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 68.7786722,
+      "lng": 17.1765909
     },
     {
       "county": "Troms",
       "municipality": "Gratangen",
       "id": "gratangen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 68.7144273,
+      "lng": 17.3959323
     },
     {
       "county": "Troms",
       "municipality": "Lavangen",
       "id": "lavangen",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 68.7169832,
+      "lng": 17.8162748
     },
     {
       "county": "Troms",
       "municipality": "Bardu",
       "id": "bardu",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.8604537,
+      "lng": 18.3508104
     },
     {
       "county": "Troms",
       "municipality": "Salangen",
       "id": "salangen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 68.8721625,
+      "lng": 17.8447177
     },
     {
       "county": "Troms",
       "municipality": "Målselv",
       "id": "malselv",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.1239334,
+      "lng": 18.6148996
     },
     {
       "county": "Troms",
       "municipality": "Sørreisa",
       "id": "sorreisa",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 69.1472588,
+      "lng": 18.1541907
     },
     {
       "county": "Troms",
       "municipality": "Dyrøy",
       "id": "dyroy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 69.0265501,
+      "lng": 17.6329432
     },
     {
       "county": "Troms",
       "municipality": "Senja",
       "id": "senja",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.2311397,
+      "lng": 17.9874696
     },
     {
       "county": "Troms",
       "municipality": "Balsfjord",
       "id": "balsfjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.2402257,
+      "lng": 19.2266386
     },
     {
       "county": "Troms",
       "municipality": "Karlsøy",
       "id": "karlsoy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 69.9678243,
+      "lng": 19.6261142
     },
     {
       "county": "Troms",
       "municipality": "Lyngen",
       "id": "lyngen",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.5745132,
+      "lng": 20.2191701
     },
     {
       "county": "Troms",
       "municipality": "Storfjord",
       "id": "storfjord",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 69.268953,
+      "lng": 19.9606913
     },
     {
       "county": "Troms",
       "municipality": "Kåfjord",
       "id": "kafjord",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 69.6040166,
+      "lng": 20.5345327
     },
     {
       "county": "Troms",
       "municipality": "Skjervøy",
       "id": "skjervoy",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 70.0336639,
+      "lng": 20.9733961
     },
     {
       "county": "Troms",
       "municipality": "Nordreisa",
       "id": "nordreisa",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 69.5274572,
+      "lng": 21.5988636
     },
     {
       "county": "Troms",
       "municipality": "Kvænangen",
       "id": "kvaenangen",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 69.8594962,
+      "lng": 22.0571038
     },
     {
       "county": "Finnmark",
       "municipality": "Alta",
       "id": "alta",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.9770868,
+      "lng": 23.2935603
     },
     {
       "county": "Finnmark",
       "municipality": "Hammerfest",
       "id": "hammerfest",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 70.662572,
+      "lng": 23.6835026
     },
     {
       "county": "Finnmark",
       "municipality": "Sør-Varanger",
       "id": "sor-varanger",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 69.728621,
+      "lng": 30.0417013
     },
     {
       "county": "Finnmark",
       "municipality": "Vadsø",
       "id": "vadso",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 70.1124791,
+      "lng": 29.3354739
     },
     {
       "county": "Finnmark",
       "municipality": "Karasjok",
       "id": "karasjok",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 69.4722305,
+      "lng": 25.5187935
     },
     {
       "county": "Finnmark",
       "municipality": "Kautokeino",
       "id": "kautokeino",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 69.012234,
+      "lng": 23.043688
     },
     {
       "county": "Finnmark",
       "municipality": "Loppa",
       "id": "loppa",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 70.2394183,
+      "lng": 22.3486008
     },
     {
       "county": "Finnmark",
       "municipality": "Hasvik",
       "id": "hasvik",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 70.591148,
+      "lng": 22.3029871
     },
     {
       "county": "Finnmark",
       "municipality": "Måsøy",
       "id": "masoy",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 70.9965662,
+      "lng": 24.6616993
     },
     {
       "county": "Finnmark",
       "municipality": "Nordkapp",
       "id": "nordkapp",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 70.978269,
+      "lng": 25.975049
     },
     {
       "county": "Finnmark",
       "municipality": "Porsanger",
       "id": "porsanger",
-      "borders": null,
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 70.051174,
+      "lng": 24.95869
     },
     {
       "county": "Finnmark",
       "municipality": "Lebesby",
       "id": "lebesby",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 70.9452972,
+      "lng": 27.3512397
     },
     {
       "county": "Finnmark",
       "municipality": "Gamvik",
       "id": "gamvik",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 71.0410589,
+      "lng": 27.8512391
     },
     {
       "county": "Finnmark",
       "municipality": "Tana",
       "id": "tana",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 70.1993586,
+      "lng": 28.1859379
     },
     {
       "county": "Finnmark",
       "municipality": "Berlevåg",
       "id": "berlevag",
-      "borders": [],
-      "bugs": []
+      "bugs": [],
+      "lat": 70.8580987,
+      "lng": 29.0850196
     },
     {
       "county": "Finnmark",
       "municipality": "Båtsfjord",
       "id": "batsfjord",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 70.635054,
+      "lng": 29.7214169
     },
     {
       "county": "Finnmark",
       "municipality": "Vardø",
       "id": "vardo",
-      "borders": null,
-      "bugs": []
+      "bugs": [],
+      "lat": 70.370081,
+      "lng": 31.107324
     },
     {
       "county": "Finnmark",
       "municipality": "Nesseby",
       "id": "nesseby",
-      "borders": [],
       "bugs": [
         "Offisielt navn er flerspråklig (samisk/finsk + norsk); bruker kun norsk navn her."
-      ]
+      ],
+      "lat": 70.1636831,
+      "lng": 28.5712351
     }
   ]
 }

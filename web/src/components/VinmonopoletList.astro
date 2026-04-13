@@ -1,28 +1,46 @@
 ---
-import type { ResolvedStore, DayData, VinmonopoletDaySummary } from "../types";
+import type {
+  ResolvedStore,
+  DayData,
+  VinmonopoletDaySummary,
+  VinmonopoletMode,
+  NearestVinmonopolet,
+} from "../types";
 import { weekdayShort, formatDateShort } from "../lib/dateFormat";
 import { formatVinmonopoletRange } from "../lib/vinmonopolet";
 
 interface Props {
+  mode: VinmonopoletMode;
   stores: ResolvedStore[];
   days: DayData[];
   daySummary: (VinmonopoletDaySummary | null)[];
+  nearest: NearestVinmonopolet | null;
   municipalityName: string;
   municipalityId: string;
 }
 
-const { stores, days, daySummary, municipalityName, municipalityId } = Astro.props;
+const { mode, stores, days, daySummary, nearest, municipalityName, municipalityId } =
+  Astro.props;
 
-const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærmeste vinmonopolet ${municipalityId}`)}`;
+const genericMapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(
+  `nærmeste vinmonopolet ${municipalityId}`,
+)}`;
+
+const nearestStoreMapsUrl = nearest
+  ? `https://www.google.com/maps/search/${encodeURIComponent(nearest.store.address)}`
+  : null;
+
+// In `nearest` mode we render the same table shape using the nearest store's
+// day_summary; the local branch uses the full multi-store summary as before.
+const tableSummary = mode === "nearest" && nearest ? nearest.day_summary : daySummary;
 ---
 
-{stores.length > 0 && (
+{mode === "local" && (
   <section>
     <h2 class="mb-4 text-lg font-semibold text-slate-200">
       Vinmonopolet i {municipalityName}
     </h2>
 
-    <!-- Aggregated 14-day table -->
     <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs">
@@ -35,7 +53,7 @@ const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærme
             </tr>
           </thead>
           <tbody>
-            {daySummary.map((summary, i) => (
+            {tableSummary.map((summary, i) => (
               <tr class:list={[
                 "border-b border-slate-700/50",
                 i === 0 && "bg-slate-800/80",
@@ -70,11 +88,10 @@ const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærme
       </div>
     </div>
 
-    <!-- Store directory -->
     <div class="mt-6">
       <h3 class="mb-2 text-sm font-semibold text-slate-300">Butikker ({stores.length})</h3>
       <a
-        href={mapsUrl}
+        href={genericMapsUrl}
         class="mb-3 inline-block text-sm text-slate-300 underline hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -87,5 +104,98 @@ const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(`nærme
         ))}
       </ul>
     </div>
+  </section>
+)}
+
+{mode === "nearest" && nearest && (
+  <section>
+    <h2 class="mb-4 text-lg font-semibold text-slate-200">
+      Nærmeste Vinmonopolet
+    </h2>
+
+    <p class="mb-4 text-sm text-slate-300">
+      <strong>{municipalityName}</strong> har ikke Vinmonopol, nærmeste er{" "}
+      <strong>{nearest.store.name}</strong> i{" "}
+      <strong>{nearest.source_municipality_name}</strong> kommune.
+    </p>
+
+    <div class="rounded-lg border border-slate-700 bg-slate-800 p-4">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-slate-700 text-slate-400">
+              <th class="pb-1 pr-2 font-medium">Dato</th>
+              <th class="pb-1 pr-2 font-medium">Dag</th>
+              <th class="pb-1 pr-2 font-medium">Åpner</th>
+              <th class="pb-1 font-medium">Stenger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableSummary.map((summary, i) => (
+              <tr class:list={[
+                "border-b border-slate-700/50",
+                i === 0 && "bg-slate-800/80",
+              ]}>
+                <td class="py-1 pr-2 text-slate-300">
+                  {summary ? formatDateShort(summary.date) : (i < days.length ? formatDateShort(days[i].date) : "")}
+                </td>
+                <td class="py-1 pr-2 text-slate-300">
+                  {i < days.length ? (weekdayShort[days[i].weekday] ?? days[i].weekday) : ""}
+                </td>
+                {!summary || summary.type === "closed" ? (
+                  <td colspan={2} class="py-1 text-red-400">Stengt</td>
+                ) : summary.type === "uniform" ? (
+                  <>
+                    <td class="py-1 pr-2 text-slate-200">{summary.open}</td>
+                    <td class="py-1 text-slate-200">{summary.close}</td>
+                  </>
+                ) : (
+                  <>
+                    <td class="py-1 pr-2 text-slate-200">
+                      {formatVinmonopoletRange(summary.min_open!, summary.max_open!)}
+                    </td>
+                    <td class="py-1 text-slate-200">
+                      {formatVinmonopoletRange(summary.min_close!, summary.max_close!)}
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="mt-3 text-xs text-slate-500">
+      ~{nearest.distance_km} km i luftlinje fra {municipalityName} rådhus.
+    </p>
+
+    {nearestStoreMapsUrl && (
+      <a
+        href={nearestStoreMapsUrl}
+        class="mt-2 inline-block text-sm text-slate-300 underline hover:text-white"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Vis {nearest.store.name} på Google Maps
+      </a>
+    )}
+  </section>
+)}
+
+{mode === "fallback" && (
+  <section>
+    <h2 class="mb-4 text-lg font-semibold text-slate-200">Vinmonopolet</h2>
+    <p class="mb-3 text-sm text-slate-300">
+      <strong>{municipalityName}</strong> har ikke Vinmonopol.
+    </p>
+    <a
+      href={genericMapsUrl}
+      class="inline-block text-sm text-slate-300 underline hover:text-white"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Finn nærmeste Vinmonopolet på Google Maps
+    </a>
   </section>
 )}

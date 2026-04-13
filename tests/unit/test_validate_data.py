@@ -424,6 +424,8 @@ def _valid_store(store_id: str = "283") -> dict:
         "name": "Test",
         "municipality": "sandefjord",
         "address": "Test 1, 0000 Test",
+        "lat": 59.1333,
+        "lng": 10.2167,
         "standard_hours": {
             "monday": {"open": "10:00", "close": "18:00"},
             "tuesday": {"open": "10:00", "close": "18:00"},

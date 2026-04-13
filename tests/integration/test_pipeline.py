@@ -396,12 +396,43 @@ class TestMainCLI:
         assert data["vinmonopolet_fetched_at"] is None
 
     def test_fetched_at_propagates_from_metadata(self, tmp_path):
-        """fetched_at in vinmonopolet.json metadata must be written to municipality JSON."""
+        """fetched_at in vinmonopolet.json metadata must be written to municipality JSON.
+
+        Under the mode contract, fetched_at is nulled out in `fallback` mode;
+        the fixture must therefore include a store for sandefjord so the
+        output ends up in `local` mode.
+        """
         _setup_tmp_data_dir(tmp_path)
-        # Overwrite the stub with one that has metadata
         vinmonopolet_path = tmp_path / "generated" / "vinmonopolet.json"
         vinmonopolet_path.write_text(
-            '{"metadata": {"fetched_at": "2026-04-12T10:00:00+02:00"}, "stores": []}',
+            json.dumps(
+                {
+                    "metadata": {"fetched_at": "2026-04-12T10:00:00+02:00"},
+                    "stores": [
+                        {
+                            "store_id": "1",
+                            "name": "Test Store",
+                            "municipality": "sandefjord",
+                            "address": "addr",
+                            "lat": 59.13,
+                            "lng": 10.22,
+                            "standard_hours": {
+                                k: None
+                                for k in [
+                                    "monday",
+                                    "tuesday",
+                                    "wednesday",
+                                    "thursday",
+                                    "friday",
+                                    "saturday",
+                                    "sunday",
+                                ]
+                            },
+                            "actual_hours": {},
+                        }
+                    ],
+                }
+            ),
             encoding="utf-8",
         )
         args = [
@@ -421,6 +452,7 @@ class TestMainCLI:
         output = tmp_path / "generated" / "municipalities" / "sandefjord.json"
         with open(output, encoding="utf-8") as f:
             data = json.load(f)
+        assert data["vinmonopolet_mode"] == "local"
         assert data["vinmonopolet_fetched_at"] == "2026-04-12T10:00:00+02:00"
 
     def test_all_generates_all_municipalities(self, tmp_path):

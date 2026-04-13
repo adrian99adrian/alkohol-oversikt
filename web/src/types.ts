@@ -41,6 +41,16 @@ export interface ResolvedStore {
   hours: StoreDay[];
 }
 
+export type VinmonopoletMode = "local" | "nearest" | "fallback";
+
+export interface NearestVinmonopolet {
+  store: ResolvedStore;
+  distance_km: number;
+  source_municipality_id: string;
+  source_municipality_name: string;
+  day_summary: (VinmonopoletDaySummary | null)[];
+}
+
 export interface MunicipalityData {
   municipality: {
     id: string;
@@ -51,7 +61,9 @@ export interface MunicipalityData {
     verified: boolean;
   };
   days: DayData[];
+  vinmonopolet_mode: VinmonopoletMode;
   vinmonopolet_stores: ResolvedStore[];
   vinmonopolet_day_summary: (VinmonopoletDaySummary | null)[];
   vinmonopolet_fetched_at?: string | null;
+  nearest_vinmonopolet: NearestVinmonopolet | null;
 }

@@ -152,6 +152,58 @@ def format_address(store: dict) -> str:
     return f"{addr['line1']}, {addr['postalCode']} {addr['town']}"
 
 
+# Norway bounding box — stores outside this box are treated as API corruption.
+_LAT_MIN, _LAT_MAX = 57.0, 72.0
+_LNG_MIN, _LNG_MAX = 4.0, 32.0
+
+
+def parse_gps_coord(raw: object, *, store_id: str) -> tuple[float, float]:
+    """Parse Vinmonopolet's coordinates into floats.
+
+    The API carries coordinates in `geoPoint: {latitude, longitude}`. An older
+    shape — `gpsCoord: "lat,lng"` string — is accepted for backward
+    compatibility with test fixtures that predate the current API.
+
+    Hard-fails (ValueError) on any abnormality: missing field, wrong shape,
+    non-numeric values, or coordinates outside Norway's bounding box. The
+    nearest-Vinmonopolet UX depends on every store having valid coordinates,
+    so silent fallback would collapse the feature without warning.
+    """
+    if raw is None:
+        raise ValueError(f"store {store_id}: coordinates are missing (expected geoPoint dict)")
+
+    if isinstance(raw, dict):
+        try:
+            lat = float(raw["latitude"])
+            lng = float(raw["longitude"])
+        except (KeyError, ValueError, TypeError) as e:
+            raise ValueError(
+                f"store {store_id}: geoPoint lat/lng non-numeric ({raw!r}): {e}"
+            ) from e
+    elif isinstance(raw, str):
+        if not raw.strip():
+            raise ValueError(f"store {store_id}: coordinate string is empty")
+        parts = [p.strip() for p in raw.split(",")]
+        if len(parts) != 2:
+            raise ValueError(f"store {store_id}: coordinate string must be 'lat,lng', got {raw!r}")
+        try:
+            lat = float(parts[0])
+            lng = float(parts[1])
+        except ValueError as e:
+            raise ValueError(
+                f"store {store_id}: coordinate string non-numeric ({raw!r}): {e}"
+            ) from e
+    else:
+        raise ValueError(
+            f"store {store_id}: coordinates must be geoPoint dict or 'lat,lng' string, "
+            f"got {type(raw).__name__}"
+        )
+
+    if not (_LAT_MIN <= lat <= _LAT_MAX) or not (_LNG_MIN <= lng <= _LNG_MAX):
+        raise ValueError(f"store {store_id}: coordinates ({lat}, {lng}) outside Norway bounds")
+    return lat, lng
+
+
 def map_town_to_municipality(
     town: str,
     overrides: dict[str, str],
@@ -189,11 +241,18 @@ def transform_store(
             store["displayName"], overrides, known_municipalities
         )
 
+    lat, lng = parse_gps_coord(
+        store.get("geoPoint") or store.get("gpsCoord"),
+        store_id=store["name"],
+    )
+
     return {
         "store_id": store["name"],
         "name": store["displayName"],
         "municipality": municipality,
         "address": format_address(store),
+        "lat": lat,
+        "lng": lng,
         "standard_hours": derive_standard_hours(
             opening_times, special_times, previous=previous_standard_hours
         ),

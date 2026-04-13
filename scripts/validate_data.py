@@ -212,6 +212,121 @@ def validate_generated_municipality(
     errors.extend(_validate_day_summary(gen_data, len(days)))
     errors.extend(_validate_store_entries(gen_data, days))
     errors.extend(_validate_vinmonopolet_fetched_at(gen_data))
+    errors.extend(_validate_vinmonopolet_mode(gen_data, len(days)))
+    return errors
+
+
+_VALID_MODES = ("local", "nearest", "fallback")
+
+
+def _validate_vinmonopolet_mode(gen_data: dict, num_days: int) -> list[str]:
+    """Enforce the strict one-of contract for vinmonopolet_mode.
+
+    See no_vinmonopolet_ux_plan.md for the full contract. In short:
+      - local:    own stores, no nearest, fetched_at set, day_summaries populated
+      - nearest:  no stores, nearest_vinmonopolet set (with its own day_summary
+                  mirrored into top-level vinmonopolet_day_summary), fetched_at set
+      - fallback: everything empty/null
+    """
+    errors: list[str] = []
+
+    if "vinmonopolet_mode" not in gen_data:
+        errors.append("vinmonopolet_mode: missing field (legacy data?)")
+        return errors
+
+    mode = gen_data["vinmonopolet_mode"]
+    if mode not in _VALID_MODES:
+        errors.append(f"vinmonopolet_mode: invalid value {mode!r} (expected one of {_VALID_MODES})")
+        return errors
+
+    stores = gen_data.get("vinmonopolet_stores", [])
+    nearest = gen_data.get("nearest_vinmonopolet")
+    day_summary = gen_data.get("vinmonopolet_day_summary", [])
+    fetched_at = gen_data.get("vinmonopolet_fetched_at")
+    expected_len = min(14, num_days)
+
+    if mode == "local":
+        if len(stores) == 0:
+            errors.append("mode=local: vinmonopolet_stores must be non-empty")
+        if nearest is not None:
+            errors.append("mode=local: nearest_vinmonopolet must be null")
+        if not fetched_at:
+            errors.append("mode=local: vinmonopolet_fetched_at is required")
+        if len(day_summary) != expected_len:
+            errors.append(
+                f"mode=local: vinmonopolet_day_summary length {len(day_summary)} != {expected_len}"
+            )
+
+    elif mode == "nearest":
+        if len(stores) != 0:
+            errors.append("mode=nearest: vinmonopolet_stores must be empty")
+        if nearest is None:
+            errors.append("mode=nearest: nearest_vinmonopolet is required")
+        else:
+            errors.extend(_validate_nearest_payload(nearest, expected_len))
+            if nearest.get("day_summary") != day_summary:
+                errors.append(
+                    "mode=nearest: vinmonopolet_day_summary must mirror "
+                    "nearest_vinmonopolet.day_summary"
+                )
+        if not fetched_at:
+            errors.append("mode=nearest: vinmonopolet_fetched_at is required")
+
+    else:  # fallback
+        if len(stores) != 0:
+            errors.append("mode=fallback: vinmonopolet_stores must be empty")
+        if nearest is not None:
+            errors.append("mode=fallback: nearest_vinmonopolet must be null")
+        if fetched_at:
+            errors.append("mode=fallback: vinmonopolet_fetched_at must be null")
+        if len(day_summary) != 0:
+            errors.append("mode=fallback: vinmonopolet_day_summary must be empty")
+
+    return errors
+
+
+def _validate_nearest_payload(payload: dict, expected_summary_len: int) -> list[str]:
+    """Validate the nearest_vinmonopolet dict's own shape."""
+    errors: list[str] = []
+    required = {
+        "store",
+        "distance_km",
+        "source_municipality_id",
+        "source_municipality_name",
+        "day_summary",
+    }
+    missing = required - payload.keys()
+    if missing:
+        errors.append(f"nearest_vinmonopolet: missing fields {sorted(missing)}")
+        return errors
+
+    distance = payload["distance_km"]
+    if not isinstance(distance, (int, float)) or isinstance(distance, bool):
+        errors.append(
+            f"nearest_vinmonopolet.distance_km must be numeric, got {type(distance).__name__}"
+        )
+    elif distance < 0:
+        errors.append(f"nearest_vinmonopolet.distance_km must be non-negative, got {distance}")
+
+    if (
+        not isinstance(payload["source_municipality_id"], str)
+        or not payload["source_municipality_id"]
+    ):
+        errors.append("nearest_vinmonopolet.source_municipality_id must be a non-empty string")
+    if (
+        not isinstance(payload["source_municipality_name"], str)
+        or not payload["source_municipality_name"]
+    ):
+        errors.append("nearest_vinmonopolet.source_municipality_name must be a non-empty string")
+
+    summary = payload["day_summary"]
+    if not isinstance(summary, list):
+        errors.append("nearest_vinmonopolet.day_summary must be a list")
+    elif len(summary) != expected_summary_len:
+        errors.append(
+            f"nearest_vinmonopolet.day_summary length {len(summary)} != {expected_summary_len}"
+        )
+
     return errors
 
 
@@ -257,9 +372,15 @@ REQUIRED_STORE_FIELDS = [
     "name",
     "municipality",
     "address",
+    "lat",
+    "lng",
     "standard_hours",
     "actual_hours",
 ]
+
+# Norway bounding box — must match scripts/fetch_vinmonopolet.py.
+_STORE_LAT_MIN, _STORE_LAT_MAX = 57.0, 72.0
+_STORE_LNG_MIN, _STORE_LNG_MAX = 4.0, 32.0
 WEEKDAY_KEYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 _TIME_RE = re.compile(r"^\d{2}:\d{2}$")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -280,7 +401,9 @@ def _validate_vm_metadata(metadata: dict, num_stores: int) -> list[str]:
 
 
 def _validate_store_fields(stores: list[dict]) -> list[str]:
-    """Validate required fields, numeric store_id, and duplicates."""
+    """Validate required fields, numeric store_id, coordinates, and duplicates."""
+    import math as _math
+
     errors = []
     seen_ids: set[str] = set()
     for i, store in enumerate(stores):
@@ -293,6 +416,25 @@ def _validate_store_fields(stores: list[dict]) -> list[str]:
         if sid in seen_ids:
             errors.append(f"Duplicate store_id: {sid}")
         seen_ids.add(sid)
+
+        # Coordinate validation — not just presence, but numeric + in-range.
+        # The nearest-Vinmonopolet UX would silently collapse to fallback if
+        # a bad coord slipped through, so these rules must be strict.
+        for key, lo, hi in (
+            ("lat", _STORE_LAT_MIN, _STORE_LAT_MAX),
+            ("lng", _STORE_LNG_MIN, _STORE_LNG_MAX),
+        ):
+            if key not in store:
+                continue  # already reported by the required-fields loop
+            val = store[key]
+            if isinstance(val, bool) or not isinstance(val, (int, float)):
+                errors.append(f"Store {sid}: {key} must be numeric, got {type(val).__name__}")
+                continue
+            if val is None or _math.isnan(val) or _math.isinf(val):
+                errors.append(f"Store {sid}: {key} is non-finite")
+                continue
+            if not (lo <= val <= hi):
+                errors.append(f"Store {sid}: {key} {val} outside Norway bounds [{lo}, {hi}]")
     return errors
 
 

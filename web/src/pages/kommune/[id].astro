@@ -38,7 +38,20 @@ export function getStaticPaths() {
 }
 
 const { data } = Astro.props as { data: MunicipalityData };
-const { municipality, days, vinmonopolet_stores, vinmonopolet_day_summary } = data;
+const {
+  municipality,
+  days,
+  vinmonopolet_stores,
+  vinmonopolet_day_summary,
+  vinmonopolet_mode,
+  nearest_vinmonopolet,
+} = data;
+
+// True when the page shows Vinmonopolet data derived from the API — either
+// our own stores (local) or the nearest store surfaced for a store-less
+// kommune (nearest). Fallback mode shows only a generic Maps link and should
+// not carry API-derived trust signals like staleness warnings.
+const hasVinmonopoletContent = vinmonopolet_mode !== "fallback";
 
 const basePath = normalizeBasePath(import.meta.env.BASE_URL);
 
@@ -67,7 +80,7 @@ const daySummary = vinmonopolet_day_summary ?? [];
 // the Vinmonopolet section is hidden and the warning would be misleading.
 const vinmonopoletFetchedAt = data.vinmonopolet_fetched_at;
 const isVinmonopoletWarning =
-  vinmonopolet_stores.length > 0 &&
+  hasVinmonopoletContent &&
   isVinmonopoletStale(vinmonopoletFetchedAt, VINMONOPOLET_STALE_THRESHOLD_DAYS);
 // Slice YYYY-MM-DD out of the ISO timestamp to keep the producer's local-day
 // (fetch_vinmonopolet writes Europe/Oslo local time), avoiding UTC drift when
@@ -159,9 +172,17 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
       )}
     </section>
 
-    <!-- Vinmonopolet store list -->
+    <!-- Vinmonopolet: local stores, nearest, or fallback -->
     <div class="mb-8">
-      <VinmonopoletList stores={vinmonopolet_stores} days={tableDays} daySummary={daySummary} municipalityName={municipality.name} municipalityId={municipality.id} />
+      <VinmonopoletList
+        mode={vinmonopolet_mode}
+        stores={vinmonopolet_stores}
+        days={tableDays}
+        daySummary={daySummary}
+        nearest={nearest_vinmonopolet}
+        municipalityName={municipality.name}
+        municipalityId={municipality.id}
+      />
     </div>
 
     <!-- Sources -->
@@ -175,7 +196,7 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
             </a>
           </li>
         ))}
-        {vinmonopolet_stores.length > 0 && (
+        {hasVinmonopoletContent && (
           <li>
             <a href="https://www.vinmonopolet.no" class="text-slate-300 underline hover:text-white" target="_blank" rel="noopener noreferrer">
               Vinmonopolet API
