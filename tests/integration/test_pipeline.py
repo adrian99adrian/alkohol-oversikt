@@ -551,3 +551,74 @@ class TestMainCLI:
         gen_dir = tmp_path / "generated" / "municipalities"
         files = sorted(gen_dir.glob("*.json"))
         assert len(files) >= 6  # sandefjord, larvik, oslo, trondheim, bergen, stavanger
+
+
+class TestSchemaExtensionPipeline:
+    """End-to-end: a fixture kommune using all four new optional fields
+    produces correct output through the full pipeline."""
+
+    def _fixture_municipality(self) -> dict:
+        return {
+            "id": "fixture",
+            "name": "Fiksjon",
+            "county": "Test",
+            "beer_sales": {
+                "weekday_open": "08:00",
+                "weekday_close": "20:00",
+                "saturday_open": "08:00",
+                "saturday_close": "18:00",
+                "pre_holiday_close": "18:00",
+                "special_day_close": "15:00",
+                "special_day_open": "08:30",
+                "special_days": ["christmas_eve", "new_years_eve"],
+                "exceptions": {"pre_easter_week": "pre_holiday"},
+                "date_overrides": [
+                    {"date": "04-30", "hours": "saturday"},
+                    {"date": "05-16", "hours": "saturday"},
+                ],
+            },
+            "sources": [{"title": "Test", "url": "https://example.test"}],
+            "last_verified": "2026-04-13",
+            "verified": True,
+            "notes": "Dette er en fiktiv kommune til testformål.",
+        }
+
+    def test_full_year_passes_validation(self):
+        mun = self._fixture_municipality()
+        result, calendar = _run_pipeline(mun, date(2026, 1, 1), days=365)
+        assert validate_calendar(calendar) == []
+        assert validate_generated_municipality(result, result["days"], calendar) == []
+        assert validate_national_max_compliance(result["days"]) == []
+
+    def test_notes_in_output(self):
+        mun = self._fixture_municipality()
+        result, _ = _run_pipeline(mun, date(2026, 1, 1), days=30)
+        assert result["municipality"]["notes"] == mun["notes"]
+
+    def test_pre_easter_week_forces_18_00(self):
+        """Wed April 1 2026 — pre_easter_week rule forces 18:00, also overrides
+        the 15:00 special_day_close on påskeaften."""
+        mun = self._fixture_municipality()
+        result, _ = _run_pipeline(mun, date(2026, 4, 1), days=7)
+        wed = next(d for d in result["days"] if d["date"] == "2026-04-01")
+        assert wed["beer_close"] == "18:00"
+        easter_eve = next(d for d in result["days"] if d["date"] == "2026-04-04")
+        assert easter_eve["beer_close"] == "18:00"
+
+    def test_special_day_open_applied(self):
+        """Dec 24 2026 — recognized special day uses special_day_open 08:30."""
+        mun = self._fixture_municipality()
+        result, _ = _run_pipeline(mun, date(2026, 12, 20), days=10)
+        xmas_eve = next(d for d in result["days"] if d["date"] == "2026-12-24")
+        assert xmas_eve["beer_open"] == "08:30"
+        assert xmas_eve["beer_close"] == "15:00"
+
+    def test_date_override_applied(self):
+        """April 30 2026 (Thursday) — date_override saturday → 18:00."""
+        mun = self._fixture_municipality()
+        result, _ = _run_pipeline(mun, date(2026, 4, 30), days=1)
+        day = result["days"][0]
+        assert day["date"] == "2026-04-30"
+        assert day["beer_close"] == "18:00"
+        assert day["is_deviation"] is True
+        assert day["comment"] and "18:00" in day["comment"]

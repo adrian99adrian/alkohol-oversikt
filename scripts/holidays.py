@@ -165,6 +165,18 @@ def _pre_holiday_label(pre_holiday_for_key: str | None) -> str:
     return "Dag før helligdag"
 
 
+def is_pre_easter_week_day(d: date) -> bool:
+    """True for Wed/Thu/Fri/Sat immediately before Easter Sunday.
+
+    The 4-day window covers what some kommuner call "påskeuken": onsdag før
+    skjærtorsdag through påskeaften. Thu/Fri are public holidays already so
+    the flag only changes behavior for Wed and Sat, but both are tagged for
+    consistency.
+    """
+    easter = compute_easter(d.year)
+    return easter - timedelta(days=4) <= d <= easter - timedelta(days=1)
+
+
 def classify_day(
     d: date,
     holidays: dict[date, str],
@@ -184,6 +196,7 @@ def classify_day(
         - is_special_day: bool
         - special_day_key: str | None
         - holiday_name: str | None
+        - is_pre_easter_week: bool
     """
     is_holiday = d in holidays
     is_sunday = d.weekday() == 6
@@ -224,4 +237,5 @@ def classify_day(
         "is_special_day": is_special,
         "special_day_key": special_day_key,
         "holiday_name": holiday_name,
+        "is_pre_easter_week": is_pre_easter_week_day(d),
     }

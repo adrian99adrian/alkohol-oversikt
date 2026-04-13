@@ -9,6 +9,8 @@ from datetime import date
 
 from build_calendar import WEEKDAY_NAMES_NO
 
+_ALLOWED_DATE_OVERRIDE_HOURS = {"saturday", "pre_holiday"}
+
 # Day types where beer sale is forbidden
 _FORBIDDEN_DAY_TYPES = {"sunday", "public_holiday"}
 
@@ -28,6 +30,39 @@ def national_max(day_info: dict) -> str | None:
     return "18:00"
 
 
+def _date_override_hours(day_info: dict, beer: dict) -> str | None:
+    """Return "saturday" / "pre_holiday" if this date matches a date_override.
+
+    date_overrides is a list like [{"date": "MM-DD", "hours": "saturday"}]
+    used for arbitrary dates that should follow Saturday or pre-holiday rules
+    (e.g. Ørland treats April 30 and May 16 as Saturday hours).
+    """
+    overrides = beer.get("date_overrides") or []
+    if not overrides:
+        return None
+    iso = day_info.get("date")
+    if not iso:
+        return None
+    mmdd = iso[5:]  # "YYYY-MM-DD" -> "MM-DD"
+    for ov in overrides:
+        if ov.get("date") == mmdd:
+            hours = ov.get("hours")
+            # Only return values the rest of the pipeline knows how to apply.
+            # Malformed entries (should have been caught by validate_data.py)
+            # are ignored rather than silently treated as a truthy match.
+            if hours in _ALLOWED_DATE_OVERRIDE_HOURS:
+                return hours
+            return None
+    return None
+
+
+def _has_pre_easter_week_rule(day_info: dict, beer: dict) -> bool:
+    """True when a kommune's pre_easter_week exception applies to this day."""
+    if not day_info.get("is_pre_easter_week"):
+        return False
+    return beer.get("exceptions", {}).get("pre_easter_week") == "pre_holiday"
+
+
 def municipal_close(day_info: dict, municipality: dict) -> str | None:
     """Return the municipal closing time for a day.
 
@@ -41,6 +76,18 @@ def municipal_close(day_info: dict, municipality: dict) -> str | None:
 
     if day_type in _FORBIDDEN_DAY_TYPES:
         return None
+
+    # date_overrides take precedence over all other rules (explicit dates)
+    override_hours = _date_override_hours(day_info, beer)
+    if override_hours == "saturday":
+        return beer["saturday_close"]
+    if override_hours == "pre_holiday":
+        return beer["pre_holiday_close"]
+
+    # pre_easter_week exception forces pre_holiday close on Wed-Sat før påske,
+    # overriding both special_day and normal pre_holiday handling.
+    if _has_pre_easter_week_rule(day_info, beer):
+        return beer["pre_holiday_close"]
 
     # Check if this is a special day that THIS municipality recognizes
     if day_info["is_special_day"] and day_info["special_day_key"] in beer.get("special_days", []):
@@ -76,10 +123,31 @@ def municipal_open(day_info: dict, municipality: dict) -> str | None:
     if day_type in _FORBIDDEN_DAY_TYPES:
         return None
 
+    # date_overrides take precedence
+    override_hours = _date_override_hours(day_info, beer)
+    if override_hours == "saturday":
+        return beer["saturday_open"]
+    if override_hours == "pre_holiday":
+        return beer["weekday_open"]
+
+    # Note: pre_easter_week has no open-time branch because the flag only
+    # fires on Wed (day_type=pre_holiday, uses weekday_open below) and Sat
+    # (day_type=saturday or special_day, handled by the branches below).
+    # No current kommune rule asks for a different open time on påskeuken.
+
+    # Recognized special day — special_day_open wins even when the date also
+    # falls on a Saturday (e.g. påskeaften). Must be checked BEFORE the plain
+    # saturday branch so a kommune's explicit special-eve open time isn't
+    # silently dropped.
+    if day_info["is_special_day"] and day_info["special_day_key"] in beer.get("special_days", []):
+        if "special_day_open" in beer:
+            return beer["special_day_open"]
+        return beer["saturday_open"] if day_info.get("_is_saturday") else beer["weekday_open"]
+
     if day_type == "saturday":
         return beer["saturday_open"]
 
-    # Special days: use saturday_open if on Saturday, else weekday_open
+    # Unrecognized special day falls back to default open
     if day_info["is_special_day"]:
         return beer["saturday_open"] if day_info.get("_is_saturday") else beer["weekday_open"]
 
@@ -200,8 +268,19 @@ def _build_comment(
 ) -> str | None:
     """Build a Norwegian comment for deviation days."""
     day_type = day_info["day_type"]
+    beer = municipality["beer_sales"]
 
     if day_type == "weekday":
+        # Weekdays only get a comment when a kommune-specific rule forces a
+        # different close time (otherwise "Hverdag" is obvious). Covers both
+        # date_overrides and pre_easter_week; the latter is defensive —
+        # normally påskeuken's Wed is already day_type=pre_holiday, but if a
+        # kommune ever has a weekday hitting this rule we still want a clear
+        # note rather than a blank comment alongside is_deviation=True.
+        if _date_override_hours(day_info, beer) and close:
+            return f"Kommunal forskrift — ølsalg stenger kl. {close}"
+        if _has_pre_easter_week_rule(day_info, beer) and close:
+            return f"Påskeuken — ølsalg stenger kl. {close}"
         return None
 
     if day_type in _FORBIDDEN_DAY_TYPES:
@@ -212,7 +291,14 @@ def _build_comment(
     label = day_info["day_type_label"]
 
     if close:
-        parts.append(f"{label} — ølsalg stenger kl. {close}")
+        # When a date_override forces this non-weekday day into a different
+        # ruleset (e.g. Ørland Dec 27 falling on a pre_holiday), prepend the
+        # forskrift note so the reader knows the kommune's rule — not the
+        # calendar's day_type — drove the time.
+        if _date_override_hours(day_info, beer):
+            parts.append(f"Kommunal forskrift ({label.lower()}) — ølsalg stenger kl. {close}")
+        else:
+            parts.append(f"{label} — ølsalg stenger kl. {close}")
 
     if ls_close:
         threshold = municipality["beer_sales"].get("large_store_threshold_sqm", 100)

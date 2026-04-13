@@ -371,3 +371,32 @@ class TestHolidayNames:
             result = classify_day(d, holidays, special)
             assert isinstance(result["day_type_label"], str)
             assert len(result["day_type_label"]) > 0
+
+
+class TestPreEasterWeekFlag:
+    """Verify is_pre_easter_week covers Wed-Sat immediately before Easter."""
+
+    def _flag(self, d: date) -> bool:
+        holidays = get_public_holidays(d.year)
+        special = get_special_days(d.year)
+        return classify_day(d, holidays, special)["is_pre_easter_week"]
+
+    def test_easter_2026_window(self):
+        """Easter 2026 = Sun April 5. Påskeuke = Wed April 1 – Sat April 4."""
+        assert self._flag(date(2026, 4, 1)) is True  # Wed
+        assert self._flag(date(2026, 4, 2)) is True  # Thu (Skjærtorsdag)
+        assert self._flag(date(2026, 4, 3)) is True  # Fri (Langfredag)
+        assert self._flag(date(2026, 4, 4)) is True  # Sat (Påskeaften)
+
+    def test_outside_window_false(self):
+        assert self._flag(date(2026, 3, 31)) is False  # Tue before påskeuke
+        assert self._flag(date(2026, 4, 5)) is False  # Easter Sunday itself
+        assert self._flag(date(2026, 4, 6)) is False  # 2. påskedag
+        assert self._flag(date(2026, 3, 10)) is False  # random weekday
+
+    def test_different_year(self):
+        """Easter 2027 = March 28. Påskeuke = Wed March 24 – Sat March 27."""
+        assert self._flag(date(2027, 3, 24)) is True
+        assert self._flag(date(2027, 3, 27)) is True
+        assert self._flag(date(2027, 3, 23)) is False
+        assert self._flag(date(2027, 3, 28)) is False

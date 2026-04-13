@@ -163,3 +163,21 @@ class TestVinmonopoletFetchedAtPropagation:
         result = self._build(sample_municipality_sandefjord, "2026-04-12T10:00:00+02:00", stores=[])
         assert result["vinmonopolet_mode"] == "fallback"
         assert result["vinmonopolet_fetched_at"] is None
+
+
+class TestNotesPassthrough:
+    """The optional top-level `notes` field is copied into the generated output."""
+
+    def _build(self, municipality: dict) -> dict:
+        calendar = build_calendar(date(2026, 1, 1), num_days=30)
+        return build_municipality(municipality, calendar)
+
+    def test_notes_copied_when_present(self, sample_municipality_sandefjord):
+        municipality = dict(sample_municipality_sandefjord)
+        municipality["notes"] = "Drøbak gamleby har egne regler."
+        result = self._build(municipality)
+        assert result["municipality"]["notes"] == "Drøbak gamleby har egne regler."
+
+    def test_notes_absent_when_missing(self, sample_municipality_sandefjord):
+        result = self._build(sample_municipality_sandefjord)
+        assert "notes" not in result["municipality"]

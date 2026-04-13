@@ -59,6 +59,7 @@ export interface MunicipalityData {
     sources: { title: string; url: string }[];
     last_verified: string | null;
     verified: boolean;
+    notes?: string;
   };
   days: DayData[];
   vinmonopolet_mode: VinmonopoletMode;

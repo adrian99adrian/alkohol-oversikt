@@ -38,6 +38,26 @@ REQUIRED_BEER_SALES_FIELDS = [
     "special_days",
 ]
 
+_HHMM_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
+_MMDD_RE = re.compile(r"^\d{2}-\d{2}$")
+_ALLOWED_DATE_OVERRIDE_HOURS = {"saturday", "pre_holiday"}
+_ALLOWED_PRE_EASTER_WEEK = {"pre_holiday"}
+
+
+def _is_real_mmdd(mmdd: str) -> bool:
+    """True when MM-DD is a real calendar day (rejects 02-30, 13-01, 00-00 etc.).
+
+    Uses a leap year so Feb 29 remains valid — otherwise a kommune couldn't
+    pin a date_override to leap day if they ever needed to.
+    """
+    try:
+        month, day = mmdd.split("-")
+        date(2024, int(month), int(day))
+    except (ValueError, TypeError):
+        return False
+    return True
+
+
 # National max closing times. pre_holiday can be overridden to weekday (20:00)
 # by municipal exceptions, so we allow up to 20:00 for pre_holiday.
 NATIONAL_MAX = {
@@ -78,10 +98,96 @@ def _check_verified_invariants(data: dict) -> list[str]:
     return []
 
 
+def _check_optional_beer_sales_fields(data: dict) -> list[str]:
+    """Validate shape of the optional schema-extension fields on beer_sales.
+
+    All fields are optional; if present, they must be well-formed.
+    """
+    if "beer_sales" not in data:
+        return []
+    beer = data["beer_sales"]
+    errors: list[str] = []
+
+    if "special_day_open" in beer:
+        val = beer["special_day_open"]
+        if not isinstance(val, str) or not _HHMM_RE.match(val):
+            errors.append("special_day_open must be HH:MM string")
+
+    exceptions = beer.get("exceptions")
+    if isinstance(exceptions, dict) and "pre_easter_week" in exceptions:
+        val = exceptions["pre_easter_week"]
+        if val not in _ALLOWED_PRE_EASTER_WEEK:
+            errors.append(
+                f"exceptions.pre_easter_week must be one of {sorted(_ALLOWED_PRE_EASTER_WEEK)}, "
+                f"got {val!r}"
+            )
+
+    if "date_overrides" in beer:
+        errors.extend(_validate_date_overrides(beer["date_overrides"]))
+
+    return errors
+
+
+def _validate_date_override_date(entry: dict, idx: int, seen: set[str]) -> list[str]:
+    """Validate the `date` field of one date_overrides entry.
+
+    Impossible dates (e.g. 02-30, 13-01) match the MM-DD regex but never match
+    a real calendar date, which would silently drop the intended override —
+    so they're rejected at validation time rather than shipping as a no-op.
+    """
+    d = entry.get("date")
+    if not isinstance(d, str) or not _MMDD_RE.match(d):
+        return [f"date_overrides[{idx}].date must be MM-DD string"]
+    if not _is_real_mmdd(d):
+        return [f"date_overrides[{idx}].date {d!r} is not a real calendar date"]
+    if d in seen:
+        return [f"date_overrides[{idx}].date duplicate {d!r}"]
+    seen.add(d)
+    return []
+
+
+def _validate_date_override_hours(entry: dict, idx: int) -> list[str]:
+    """Validate the `hours` field of one date_overrides entry."""
+    if "hours" not in entry:
+        return [f"date_overrides[{idx}].hours is required"]
+    hours = entry["hours"]
+    if hours not in _ALLOWED_DATE_OVERRIDE_HOURS:
+        return [
+            f"date_overrides[{idx}].hours must be one of "
+            f"{sorted(_ALLOWED_DATE_OVERRIDE_HOURS)}, got {hours!r}"
+        ]
+    return []
+
+
+def _validate_date_overrides(overrides: object) -> list[str]:
+    """Each entry must be {date: MM-DD (real calendar day), hours: saturday|pre_holiday}."""
+    if not isinstance(overrides, list):
+        return ["date_overrides must be a list"]
+    errors: list[str] = []
+    seen_dates: set[str] = set()
+    for i, entry in enumerate(overrides):
+        if not isinstance(entry, dict):
+            errors.append(f"date_overrides[{i}] must be an object")
+            continue
+        errors.extend(_validate_date_override_date(entry, i, seen_dates))
+        errors.extend(_validate_date_override_hours(entry, i))
+    return errors
+
+
+def _check_notes(data: dict) -> list[str]:
+    if "notes" not in data:
+        return []
+    if not isinstance(data["notes"], str):
+        return ["notes must be a string when present"]
+    return []
+
+
 def validate_municipality_schema(data: dict) -> list[str]:
     """Validate a municipality JSON file. Returns list of errors."""
     errors = _check_required_fields(data)
     errors.extend(_check_beer_sales_fields(data))
+    errors.extend(_check_optional_beer_sales_fields(data))
+    errors.extend(_check_notes(data))
     if "sources" in data and len(data.get("sources", [])) == 0:
         errors.append("Must have at least one source")
     errors.extend(_check_verified_invariants(data))
