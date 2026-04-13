@@ -14,14 +14,17 @@
       "whit_eve",
       "christmas_eve",
       "new_years_eve"
-    ]
+    ],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Skien kommune — forskrift om salgstider for øl (LFO 1995-03-16-297)",
+      "url": "https://lovdata.no/dokument/LFO/forskrift/1995-03-16-297"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }
