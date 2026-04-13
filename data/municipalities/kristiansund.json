@@ -8,20 +8,19 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+    "special_day_close": "18:00",
+    "special_days": [],
+    "exceptions": {
+      "pre_ascension_day": "weekday",
+      "pre_easter_week": "pre_holiday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Kristiansund kommune — salgstider for alkohol i butikk",
+      "url": "https://www.kristiansund.kommune.no/tjenester/naring/salg-servering-og-skjenking/salgstider-for-alkohol-i-butikk/"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }

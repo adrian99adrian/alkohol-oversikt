@@ -5,12 +5,12 @@
     "county": "Møre og Romsdal",
     "sources": [
       {
-        "title": "Alkoholloven § 3-7",
-        "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+        "title": "Ålesund kommune — forskrift om åpningstider for serverings-, salgs- og skjenkesteder (LFO 2017-06-08-1131)",
+        "url": "https://lovdata.no/dokument/LFO/forskrift/2017-06-08-1131"
       }
     ],
-    "last_verified": null,
-    "verified": false
+    "last_verified": "2026-04-14",
+    "verified": true
   },
   "days": [
     {
@@ -489,10 +489,10 @@
       "day_type_label": "Dag før kristi himmelfartsdag",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "18:00",
+      "beer_close": "20:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 18:00",
+      "is_deviation": false,
+      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 20:00",
       "vinmonopolet_summary": null
     },
     {
