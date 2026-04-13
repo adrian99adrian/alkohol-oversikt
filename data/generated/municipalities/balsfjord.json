@@ -14,23 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-13",
-      "weekday": "mandag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "closed",
-        "open_count": 0,
-        "closed_count": 1
-      }
-    },
-    {
       "date": "2026-04-14",
       "weekday": "tirsdag",
       "day_type": "weekday",
@@ -282,7 +265,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 1
+      }
     },
     {
       "date": "2026-04-28",
@@ -4833,6 +4820,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-13",
+      "weekday": "tirsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4842,11 +4842,6 @@
       "name": "Storsteinnes",
       "address": "Rådhusgata 9, 9050 Storsteinnes",
       "hours": [
-        {
-          "date": "2026-04-13",
-          "open": null,
-          "close": null
-        },
         {
           "date": "2026-04-14",
           "open": "11:00",
@@ -4911,17 +4906,16 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": null,
+          "close": null
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "closed",
-      "open_count": 0,
-      "closed_count": 1,
-      "date": "2026-04-13"
-    },
     {
       "type": "uniform",
       "open": "11:00",
@@ -5019,6 +5013,12 @@
       "open_count": 0,
       "closed_count": 1,
       "date": "2026-04-26"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 1,
+      "date": "2026-04-27"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

@@ -14,27 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-13",
-      "weekday": "mandag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
-        "open_count": 5,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-14",
       "weekday": "tirsdag",
       "day_type": "weekday",
@@ -302,7 +281,15 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 5,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-28",
@@ -4853,6 +4840,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-13",
+      "weekday": "tirsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4863,11 +4863,6 @@
       "address": "Storgata 26, 2000 Lillestrøm",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -4931,6 +4926,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -4940,11 +4940,6 @@
       "address": "Strømmen Storsenter, Støperiveien 5, 2010 Strømmen",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5008,6 +5003,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5017,11 +5017,6 @@
       "address": "Fru Natvigs vei 1, 1920 Sørumsand",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "17:00"
@@ -5085,6 +5080,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     },
@@ -5094,11 +5094,6 @@
       "address": "Gamle Fetvei 13, 1900 Fetsund",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5162,6 +5157,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5171,11 +5171,6 @@
       "address": "Furuholtet 1, 2020 Skedsmokorset",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5239,21 +5234,16 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
-      "open_count": 5,
-      "closed_count": 0,
-      "date": "2026-04-13"
-    },
     {
       "type": "range",
       "min_open": "10:00",
@@ -5367,6 +5357,16 @@
       "open_count": 0,
       "closed_count": 5,
       "date": "2026-04-26"
+    },
+    {
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 5,
+      "closed_count": 0,
+      "date": "2026-04-27"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

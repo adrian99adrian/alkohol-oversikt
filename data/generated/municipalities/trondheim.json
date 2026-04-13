@@ -14,27 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-13",
-      "weekday": "mandag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "09:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
-        "open_count": 9,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-14",
       "weekday": "tirsdag",
       "day_type": "weekday",
@@ -298,7 +277,15 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 9,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-28",
@@ -4849,6 +4836,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-13",
+      "weekday": "tirsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "09:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4859,11 +4859,6 @@
       "address": "Østre Rosten 28, 7075 Tiller",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -4927,6 +4922,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -4936,11 +4936,6 @@
       "address": "Olav Tryggvasons gate 28, 7011 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5004,6 +4999,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5013,11 +5013,6 @@
       "address": "Falkenborgveien 5, 7044 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5081,6 +5076,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5090,11 +5090,6 @@
       "address": "Kongens gate 9, 7013 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5158,6 +5153,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5167,11 +5167,6 @@
       "address": "Anders Estenstadsvei 16, 7046 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5235,6 +5230,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5244,11 +5244,6 @@
       "address": "Beddingen 11, Bassengtomta, 7014 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5312,6 +5307,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5321,11 +5321,6 @@
       "address": "City Lade, Haakon VII's gt. 9, 7041 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5389,6 +5384,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5398,11 +5398,6 @@
       "address": "Gamle Oslovei 1-5, 7020 Trondheim",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "18:00"
@@ -5466,6 +5461,11 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -5475,11 +5475,6 @@
       "address": "Ringvålveien 3-7, 7080 Heimdal",
       "hours": [
         {
-          "date": "2026-04-13",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-14",
           "open": "10:00",
           "close": "17:00"
@@ -5543,21 +5538,16 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
-      "open_count": 9,
-      "closed_count": 0,
-      "date": "2026-04-13"
-    },
     {
       "type": "range",
       "min_open": "10:00",
@@ -5667,6 +5657,16 @@
       "open_count": 0,
       "closed_count": 9,
       "date": "2026-04-26"
+    },
+    {
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 9,
+      "closed_count": 0,
+      "date": "2026-04-27"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

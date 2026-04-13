@@ -9,27 +9,10 @@
         "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
       }
     ],
-    "last_verified": null,
-    "verified": false
+    "last_verified": "2026-04-14",
+    "verified": true
   },
   "days": [
-    {
-      "date": "2026-04-13",
-      "weekday": "mandag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "closed",
-        "open_count": 0,
-        "closed_count": 1
-      }
-    },
     {
       "date": "2026-04-14",
       "weekday": "tirsdag",
@@ -282,7 +265,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 1
+      }
     },
     {
       "date": "2026-04-28",
@@ -486,10 +473,10 @@
       "day_type_label": "Dag før kristi himmelfartsdag",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "18:00",
+      "beer_close": "20:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 18:00",
+      "is_deviation": false,
+      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 20:00",
       "vinmonopolet_summary": null
     },
     {
@@ -616,10 +603,10 @@
       "day_type_label": "Pinseaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Pinseaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Pinseaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3411,10 +3398,10 @@
       "day_type_label": "Julaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Julaften — ølsalg stenger kl. 15:00",
+      "comment": "Julaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3502,10 +3489,10 @@
       "day_type_label": "Nyttårsaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Nyttårsaften — ølsalg stenger kl. 15:00",
+      "comment": "Nyttårsaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4620,10 +4607,10 @@
       "day_type_label": "Påskeaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Påskeaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Påskeaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4833,6 +4820,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-13",
+      "weekday": "tirsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4842,11 +4842,6 @@
       "name": "Ølen",
       "address": "Sandeidvegen 3, 5580 Ølen",
       "hours": [
-        {
-          "date": "2026-04-13",
-          "open": null,
-          "close": null
-        },
         {
           "date": "2026-04-14",
           "open": "10:00",
@@ -4911,17 +4906,16 @@
           "date": "2026-04-26",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-27",
+          "open": null,
+          "close": null
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "closed",
-      "open_count": 0,
-      "closed_count": 1,
-      "date": "2026-04-13"
-    },
     {
       "type": "uniform",
       "open": "10:00",
@@ -5019,6 +5013,12 @@
       "open_count": 0,
       "closed_count": 1,
       "date": "2026-04-26"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 1,
+      "date": "2026-04-27"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",
