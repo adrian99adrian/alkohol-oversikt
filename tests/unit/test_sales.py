@@ -475,14 +475,11 @@ class TestDateOverrides:
         actually verifies the pre_holiday branch (not a false pass via
         coincidentally-equal values)."""
         mun = _make_mun(
-            date_overrides=[{"date": "11-15", "hours": "pre_holiday"}],
+            date_overrides=[{"date": "11-16", "hours": "pre_holiday"}],
             saturday_close="16:00",
             pre_holiday_close="17:00",
         )
-        day_info = _classify(date(2026, 11, 15))  # Sunday — date_overrides precedes forbidden
-        # Sunday is forbidden, override doesn't fire. Pick a non-forbidden date:
         day_info = _classify(date(2026, 11, 16))  # Monday
-        mun["beer_sales"]["date_overrides"] = [{"date": "11-16", "hours": "pre_holiday"}]
         assert municipal_close(day_info, mun) == "17:00"  # pre_holiday_close, not saturday_close
 
     def test_override_wins_over_special_day(self):
@@ -509,3 +506,20 @@ class TestDateOverrides:
         mun = _make_mun(date_overrides=[{"date": "04-30", "hours": "saturday"}])
         day_info = _classify(date(2026, 4, 29))  # Wed
         assert municipal_close(day_info, mun) == "20:00"
+
+    def test_comment_flags_forskrift_on_non_weekday_override(self):
+        """When a date_override lands on a pre_holiday/saturday/special_day, the
+        comment should still mark it as a kommune forskrift override so readers
+        understand the calendar's day_type wasn't what drove the close time."""
+        # Dec 27 2026 is a Sunday → forbidden, skip to Dec 28 2026 (Monday)
+        # which is a normal weekday — pick Dec 31 (Thursday = new_years_eve special).
+        mun = _make_mun(
+            date_overrides=[{"date": "12-31", "hours": "saturday"}],
+            special_days=["new_years_eve"],
+            special_day_close="15:00",
+        )
+        d = date(2026, 12, 31)  # Thursday, new_years_eve → special_day
+        day_info = _classify(d)
+        entry = build_day_entry(d, day_info, mun)
+        assert entry["beer_close"] == "18:00"  # saturday_close, via override
+        assert entry["comment"] and "Kommunal forskrift" in entry["comment"]
