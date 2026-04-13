@@ -136,6 +136,13 @@ const fetchedAtFormatted = vinmonopoletFetchedAt
       </div>
     )}
 
+    <!-- Free-form kommune notes (e.g. bydel-specific rules not modeled in data) -->
+    {municipality.notes && (
+      <div class="mb-6 rounded-lg border border-amber-700 bg-amber-900/30 p-3">
+        <p class="text-sm text-amber-200">{municipality.notes}</p>
+      </div>
+    )}
+
     <!-- Today and Tomorrow cards -->
     <div class="mb-6 grid gap-4 sm:grid-cols-2">
       <DayCard
