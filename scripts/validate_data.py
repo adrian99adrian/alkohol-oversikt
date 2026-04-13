@@ -38,10 +38,25 @@ REQUIRED_BEER_SALES_FIELDS = [
     "special_days",
 ]
 
-_HHMM_RE = re.compile(r"^\d{2}:\d{2}$")
+_HHMM_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 _MMDD_RE = re.compile(r"^\d{2}-\d{2}$")
 _ALLOWED_DATE_OVERRIDE_HOURS = {"saturday", "pre_holiday"}
 _ALLOWED_PRE_EASTER_WEEK = {"pre_holiday"}
+
+
+def _is_real_mmdd(mmdd: str) -> bool:
+    """True when MM-DD is a real calendar day (rejects 02-30, 13-01, 00-00 etc.).
+
+    Uses a leap year so Feb 29 remains valid — otherwise a kommune couldn't
+    pin a date_override to leap day if they ever needed to.
+    """
+    try:
+        month, day = mmdd.split("-")
+        date(2024, int(month), int(day))
+    except (ValueError, TypeError):
+        return False
+    return True
+
 
 # National max closing times. pre_holiday can be overridden to weekday (20:00)
 # by municipal exceptions, so we allow up to 20:00 for pre_holiday.
@@ -114,7 +129,7 @@ def _check_optional_beer_sales_fields(data: dict) -> list[str]:
 
 
 def _validate_date_overrides(overrides: object) -> list[str]:
-    """Each entry must be {date: MM-DD, hours: saturday|pre_holiday}."""
+    """Each entry must be {date: MM-DD (real calendar day), hours: saturday|pre_holiday}."""
     if not isinstance(overrides, list):
         return ["date_overrides must be a list"]
     errors: list[str] = []
@@ -126,16 +141,25 @@ def _validate_date_overrides(overrides: object) -> list[str]:
         d = entry.get("date")
         if not isinstance(d, str) or not _MMDD_RE.match(d):
             errors.append(f"date_overrides[{i}].date must be MM-DD string")
+        elif not _is_real_mmdd(d):
+            # Impossible dates (e.g. 02-30, 13-01) would silently never match
+            # any real calendar date, dropping the intended override. Reject
+            # at validation time so the typo is caught before data ships.
+            errors.append(f"date_overrides[{i}].date {d!r} is not a real calendar date")
         elif d in seen_dates:
             errors.append(f"date_overrides[{i}].date duplicate {d!r}")
         else:
             seen_dates.add(d)
-        hours = entry.get("hours")
-        if hours not in _ALLOWED_DATE_OVERRIDE_HOURS:
-            errors.append(
-                f"date_overrides[{i}].hours must be one of "
-                f"{sorted(_ALLOWED_DATE_OVERRIDE_HOURS)}, got {hours!r}"
-            )
+
+        if "hours" not in entry:
+            errors.append(f"date_overrides[{i}].hours is required")
+        else:
+            hours = entry["hours"]
+            if hours not in _ALLOWED_DATE_OVERRIDE_HOURS:
+                errors.append(
+                    f"date_overrides[{i}].hours must be one of "
+                    f"{sorted(_ALLOWED_DATE_OVERRIDE_HOURS)}, got {hours!r}"
+                )
     return errors
 
 

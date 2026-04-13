@@ -141,6 +141,38 @@ class TestSchemaExtensionFields:
         errors = validate_municipality_schema(data)
         assert any("date_overrides" in e for e in errors)
 
+    def test_impossible_mmdd_rejected(self, sample_municipality_sandefjord):
+        """02-30 / 13-01 match the MM-DD regex but are not real calendar days."""
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [{"date": "02-30", "hours": "saturday"}]
+        errors = validate_municipality_schema(data)
+        assert any("not a real calendar date" in e for e in errors)
+
+    def test_impossible_month_rejected(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [{"date": "13-01", "hours": "saturday"}]
+        errors = validate_municipality_schema(data)
+        assert any("not a real calendar date" in e for e in errors)
+
+    def test_leap_day_accepted(self, sample_municipality_sandefjord):
+        """Feb 29 should remain valid in case a kommune ever needs it."""
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [{"date": "02-29", "hours": "saturday"}]
+        assert validate_municipality_schema(data) == []
+
+    def test_missing_hours_has_clear_message(self, sample_municipality_sandefjord):
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["date_overrides"] = [{"date": "04-30"}]
+        errors = validate_municipality_schema(data)
+        assert any("hours is required" in e for e in errors)
+
+    def test_invalid_hhmm_rejected(self, sample_municipality_sandefjord):
+        """Tighter regex rejects 24:00 / 99:99 even though format is 'HH:MM'."""
+        data = deepcopy(sample_municipality_sandefjord)
+        data["beer_sales"]["special_day_open"] = "24:00"
+        errors = validate_municipality_schema(data)
+        assert any("special_day_open" in e for e in errors)
+
     def test_invalid_date_override_hours_rejected(self, sample_municipality_sandefjord):
         data = deepcopy(sample_municipality_sandefjord)
         data["beer_sales"]["date_overrides"] = [{"date": "04-30", "hours": "weekday"}]

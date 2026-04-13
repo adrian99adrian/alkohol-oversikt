@@ -412,6 +412,20 @@ class TestSpecialDayOpen:
         day_info = _classify(date(2026, 3, 10))  # Tuesday
         assert municipal_open(day_info, mun) == "08:00"
 
+    def test_special_day_open_wins_on_saturday_paaskeaften(self):
+        """Regression: påskeaften falls on a Saturday. Earlier the saturday
+        short-circuit in municipal_open ran before the special-day check,
+        silently dropping special_day_open."""
+        mun = _make_mun(
+            special_day_open="09:00",
+            special_days=["easter_eve"],
+            special_day_close="15:00",
+            saturday_open="10:00",
+        )
+        day_info = _classify(date(2026, 4, 4))  # Påskeaften (Saturday)
+        assert day_info["day_type"] == "special_day"
+        assert municipal_open(day_info, mun) == "09:00"
+
 
 class TestPreEasterWeekException:
     """Påskeuke rule: Wed/Thu/Fri/Sat før påske close at pre_holiday time."""
@@ -456,11 +470,20 @@ class TestDateOverrides:
         assert municipal_close(day_info, mun) == "18:00"
         assert municipal_open(day_info, mun) == "08:00"  # saturday_open
 
-    def test_pre_holiday_override_on_weekday(self):
-        mun = _make_mun(date_overrides=[{"date": "05-16", "hours": "pre_holiday"}])
-        day_info = _classify(date(2026, 5, 16))  # Saturday — but year varies
-        # override still applies based on MM-DD match
-        assert municipal_close(day_info, mun) == "18:00"
+    def test_pre_holiday_override_distinguishes_from_saturday_branch(self):
+        """Use distinct saturday_close and pre_holiday_close so this test
+        actually verifies the pre_holiday branch (not a false pass via
+        coincidentally-equal values)."""
+        mun = _make_mun(
+            date_overrides=[{"date": "11-15", "hours": "pre_holiday"}],
+            saturday_close="16:00",
+            pre_holiday_close="17:00",
+        )
+        day_info = _classify(date(2026, 11, 15))  # Sunday — date_overrides precedes forbidden
+        # Sunday is forbidden, override doesn't fire. Pick a non-forbidden date:
+        day_info = _classify(date(2026, 11, 16))  # Monday
+        mun["beer_sales"]["date_overrides"] = [{"date": "11-16", "hours": "pre_holiday"}]
+        assert municipal_close(day_info, mun) == "17:00"  # pre_holiday_close, not saturday_close
 
     def test_override_wins_over_special_day(self):
         """Dec 31 is new_years_eve; override says saturday → 18:00 overrides special_day_close."""
