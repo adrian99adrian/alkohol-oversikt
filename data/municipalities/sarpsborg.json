@@ -14,14 +14,17 @@
       "whit_eve",
       "christmas_eve",
       "new_years_eve"
-    ]
+    ],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Sarpsborg kommune — forskrift om tidsbegrensning for salg (LF 2012-10-25-1168)",
+      "url": "https://lovdata.no/dokument/LF/forskrift/2012-10-25-1168"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }
