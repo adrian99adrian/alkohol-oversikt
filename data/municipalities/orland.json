@@ -8,20 +8,27 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
+    "special_day_close": "18:00",
+    "special_days": [],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    },
+    "date_overrides": [
+      { "date": "04-30", "hours": "saturday" },
+      { "date": "05-16", "hours": "saturday" },
+      { "date": "12-27", "hours": "saturday" },
+      { "date": "12-28", "hours": "saturday" },
+      { "date": "12-29", "hours": "saturday" },
+      { "date": "12-30", "hours": "saturday" },
+      { "date": "12-31", "hours": "saturday" }
     ]
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Ørland kommune — forskrift til omsetning av alkoholholdig drikk og serveringsloven (LF 2023-02-16-209)",
+      "url": "https://lovdata.no/dokument/LF/forskrift/2023-02-16-209"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }
