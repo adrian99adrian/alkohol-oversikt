@@ -3,9 +3,9 @@
   "name": "Røros",
   "county": "Trøndelag",
   "beer_sales": {
-    "weekday_open": "08:00",
+    "weekday_open": "09:00",
     "weekday_close": "20:00",
-    "saturday_open": "08:00",
+    "saturday_open": "09:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
     "special_day_close": "15:00",
@@ -14,14 +14,17 @@
       "whit_eve",
       "christmas_eve",
       "new_years_eve"
-    ]
+    ],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Røros kommune — forskrift om alkohol (LF 2020-09-24-3355)",
+      "url": "https://lovdata.no/dokument/LF/forskrift/2020-09-24-3355"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }
