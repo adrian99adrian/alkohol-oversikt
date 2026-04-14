@@ -15,7 +15,9 @@
       "christmas_eve"
     ],
     "exceptions": {
-      "pre_ascension_day": "weekday"
+      "pre_ascension_day": "weekday",
+      "pre_labour_day": "weekday",
+      "pre_constitution_day": "weekday"
     }
   },
   "sources": [

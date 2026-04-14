@@ -295,10 +295,10 @@
       "day_type_label": "Dag før 1. mai",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "18:00",
+      "beer_close": "20:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Dag før 1. mai — ølsalg stenger kl. 18:00",
+      "is_deviation": false,
+      "comment": "Dag før 1. mai — ølsalg stenger kl. 20:00",
       "vinmonopolet_summary": null
     },
     {

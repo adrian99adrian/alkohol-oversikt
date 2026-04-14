@@ -223,6 +223,44 @@ class TestTrondheimAscensionException:
         assert closing_time(day_info, sample_municipality_trondheim) == "18:00"
 
 
+class TestBambleMayEveExceptions:
+    """Day before 1. mai and 17. mai use weekday hours in Bamble.
+
+    Bamble's 2024-2028 handlingsplan explicitly states that dagen før
+    Kristi himmelfart, 1. mai og 17. mai skal regnes som vanlige hverdager.
+    Schema exposes this via exceptions.pre_labour_day and pre_constitution_day.
+    """
+
+    def test_day_before_labour_day_uses_weekday(self, sample_municipality_bamble):
+        """April 30, 2026 (Thu) before 1. mai (Fri): weekday 20:00, not pre_holiday 18:00."""
+        day_info = _classify(date(2026, 4, 30))
+        assert day_info["day_type"] == "pre_holiday"
+        assert day_info["pre_holiday_for"] == "labour_day"
+        assert closing_time(day_info, sample_municipality_bamble) == "20:00"
+
+    def test_day_before_constitution_day_uses_weekday(self, sample_municipality_bamble):
+        """May 16, 2028 (Tue) before 17. mai (Wed): weekday 20:00, not pre_holiday 18:00."""
+        day_info = _classify(date(2028, 5, 16))
+        assert day_info["day_type"] == "pre_holiday"
+        assert day_info["pre_holiday_for"] == "constitution_day"
+        assert closing_time(day_info, sample_municipality_bamble) == "20:00"
+
+    def test_other_pre_holiday_not_affected(self, sample_municipality_bamble):
+        """April 1, 2026 (Wed before Skjærtorsdag) still uses pre_holiday: 18:00."""
+        day_info = _classify(date(2026, 4, 1))
+        assert closing_time(day_info, sample_municipality_bamble) == "18:00"
+
+    def test_control_kommune_without_exceptions(self, sample_municipality_sandefjord):
+        """Sandefjord has no pre_labour_day exception — pre-1. mai still closes 18:00.
+
+        Guards against the exception accidentally firing for kommuner that
+        didn't opt in.
+        """
+        day_info = _classify(date(2026, 4, 30))
+        assert day_info["pre_holiday_for"] == "labour_day"
+        assert closing_time(day_info, sample_municipality_sandefjord) == "18:00"
+
+
 # --- Oslo large store rule ---
 
 
