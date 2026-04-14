@@ -3,25 +3,27 @@
   "name": "Ringsaker",
   "county": "Innlandet",
   "beer_sales": {
-    "weekday_open": "08:00",
+    "weekday_open": "06:00",
     "weekday_close": "20:00",
-    "saturday_open": "08:00",
+    "saturday_open": "06:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
+    "special_day_close": "16:00",
     "special_days": [
       "easter_eve",
       "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+      "christmas_eve"
+    ],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Ringsaker kommune — forskrift om tider for salg og utlevering av alkoholholdig drikk (LF 2007-05-23-958)",
+      "url": "https://lovdata.no/dokument/LF/forskrift/2007-05-23-958"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-14",
+  "verified": true
 }
