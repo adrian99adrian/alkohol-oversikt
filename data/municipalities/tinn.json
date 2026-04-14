@@ -8,20 +8,19 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+    "special_day_close": "18:00",
+    "special_days": [],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Tinn kommune – Alkoholpolitisk handlingsplan 2024–2028",
+      "url": "https://aimblob.blob.core.windows.net/aimfiles/1ea4dd6e-ba98-454f-bd47-493009317359.pdf"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-15",
+  "verified": true,
+  "notes": "Som typisk turiststed kan åpningstidene fravikes i påsken og i juni-august, men planen oppgir ikke konkrete klokkeslett for disse unntakene."
 }

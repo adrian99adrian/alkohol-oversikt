@@ -5,35 +5,18 @@
     "county": "Vestfold",
     "sources": [
       {
-        "title": "Alkoholloven § 3-7",
-        "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+        "title": "Færder kommune – Åpningstider for utsalgssteder med salgsbevilling",
+        "url": "https://faerder.kommune.no/politikk-samfunn-og-organisasjon/skatt-og-naring/naring/apningstider-for-utsalgssteder-med-salgsbevilling/"
+      },
+      {
+        "title": "Lov om helligdager og helligdagsfred § 5",
+        "url": "https://lovdata.no/dokument/NL/lov/1995-02-24-12"
       }
     ],
-    "last_verified": null,
-    "verified": false
+    "last_verified": "2026-04-15",
+    "verified": true
   },
   "days": [
-    {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
-        "open_count": 2,
-        "closed_count": 0
-      }
-    },
     {
       "date": "2026-04-15",
       "weekday": "onsdag",
@@ -302,7 +285,15 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-29",
@@ -623,10 +614,10 @@
       "day_type_label": "Pinseaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "16:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Pinseaften — ølsalg stenger kl. 15:00",
+      "comment": "Pinseaften — ølsalg stenger kl. 16:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3418,10 +3409,10 @@
       "day_type_label": "Julaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "16:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Julaften — ølsalg stenger kl. 15:00",
+      "comment": "Julaften — ølsalg stenger kl. 16:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3509,10 +3500,10 @@
       "day_type_label": "Nyttårsaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Nyttårsaften — ølsalg stenger kl. 15:00",
+      "comment": "Nyttårsaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4627,10 +4618,10 @@
       "day_type_label": "Påskeaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "16:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Påskeaften — ølsalg stenger kl. 15:00",
+      "comment": "Påskeaften — ølsalg stenger kl. 16:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4853,6 +4844,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4862,11 +4866,6 @@
       "name": "Nøtterøy",
       "address": "Ørsnesalléen 31, 3120 Nøtterøy",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4929,6 +4928,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -4940,11 +4944,6 @@
       "address": "Østveien 665, 3145 Tjøme",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "17:00"
@@ -5008,21 +5007,16 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
-      "open_count": 2,
-      "closed_count": 0,
-      "date": "2026-04-14"
-    },
     {
       "type": "range",
       "min_open": "10:00",
@@ -5136,6 +5130,16 @@
       "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-27"
+    },
+    {
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-28"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

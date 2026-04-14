@@ -5,27 +5,14 @@
     "county": "Agder",
     "sources": [
       {
-        "title": "Alkoholloven § 3-7",
-        "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+        "title": "Sirdal kommune – Alkoholpolitiske retningslinjer 2024–2028",
+        "url": "https://www.sirdal.kommune.no/download/18.7e7773a19c2c46f4072d64/1770642489092/Alkoholpolitiske%20retningslinjer%20i%20Sirdal%20kommune%20for%20periode%202024%20-%202028%20-%20vedtatt%2019.09.2024%20%282%29.pdf"
       }
     ],
-    "last_verified": null,
-    "verified": false
+    "last_verified": "2026-04-15",
+    "verified": true
   },
   "days": [
-    {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": null
-    },
     {
       "date": "2026-04-15",
       "weekday": "onsdag",
@@ -397,10 +384,10 @@
       "day_type_label": "Dag før kristi himmelfartsdag",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "18:00",
+      "beer_close": "20:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 18:00",
+      "is_deviation": false,
+      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 20:00",
       "vinmonopolet_summary": null
     },
     {
@@ -527,10 +514,10 @@
       "day_type_label": "Pinseaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Pinseaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Pinseaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3322,10 +3309,10 @@
       "day_type_label": "Julaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Julaften — ølsalg stenger kl. 15:00",
+      "comment": "Julaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3413,10 +3400,10 @@
       "day_type_label": "Nyttårsaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Nyttårsaften — ølsalg stenger kl. 15:00",
+      "comment": "Nyttårsaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4531,10 +4518,10 @@
       "day_type_label": "Påskeaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Påskeaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Påskeaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4757,6 +4744,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "nearest",
@@ -4769,11 +4769,6 @@
       "name": "Flekkefjord",
       "address": "Kirkegaten 14, 4400 Flekkefjord",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4838,6 +4833,11 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     },
@@ -4845,14 +4845,6 @@
     "source_municipality_id": "flekkefjord",
     "source_municipality_name": "Flekkefjord",
     "day_summary": [
-      {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "17:00",
-        "open_count": 1,
-        "closed_count": 0,
-        "date": "2026-04-14"
-      },
       {
         "type": "uniform",
         "open": "10:00",
@@ -4952,6 +4944,14 @@
         "open_count": 1,
         "closed_count": 0,
         "date": "2026-04-27"
+      },
+      {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "17:00",
+        "open_count": 1,
+        "closed_count": 0,
+        "date": "2026-04-28"
       }
     ]
   }

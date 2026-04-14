@@ -5,31 +5,19 @@
     "county": "Agder",
     "sources": [
       {
-        "title": "Alkoholloven § 3-7",
-        "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+        "title": "Kvinesdal kommune – Alkoholpolitiske retningslinjer 2020–2024 (utløpt)",
+        "url": "https://kvinesdal.kommune.no/_f/p1/i68ea9860-057f-4c89-8e31-dba9345508c9/alkoholpolitiske-retningslinjer-2020-2024-vedtatt-kommunestyret-130520.pdf"
+      },
+      {
+        "title": "Kvinesdal kommune – Regelverk for salgs- og skjenkesteder",
+        "url": "https://kvinesdal.kommune.no/tjenester/naring-natur-og-miljo/salg-skjenking-og-servering/regelverk-for-salgs-og-skjenkesteder/"
       }
     ],
-    "last_verified": null,
-    "verified": false
+    "last_verified": "2026-04-15",
+    "verified": true,
+    "notes": "Kommunens egen side peker fortsatt på utløpt 2020–2024-plan. Tidene matcher Lister-regionens felles 2024–2028-retningslinjer (via Lyngdal) og antas videreført uendret."
   },
   "days": [
-    {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "closed",
-        "open_count": 0,
-        "closed_count": 1
-      }
-    },
     {
       "date": "2026-04-15",
       "weekday": "onsdag",
@@ -278,7 +266,11 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "closed",
+        "open_count": 0,
+        "closed_count": 1
+      }
     },
     {
       "date": "2026-04-29",
@@ -469,10 +461,10 @@
       "day_type_label": "Dag før kristi himmelfartsdag",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "18:00",
+      "beer_close": "20:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 18:00",
+      "is_deviation": false,
+      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 20:00",
       "vinmonopolet_summary": null
     },
     {
@@ -599,10 +591,10 @@
       "day_type_label": "Pinseaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Pinseaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Pinseaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3394,10 +3386,10 @@
       "day_type_label": "Julaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Julaften — ølsalg stenger kl. 15:00",
+      "comment": "Julaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3485,10 +3477,10 @@
       "day_type_label": "Nyttårsaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Nyttårsaften — ølsalg stenger kl. 15:00",
+      "comment": "Nyttårsaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4603,10 +4595,10 @@
       "day_type_label": "Påskeaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Påskeaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Påskeaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4829,6 +4821,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4838,11 +4843,6 @@
       "name": "Kvinesdal",
       "address": "Elvevegen 2, 4480 Kvinesdal",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": null,
-          "close": null
-        },
         {
           "date": "2026-04-15",
           "open": "12:00",
@@ -4907,17 +4907,16 @@
           "date": "2026-04-27",
           "open": null,
           "close": null
+        },
+        {
+          "date": "2026-04-28",
+          "open": null,
+          "close": null
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "closed",
-      "open_count": 0,
-      "closed_count": 1,
-      "date": "2026-04-14"
-    },
     {
       "type": "uniform",
       "open": "12:00",
@@ -5011,6 +5010,12 @@
       "open_count": 0,
       "closed_count": 1,
       "date": "2026-04-27"
+    },
+    {
+      "type": "closed",
+      "open_count": 0,
+      "closed_count": 1,
+      "date": "2026-04-28"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

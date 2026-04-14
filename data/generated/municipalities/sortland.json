@@ -5,33 +5,18 @@
     "county": "Nordland",
     "sources": [
       {
-        "title": "Alkoholloven § 3-7",
-        "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+        "title": "Sortland kommune – Bevillingsreglement for alkoholsaker 2024–2028",
+        "url": "https://www.sortland.kommune.no/_f/p4/ic2823ab8-ec9e-4e55-9cae-e2e83bc8dca5/bevillingsreglement-for-alkoholsaker-2024-2028-vedtatt-av-kommunestyret-20062024-1.pdf"
+      },
+      {
+        "title": "Sortland kommune – Regelverk for salgs- og skjenkesteder",
+        "url": "https://www.sortland.kommune.no/tjenester/okonomi-naring-og-bevilling/salg-servering-og-skjenking/regelverk-for-salgs-og-skjenkesteder/"
       }
     ],
-    "last_verified": null,
-    "verified": false
+    "last_verified": "2026-04-15",
+    "verified": true
   },
   "days": [
-    {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "17:00",
-        "open_count": 1,
-        "closed_count": 0
-      }
-    },
     {
       "date": "2026-04-15",
       "weekday": "onsdag",
@@ -286,7 +271,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "17:00",
+        "open_count": 1,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-29",
@@ -477,10 +468,10 @@
       "day_type_label": "Dag før kristi himmelfartsdag",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "18:00",
+      "beer_close": "20:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 18:00",
+      "is_deviation": false,
+      "comment": "Dag før kristi himmelfartsdag — ølsalg stenger kl. 20:00",
       "vinmonopolet_summary": null
     },
     {
@@ -607,10 +598,10 @@
       "day_type_label": "Pinseaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Pinseaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Pinseaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3402,10 +3393,10 @@
       "day_type_label": "Julaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Julaften — ølsalg stenger kl. 15:00",
+      "comment": "Julaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -3493,10 +3484,10 @@
       "day_type_label": "Nyttårsaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
       "is_deviation": true,
-      "comment": "Nyttårsaften — ølsalg stenger kl. 15:00",
+      "comment": "Nyttårsaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4611,10 +4602,10 @@
       "day_type_label": "Påskeaften",
       "beer_sale_allowed": true,
       "beer_open": "08:00",
-      "beer_close": "15:00",
+      "beer_close": "18:00",
       "beer_close_large_stores": null,
-      "is_deviation": true,
-      "comment": "Påskeaften — ølsalg stenger kl. 15:00",
+      "is_deviation": false,
+      "comment": "Påskeaften — ølsalg stenger kl. 18:00",
       "vinmonopolet_summary": null
     },
     {
@@ -4837,6 +4828,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4846,11 +4850,6 @@
       "name": "Sortland",
       "address": "Strandgt. 24, 8400 Sortland",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4915,19 +4914,16 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "17:00",
-      "open_count": 1,
-      "closed_count": 0,
-      "date": "2026-04-14"
-    },
     {
       "type": "uniform",
       "open": "10:00",
@@ -5027,6 +5023,14 @@
       "open_count": 1,
       "closed_count": 0,
       "date": "2026-04-27"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "17:00",
+      "open_count": 1,
+      "closed_count": 0,
+      "date": "2026-04-28"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

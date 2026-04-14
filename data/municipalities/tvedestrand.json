@@ -8,20 +8,27 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
+    "special_day_close": "16:00",
     "special_days": [
       "easter_eve",
       "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+      "christmas_eve"
+    ],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Tvedestrand kommune – Alkoholpolitisk handlingsplan",
+      "url": "https://www.tvedestrand.kommune.no/tjenester/naring-bevilling-og-skatt/salg-servering-og-skjenking/alkoholpolitisk-handlingsplan-for-tvedestrand-kommune/"
+    },
+    {
+      "title": "Tvedestrand kommune – Høringsutkast alkoholpolitisk handlingsplan 2025–2028",
+      "url": "https://www.tvedestrand.kommune.no/_f/p1/ie457bc2c-4425-4489-908f-f1515c5101b8/24_2155-10-horingsutkast-alkoholpolitisk-handlingsplan-2025-2028-610989_1_1.PDF"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-15",
+  "verified": true,
+  "notes": "Tidene er hentet fra høringsutkast til alkoholpolitisk handlingsplan 2025–2028. Endelig plan er ikke vedtatt, men tidene antas å stå som foreslått."
 }

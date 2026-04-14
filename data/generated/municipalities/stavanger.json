@@ -14,27 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
-        "open_count": 6,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-15",
       "weekday": "onsdag",
       "day_type": "weekday",
@@ -298,7 +277,15 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 6,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-29",
@@ -4849,6 +4836,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4858,11 +4858,6 @@
       "name": "Stavanger, Hillevåg",
       "address": "Gartnerveien 15, 4016 Stavanger",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4925,6 +4920,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -4936,11 +4936,6 @@
       "address": "Lars Hertevigs gate 6, 4005 Stavanger",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5002,6 +4997,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5013,11 +5013,6 @@
       "address": "Verksgata 1A, 4013 Stavanger",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5079,6 +5074,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5090,11 +5090,6 @@
       "address": "Madlakrossen 9, 4042 Hafrsfjord",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5156,6 +5151,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5167,11 +5167,6 @@
       "address": "Jåttåvågveien 7, 4020 Stavanger",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "17:00"
@@ -5233,6 +5228,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "17:00"
         }
@@ -5244,11 +5244,6 @@
       "address": "Tastatunet 1, 4027 Stavanger",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "17:00"
@@ -5312,21 +5307,16 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
-      "open_count": 6,
-      "closed_count": 0,
-      "date": "2026-04-14"
-    },
     {
       "type": "range",
       "min_open": "10:00",
@@ -5436,6 +5426,16 @@
       "open_count": 6,
       "closed_count": 0,
       "date": "2026-04-27"
+    },
+    {
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 6,
+      "closed_count": 0,
+      "date": "2026-04-28"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

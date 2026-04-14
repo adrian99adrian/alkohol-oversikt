@@ -8,20 +8,22 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+    "special_day_close": "18:00",
+    "special_days": [],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Vågan kommune – Alkoholpolitisk handlingsplan 2024–2028",
+      "url": "https://vagan.kommune.no/_f/p1/i251bc5fe-b73b-4d4d-958d-ba643fb88a5a/alkoholpolitisk-handlingsplan-2024-2028.pdf"
+    },
+    {
+      "title": "Vågan kommune – Handlingsplan alkohol/rus",
+      "url": "https://vagan.kommune.no/samfunn/kommunal-planlegging/tema-og-virksomhetsplaner/handlingsplan-alkohol-rus.21984.aspx"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-15",
+  "verified": true
 }
