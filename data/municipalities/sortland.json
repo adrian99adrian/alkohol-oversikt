@@ -8,20 +8,22 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+    "special_day_close": "18:00",
+    "special_days": [],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Sortland kommune – Bevillingsreglement for alkoholsaker 2024–2028",
+      "url": "https://www.sortland.kommune.no/_f/p4/ic2823ab8-ec9e-4e55-9cae-e2e83bc8dca5/bevillingsreglement-for-alkoholsaker-2024-2028-vedtatt-av-kommunestyret-20062024-1.pdf"
+    },
+    {
+      "title": "Sortland kommune – Regelverk for salgs- og skjenkesteder",
+      "url": "https://www.sortland.kommune.no/tjenester/okonomi-naring-og-bevilling/salg-servering-og-skjenking/regelverk-for-salgs-og-skjenkesteder/"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-15",
+  "verified": true
 }

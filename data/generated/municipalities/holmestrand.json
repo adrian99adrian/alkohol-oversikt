@@ -14,25 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "17:00",
-        "open_count": 2,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-15",
       "weekday": "onsdag",
       "day_type": "weekday",
@@ -290,7 +271,13 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "17:00",
+        "open_count": 2,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-29",
@@ -4841,6 +4828,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4850,11 +4850,6 @@
       "name": "Holmestrand",
       "address": "Langgaten 39, 3080 Holmestrand",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4917,6 +4912,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "17:00"
         }
@@ -4928,11 +4928,6 @@
       "address": "Kostegata 2, 3070 Sande I Vestfold",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "17:00"
@@ -4996,19 +4991,16 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "17:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "uniform",
-      "open": "10:00",
-      "close": "17:00",
-      "open_count": 2,
-      "closed_count": 0,
-      "date": "2026-04-14"
-    },
     {
       "type": "uniform",
       "open": "10:00",
@@ -5112,6 +5104,14 @@
       "open_count": 2,
       "closed_count": 0,
       "date": "2026-04-27"
+    },
+    {
+      "type": "uniform",
+      "open": "10:00",
+      "close": "17:00",
+      "open_count": 2,
+      "closed_count": 0,
+      "date": "2026-04-28"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

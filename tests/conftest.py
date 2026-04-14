@@ -79,6 +79,14 @@ def sample_municipality_trondheim(project_root: Path) -> dict:
 
 
 @pytest.fixture
+def sample_municipality_bamble(project_root: Path) -> dict:
+    """Load Bamble municipality JSON (has pre_labour_day + pre_constitution_day exceptions)."""
+    path = project_root / "data" / "municipalities" / "bamble.json"
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+@pytest.fixture
 def sample_municipality_bergen(project_root: Path) -> dict:
     """Load Bergen municipality JSON."""
     path = project_root / "data" / "municipalities" / "bergen.json"

@@ -8,20 +8,23 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
+    "special_day_close": "16:00",
     "special_days": [
       "easter_eve",
       "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
+      "christmas_eve"
     ]
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Færder kommune – Åpningstider for utsalgssteder med salgsbevilling",
+      "url": "https://faerder.kommune.no/politikk-samfunn-og-organisasjon/skatt-og-naring/naring/apningstider-for-utsalgssteder-med-salgsbevilling/"
+    },
+    {
+      "title": "Lov om helligdager og helligdagsfred § 5",
+      "url": "https://lovdata.no/dokument/NL/lov/1995-02-24-12"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-15",
+  "verified": true
 }

@@ -8,20 +8,18 @@
     "saturday_open": "08:00",
     "saturday_close": "18:00",
     "pre_holiday_close": "18:00",
-    "special_day_close": "15:00",
-    "special_days": [
-      "easter_eve",
-      "whit_eve",
-      "christmas_eve",
-      "new_years_eve"
-    ]
+    "special_day_close": "18:00",
+    "special_days": [],
+    "exceptions": {
+      "pre_ascension_day": "weekday"
+    }
   },
   "sources": [
     {
-      "title": "Alkoholloven § 3-7",
-      "url": "https://lovdata.no/lov/1989-06-02-27/§3-7"
+      "title": "Sirdal kommune – Alkoholpolitiske retningslinjer 2024–2028",
+      "url": "https://www.sirdal.kommune.no/download/18.7e7773a19c2c46f4072d64/1770642489092/Alkoholpolitiske%20retningslinjer%20i%20Sirdal%20kommune%20for%20periode%202024%20-%202028%20-%20vedtatt%2019.09.2024%20%282%29.pdf"
     }
   ],
-  "last_verified": null,
-  "verified": false
+  "last_verified": "2026-04-15",
+  "verified": true
 }

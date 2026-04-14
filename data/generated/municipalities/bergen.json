@@ -14,27 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": {
-        "type": "range",
-        "min_open": "10:00",
-        "max_open": "10:00",
-        "min_close": "17:00",
-        "max_close": "18:00",
-        "open_count": 11,
-        "closed_count": 0
-      }
-    },
-    {
       "date": "2026-04-15",
       "weekday": "onsdag",
       "day_type": "weekday",
@@ -298,7 +277,15 @@
       "beer_close_large_stores": null,
       "is_deviation": false,
       "comment": null,
-      "vinmonopolet_summary": null
+      "vinmonopolet_summary": {
+        "type": "range",
+        "min_open": "10:00",
+        "max_open": "10:00",
+        "min_close": "17:00",
+        "max_close": "18:00",
+        "open_count": 11,
+        "closed_count": 0
+      }
     },
     {
       "date": "2026-04-29",
@@ -4849,6 +4836,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "local",
@@ -4858,11 +4858,6 @@
       "name": "Bergen, Bergen Storsenter",
       "address": "Strømgaten 8, 5015 Bergen",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4925,6 +4920,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -4936,11 +4936,6 @@
       "address": "Vilhelm Bjerknes vei, Sletten Senter 4, 5081 Bergen",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5002,6 +4997,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5013,11 +5013,6 @@
       "address": "Folke Bernadottes vei 52, 5147 Fyllingsdalen",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5079,6 +5074,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5090,11 +5090,6 @@
       "address": "Valkendorfsgaten 6, 5012 Bergen",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5156,6 +5151,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5167,11 +5167,6 @@
       "address": "Østre Nesttunvegen 16, 5221 Nesttun",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5233,6 +5228,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5244,11 +5244,6 @@
       "address": "Ådnavegen 63, 5260 Indre Arna",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "17:00"
@@ -5310,6 +5305,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "17:00"
         }
@@ -5321,11 +5321,6 @@
       "address": "Loddefjordveien 2, 5171 Loddefjord",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5387,6 +5382,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5398,11 +5398,6 @@
       "address": "Åsane Senter 40, 5116 Ulset",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5464,6 +5459,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5475,11 +5475,6 @@
       "address": "Laguneveien 1, 5239 Rådal",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5541,6 +5536,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "18:00"
         }
@@ -5552,11 +5552,6 @@
       "address": "Kringsjåveien 83-89, 5163 Laksevåg",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "17:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "17:00"
@@ -5618,6 +5613,11 @@
         },
         {
           "date": "2026-04-27",
+          "open": "10:00",
+          "close": "17:00"
+        },
+        {
+          "date": "2026-04-28",
           "open": "10:00",
           "close": "17:00"
         }
@@ -5629,11 +5629,6 @@
       "address": "Myrdalsveien 2, 5130 Nyborg",
       "hours": [
         {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
-        {
           "date": "2026-04-15",
           "open": "10:00",
           "close": "18:00"
@@ -5697,21 +5692,16 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     }
   ],
   "vinmonopolet_day_summary": [
-    {
-      "type": "range",
-      "min_open": "10:00",
-      "max_open": "10:00",
-      "min_close": "17:00",
-      "max_close": "18:00",
-      "open_count": 11,
-      "closed_count": 0,
-      "date": "2026-04-14"
-    },
     {
       "type": "range",
       "min_open": "10:00",
@@ -5821,6 +5811,16 @@
       "open_count": 11,
       "closed_count": 0,
       "date": "2026-04-27"
+    },
+    {
+      "type": "range",
+      "min_open": "10:00",
+      "max_open": "10:00",
+      "min_close": "17:00",
+      "max_close": "18:00",
+      "open_count": 11,
+      "closed_count": 0,
+      "date": "2026-04-28"
     }
   ],
   "vinmonopolet_fetched_at": "2026-04-13T02:15:24.689271+02:00",

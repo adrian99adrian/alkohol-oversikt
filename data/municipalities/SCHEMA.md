@@ -37,6 +37,8 @@ The source of truth for validation is [scripts/validate_data.py](../../scripts/v
 |---|---|---|---|
 | `special_day_open` | `HH:MM` | `"08:30"` | Opening time on recognized special eves. Falls back to `weekday_open` (or `saturday_open` on Saturday) if absent. Used by kommuner that open later on eves — e.g. Hole 08:30, Orkland 09:00. |
 | `exceptions.pre_ascension_day` | `"weekday"` | `"weekday"` | Treat day før Kristi himmelfart as a weekday (close at `weekday_close`). Used by e.g. Larvik. |
+| `exceptions.pre_labour_day` | `"weekday"` | `"weekday"` | Treat day før 1. mai as a weekday (close at `weekday_close`). Used by Alta, Bamble, Kragerø, Tvedestrand. |
+| `exceptions.pre_constitution_day` | `"weekday"` | `"weekday"` | Treat day før 17. mai as a weekday (close at `weekday_close`). Used by Alta, Bamble, Kragerø, Tvedestrand. |
 | `exceptions.pre_easter_week` | `"pre_holiday"` | `"pre_holiday"` | Force Wed-Sat før påskedag to close at `pre_holiday_close` (18:00). Overrides `special_day_close` on påskeaften. Used by Drammen, Kristiansund, Bærum, Asker, Kongsvinger. |
 | `date_overrides` | `[{date: "MM-DD", hours: "saturday"\|"pre_holiday"}]` | `[{"date":"04-30","hours":"saturday"}]` | Force a calendar date into Saturday or pre-holiday hours. Takes precedence over every other rule. Dates are validated as real calendar days (02-30 / 13-01 rejected; leap day accepted). Used by Ørland (April 30, May 16, Dec 27–31). |
 | `special_day_close_large_stores` | `HH:MM` | `"16:00"` | Tighter close for stores over `large_store_threshold_sqm`. Only applies on dates listed in `large_store_special_days`. Used by Oslo. |

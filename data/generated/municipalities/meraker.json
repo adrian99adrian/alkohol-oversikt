@@ -14,19 +14,6 @@
   },
   "days": [
     {
-      "date": "2026-04-14",
-      "weekday": "tirsdag",
-      "day_type": "weekday",
-      "day_type_label": "Hverdag",
-      "beer_sale_allowed": true,
-      "beer_open": "08:00",
-      "beer_close": "20:00",
-      "beer_close_large_stores": null,
-      "is_deviation": false,
-      "comment": null,
-      "vinmonopolet_summary": null
-    },
-    {
       "date": "2026-04-15",
       "weekday": "onsdag",
       "day_type": "weekday",
@@ -4757,6 +4744,19 @@
       "is_deviation": false,
       "comment": null,
       "vinmonopolet_summary": null
+    },
+    {
+      "date": "2027-04-14",
+      "weekday": "onsdag",
+      "day_type": "weekday",
+      "day_type_label": "Hverdag",
+      "beer_sale_allowed": true,
+      "beer_open": "08:00",
+      "beer_close": "20:00",
+      "beer_close_large_stores": null,
+      "is_deviation": false,
+      "comment": null,
+      "vinmonopolet_summary": null
     }
   ],
   "vinmonopolet_mode": "nearest",
@@ -4769,11 +4769,6 @@
       "name": "Stjørdal",
       "address": "Torgkvartalet, Stokmoveien 2, 7500 Stjørdal",
       "hours": [
-        {
-          "date": "2026-04-14",
-          "open": "10:00",
-          "close": "18:00"
-        },
         {
           "date": "2026-04-15",
           "open": "10:00",
@@ -4838,6 +4833,11 @@
           "date": "2026-04-27",
           "open": "10:00",
           "close": "18:00"
+        },
+        {
+          "date": "2026-04-28",
+          "open": "10:00",
+          "close": "18:00"
         }
       ]
     },
@@ -4845,14 +4845,6 @@
     "source_municipality_id": "stjordal",
     "source_municipality_name": "Stjørdal",
     "day_summary": [
-      {
-        "type": "uniform",
-        "open": "10:00",
-        "close": "18:00",
-        "open_count": 1,
-        "closed_count": 0,
-        "date": "2026-04-14"
-      },
       {
         "type": "uniform",
         "open": "10:00",
@@ -4952,6 +4944,14 @@
         "open_count": 1,
         "closed_count": 0,
         "date": "2026-04-27"
+      },
+      {
+        "type": "uniform",
+        "open": "10:00",
+        "close": "18:00",
+        "open_count": 1,
+        "closed_count": 0,
+        "date": "2026-04-28"
       }
     ]
   }
