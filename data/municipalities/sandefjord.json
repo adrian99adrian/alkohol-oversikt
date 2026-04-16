@@ -1,7 +1,7 @@
 {
   "id": "sandefjord",
   "name": "Sandefjord",
-  "county": "Vestfold og Telemark",
+  "county": "Vestfold",
   "beer_sales": {
     "weekday_open": "06:00",
     "weekday_close": "20:00",
