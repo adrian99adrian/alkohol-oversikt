@@ -104,9 +104,16 @@ class TestVinmonopoletCLI:
         (data_dir / "municipalities" / "sandefjord.json").write_text("{}")
         (data_dir / "town_municipality_map.json").write_text("{}")
 
+        # Seed a sentinel cache file so we can prove it is preserved verbatim
+        # on the raise path (not overwritten before the helper rejects input).
+        cached = data_dir / "generated" / "vinmonopolet.json"
+        cached.parent.mkdir(parents=True)
+        sentinel = {"sentinel": True, "stores": []}
+        cached.write_text(json.dumps(sentinel))
+
         with patch("sys.argv", ["prog", "--data-dir", str(data_dir)]):
-            with pytest.raises(ValueError, match="Inconsistent 7-day windows"):
+            with pytest.raises(ValueError, match="Inconsistent date windows"):
                 main()
 
-        # Must not have clobbered cached data on inconsistent input.
-        assert not (data_dir / "generated" / "vinmonopolet.json").exists()
+        # Cache must be byte-for-byte unchanged on inconsistent input.
+        assert json.loads(cached.read_text()) == sentinel

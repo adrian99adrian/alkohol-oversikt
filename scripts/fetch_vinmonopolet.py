@@ -374,7 +374,7 @@ def _assert_consistent_windows(stores: list[dict]) -> tuple[str, str]:
         sample = ", ".join(ids[:3]) + ("..." if len(ids) > 3 else "")
         parts.append(f"{start}..{end} ({len(ids)} stores: {sample})")
     raise ValueError(
-        "Inconsistent 7-day windows across stores (likely CDN staggering mid-rollover): "
+        "Inconsistent date windows across stores (likely CDN staggering mid-rollover): "
         + "; ".join(parts)
     )
 

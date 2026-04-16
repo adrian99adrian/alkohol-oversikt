@@ -551,7 +551,7 @@ class TestAssertConsistentWindows:
     def test_start_mismatch_raises(self):
         """Two stores with different start dates — the midnight-rollover case."""
         stores = [self._store("101", "2026-04-17"), self._store("129", "2026-04-16")]
-        with pytest.raises(ValueError, match="Inconsistent 7-day windows"):
+        with pytest.raises(ValueError, match="Inconsistent date windows"):
             _assert_consistent_windows(stores)
 
     def test_end_mismatch_raises(self):
@@ -560,7 +560,7 @@ class TestAssertConsistentWindows:
             self._store("101", "2026-04-17", length=7),
             self._store("129", "2026-04-17", length=6),
         ]
-        with pytest.raises(ValueError, match="Inconsistent 7-day windows"):
+        with pytest.raises(ValueError, match="Inconsistent date windows"):
             _assert_consistent_windows(stores)
 
     def test_subset_mismatch_groups_stores(self):
