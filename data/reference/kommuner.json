@@ -850,8 +850,8 @@
       "municipality": "Aremark",
       "id": "aremark",
       "bugs": [],
-      "lat": 59.220665,
-      "lng": 11.696854
+      "lat": 59.220554,
+      "lng": 11.696776
     },
     {
       "county": "Akershus",
@@ -1218,8 +1218,8 @@
       "municipality": "Stange",
       "id": "stange",
       "bugs": [],
-      "lat": 60.715954,
-      "lng": 11.191496
+      "lat": 60.715992,
+      "lng": 11.191203
     },
     {
       "county": "Innlandet",
@@ -1450,8 +1450,8 @@
       "municipality": "Østre Toten",
       "id": "ostre-toten",
       "bugs": [],
-      "lat": 60.6769826,
-      "lng": 10.8172675
+      "lat": 60.67706,
+      "lng": 10.81583
     },
     {
       "county": "Innlandet",
@@ -2090,8 +2090,8 @@
       "municipality": "Osterøy",
       "id": "osteroy",
       "bugs": [],
-      "lat": 60.5239105,
-      "lng": 5.5055756
+      "lat": 60.523978,
+      "lng": 5.507189
     },
     {
       "county": "Vestland",
