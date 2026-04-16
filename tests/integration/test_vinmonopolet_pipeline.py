@@ -3,6 +3,7 @@
 import json
 from unittest.mock import patch
 
+import pytest
 from fetch_vinmonopolet import main, transform_store
 
 
@@ -71,3 +72,41 @@ class TestVinmonopoletCLI:
         assert "window_start" in data["metadata"]
         assert "window_end" in data["metadata"]
         assert "fetched_at" in data["metadata"]
+
+    @patch("fetch_vinmonopolet.fetch_all_stores")
+    def test_raises_when_stores_report_inconsistent_windows(
+        self, mock_fetch, sample_api_store, tmp_path
+    ):
+        """CDN staggering: two stores on different 7-day windows → main() raises
+        and does not clobber the cached vinmonopolet.json."""
+        from tests.conftest import _make_opening_time
+
+        stale = {**sample_api_store, "name": "101"}
+        # Fresh store shifted one day forward (2026-03-31..2026-04-06 vs.
+        # the fixture's 2026-03-30..2026-04-05).
+        fresh = {
+            **sample_api_store,
+            "name": "129",
+            "openingTimes": [
+                _make_opening_time("2026-03-31", open_h=10, close_h=18, weekday="Tirsdag"),
+                _make_opening_time("2026-04-01", open_h=10, close_h=18, weekday="Onsdag"),
+                _make_opening_time("2026-04-02", open_h=10, close_h=18, weekday="Torsdag"),
+                _make_opening_time("2026-04-03", open_h=10, close_h=18, weekday="Fredag"),
+                _make_opening_time("2026-04-04", open_h=10, close_h=15, weekday="Lørdag"),
+                _make_opening_time("2026-04-05", closed=True, weekday="Søndag"),
+                _make_opening_time("2026-04-06", open_h=10, close_h=18, weekday="Mandag"),
+            ],
+        }
+        mock_fetch.return_value = [stale, fresh]
+
+        data_dir = tmp_path / "data"
+        (data_dir / "municipalities").mkdir(parents=True)
+        (data_dir / "municipalities" / "sandefjord.json").write_text("{}")
+        (data_dir / "town_municipality_map.json").write_text("{}")
+
+        with patch("sys.argv", ["prog", "--data-dir", str(data_dir)]):
+            with pytest.raises(ValueError, match="Inconsistent 7-day windows"):
+                main()
+
+        # Must not have clobbered cached data on inconsistent input.
+        assert not (data_dir / "generated" / "vinmonopolet.json").exists()

@@ -347,13 +347,36 @@ def _load_previous_standard_hours(data_dir: Path) -> dict[str, dict]:
     return {s["store_id"]: s["standard_hours"] for s in data.get("stores", [])}
 
 
-def _compute_window(stores: list[dict]) -> tuple[str, str]:
-    """Compute the shared actual_hours date window from transformed stores."""
-    all_dates: set[str] = set()
+def _assert_consistent_windows(stores: list[dict]) -> tuple[str, str]:
+    """Return the shared (start, end) window when every store agrees; else raise.
+
+    Guards against Vinmonopolet CDN staggering mid-rollover, where some stores
+    return a stale 7-day window and others a fresh one — a union window would
+    then match no store and fail downstream validation.
+
+    Raises ValueError on empty input, empty actual_hours, or disagreement.
+    """
+    if not stores:
+        raise ValueError("No stores provided; cannot determine window")
+
+    windows: dict[tuple[str, str], list[str]] = {}
     for store in stores:
-        all_dates.update(store["actual_hours"].keys())
-    sorted_dates = sorted(all_dates)
-    return sorted_dates[0], sorted_dates[-1]
+        dates = sorted(store["actual_hours"].keys())
+        if not dates:
+            raise ValueError(f"Store {store.get('store_id', '?')} has empty actual_hours")
+        windows.setdefault((dates[0], dates[-1]), []).append(str(store.get("store_id", "?")))
+
+    if len(windows) == 1:
+        return next(iter(windows))
+
+    parts = []
+    for (start, end), ids in sorted(windows.items()):
+        sample = ", ".join(ids[:3]) + ("..." if len(ids) > 3 else "")
+        parts.append(f"{start}..{end} ({len(ids)} stores: {sample})")
+    raise ValueError(
+        "Inconsistent 7-day windows across stores (likely CDN staggering mid-rollover): "
+        + "; ".join(parts)
+    )
 
 
 def main() -> None:
@@ -394,7 +417,7 @@ def main() -> None:
     ]
     transformed.sort(key=lambda s: int(s["store_id"]))
 
-    window_start, window_end = _compute_window(transformed)
+    window_start, window_end = _assert_consistent_windows(transformed)
     fetched_at = datetime.now(tz=ZoneInfo("Europe/Oslo")).isoformat()
 
     output = {

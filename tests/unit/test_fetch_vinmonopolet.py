@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 from fetch_vinmonopolet import (
+    _assert_consistent_windows,
     build_actual_hours,
     derive_standard_hours,
     fetch_all_stores,
@@ -521,3 +522,68 @@ class TestRealAPI:
         assert "address" in store
         assert "openingTimes" in store
         assert len(store["openingTimes"]) == 7
+
+
+class TestAssertConsistentWindows:
+    """Unit tests for _assert_consistent_windows."""
+
+    @staticmethod
+    def _store(sid: str, start: str, length: int = 7) -> dict:
+        """Build a store with `length` consecutive dates starting at `start`."""
+        from datetime import date, timedelta
+
+        d0 = date.fromisoformat(start)
+        keys = [(d0 + timedelta(days=i)).isoformat() for i in range(length)]
+        return {"store_id": sid, "actual_hours": {k: None for k in keys}}
+
+    def test_all_agree_returns_window(self):
+        """Every store reports the same 7-day window — helper returns it."""
+        stores = [self._store("101", "2026-04-17"), self._store("129", "2026-04-17")]
+        assert _assert_consistent_windows(stores) == ("2026-04-17", "2026-04-23")
+
+    def test_single_store_returns_its_window(self):
+        """A single store is trivially consistent with itself."""
+        assert _assert_consistent_windows([self._store("1", "2026-04-17")]) == (
+            "2026-04-17",
+            "2026-04-23",
+        )
+
+    def test_start_mismatch_raises(self):
+        """Two stores with different start dates — the midnight-rollover case."""
+        stores = [self._store("101", "2026-04-17"), self._store("129", "2026-04-16")]
+        with pytest.raises(ValueError, match="Inconsistent 7-day windows"):
+            _assert_consistent_windows(stores)
+
+    def test_end_mismatch_raises(self):
+        """Same start but one store has a shorter window — different end date."""
+        stores = [
+            self._store("101", "2026-04-17", length=7),
+            self._store("129", "2026-04-17", length=6),
+        ]
+        with pytest.raises(ValueError, match="Inconsistent 7-day windows"):
+            _assert_consistent_windows(stores)
+
+    def test_subset_mismatch_groups_stores(self):
+        """Error message groups stores by window and samples IDs (max 3 + ellipsis)."""
+        stale = [self._store(str(i), "2026-04-16") for i in range(5)]
+        fresh = [self._store(str(i + 100), "2026-04-17") for i in range(3)]
+        with pytest.raises(ValueError) as exc:
+            _assert_consistent_windows(stale + fresh)
+        msg = str(exc.value)
+        assert "5 stores" in msg
+        assert "3 stores" in msg
+        assert "2026-04-16..2026-04-22" in msg
+        assert "2026-04-17..2026-04-23" in msg
+        # Stale group has 5 stores, so the sample should be truncated with "..."
+        assert "..." in msg
+
+    def test_empty_list_raises(self):
+        """Empty store list — cannot determine a window."""
+        with pytest.raises(ValueError, match="No stores"):
+            _assert_consistent_windows([])
+
+    def test_empty_actual_hours_raises(self):
+        """A store with empty actual_hours is an internal bug — raise clearly."""
+        bad = {"store_id": "999", "actual_hours": {}}
+        with pytest.raises(ValueError, match="999.*empty actual_hours"):
+            _assert_consistent_windows([bad])
