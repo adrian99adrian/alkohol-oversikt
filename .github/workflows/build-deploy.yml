@@ -21,6 +21,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Shared with vinmonopolet-canary.yml so fetch runs serialize.
+    concurrency:
+      group: vinmonopolet-fetch
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 

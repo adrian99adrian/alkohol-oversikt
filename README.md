@@ -2,6 +2,7 @@
 
 ![CI](https://github.com/adrian99adrian/alkohol-oversikt/actions/workflows/ci.yml/badge.svg)
 ![Build & Deploy](https://github.com/adrian99adrian/alkohol-oversikt/actions/workflows/build-deploy.yml/badge.svg)
+![Fetch Canary](https://github.com/adrian99adrian/alkohol-oversikt/actions/workflows/vinmonopolet-canary.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 A static website showing when beer sales close in Norwegian municipalities and when Vinmonopolet (state liquor stores) are open.
