@@ -2,7 +2,10 @@ name: Vinmonopolet Fetch Canary
 
 on:
   schedule:
-    # 05:00 UTC — runs 1h after Build & Deploy's 04:00 UTC cron
+    # 05:00 UTC — staggered an hour after Build & Deploy's 04:00 UTC cron.
+    # GitHub-scheduled crons can drift several minutes under load, so the
+    # canary may occasionally queue behind a late build via the shared
+    # vinmonopolet-fetch concurrency group. That's expected, not a bug.
     - cron: "0 5 * * *"
   workflow_dispatch:
 
@@ -17,6 +20,10 @@ concurrency:
 jobs:
   canary:
     runs-on: ubuntu-latest
+    # Bounded so a hung httpx retry (MAX_RETRIES=3 with exponential backoff)
+    # cannot sit for the runner's 6h default and block the next day's build
+    # via the shared concurrency group.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -27,8 +34,8 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      # Any failure (network, API schema change, inconsistent windows from
-      # _assert_consistent_windows, etc.) goes red in the Actions tab.
-      # PR 2 will wire up Discord alerting on two-in-a-row failures.
+      # Any failure (network, API schema change, inconsistent windows, etc.)
+      # goes red in the Actions tab — no continue-on-error here, unlike
+      # Build & Deploy which intentionally falls back to cached data.
       - name: Fetch Vinmonopolet (canary)
         run: python scripts/fetch_vinmonopolet.py
