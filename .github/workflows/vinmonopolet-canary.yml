@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  actions: read  # needed for the previous-run lookup in the alert step
 
 # Shared with the build job of build-deploy.yml so fetch runs serialize.
 concurrency:
@@ -20,10 +21,11 @@ concurrency:
 jobs:
   canary:
     runs-on: ubuntu-latest
-    # Bounded so a hung httpx retry (MAX_RETRIES=3 with exponential backoff)
-    # cannot sit for the runner's 6h default and block the next day's build
-    # via the shared concurrency group.
-    timeout-minutes: 15
+    # Backstop so a hung checkout / setup-python / pip install can't sit on
+    # the runner's 6h default and block the next day's build via the shared
+    # vinmonopolet-fetch concurrency group. The fetch step has its own
+    # tighter 15-minute timeout below.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -37,5 +39,62 @@ jobs:
       # Any failure (network, API schema change, inconsistent windows, etc.)
       # goes red in the Actions tab — no continue-on-error here, unlike
       # Build & Deploy which intentionally falls back to cached data.
+      #
+      # timeout-minutes is on the step (not the job) so a hung httpx retry
+      # is marked as a failed step rather than a killed runner — that lets
+      # the Alert step below still run on timeout days.
       - name: Fetch Vinmonopolet (canary)
+        id: fetch
+        timeout-minutes: 15
         run: python scripts/fetch_vinmonopolet.py
+
+      # Pings #alkohol-oversikt-fetch-canary via Discord webhook only when the
+      # fetch itself failed AND the previous scheduled run was also bad. First
+      # bad day in a streak stays silent — the frontend already warns users.
+      # Set repo variable ALERTS_ENABLED=false to mute without a code change.
+      - name: Alert on two-in-a-row failure
+        # Gated on github.event_name so manual workflow_dispatch runs never
+        # page Discord — a smoke test during an ongoing outage would otherwise
+        # fire the alert even though we only want scheduled runs to count.
+        if: >-
+          failure()
+          && steps.fetch.conclusion == 'failure'
+          && github.event_name == 'schedule'
+          && vars.ALERTS_ENABLED == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ROLE_ID: ${{ vars.DISCORD_ALERT_ROLE_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          PR_URL: ${{ github.server_url }}/${{ github.repository }}/pull/49
+        run: |
+          # Previous completed SCHEDULED canary run. Filters out manual
+          # workflow_dispatch smoke tests so they don't pollute the streak.
+          prev=$(gh api \
+            "/repos/${{ github.repository }}/actions/workflows/vinmonopolet-canary.yml/runs?branch=main&event=schedule&status=completed&per_page=1" \
+            --jq '.workflow_runs[0].conclusion // "none"')
+          echo "Previous scheduled canary conclusion: $prev"
+
+          case "$prev" in
+            failure|timed_out|startup_failure) prev_bad=true ;;
+            *) prev_bad=false ;;
+          esac
+
+          if [ "$prev_bad" != "true" ]; then
+            echo "Previous scheduled run was not a failure — suppressing alert (single-day streak)."
+            exit 0
+          fi
+
+          content="<@&${ROLE_ID}> 🚨 Vinmonopolet canary failed more than 2 days in a row 🚨
+          Link: ${RUN_URL}
+          In case you forgot what this warning is: ${PR_URL}"
+
+          payload=$(jq -n \
+            --arg content "$content" \
+            --arg role "$ROLE_ID" \
+            '{content: $content, allowed_mentions: {parse: [], roles: [$role]}}')
+
+          curl -sS --fail-with-body \
+            -H "Content-Type: application/json" \
+            -X POST -d "$payload" \
+            "$DISCORD_WEBHOOK_URL"
