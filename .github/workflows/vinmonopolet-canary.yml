@@ -21,6 +21,11 @@ concurrency:
 jobs:
   canary:
     runs-on: ubuntu-latest
+    # Backstop so a hung checkout / setup-python / pip install can't sit on
+    # the runner's 6h default and block the next day's build via the shared
+    # vinmonopolet-fetch concurrency group. The fetch step has its own
+    # tighter 15-minute timeout below.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -48,7 +53,14 @@ jobs:
       # bad day in a streak stays silent — the frontend already warns users.
       # Set repo variable ALERTS_ENABLED=false to mute without a code change.
       - name: Alert on two-in-a-row failure
-        if: failure() && steps.fetch.conclusion == 'failure' && vars.ALERTS_ENABLED == 'true'
+        # Gated on github.event_name so manual workflow_dispatch runs never
+        # page Discord — a smoke test during an ongoing outage would otherwise
+        # fire the alert even though we only want scheduled runs to count.
+        if: >-
+          failure()
+          && steps.fetch.conclusion == 'failure'
+          && github.event_name == 'schedule'
+          && vars.ALERTS_ENABLED == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
