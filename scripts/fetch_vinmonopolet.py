@@ -23,6 +23,20 @@ DEFAULT_PAGE_SIZE = 400
 DEFAULT_TIMEOUT = 30
 MAX_RETRIES = 3
 
+# Vinmonopolet's WAF started returning 403 to default-UA clients from non-Norwegian
+# (cloud) egress IPs in May 2026, breaking the daily fetch from GitHub Actions while
+# residential NO IPs still got 200. Browser-like headers + nb-NO Accept-Language are
+# enough to pass the rule. Update if the canary starts 403'ing again.
+BROWSER_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "nb-NO,nb;q=0.9,en;q=0.8",
+    "Referer": "https://www.vinmonopolet.no/",
+}
+
 WEEKDAY_NAMES = [
     "monday",
     "tuesday",
@@ -403,7 +417,7 @@ def main() -> None:
     # Load previous standard_hours so holiday-week fetches preserve per-day patterns
     previous_hours = _load_previous_standard_hours(data_dir)
 
-    with httpx.Client(timeout=args.timeout) as client:
+    with httpx.Client(timeout=args.timeout, headers=BROWSER_HEADERS) as client:
         raw_stores = fetch_all_stores(client, page_size=args.page_size)
 
     transformed = [

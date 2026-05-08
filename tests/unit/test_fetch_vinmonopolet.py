@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 from fetch_vinmonopolet import (
+    BROWSER_HEADERS,
     _assert_consistent_windows,
     build_actual_hours,
     derive_standard_hours,
@@ -587,3 +588,35 @@ class TestAssertConsistentWindows:
         bad = {"store_id": "999", "actual_hours": {}}
         with pytest.raises(ValueError, match="999.*empty actual_hours"):
             _assert_consistent_windows([bad])
+
+
+class TestBrowserHeaders:
+    """Verify BROWSER_HEADERS is well-formed and applied to the httpx client."""
+
+    def test_required_headers_present(self):
+        """All keys the WAF rule cares about must be set."""
+        assert "User-Agent" in BROWSER_HEADERS
+        assert "Accept-Language" in BROWSER_HEADERS
+        assert "Referer" in BROWSER_HEADERS
+
+    def test_user_agent_looks_like_browser(self):
+        """A non-browser UA is what got us blocked in the first place."""
+        ua = BROWSER_HEADERS["User-Agent"]
+        assert ua.startswith("Mozilla/")
+        assert "python" not in ua.lower()
+        assert "httpx" not in ua.lower()
+
+    def test_accept_language_prefers_norwegian(self):
+        """nb-NO must come first — it's the part that mimics a NO browser."""
+        assert BROWSER_HEADERS["Accept-Language"].startswith("nb-NO")
+
+    def test_referer_is_vinmonopolet(self):
+        """A foreign Referer would defeat the point."""
+        assert BROWSER_HEADERS["Referer"].startswith("https://www.vinmonopolet.no")
+
+    def test_client_applies_headers(self):
+        """httpx.Client must actually carry the headers on outbound requests."""
+        with httpx.Client(headers=BROWSER_HEADERS) as client:
+            assert client.headers["User-Agent"] == BROWSER_HEADERS["User-Agent"]
+            assert client.headers["Accept-Language"] == BROWSER_HEADERS["Accept-Language"]
+            assert client.headers["Referer"] == BROWSER_HEADERS["Referer"]
