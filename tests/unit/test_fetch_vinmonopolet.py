@@ -6,6 +6,7 @@ import pytest
 import requests
 from fetch_vinmonopolet import (
     BROWSER_HEADERS,
+    DEFAULT_TIMEOUT,
     _assert_consistent_windows,
     build_actual_hours,
     derive_standard_hours,
@@ -415,6 +416,26 @@ class TestGetWithRetry:
             get_with_retry(client, "http://example.com", {})
         assert client.get.call_count == 1
 
+    def test_passes_timeout_to_client(self):
+        """timeout must reach client.get — requests has no client-level timeout."""
+        client = MagicMock()
+        response = MagicMock()
+        response.raise_for_status = MagicMock()
+        client.get.return_value = response
+
+        get_with_retry(client, "http://example.com", {}, timeout=12)
+        assert client.get.call_args.kwargs["timeout"] == 12
+
+    def test_uses_default_timeout_when_unset(self):
+        """Omitting timeout falls back to DEFAULT_TIMEOUT, never None (no hang)."""
+        client = MagicMock()
+        response = MagicMock()
+        response.raise_for_status = MagicMock()
+        client.get.return_value = response
+
+        get_with_retry(client, "http://example.com", {})
+        assert client.get.call_args.kwargs["timeout"] == DEFAULT_TIMEOUT
+
 
 class TestFetchPage:
     """Verify single-page fetch."""
@@ -453,6 +474,16 @@ class TestFetchPage:
         params = call_args[0][2]
         assert params["page"] == 3
         assert params["pageSize"] == 50
+
+    @patch("fetch_vinmonopolet.get_with_retry")
+    def test_threads_timeout(self, mock_retry):
+        response = MagicMock()
+        response.json.return_value = {"stores": [], "pagination": {}}
+        mock_retry.return_value = response
+        client = MagicMock()
+
+        fetch_page(client, page=0, timeout=12)
+        assert mock_retry.call_args.kwargs["timeout"] == 12
 
 
 class TestFetchAllStores:
