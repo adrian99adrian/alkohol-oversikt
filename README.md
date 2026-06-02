@@ -27,7 +27,7 @@ cd alkohol-oversikt
 bash setup.sh
 ```
 
-`setup.sh` configures git hooks, installs Python dependencies, and installs frontend dependencies (requires Node.js).
+`setup.sh` configures git hooks, installs Python dependencies, and installs frontend dependencies (requires Node.js ≥ 22.12, as pinned in `web/.nvmrc` — Astro 6 needs it).
 
 ```bash
 # Run the data pipeline
