@@ -15,7 +15,7 @@ from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-import httpx
+import requests
 from geo_bounds import in_norway as _in_norway
 
 API_BASE = "https://www.vinmonopolet.no/vmpws/v2/vmp/stores"
@@ -23,10 +23,14 @@ DEFAULT_PAGE_SIZE = 400
 DEFAULT_TIMEOUT = 30
 MAX_RETRIES = 3
 
-# Vinmonopolet's WAF started returning 403 to default-UA clients from non-Norwegian
-# (cloud) egress IPs in May 2026, breaking the daily fetch from GitHub Actions while
-# residential NO IPs still got 200. Browser-like headers + nb-NO Accept-Language are
-# enough to pass the rule. Update if the canary starts 403'ing again.
+# Vinmonopolet's WAF fingerprints the HTTP *client*, not the IP or headers. From a
+# GitHub Actions runner, httpx gets a consistent 403 while requests and stdlib urllib
+# (both urllib3 / stdlib-ssl based) get 200 with these exact headers — verified June
+# 2026 by a same-runner probe comparing all three clients. That's why this module uses
+# requests, not httpx. The browser-like headers below are kept as defense-in-depth (an
+# earlier-2026 WAF rule also keyed on a non-browser User-Agent). If the canary starts
+# 403'ing again, re-run the client comparison: the WAF may have extended the fingerprint
+# to requests too, in which case fall back to scraping the store HTML pages via Playwright.
 BROWSER_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -272,26 +276,27 @@ def transform_store(
 
 
 def get_with_retry(
-    client: httpx.Client,
+    client: requests.Session,
     url: str,
     params: dict,
     max_retries: int = MAX_RETRIES,
-) -> httpx.Response:
+    timeout: float = DEFAULT_TIMEOUT,
+) -> requests.Response:
     """GET with retry on timeout and 5xx errors.
 
     Retries with exponential backoff. No retry on 4xx.
     """
     for attempt in range(max_retries):
         try:
-            response = client.get(url, params=params)
+            response = client.get(url, params=params, timeout=timeout)
             response.raise_for_status()
             return response
-        except httpx.TimeoutException:
+        except requests.exceptions.Timeout:
             if attempt == max_retries - 1:
                 raise
             time.sleep(2**attempt)
-        except httpx.HTTPStatusError as e:
-            if e.response.status_code < 500:
+        except requests.exceptions.HTTPError as e:
+            if e.response is not None and e.response.status_code < 500:
                 raise
             if attempt == max_retries - 1:
                 raise
@@ -300,25 +305,27 @@ def get_with_retry(
 
 
 def fetch_page(
-    client: httpx.Client,
+    client: requests.Session,
     page: int,
     page_size: int = DEFAULT_PAGE_SIZE,
+    timeout: float = DEFAULT_TIMEOUT,
 ) -> dict:
     """Fetch one page of stores from the Vinmonopolet API."""
     params = {"fields": "FULL", "pageSize": page_size, "page": page}
-    response = get_with_retry(client, API_BASE, params)
+    response = get_with_retry(client, API_BASE, params, timeout=timeout)
     return response.json()
 
 
 def fetch_all_stores(
-    client: httpx.Client,
+    client: requests.Session,
     page_size: int = DEFAULT_PAGE_SIZE,
+    timeout: float = DEFAULT_TIMEOUT,
 ) -> list[dict]:
     """Fetch all stores, paginating through all pages.
 
     Verifies the total count matches pagination.totalResults.
     """
-    first_page = fetch_page(client, page=0, page_size=page_size)
+    first_page = fetch_page(client, page=0, page_size=page_size, timeout=timeout)
     total_pages = first_page["pagination"]["totalPages"]
 
     seen: dict[str, dict] = {}
@@ -326,7 +333,7 @@ def fetch_all_stores(
         seen[store["name"]] = store
 
     for page_num in range(1, total_pages):
-        page_data = fetch_page(client, page=page_num, page_size=page_size)
+        page_data = fetch_page(client, page=page_num, page_size=page_size, timeout=timeout)
         for store in page_data["stores"]:
             seen[store["name"]] = store
 
@@ -417,8 +424,9 @@ def main() -> None:
     # Load previous standard_hours so holiday-week fetches preserve per-day patterns
     previous_hours = _load_previous_standard_hours(data_dir)
 
-    with httpx.Client(timeout=args.timeout, headers=BROWSER_HEADERS) as client:
-        raw_stores = fetch_all_stores(client, page_size=args.page_size)
+    with requests.Session() as client:
+        client.headers.update(BROWSER_HEADERS)
+        raw_stores = fetch_all_stores(client, page_size=args.page_size, timeout=args.timeout)
 
     transformed = [
         transform_store(

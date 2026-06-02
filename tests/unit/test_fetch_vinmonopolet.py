@@ -2,8 +2,8 @@
 
 from unittest.mock import MagicMock, patch
 
-import httpx
 import pytest
+import requests
 from fetch_vinmonopolet import (
     BROWSER_HEADERS,
     _assert_consistent_windows,
@@ -369,8 +369,8 @@ class TestGetWithRetry:
         client = MagicMock()
         error_response = MagicMock()
         error_response.status_code = 500
-        error_response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "500", request=MagicMock(), response=error_response
+        error_response.raise_for_status.side_effect = requests.exceptions.HTTPError(
+            "500", response=error_response
         )
         ok_response = MagicMock()
         ok_response.status_code = 200
@@ -387,7 +387,7 @@ class TestGetWithRetry:
         ok_response = MagicMock()
         ok_response.status_code = 200
         ok_response.raise_for_status = MagicMock()
-        client.get.side_effect = [httpx.TimeoutException("timeout"), ok_response]
+        client.get.side_effect = [requests.exceptions.Timeout("timeout"), ok_response]
 
         result = get_with_retry(client, "http://example.com", {}, max_retries=3)
         assert result == ok_response
@@ -396,9 +396,9 @@ class TestGetWithRetry:
     @patch("fetch_vinmonopolet.time.sleep")
     def test_raises_after_max_retries(self, mock_sleep):
         client = MagicMock()
-        client.get.side_effect = httpx.TimeoutException("timeout")
+        client.get.side_effect = requests.exceptions.Timeout("timeout")
 
-        with pytest.raises(httpx.TimeoutException):
+        with pytest.raises(requests.exceptions.Timeout):
             get_with_retry(client, "http://example.com", {}, max_retries=3)
         assert client.get.call_count == 3
 
@@ -406,12 +406,12 @@ class TestGetWithRetry:
         client = MagicMock()
         response = MagicMock()
         response.status_code = 404
-        response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "404", request=MagicMock(), response=response
+        response.raise_for_status.side_effect = requests.exceptions.HTTPError(
+            "404", response=response
         )
         client.get.return_value = response
 
-        with pytest.raises(httpx.HTTPStatusError):
+        with pytest.raises(requests.exceptions.HTTPError):
             get_with_retry(client, "http://example.com", {})
         assert client.get.call_count == 1
 
@@ -510,7 +510,8 @@ class TestRealAPI:
 
     def test_page_zero_returns_stores(self):
         """Fetch page 0 and verify response structure."""
-        with httpx.Client(timeout=30) as client:
+        with requests.Session() as client:
+            client.headers.update(BROWSER_HEADERS)
             result = fetch_page(client, page=0, page_size=2)
 
         assert "stores" in result
@@ -591,7 +592,7 @@ class TestAssertConsistentWindows:
 
 
 class TestBrowserHeaders:
-    """Verify BROWSER_HEADERS is well-formed and applied to the httpx client."""
+    """Verify BROWSER_HEADERS is well-formed and applied to the requests session."""
 
     def test_required_headers_present(self):
         """All keys the WAF rule cares about must be set."""
@@ -615,8 +616,9 @@ class TestBrowserHeaders:
         assert BROWSER_HEADERS["Referer"].startswith("https://www.vinmonopolet.no")
 
     def test_client_applies_headers(self):
-        """httpx.Client must actually carry the headers on outbound requests."""
-        with httpx.Client(headers=BROWSER_HEADERS) as client:
+        """The requests session must actually carry the headers on outbound requests."""
+        with requests.Session() as client:
+            client.headers.update(BROWSER_HEADERS)
             assert client.headers["User-Agent"] == BROWSER_HEADERS["User-Agent"]
             assert client.headers["Accept-Language"] == BROWSER_HEADERS["Accept-Language"]
             assert client.headers["Referer"] == BROWSER_HEADERS["Referer"]
