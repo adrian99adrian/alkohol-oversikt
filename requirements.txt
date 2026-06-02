@@ -1,5 +1,9 @@
 # Data pipeline
+# requests is used for the Vinmonopolet fetch — its WAF fingerprints and 403s
+# httpx from cloud IPs but lets requests/urllib3 through (see fetch_vinmonopolet).
+# httpx is still used by import_kommune_coords.py (Nominatim, not WAF-protected).
 httpx==0.28.1
+requests==2.34.2
 tzdata==2026.2
 
 # Testing

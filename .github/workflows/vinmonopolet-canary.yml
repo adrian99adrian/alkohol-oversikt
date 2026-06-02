@@ -40,7 +40,7 @@ jobs:
       # goes red in the Actions tab — no continue-on-error here, unlike
       # Build & Deploy which intentionally falls back to cached data.
       #
-      # timeout-minutes is on the step (not the job) so a hung httpx retry
+      # timeout-minutes is on the step (not the job) so a hung requests retry
       # is marked as a failed step rather than a killed runner — that lets
       # the Alert step below still run on timeout days.
       - name: Fetch Vinmonopolet (canary)
