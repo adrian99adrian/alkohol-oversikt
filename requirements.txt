@@ -12,7 +12,7 @@ pytest-cov==7.1.0
 pyyaml==6.0.3
 
 # Linting
-ruff==0.15.15
+ruff==0.15.16
 
 # Type checking
 pyright==1.1.410
