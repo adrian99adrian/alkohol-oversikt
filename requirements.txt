@@ -4,15 +4,15 @@
 # httpx is still used by import_kommune_coords.py (Nominatim, not WAF-protected).
 httpx==0.28.1
 requests==2.34.2
-tzdata==2026.2
+tzdata==2026.3
 
 # Testing
-pytest==9.0.3
+pytest==9.1.1
 pytest-cov==7.1.0
 pyyaml==6.0.3
 
 # Linting
-ruff==0.15.15
+ruff==0.15.21
 
 # Type checking
-pyright==1.1.410
+pyright==1.1.411
